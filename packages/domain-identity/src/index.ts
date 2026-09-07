@@ -16,6 +16,17 @@ export {
   workspaceBelongsToOrganization
 } from './relationships.js';
 
+export { ROLE_ASSIGNMENT_STATUSES } from './role-assignment.js';
+
+export {
+  isActiveRoleAssignment,
+  roleAssignmentBelongsToMembership,
+  roleAssignmentTargetsRole,
+  roleBelongsToMembershipOrganization
+} from './role-relationships.js';
+
+export { ROLE_KINDS, ROLE_STATUSES } from './role.js';
+
 export type { Branch, BranchId, BranchStatus } from './branch.js';
 
 export type { BranchAccess, BranchAccessId, BranchAccessStatus } from './branch-access.js';
@@ -30,5 +41,9 @@ export type {
   OrganizationStatus,
   OrganizationType
 } from './organization.js';
+
+export type { RoleAssignment, RoleAssignmentId, RoleAssignmentStatus } from './role-assignment.js';
+
+export type { Role, RoleId, RoleKind, RolePermission, RoleStatus } from './role.js';
 
 export type { Workspace, WorkspaceId } from './workspace.js';
