@@ -2,6 +2,8 @@ export { APPLICATION_ERROR_CODES, createApplicationError } from './application-e
 
 export { SUPPORTED_CURRENCIES, isSupportedCurrency, parseCurrency } from './currency.js';
 
+export { createDomainEvent } from './domain-event.js';
+
 export { asOpaqueId } from './id.js';
 
 export {
@@ -21,6 +23,9 @@ export { err, isErr, isOk, ok } from './result.js';
 export type { ApplicationError, ApplicationErrorCode } from './application-error.js';
 
 export type { Currency } from './currency.js';
+
+export type { CreateDomainEventInput, DomainEvent, DomainEventMetadata } from './domain-event.js';
+
 export type { OpaqueId } from './id.js';
 export type { Money } from './money.js';
 export type { Result } from './result.js';
