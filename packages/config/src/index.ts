@@ -1,0 +1,1 @@
+export const SEGALOKA_CONFIG_PACKAGE = '@segaloka/config' as const;
