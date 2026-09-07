@@ -45,6 +45,8 @@ importers:
 
   packages/observability: {}
 
+  packages/platform-registry: {}
+
   packages/shared-kernel: {}
 
 packages:
