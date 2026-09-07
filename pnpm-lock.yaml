@@ -32,6 +32,10 @@ importers:
 
   packages/config: {}
 
+  packages/contracts: {}
+
+  packages/observability: {}
+
   packages/shared-kernel: {}
 
 packages:
