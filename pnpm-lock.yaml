@@ -43,6 +43,12 @@ importers:
 
   packages/contracts: {}
 
+  packages/domain-identity:
+    dependencies:
+      '@segaloka/shared-kernel':
+        specifier: workspace:*
+        version: link:../shared-kernel
+
   packages/observability: {}
 
   packages/platform-registry: {}
