@@ -13,6 +13,7 @@ import type {
 } from '@segaloka/domain-identity';
 
 import {
+  toAuthorizationBranchId,
   toAuthorizationSubjectId,
   toAuthorizationTenantId,
   toIdentityBranchId,
@@ -36,6 +37,15 @@ describe('authorization ID translators', () => {
 
     expect(translated).toBe(branchId);
     expect(translated).toBe(' branch_01 ');
+  });
+
+  it('preserves identity branch ID exactly when translating to authorization branch ID', () => {
+    const branchId = ' branch_02 ' as IdentityBranchId;
+
+    const translated: AuthorizationBranchId = toAuthorizationBranchId(branchId);
+
+    expect(translated).toBe(branchId);
+    expect(translated).toBe(' branch_02 ');
   });
 
   it('maps organization ID to authorization tenant ID without normalization', () => {

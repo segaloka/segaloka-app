@@ -20,6 +20,10 @@ export function toIdentityBranchId(branchId: AuthorizationBranchId): IdentityBra
   return branchId;
 }
 
+export function toAuthorizationBranchId(branchId: IdentityBranchId): AuthorizationBranchId {
+  return branchId;
+}
+
 export function toAuthorizationTenantId(organizationId: OrganizationId): TenantId {
   return organizationId as unknown as TenantId;
 }
