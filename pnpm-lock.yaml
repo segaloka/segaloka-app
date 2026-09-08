@@ -41,6 +41,9 @@ importers:
       '@segaloka/domain-identity':
         specifier: workspace:*
         version: link:../../packages/domain-identity
+      '@segaloka/platform-registry':
+        specifier: workspace:*
+        version: link:../../packages/platform-registry
 
   packages/auth:
     dependencies:
