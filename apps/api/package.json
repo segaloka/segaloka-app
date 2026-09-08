@@ -1,0 +1,13 @@
+{
+  "name": "@segaloka/api",
+  "version": "0.0.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "typecheck": "tsc --noEmit"
+  },
+  "dependencies": {
+    "@segaloka/auth": "workspace:*",
+    "@segaloka/domain-identity": "workspace:*"
+  }
+}

@@ -33,6 +33,15 @@ importers:
         specifier: 5.0.0
         version: 5.0.0(vite@8.2.2)
 
+  apps/api:
+    dependencies:
+      '@segaloka/auth':
+        specifier: workspace:*
+        version: link:../../packages/auth
+      '@segaloka/domain-identity':
+        specifier: workspace:*
+        version: link:../../packages/domain-identity
+
   packages/auth:
     dependencies:
       '@segaloka/platform-registry':
