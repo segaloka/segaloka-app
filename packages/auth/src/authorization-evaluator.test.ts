@@ -229,7 +229,7 @@ describe('evaluateAuthorization', () => {
 
     expect(evaluateAuthorization(input, registry)).toMatchObject({
       allowed: false,
-      reason: 'SCOPE_NOT_SATISFIED'
+      reason: 'BRANCH_ACCESS_REQUIRED'
     });
   });
 
@@ -390,6 +390,105 @@ describe('evaluateAuthorization', () => {
     ).toMatchObject({
       allowed: false,
       reason: 'RISK_POLICY_DENIED'
+    });
+  });
+
+  it('returns ownership-specific denial when OWN scope is not satisfied', () => {
+    const input: AuthorizationEvaluationInput = {
+      ...createInput(),
+      roleGrants: [
+        {
+          roleId: 'role_owner',
+          permissions: [
+            {
+              permissionKey: 'booking.read',
+              scope: 'OWN'
+            }
+          ]
+        }
+      ],
+      resource: {
+        tenantId: asOpaqueId<'TenantId'>('tenant_01'),
+        ownerSubjectId: asOpaqueId<'AuthorizationSubjectId'>('subject_other')
+      }
+    };
+
+    expect(evaluateAuthorization(input, registry)).toMatchObject({
+      allowed: false,
+      reason: 'RESOURCE_OWNERSHIP_REQUIRED'
+    });
+  });
+
+  it('returns assignment-specific denial when ASSIGNED scope is not satisfied', () => {
+    const input: AuthorizationEvaluationInput = {
+      ...createInput(),
+      roleGrants: [
+        {
+          roleId: 'role_assigned',
+          permissions: [
+            {
+              permissionKey: 'booking.read',
+              scope: 'ASSIGNED'
+            }
+          ]
+        }
+      ],
+      resource: {
+        tenantId: asOpaqueId<'TenantId'>('tenant_01'),
+        assignedSubjectIds: [asOpaqueId<'AuthorizationSubjectId'>('subject_other')]
+      }
+    };
+
+    expect(evaluateAuthorization(input, registry)).toMatchObject({
+      allowed: false,
+      reason: 'RESOURCE_ASSIGNMENT_REQUIRED'
+    });
+  });
+
+  it('returns relationship-specific denial when RELATIONSHIP scope is not satisfied', () => {
+    const input: AuthorizationEvaluationInput = {
+      ...createInput(),
+      permissionKey: 'partner.read',
+      roleGrants: [
+        {
+          roleId: 'role_partner',
+          permissions: [
+            {
+              permissionKey: 'partner.read',
+              scope: 'RELATIONSHIP'
+            }
+          ]
+        }
+      ],
+      relationshipState: 'UNSATISFIED'
+    };
+
+    expect(evaluateAuthorization(input, registry)).toMatchObject({
+      allowed: false,
+      reason: 'RELATIONSHIP_REQUIRED'
+    });
+  });
+
+  it('rejects a grant scope that is not allowed by the permission registry', () => {
+    const input: AuthorizationEvaluationInput = {
+      ...createInput(),
+      permissionKey: 'partner.read',
+      roleGrants: [
+        {
+          roleId: 'role_invalid',
+          permissions: [
+            {
+              permissionKey: 'partner.read',
+              scope: 'TENANT'
+            }
+          ]
+        }
+      ]
+    };
+
+    expect(evaluateAuthorization(input, registry)).toMatchObject({
+      allowed: false,
+      reason: 'SCOPE_NOT_SATISFIED'
     });
   });
 });

@@ -1,19 +1,19 @@
-import type { AuthorizationScope, PermissionRegistry } from '@segaloka/platform-registry';
+import type {
+  AuthorizationScope,
+  PermissionDefinition,
+  PermissionRegistry
+} from '@segaloka/platform-registry';
 
-import { getPermission } from '@segaloka/platform-registry';
+import { getPermission, isScopeAllowedForPermission } from '@segaloka/platform-registry';
 
 import { allowAuthorization, denyAuthorization } from './authorization-decision.js';
 
-import type { AuthorizationDecision } from './authorization-contract.js';
+import type { AuthorizationDecision, AuthorizationDenyReason } from './authorization-contract.js';
 
 import type {
   AuthorizationEvaluationInput,
   AuthorizationPermissionGrant
 } from './authorization-evaluation.js';
-
-function isSameValue(left: string | undefined, right: string | undefined): boolean {
-  return left === right;
-}
 
 function findPermissionGrants(
   input: AuthorizationEvaluationInput
@@ -45,7 +45,7 @@ function isScopeSatisfied(input: AuthorizationEvaluationInput, scope: Authorizat
       return (
         input.subjectId !== undefined &&
         input.resource?.ownerSubjectId !== undefined &&
-        isSameValue(input.subjectId, input.resource.ownerSubjectId)
+        input.resource.ownerSubjectId === input.subjectId
       );
 
     case 'ASSIGNED':
@@ -63,6 +63,50 @@ function isScopeSatisfied(input: AuthorizationEvaluationInput, scope: Authorizat
   }
 }
 
+function scopeFailureReason(scope: AuthorizationScope): AuthorizationDenyReason {
+  switch (scope) {
+    case 'BRANCH':
+      return 'BRANCH_ACCESS_REQUIRED';
+
+    case 'OWN':
+      return 'RESOURCE_OWNERSHIP_REQUIRED';
+
+    case 'ASSIGNED':
+      return 'RESOURCE_ASSIGNMENT_REQUIRED';
+
+    case 'RELATIONSHIP':
+      return 'RELATIONSHIP_REQUIRED';
+
+    case 'GLOBAL':
+    case 'TENANT':
+    case 'PUBLIC':
+      return 'SCOPE_NOT_SATISFIED';
+  }
+}
+
+function filterRegistryAllowedGrants(
+  permission: PermissionDefinition,
+  grants: readonly AuthorizationPermissionGrant[]
+): readonly AuthorizationPermissionGrant[] {
+  return grants.filter((grant) => isScopeAllowedForPermission(permission, grant.scope));
+}
+
+function selectScopeFailureReason(
+  grants: readonly AuthorizationPermissionGrant[]
+): AuthorizationDenyReason {
+  const reasons = grants.map((grant) => scopeFailureReason(grant.scope));
+
+  const precedence: readonly AuthorizationDenyReason[] = [
+    'BRANCH_ACCESS_REQUIRED',
+    'RESOURCE_OWNERSHIP_REQUIRED',
+    'RESOURCE_ASSIGNMENT_REQUIRED',
+    'RELATIONSHIP_REQUIRED',
+    'SCOPE_NOT_SATISFIED'
+  ];
+
+  return precedence.find((reason) => reasons.includes(reason)) ?? 'SCOPE_NOT_SATISFIED';
+}
+
 export function evaluateAuthorization(
   input: AuthorizationEvaluationInput,
   registry: PermissionRegistry
@@ -71,7 +115,9 @@ export function evaluateAuthorization(
     return denyAuthorization(input.permissionKey, 'UNAUTHENTICATED');
   }
 
-  if (getPermission(registry, input.permissionKey) === undefined) {
+  const permission = getPermission(registry, input.permissionKey);
+
+  if (permission === undefined) {
     return denyAuthorization(input.permissionKey, 'UNKNOWN_PERMISSION');
   }
 
@@ -99,16 +145,22 @@ export function evaluateAuthorization(
     return denyAuthorization(input.permissionKey, 'NO_ACTIVE_ROLE_ASSIGNMENT');
   }
 
-  const permissionGrants = findPermissionGrants(input);
+  const matchingGrants = findPermissionGrants(input);
 
-  if (permissionGrants.length === 0) {
+  if (matchingGrants.length === 0) {
     return denyAuthorization(input.permissionKey, 'PERMISSION_NOT_GRANTED');
   }
 
-  const satisfiedGrant = permissionGrants.find((grant) => isScopeSatisfied(input, grant.scope));
+  const validGrants = filterRegistryAllowedGrants(permission, matchingGrants);
+
+  if (validGrants.length === 0) {
+    return denyAuthorization(input.permissionKey, 'SCOPE_NOT_SATISFIED');
+  }
+
+  const satisfiedGrant = validGrants.find((grant) => isScopeSatisfied(input, grant.scope));
 
   if (satisfiedGrant === undefined) {
-    return denyAuthorization(input.permissionKey, 'SCOPE_NOT_SATISFIED');
+    return denyAuthorization(input.permissionKey, selectScopeFailureReason(validGrants));
   }
 
   if (input.entitlementState === 'UNSATISFIED') {
