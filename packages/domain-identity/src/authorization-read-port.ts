@@ -19,9 +19,9 @@ export interface IdentityAuthorizationReadPort {
     organizationId: OrganizationId
   ): Promise<Membership | undefined>;
 
-  findBranchById(branchId: BranchId): Promise<Branch | undefined>;
-
   listBranchAccessForMembership(membershipId: Membership['id']): Promise<readonly BranchAccess[]>;
+
+  findBranchesByIds(branchIds: readonly BranchId[]): Promise<readonly Branch[]>;
 
   listRoleAssignmentsForMembership(
     membershipId: Membership['id']
