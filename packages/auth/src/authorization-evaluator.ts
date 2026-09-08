@@ -17,6 +17,16 @@ import type {
   AuthorizationPermissionGrant
 } from './authorization-evaluation.js';
 
+const AUTHORIZATION_SCOPE_SELECTION_PRECEDENCE: readonly AuthorizationScope[] = Object.freeze([
+  'OWN',
+  'ASSIGNED',
+  'RELATIONSHIP',
+  'BRANCH',
+  'TENANT',
+  'GLOBAL',
+  'PUBLIC'
+]);
+
 function findPermissionGrants(
   input: AuthorizationEvaluationInput
 ): readonly AuthorizationPermissionGrant[] {
@@ -93,6 +103,23 @@ function filterRegistryAllowedGrants(
   return grants.filter((grant) => isScopeAllowedForPermission(permission, grant.scope));
 }
 
+function selectSatisfiedGrant(
+  input: AuthorizationEvaluationInput,
+  grants: readonly AuthorizationPermissionGrant[]
+): AuthorizationPermissionGrant | undefined {
+  for (const scope of AUTHORIZATION_SCOPE_SELECTION_PRECEDENCE) {
+    const satisfiedGrant = grants.find(
+      (grant) => grant.scope === scope && isScopeSatisfied(input, grant.scope)
+    );
+
+    if (satisfiedGrant !== undefined) {
+      return satisfiedGrant;
+    }
+  }
+
+  return undefined;
+}
+
 function selectScopeFailureReason(
   grants: readonly AuthorizationPermissionGrant[]
 ): AuthorizationDenyReason {
@@ -161,7 +188,7 @@ export function evaluateAuthorization(
     return denyAuthorization(input.permissionKey, 'SCOPE_NOT_SATISFIED');
   }
 
-  const satisfiedGrant = validGrants.find((grant) => isScopeSatisfied(input, grant.scope));
+  const satisfiedGrant = selectSatisfiedGrant(input, validGrants);
 
   if (satisfiedGrant === undefined) {
     return denyAuthorization(input.permissionKey, selectScopeFailureReason(validGrants));

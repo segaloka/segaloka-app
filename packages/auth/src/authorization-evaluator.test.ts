@@ -498,4 +498,90 @@ describe('evaluateAuthorization', () => {
       reason: 'SCOPE_NOT_SATISFIED'
     });
   });
+
+  it('selects the same most-contextual satisfied scope regardless of role grant order', () => {
+    const ownGrant = {
+      roleId: 'role_owner',
+      permissions: [
+        {
+          permissionKey: 'booking.read' as const,
+          scope: 'OWN' as const
+        }
+      ]
+    };
+
+    const tenantGrant = {
+      roleId: 'role_tenant',
+      permissions: [
+        {
+          permissionKey: 'booking.read' as const,
+          scope: 'TENANT' as const
+        }
+      ]
+    };
+
+    const baseInput: AuthorizationEvaluationInput = {
+      ...createInput(),
+      resource: {
+        tenantId: asOpaqueId<'TenantId'>('tenant_01'),
+        ownerSubjectId: asOpaqueId<'AuthorizationSubjectId'>('subject_01')
+      }
+    };
+
+    const firstDecision = evaluateAuthorization(
+      {
+        ...baseInput,
+        roleGrants: [tenantGrant, ownGrant]
+      },
+      registry
+    );
+
+    const secondDecision = evaluateAuthorization(
+      {
+        ...baseInput,
+        roleGrants: [ownGrant, tenantGrant]
+      },
+      registry
+    );
+
+    expect(firstDecision).toEqual({
+      allowed: true,
+      permissionKey: 'booking.read',
+      satisfiedScope: 'OWN'
+    });
+
+    expect(secondDecision).toEqual(firstDecision);
+  });
+
+  it('ignores registry-disallowed grants when a valid grant can authorize the request', () => {
+    const input: AuthorizationEvaluationInput = {
+      ...createInput(),
+      roleGrants: [
+        {
+          roleId: 'role_invalid_global',
+          permissions: [
+            {
+              permissionKey: 'booking.read',
+              scope: 'GLOBAL'
+            }
+          ]
+        },
+        {
+          roleId: 'role_valid_tenant',
+          permissions: [
+            {
+              permissionKey: 'booking.read',
+              scope: 'TENANT'
+            }
+          ]
+        }
+      ]
+    };
+
+    expect(evaluateAuthorization(input, registry)).toEqual({
+      allowed: true,
+      permissionKey: 'booking.read',
+      satisfiedScope: 'TENANT'
+    });
+  });
 });
