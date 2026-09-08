@@ -32,6 +32,8 @@ export {
   validateRolePermissions
 } from './role-permission-validation.js';
 
+export type { IdentityAuthorizationReadPort } from './authorization-read-port.js';
+
 export type { Branch, BranchId, BranchStatus } from './branch.js';
 
 export type { BranchAccess, BranchAccessId, BranchAccessStatus } from './branch-access.js';
