@@ -1,16 +1,8 @@
 export { AUTHORIZATION_DENY_REASONS } from './authorization-contract.js';
 
-export {
-  allowAuthorization,
-  denyAuthorization,
-  isAuthorizationAllowed,
-  isAuthorizationDenied
-} from './authorization-decision.js';
+export { isAuthorizationAllowed, isAuthorizationDenied } from './authorization-decision.js';
 
-export {
-  AUTHORIZATION_EVALUATION_ERROR_CODES,
-  validateAuthorizationEvaluationInput
-} from './authorization-evaluation-validation.js';
+export { AuthorizationEvaluationInvariantError } from './authorization-evaluation-invariant.js';
 
 export {
   AUTHORIZATION_MEMBERSHIP_STATES,
@@ -32,12 +24,6 @@ export type {
   AuthorizationResourceContext,
   AuthorizationSubjectId
 } from './authorization-contract.js';
-
-export type {
-  AuthorizationEvaluationErrorCode,
-  AuthorizationEvaluationValidationError,
-  AuthorizationEvaluationValidationResult
-} from './authorization-evaluation-validation.js';
 
 export type {
   AuthorizationBranchAccess,
