@@ -35,6 +35,9 @@ importers:
 
   packages/auth:
     dependencies:
+      '@segaloka/platform-registry':
+        specifier: workspace:*
+        version: link:../platform-registry
       '@segaloka/shared-kernel':
         specifier: workspace:*
         version: link:../shared-kernel
