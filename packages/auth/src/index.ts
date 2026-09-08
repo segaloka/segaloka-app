@@ -1,5 +1,12 @@
 export { AUTHORIZATION_DENY_REASONS } from './authorization-contract.js';
 
+export {
+  allowAuthorization,
+  denyAuthorization,
+  isAuthorizationAllowed,
+  isAuthorizationDenied
+} from './authorization-decision.js';
+
 export { RISK_LEVELS, SUPPORTED_LOCALES, isAuthenticatedContext } from './request-context.js';
 
 export type {
