@@ -3,6 +3,7 @@ import { describe, expect, it } from 'vitest';
 import { asOpaqueId } from '@segaloka/shared-kernel';
 
 import {
+  AUTHORIZATION_IDENTITY_STATES,
   AUTHORIZATION_MEMBERSHIP_STATES,
   AUTHORIZATION_POLICY_STATES,
   AUTHORIZATION_ROLE_ASSIGNMENT_STATES
@@ -24,6 +25,7 @@ describe('Authorization evaluation input', () => {
       permissionKey: 'booking.read',
       subjectId: asOpaqueId<'AuthorizationSubjectId'>('subject_01'),
       tenantId: asOpaqueId<'TenantId'>('tenant_01'),
+      identityState: 'ACTIVE',
       membershipState: 'ACTIVE',
       organizationState: 'ACTIVE',
       roleAssignmentState: 'ACTIVE',
@@ -62,6 +64,12 @@ describe('Authorization evaluation input', () => {
     expect(input.riskPolicyState).toBe('SATISFIED');
   });
 
+  it('distinguishes missing identity from inactive identity', () => {
+    expect(AUTHORIZATION_IDENTITY_STATES).toContain('MISSING');
+    expect(AUTHORIZATION_IDENTITY_STATES).toContain('ACTIVE');
+    expect(AUTHORIZATION_IDENTITY_STATES).toContain('INACTIVE');
+  });
+
   it('distinguishes missing membership from inactive membership', () => {
     expect(AUTHORIZATION_MEMBERSHIP_STATES).toContain('MISSING');
 
@@ -80,6 +88,7 @@ describe('Authorization evaluation input', () => {
       permissionKey: 'booking.read',
       subjectId: asOpaqueId<'AuthorizationSubjectId'>('subject_02'),
       tenantId: asOpaqueId<'TenantId'>('tenant_02'),
+      identityState: 'ACTIVE',
       membershipState: 'ACTIVE',
       organizationState: 'ACTIVE',
       roleAssignmentState: 'NONE',
@@ -105,6 +114,7 @@ describe('Authorization evaluation input', () => {
       },
       permissionKey: 'booking.read',
       tenantId: asOpaqueId<'TenantId'>('tenant_03'),
+      identityState: 'MISSING',
       membershipState: 'MISSING',
       organizationState: 'ACTIVE',
       roleAssignmentState: 'NONE',
@@ -133,6 +143,7 @@ describe('Authorization evaluation input', () => {
       permissionKey: 'booking.read',
       subjectId: asOpaqueId<'AuthorizationSubjectId'>('subject_04'),
       tenantId: asOpaqueId<'TenantId'>('tenant_04'),
+      identityState: 'ACTIVE',
       membershipState: 'ACTIVE',
       organizationState: 'ACTIVE',
       roleAssignmentState: 'ACTIVE',
@@ -158,6 +169,7 @@ describe('Authorization evaluation input', () => {
   });
 
   it('contains unique state vocabularies', () => {
+    expect(new Set(AUTHORIZATION_IDENTITY_STATES).size).toBe(AUTHORIZATION_IDENTITY_STATES.length);
     expect(new Set(AUTHORIZATION_MEMBERSHIP_STATES).size).toBe(
       AUTHORIZATION_MEMBERSHIP_STATES.length
     );

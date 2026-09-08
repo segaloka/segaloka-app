@@ -5,6 +5,7 @@ export { isAuthorizationAllowed, isAuthorizationDenied } from './authorization-d
 export { AuthorizationEvaluationInvariantError } from './authorization-evaluation-invariant.js';
 
 export {
+  AUTHORIZATION_IDENTITY_STATES,
   AUTHORIZATION_MEMBERSHIP_STATES,
   AUTHORIZATION_ORGANIZATION_STATES,
   AUTHORIZATION_POLICY_STATES,
@@ -28,6 +29,7 @@ export type {
 export type {
   AuthorizationBranchAccess,
   AuthorizationEvaluationInput,
+  AuthorizationIdentityState,
   AuthorizationMembershipState,
   AuthorizationOrganizationState,
   AuthorizationPermissionGrant,

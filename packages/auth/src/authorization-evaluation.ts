@@ -7,6 +7,10 @@ import type {
 
 import type { BranchId, RequestContext, TenantId } from './request-context.js';
 
+export const AUTHORIZATION_IDENTITY_STATES = ['MISSING', 'ACTIVE', 'INACTIVE'] as const;
+
+export type AuthorizationIdentityState = (typeof AUTHORIZATION_IDENTITY_STATES)[number];
+
 export const AUTHORIZATION_MEMBERSHIP_STATES = ['MISSING', 'ACTIVE', 'INACTIVE'] as const;
 
 export type AuthorizationMembershipState = (typeof AUTHORIZATION_MEMBERSHIP_STATES)[number];
@@ -43,6 +47,7 @@ export interface AuthorizationEvaluationInput {
   readonly permissionKey: PermissionKey;
   readonly subjectId?: AuthorizationSubjectId;
   readonly tenantId: TenantId;
+  readonly identityState: AuthorizationIdentityState;
   readonly membershipState: AuthorizationMembershipState;
   readonly organizationState: AuthorizationOrganizationState;
   readonly roleAssignmentState: AuthorizationRoleAssignmentState;

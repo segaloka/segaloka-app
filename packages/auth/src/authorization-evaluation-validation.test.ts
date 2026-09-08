@@ -18,6 +18,7 @@ function createBaseInput(): AuthorizationEvaluationInput {
     permissionKey: 'booking.read',
     subjectId: asOpaqueId<'AuthorizationSubjectId'>('subject_01'),
     tenantId: asOpaqueId<'TenantId'>('tenant_01'),
+    identityState: 'ACTIVE',
     membershipState: 'ACTIVE',
     organizationState: 'ACTIVE',
     roleAssignmentState: 'ACTIVE',
@@ -90,6 +91,9 @@ describe('Authorization evaluation validation', () => {
     const result = validateAuthorizationEvaluationInput(input);
 
     expect(result.valid).toBe(false);
+    expect(result.errors).toContainEqual({
+      code: 'ANONYMOUS_IDENTITY_PRESENT'
+    });
 
     expect(result.errors).toContainEqual({
       code: 'ANONYMOUS_SUBJECT_PRESENT'
@@ -137,6 +141,7 @@ describe('Authorization evaluation validation', () => {
       },
       permissionKey: 'booking.read',
       tenantId: asOpaqueId<'TenantId'>('tenant_public'),
+      identityState: 'MISSING',
       membershipState: 'MISSING',
       organizationState: 'ACTIVE',
       roleAssignmentState: 'NONE',
@@ -152,6 +157,33 @@ describe('Authorization evaluation validation', () => {
 
     expect(result.valid).toBe(true);
     expect(result.errors).toEqual([]);
+  });
+
+  it('rejects authority facts when identity is missing', () => {
+    const input: AuthorizationEvaluationInput = {
+      ...createBaseInput(),
+      identityState: 'MISSING'
+    };
+
+    const result = validateAuthorizationEvaluationInput(input);
+
+    expect(result.valid).toBe(false);
+
+    expect(result.errors).toContainEqual({
+      code: 'MISSING_IDENTITY_WITH_SUBJECT'
+    });
+
+    expect(result.errors).toContainEqual({
+      code: 'MISSING_IDENTITY_WITH_MEMBERSHIP'
+    });
+
+    expect(result.errors).toContainEqual({
+      code: 'MISSING_IDENTITY_WITH_ROLE_ASSIGNMENT'
+    });
+
+    expect(result.errors).toContainEqual({
+      code: 'MISSING_IDENTITY_WITH_ROLE_GRANTS'
+    });
   });
 
   it('returns immutable validation output', () => {

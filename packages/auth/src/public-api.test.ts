@@ -7,6 +7,7 @@ describe('@segaloka/auth public API', () => {
     expect(Object.keys(authPublicApi).sort()).toEqual(
       [
         'AUTHORIZATION_DENY_REASONS',
+        'AUTHORIZATION_IDENTITY_STATES',
         'AUTHORIZATION_MEMBERSHIP_STATES',
         'AUTHORIZATION_ORGANIZATION_STATES',
         'AUTHORIZATION_POLICY_STATES',

@@ -152,6 +152,14 @@ export function evaluateAuthorization(
     return denyAuthorization(input.permissionKey, 'UNKNOWN_PERMISSION');
   }
 
+  if (input.identityState === 'MISSING') {
+    return denyAuthorization(input.permissionKey, 'IDENTITY_REQUIRED');
+  }
+
+  if (input.identityState === 'INACTIVE') {
+    return denyAuthorization(input.permissionKey, 'IDENTITY_INACTIVE');
+  }
+
   if (input.membershipState === 'MISSING') {
     return denyAuthorization(input.permissionKey, 'MEMBERSHIP_REQUIRED');
   }

@@ -21,6 +21,7 @@ function createValidInput(): AuthorizationEvaluationInput {
     permissionKey: 'booking.read',
     subjectId: asOpaqueId<'AuthorizationSubjectId'>('subject_01'),
     tenantId: asOpaqueId<'TenantId'>('tenant_01'),
+    identityState: 'ACTIVE',
     membershipState: 'ACTIVE',
     organizationState: 'ACTIVE',
     roleAssignmentState: 'ACTIVE',
@@ -97,6 +98,10 @@ describe('Authorization evaluation invariant boundary', () => {
       expect(error).toBeInstanceOf(AuthorizationEvaluationInvariantError);
 
       if (error instanceof AuthorizationEvaluationInvariantError) {
+        expect(error.errors).toContainEqual({
+          code: 'ANONYMOUS_IDENTITY_PRESENT'
+        });
+
         expect(error.errors).toContainEqual({
           code: 'ANONYMOUS_SUBJECT_PRESENT'
         });

@@ -3,11 +3,17 @@ import type { AuthorizationEvaluationInput } from './authorization-evaluation.js
 export const AUTHORIZATION_EVALUATION_ERROR_CODES = [
   'ROLE_GRANTS_WITHOUT_ACTIVE_ASSIGNMENT',
   'ACTIVE_ASSIGNMENT_WITHOUT_ROLE_GRANTS',
+  'ANONYMOUS_IDENTITY_PRESENT',
   'ANONYMOUS_SUBJECT_PRESENT',
   'ANONYMOUS_MEMBERSHIP_PRESENT',
   'ANONYMOUS_ROLE_ASSIGNMENT_PRESENT',
   'ANONYMOUS_ROLE_GRANTS_PRESENT',
   'ANONYMOUS_BRANCH_ACCESS_PRESENT',
+  'MISSING_IDENTITY_WITH_SUBJECT',
+  'MISSING_IDENTITY_WITH_MEMBERSHIP',
+  'MISSING_IDENTITY_WITH_ROLE_ASSIGNMENT',
+  'MISSING_IDENTITY_WITH_ROLE_GRANTS',
+  'MISSING_IDENTITY_WITH_BRANCH_ACCESS',
   'MISSING_MEMBERSHIP_WITH_ROLE_ASSIGNMENT',
   'MISSING_MEMBERSHIP_WITH_ROLE_GRANTS',
   'MISSING_MEMBERSHIP_WITH_BRANCH_ACCESS'
@@ -43,6 +49,12 @@ export function validateAuthorizationEvaluationInput(
   }
 
   if (input.context.principalId === undefined) {
+    if (input.identityState !== 'MISSING') {
+      errors.push({
+        code: 'ANONYMOUS_IDENTITY_PRESENT'
+      });
+    }
+
     if (input.subjectId !== undefined) {
       errors.push({
         code: 'ANONYMOUS_SUBJECT_PRESENT'
@@ -70,6 +82,38 @@ export function validateAuthorizationEvaluationInput(
     if (input.branchAccess.length > 0) {
       errors.push({
         code: 'ANONYMOUS_BRANCH_ACCESS_PRESENT'
+      });
+    }
+  }
+
+  if (input.identityState === 'MISSING') {
+    if (input.subjectId !== undefined) {
+      errors.push({
+        code: 'MISSING_IDENTITY_WITH_SUBJECT'
+      });
+    }
+
+    if (input.membershipState !== 'MISSING') {
+      errors.push({
+        code: 'MISSING_IDENTITY_WITH_MEMBERSHIP'
+      });
+    }
+
+    if (input.roleAssignmentState !== 'NONE') {
+      errors.push({
+        code: 'MISSING_IDENTITY_WITH_ROLE_ASSIGNMENT'
+      });
+    }
+
+    if (input.roleGrants.length > 0) {
+      errors.push({
+        code: 'MISSING_IDENTITY_WITH_ROLE_GRANTS'
+      });
+    }
+
+    if (input.branchAccess.length > 0) {
+      errors.push({
+        code: 'MISSING_IDENTITY_WITH_BRANCH_ACCESS'
       });
     }
   }

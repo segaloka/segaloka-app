@@ -35,6 +35,7 @@ function createInput(): AuthorizationEvaluationInput {
     permissionKey: 'booking.read',
     subjectId: asOpaqueId<'AuthorizationSubjectId'>('subject_01'),
     tenantId: asOpaqueId<'TenantId'>('tenant_01'),
+    identityState: 'ACTIVE',
     membershipState: 'ACTIVE',
     organizationState: 'ACTIVE',
     roleAssignmentState: 'ACTIVE',
@@ -81,6 +82,7 @@ describe('evaluateAuthorization', () => {
       },
       permissionKey: 'booking.read',
       tenantId: asOpaqueId<'TenantId'>('tenant_01'),
+      identityState: 'MISSING',
       membershipState: 'MISSING',
       organizationState: 'ACTIVE',
       roleAssignmentState: 'NONE',
@@ -109,6 +111,41 @@ describe('evaluateAuthorization', () => {
       allowed: false,
       permissionKey: 'booking.delete',
       reason: 'UNKNOWN_PERMISSION'
+    });
+  });
+
+  it('requires a resolved identity for an authenticated principal', () => {
+    const { subjectId: existingSubjectId, ...inputWithoutSubject } = createInput();
+
+    expect(existingSubjectId).toBeDefined();
+
+    const input: AuthorizationEvaluationInput = {
+      ...inputWithoutSubject,
+      identityState: 'MISSING',
+      membershipState: 'MISSING',
+      roleAssignmentState: 'NONE',
+      roleGrants: [],
+      branchAccess: []
+    };
+
+    expect(evaluateAuthorization(input, registry)).toMatchObject({
+      allowed: false,
+      reason: 'IDENTITY_REQUIRED'
+    });
+  });
+
+  it('denies an inactive identity before membership authorization', () => {
+    expect(
+      evaluateAuthorization(
+        {
+          ...createInput(),
+          identityState: 'INACTIVE'
+        },
+        registry
+      )
+    ).toMatchObject({
+      allowed: false,
+      reason: 'IDENTITY_INACTIVE'
     });
   });
 
