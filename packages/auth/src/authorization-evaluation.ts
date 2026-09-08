@@ -7,13 +7,18 @@ import type {
 
 import type { BranchId, RequestContext, TenantId } from './request-context.js';
 
-export const AUTHORIZATION_MEMBERSHIP_STATES = ['ACTIVE', 'INACTIVE'] as const;
+export const AUTHORIZATION_MEMBERSHIP_STATES = ['MISSING', 'ACTIVE', 'INACTIVE'] as const;
 
 export type AuthorizationMembershipState = (typeof AUTHORIZATION_MEMBERSHIP_STATES)[number];
 
 export const AUTHORIZATION_ORGANIZATION_STATES = ['ACTIVE', 'INACTIVE'] as const;
 
 export type AuthorizationOrganizationState = (typeof AUTHORIZATION_ORGANIZATION_STATES)[number];
+
+export const AUTHORIZATION_ROLE_ASSIGNMENT_STATES = ['NONE', 'ACTIVE'] as const;
+
+export type AuthorizationRoleAssignmentState =
+  (typeof AUTHORIZATION_ROLE_ASSIGNMENT_STATES)[number];
 
 export const AUTHORIZATION_POLICY_STATES = ['NOT_REQUIRED', 'SATISFIED', 'UNSATISFIED'] as const;
 
@@ -35,14 +40,16 @@ export interface AuthorizationBranchAccess {
 
 export interface AuthorizationEvaluationInput {
   readonly context: RequestContext;
-  readonly subjectId: AuthorizationSubjectId;
+  readonly subjectId?: AuthorizationSubjectId;
   readonly tenantId: TenantId;
   readonly membershipState: AuthorizationMembershipState;
   readonly organizationState: AuthorizationOrganizationState;
+  readonly roleAssignmentState: AuthorizationRoleAssignmentState;
   readonly roleGrants: readonly AuthorizationRoleGrant[];
   readonly branchAccess: readonly AuthorizationBranchAccess[];
   readonly resource?: AuthorizationResourceContext;
   readonly entitlementState: AuthorizationPolicyState;
   readonly capabilityState: AuthorizationPolicyState;
   readonly relationshipState: AuthorizationPolicyState;
+  readonly riskPolicyState: AuthorizationPolicyState;
 }

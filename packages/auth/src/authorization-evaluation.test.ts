@@ -2,7 +2,11 @@ import { describe, expect, it } from 'vitest';
 
 import { asOpaqueId } from '@segaloka/shared-kernel';
 
-import { AUTHORIZATION_POLICY_STATES } from './authorization-evaluation.js';
+import {
+  AUTHORIZATION_MEMBERSHIP_STATES,
+  AUTHORIZATION_POLICY_STATES,
+  AUTHORIZATION_ROLE_ASSIGNMENT_STATES
+} from './authorization-evaluation.js';
 
 import type { AuthorizationEvaluationInput } from './authorization-evaluation.js';
 
@@ -21,6 +25,7 @@ describe('Authorization evaluation input', () => {
       tenantId: asOpaqueId<'TenantId'>('tenant_01'),
       membershipState: 'ACTIVE',
       organizationState: 'ACTIVE',
+      roleAssignmentState: 'ACTIVE',
       roleGrants: [
         {
           roleId: 'role_01',
@@ -44,17 +49,24 @@ describe('Authorization evaluation input', () => {
       },
       entitlementState: 'SATISFIED',
       capabilityState: 'SATISFIED',
-      relationshipState: 'NOT_REQUIRED'
+      relationshipState: 'NOT_REQUIRED',
+      riskPolicyState: 'SATISFIED'
     };
 
     expect(input.membershipState).toBe('ACTIVE');
-    expect(input.organizationState).toBe('ACTIVE');
+    expect(input.roleAssignmentState).toBe('ACTIVE');
     expect(input.roleGrants).toHaveLength(1);
     expect(input.branchAccess).toHaveLength(1);
-    expect(input.entitlementState).toBe('SATISFIED');
+    expect(input.riskPolicyState).toBe('SATISFIED');
   });
 
-  it('supports authorization without branch access', () => {
+  it('distinguishes missing membership from inactive membership', () => {
+    expect(AUTHORIZATION_MEMBERSHIP_STATES).toContain('MISSING');
+
+    expect(AUTHORIZATION_MEMBERSHIP_STATES).toContain('INACTIVE');
+  });
+
+  it('distinguishes no active role assignment from missing permission', () => {
     const input: AuthorizationEvaluationInput = {
       context: {
         requestId: asOpaqueId<'RequestId'>('request_02'),
@@ -67,52 +79,78 @@ describe('Authorization evaluation input', () => {
       tenantId: asOpaqueId<'TenantId'>('tenant_02'),
       membershipState: 'ACTIVE',
       organizationState: 'ACTIVE',
-      roleGrants: [
-        {
-          roleId: 'role_02',
-          permissions: [
-            {
-              permissionKey: 'booking.read',
-              scope: 'TENANT'
-            }
-          ]
-        }
-      ],
+      roleAssignmentState: 'NONE',
+      roleGrants: [],
       branchAccess: [],
       entitlementState: 'NOT_REQUIRED',
       capabilityState: 'NOT_REQUIRED',
-      relationshipState: 'NOT_REQUIRED'
+      relationshipState: 'NOT_REQUIRED',
+      riskPolicyState: 'NOT_REQUIRED'
     };
 
-    expect(input.branchAccess).toEqual([]);
+    expect(input.roleAssignmentState).toBe('NONE');
+    expect(input.roleGrants).toEqual([]);
   });
 
-  it('represents unsatisfied policy requirements explicitly', () => {
+  it('supports unauthenticated resolution without a business subject', () => {
     const input: AuthorizationEvaluationInput = {
       context: {
         requestId: asOpaqueId<'RequestId'>('request_03'),
-        principalId: asOpaqueId<'PrincipalId'>('principal_03'),
         tenantId: asOpaqueId<'TenantId'>('tenant_03'),
+        locale: 'id',
+        riskLevel: 'LOW'
+      },
+      tenantId: asOpaqueId<'TenantId'>('tenant_03'),
+      membershipState: 'MISSING',
+      organizationState: 'ACTIVE',
+      roleAssignmentState: 'NONE',
+      roleGrants: [],
+      branchAccess: [],
+      entitlementState: 'NOT_REQUIRED',
+      capabilityState: 'NOT_REQUIRED',
+      relationshipState: 'NOT_REQUIRED',
+      riskPolicyState: 'NOT_REQUIRED'
+    };
+
+    expect(input.context.principalId).toBeUndefined();
+    expect(input.subjectId).toBeUndefined();
+    expect(input.membershipState).toBe('MISSING');
+  });
+
+  it('represents an unsatisfied risk policy explicitly', () => {
+    const input: AuthorizationEvaluationInput = {
+      context: {
+        requestId: asOpaqueId<'RequestId'>('request_04'),
+        principalId: asOpaqueId<'PrincipalId'>('principal_04'),
+        tenantId: asOpaqueId<'TenantId'>('tenant_04'),
         locale: 'ar',
         riskLevel: 'HIGH'
       },
-      subjectId: asOpaqueId<'AuthorizationSubjectId'>('subject_03'),
-      tenantId: asOpaqueId<'TenantId'>('tenant_03'),
+      subjectId: asOpaqueId<'AuthorizationSubjectId'>('subject_04'),
+      tenantId: asOpaqueId<'TenantId'>('tenant_04'),
       membershipState: 'ACTIVE',
       organizationState: 'ACTIVE',
+      roleAssignmentState: 'ACTIVE',
       roleGrants: [],
       branchAccess: [],
-      entitlementState: 'UNSATISFIED',
-      capabilityState: 'NOT_REQUIRED',
-      relationshipState: 'UNSATISFIED'
+      entitlementState: 'SATISFIED',
+      capabilityState: 'SATISFIED',
+      relationshipState: 'NOT_REQUIRED',
+      riskPolicyState: 'UNSATISFIED'
     };
 
-    expect(input.entitlementState).toBe('UNSATISFIED');
-
-    expect(input.relationshipState).toBe('UNSATISFIED');
+    expect(input.riskPolicyState).toBe('UNSATISFIED');
   });
 
-  it('contains unique policy states', () => {
+  it('contains unique state vocabularies', () => {
+    expect(new Set(AUTHORIZATION_MEMBERSHIP_STATES).size).toBe(
+      AUTHORIZATION_MEMBERSHIP_STATES.length
+    );
+
+    expect(new Set(AUTHORIZATION_ROLE_ASSIGNMENT_STATES).size).toBe(
+      AUTHORIZATION_ROLE_ASSIGNMENT_STATES.length
+    );
+
     expect(new Set(AUTHORIZATION_POLICY_STATES).size).toBe(AUTHORIZATION_POLICY_STATES.length);
   });
 });

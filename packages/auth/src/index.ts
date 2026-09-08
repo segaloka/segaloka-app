@@ -8,9 +8,15 @@ export {
 } from './authorization-decision.js';
 
 export {
+  AUTHORIZATION_EVALUATION_ERROR_CODES,
+  validateAuthorizationEvaluationInput
+} from './authorization-evaluation-validation.js';
+
+export {
   AUTHORIZATION_MEMBERSHIP_STATES,
   AUTHORIZATION_ORGANIZATION_STATES,
-  AUTHORIZATION_POLICY_STATES
+  AUTHORIZATION_POLICY_STATES,
+  AUTHORIZATION_ROLE_ASSIGNMENT_STATES
 } from './authorization-evaluation.js';
 
 export { RISK_LEVELS, SUPPORTED_LOCALES, isAuthenticatedContext } from './request-context.js';
@@ -26,12 +32,19 @@ export type {
 } from './authorization-contract.js';
 
 export type {
+  AuthorizationEvaluationErrorCode,
+  AuthorizationEvaluationValidationError,
+  AuthorizationEvaluationValidationResult
+} from './authorization-evaluation-validation.js';
+
+export type {
   AuthorizationBranchAccess,
   AuthorizationEvaluationInput,
   AuthorizationMembershipState,
   AuthorizationOrganizationState,
   AuthorizationPermissionGrant,
   AuthorizationPolicyState,
+  AuthorizationRoleAssignmentState,
   AuthorizationRoleGrant
 } from './authorization-evaluation.js';
 
