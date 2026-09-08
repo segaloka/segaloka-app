@@ -40,6 +40,7 @@ export interface AuthorizationBranchAccess {
 
 export interface AuthorizationEvaluationInput {
   readonly context: RequestContext;
+  readonly permissionKey: PermissionKey;
   readonly subjectId?: AuthorizationSubjectId;
   readonly tenantId: TenantId;
   readonly membershipState: AuthorizationMembershipState;

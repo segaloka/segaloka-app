@@ -19,6 +19,8 @@ export {
   AUTHORIZATION_ROLE_ASSIGNMENT_STATES
 } from './authorization-evaluation.js';
 
+export { evaluateAuthorization } from './authorization-evaluator.js';
+
 export { RISK_LEVELS, SUPPORTED_LOCALES, isAuthenticatedContext } from './request-context.js';
 
 export type {

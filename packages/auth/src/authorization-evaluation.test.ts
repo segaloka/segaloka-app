@@ -21,6 +21,7 @@ describe('Authorization evaluation input', () => {
         locale: 'id',
         riskLevel: 'LOW'
       },
+      permissionKey: 'booking.read',
       subjectId: asOpaqueId<'AuthorizationSubjectId'>('subject_01'),
       tenantId: asOpaqueId<'TenantId'>('tenant_01'),
       membershipState: 'ACTIVE',
@@ -53,6 +54,7 @@ describe('Authorization evaluation input', () => {
       riskPolicyState: 'SATISFIED'
     };
 
+    expect(input.permissionKey).toBe('booking.read');
     expect(input.membershipState).toBe('ACTIVE');
     expect(input.roleAssignmentState).toBe('ACTIVE');
     expect(input.roleGrants).toHaveLength(1);
@@ -75,6 +77,7 @@ describe('Authorization evaluation input', () => {
         locale: 'en',
         riskLevel: 'LOW'
       },
+      permissionKey: 'booking.read',
       subjectId: asOpaqueId<'AuthorizationSubjectId'>('subject_02'),
       tenantId: asOpaqueId<'TenantId'>('tenant_02'),
       membershipState: 'ACTIVE',
@@ -100,6 +103,7 @@ describe('Authorization evaluation input', () => {
         locale: 'id',
         riskLevel: 'LOW'
       },
+      permissionKey: 'booking.read',
       tenantId: asOpaqueId<'TenantId'>('tenant_03'),
       membershipState: 'MISSING',
       organizationState: 'ACTIVE',
@@ -126,12 +130,23 @@ describe('Authorization evaluation input', () => {
         locale: 'ar',
         riskLevel: 'HIGH'
       },
+      permissionKey: 'booking.read',
       subjectId: asOpaqueId<'AuthorizationSubjectId'>('subject_04'),
       tenantId: asOpaqueId<'TenantId'>('tenant_04'),
       membershipState: 'ACTIVE',
       organizationState: 'ACTIVE',
       roleAssignmentState: 'ACTIVE',
-      roleGrants: [],
+      roleGrants: [
+        {
+          roleId: 'role_04',
+          permissions: [
+            {
+              permissionKey: 'booking.read',
+              scope: 'TENANT'
+            }
+          ]
+        }
+      ],
       branchAccess: [],
       entitlementState: 'SATISFIED',
       capabilityState: 'SATISFIED',

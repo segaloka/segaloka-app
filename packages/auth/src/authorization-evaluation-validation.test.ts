@@ -15,6 +15,7 @@ function createBaseInput(): AuthorizationEvaluationInput {
       locale: 'id',
       riskLevel: 'LOW'
     },
+    permissionKey: 'booking.read',
     subjectId: asOpaqueId<'AuthorizationSubjectId'>('subject_01'),
     tenantId: asOpaqueId<'TenantId'>('tenant_01'),
     membershipState: 'ACTIVE',
@@ -134,6 +135,7 @@ describe('Authorization evaluation validation', () => {
         locale: 'en',
         riskLevel: 'LOW'
       },
+      permissionKey: 'booking.read',
       tenantId: asOpaqueId<'TenantId'>('tenant_public'),
       membershipState: 'MISSING',
       organizationState: 'ACTIVE',
