@@ -8,6 +8,8 @@ import { getPermission, isScopeAllowedForPermission } from '@segaloka/platform-r
 
 import { allowAuthorization, denyAuthorization } from './authorization-decision.js';
 
+import { assertValidAuthorizationEvaluationInput } from './authorization-evaluation-invariant.js';
+
 import type { AuthorizationDecision, AuthorizationDenyReason } from './authorization-contract.js';
 
 import type {
@@ -111,6 +113,8 @@ export function evaluateAuthorization(
   input: AuthorizationEvaluationInput,
   registry: PermissionRegistry
 ): AuthorizationDecision {
+  assertValidAuthorizationEvaluationInput(input);
+
   if (input.context.principalId === undefined) {
     return denyAuthorization(input.permissionKey, 'UNAUTHENTICATED');
   }

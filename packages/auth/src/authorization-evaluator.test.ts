@@ -71,18 +71,25 @@ describe('evaluateAuthorization', () => {
     });
   });
 
-  it('denies unauthenticated requests first', () => {
+  it('denies a valid anonymous request as unauthenticated', () => {
     const input: AuthorizationEvaluationInput = {
-      ...createInput(),
       context: {
         requestId: asOpaqueId<'RequestId'>('request_02'),
         tenantId: asOpaqueId<'TenantId'>('tenant_01'),
         locale: 'id',
         riskLevel: 'LOW'
       },
+      permissionKey: 'booking.read',
+      tenantId: asOpaqueId<'TenantId'>('tenant_01'),
       membershipState: 'MISSING',
+      organizationState: 'ACTIVE',
       roleAssignmentState: 'NONE',
-      roleGrants: []
+      roleGrants: [],
+      branchAccess: [],
+      entitlementState: 'NOT_REQUIRED',
+      capabilityState: 'NOT_REQUIRED',
+      relationshipState: 'NOT_REQUIRED',
+      riskPolicyState: 'NOT_REQUIRED'
     };
 
     expect(evaluateAuthorization(input, registry)).toEqual({
