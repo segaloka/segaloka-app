@@ -27,6 +27,11 @@ export {
 
 export { ROLE_KINDS, ROLE_STATUSES } from './role.js';
 
+export {
+  ROLE_PERMISSION_VALIDATION_ERROR_CODES,
+  validateRolePermissions
+} from './role-permission-validation.js';
+
 export type { Branch, BranchId, BranchStatus } from './branch.js';
 
 export type { BranchAccess, BranchAccessId, BranchAccessStatus } from './branch-access.js';
@@ -43,6 +48,12 @@ export type {
 } from './organization.js';
 
 export type { RoleAssignment, RoleAssignmentId, RoleAssignmentStatus } from './role-assignment.js';
+
+export type {
+  RolePermissionValidationError,
+  RolePermissionValidationErrorCode,
+  RolePermissionValidationResult
+} from './role-permission-validation.js';
 
 export type { Role, RoleId, RoleKind, RolePermission, RoleStatus } from './role.js';
 

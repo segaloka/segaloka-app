@@ -5,7 +5,7 @@ import type { OrganizationId } from './organization.js';
 
 export type RoleId = OpaqueId<'RoleId'>;
 
-export const ROLE_KINDS = ['SYSTEM_TEMPLATE', 'CUSTOM'] as const;
+export const ROLE_KINDS = ['SYSTEM', 'CUSTOM'] as const;
 
 export type RoleKind = (typeof ROLE_KINDS)[number];
 

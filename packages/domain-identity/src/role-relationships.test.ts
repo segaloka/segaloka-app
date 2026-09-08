@@ -24,7 +24,7 @@ const role: Role = {
   id: asOpaqueId<'RoleId'>('role_01'),
   organizationId: membership.organizationId,
   name: 'Branch Manager',
-  kind: 'SYSTEM_TEMPLATE',
+  kind: 'SYSTEM',
   status: 'ACTIVE',
   permissions: [
     {
