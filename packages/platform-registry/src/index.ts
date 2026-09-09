@@ -6,6 +6,8 @@ export {
   isPermissionVisibility
 } from './authorization.js';
 
+export { PERMISSION_CATALOG, PERMISSION_REGISTRY } from './permission-catalog.js';
+
 export {
   canAssignPermissionToTenant,
   createPermissionRegistry,
