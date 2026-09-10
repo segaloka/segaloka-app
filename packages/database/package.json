@@ -1,0 +1,26 @@
+{
+  "name": "@segaloka/database",
+  "version": "0.0.0",
+  "private": true,
+  "type": "module",
+  "exports": {
+    ".": "./src/index.ts"
+  },
+  "scripts": {
+    "typecheck": "tsc --noEmit",
+    "test": "vitest run",
+    "test:integration": "vitest run tooling/connection-smoke.test.ts",
+    "db:generate": "drizzle-kit generate --config=drizzle.config.ts",
+    "db:check": "drizzle-kit check --config=drizzle.config.ts",
+    "db:migrate": "drizzle-kit migrate --config=drizzle.config.ts"
+  },
+  "dependencies": {
+    "@segaloka/config": "workspace:*",
+    "drizzle-orm": "^0.44.5",
+    "postgres": "^3.4.7"
+  },
+  "devDependencies": {
+    "@types/node": "24.13.3",
+    "drizzle-kit": "0.31.10"
+  }
+}
