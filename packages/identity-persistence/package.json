@@ -1,0 +1,25 @@
+{
+  "name": "@segaloka/identity-persistence",
+  "version": "0.0.0",
+  "private": true,
+  "type": "module",
+  "exports": {
+    ".": "./src/index.ts"
+  },
+  "scripts": {
+    "typecheck": "tsc --noEmit",
+    "typecheck:integration": "tsc --noEmit -p tsconfig.integration.json",
+    "test": "vitest run src",
+    "test:integration": "vitest run tooling --no-file-parallelism --maxWorkers=1 --testTimeout=15000 --hookTimeout=15000"
+  },
+  "dependencies": {
+    "@segaloka/database": "workspace:*",
+    "@segaloka/domain-identity": "workspace:*",
+    "@segaloka/platform-registry": "workspace:*",
+    "@segaloka/shared-kernel": "workspace:*",
+    "drizzle-orm": "^0.44.7"
+  },
+  "devDependencies": {
+    "@types/node": "24.13.3"
+  }
+}

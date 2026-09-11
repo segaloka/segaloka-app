@@ -5,6 +5,7 @@ import {
   PERMISSION_VISIBILITIES,
   definePermission,
   isAuthorizationScope,
+  isPermissionKey,
   isPermissionVisibility
 } from './authorization.js';
 
@@ -33,6 +34,21 @@ describe('Authorization registry', () => {
     expect(isPermissionVisibility('PLATFORM_ONLY')).toBe(true);
 
     expect(isPermissionVisibility('UNKNOWN')).toBe(false);
+  });
+
+  it('recognizes canonical permission keys', () => {
+    expect(isPermissionKey('booking.read')).toBe(true);
+    expect(isPermissionKey('travel-package.update')).toBe(true);
+    expect(isPermissionKey('platform.audit')).toBe(true);
+
+    expect(isPermissionKey('Booking Read')).toBe(false);
+    expect(isPermissionKey('booking')).toBe(false);
+    expect(isPermissionKey('booking.')).toBe(false);
+    expect(isPermissionKey('.read')).toBe(false);
+    expect(isPermissionKey('booking.read.extra')).toBe(false);
+    expect(isPermissionKey('Booking.read')).toBe(false);
+    expect(isPermissionKey('booking.Read')).toBe(false);
+    expect(isPermissionKey('booking_read.read')).toBe(false);
   });
 
   it('defines an immutable tenant-assignable permission', () => {
@@ -73,7 +89,7 @@ describe('Authorization registry', () => {
         visibility: 'TENANT_ASSIGNABLE',
         allowedScopes: ['TENANT']
       })
-    ).toThrow('Invalid permission key: Booking Read');
+    ).toThrow('Invalid permission key.');
   });
 
   it('rejects permissions without scopes', () => {

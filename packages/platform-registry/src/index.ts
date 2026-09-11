@@ -3,6 +3,7 @@ export {
   PERMISSION_VISIBILITIES,
   definePermission,
   isAuthorizationScope,
+  isPermissionKey,
   isPermissionVisibility
 } from './authorization.js';
 

@@ -15,6 +15,7 @@ describe('platform registry public API', () => {
         'definePermission',
         'getPermission',
         'isAuthorizationScope',
+        'isPermissionKey',
         'isPermissionVisibility',
         'isScopeAllowedForPermission',
         'requirePermission'

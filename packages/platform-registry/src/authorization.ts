@@ -31,9 +31,13 @@ export function isPermissionVisibility(value: string): value is PermissionVisibi
   return PERMISSION_VISIBILITIES.includes(value as PermissionVisibility);
 }
 
+export function isPermissionKey(value: string): value is PermissionKey {
+  return /^[a-z][a-z0-9-]*\.[a-z][a-z0-9-]*$/.test(value);
+}
+
 export function definePermission(definition: PermissionDefinition): PermissionDefinition {
-  if (!isValidPermissionKey(definition.key)) {
-    throw new Error(`Invalid permission key: ${definition.key}`);
+  if (!isPermissionKey(definition.key)) {
+    throw new Error('Invalid permission key.');
   }
 
   if (definition.description.trim().length === 0) {
@@ -52,8 +56,4 @@ export function definePermission(definition: PermissionDefinition): PermissionDe
     ...definition,
     allowedScopes: Object.freeze([...definition.allowedScopes])
   });
-}
-
-function isValidPermissionKey(value: string): boolean {
-  return /^[a-z][a-z0-9-]*\.[a-z][a-z0-9-]*$/.test(value);
 }
