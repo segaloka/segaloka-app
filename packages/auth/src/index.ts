@@ -14,6 +14,8 @@ export {
 
 export { evaluateAuthorization } from './authorization-evaluator.js';
 
+export { asCanonicalPrincipalId } from './canonical-principal-id.js';
+
 export { RISK_LEVELS, SUPPORTED_LOCALES, isAuthenticatedContext } from './request-context.js';
 
 export type {

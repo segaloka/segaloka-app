@@ -11,6 +11,7 @@ import {
 } from 'drizzle-orm/pg-core';
 
 export const identitySchema = pgSchema('identity');
+export const authSchema = pgSchema('auth');
 
 export const identities = identitySchema.table(
   'identities',
@@ -279,5 +280,58 @@ export const roleAssignments = identitySchema.table(
       'role_assignments_status_check',
       sql`${table.status} in ('ACTIVE', 'SUSPENDED', 'REVOKED')`
     )
+  ]
+);
+
+export const principals = authSchema.table(
+  'principals',
+  {
+    id: uuid('id').primaryKey(),
+    identityId: uuid('identity_id').references(() => identities.id),
+    status: text('status').notNull(),
+    createdAt: timestamp('created_at', {
+      withTimezone: true
+    })
+      .notNull()
+      .defaultNow(),
+    updatedAt: timestamp('updated_at', {
+      withTimezone: true
+    })
+      .notNull()
+      .defaultNow()
+  },
+  (table) => [
+    unique('principals_identity_id_unique').on(table.identityId),
+    check('principals_status_check', sql`${table.status} in ('ACTIVE', 'SUSPENDED', 'REVOKED')`)
+  ]
+);
+
+export const principalBindings = authSchema.table(
+  'principal_bindings',
+  {
+    id: uuid('id').primaryKey(),
+    principalId: uuid('principal_id')
+      .notNull()
+      .references(() => principals.id),
+    issuer: text('issuer').notNull(),
+    subject: text('subject').notNull(),
+    status: text('status').notNull(),
+    createdAt: timestamp('created_at', {
+      withTimezone: true
+    })
+      .notNull()
+      .defaultNow(),
+    updatedAt: timestamp('updated_at', {
+      withTimezone: true
+    })
+      .notNull()
+      .defaultNow()
+  },
+  (table) => [
+    unique('principal_bindings_issuer_subject_unique').on(table.issuer, table.subject),
+    index('principal_bindings_principal_id_idx').on(table.principalId),
+    check('principal_bindings_issuer_non_empty_check', sql`length(btrim(${table.issuer})) > 0`),
+    check('principal_bindings_subject_non_empty_check', sql`length(btrim(${table.subject})) > 0`),
+    check('principal_bindings_status_check', sql`${table.status} in ('ACTIVE', 'REVOKED')`)
   ]
 );

@@ -54,6 +54,28 @@ importers:
         specifier: workspace:*
         version: link:../shared-kernel
 
+  packages/auth-persistence:
+    dependencies:
+      '@segaloka/auth':
+        specifier: workspace:*
+        version: link:../auth
+      '@segaloka/database':
+        specifier: workspace:*
+        version: link:../database
+      '@segaloka/domain-identity':
+        specifier: workspace:*
+        version: link:../domain-identity
+      '@segaloka/shared-kernel':
+        specifier: workspace:*
+        version: link:../shared-kernel
+      drizzle-orm:
+        specifier: ^0.44.7
+        version: 0.44.7(postgres@3.4.9)
+    devDependencies:
+      '@types/node':
+        specifier: 24.13.3
+        version: 24.13.3
+
   packages/config: {}
 
   packages/contracts: {}
