@@ -8,7 +8,10 @@
   },
   "dependencies": {
     "@segaloka/auth": "workspace:*",
+    "@segaloka/auth-persistence": "workspace:*",
+    "@segaloka/database": "workspace:*",
     "@segaloka/domain-identity": "workspace:*",
+    "@segaloka/identity-persistence": "workspace:*",
     "@segaloka/platform-registry": "workspace:*"
   }
 }
