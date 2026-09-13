@@ -41,6 +41,11 @@ export type {
 } from './authorization-evaluation.js';
 
 export type {
+  PrincipalBindingResolutionPort,
+  VerifiedExternalIdentity
+} from './principal-binding-resolution.js';
+
+export type {
   BranchId,
   PrincipalId,
   RequestContext,
