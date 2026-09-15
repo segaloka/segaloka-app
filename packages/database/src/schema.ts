@@ -1,9 +1,15 @@
 import { sql } from 'drizzle-orm';
 import {
+  bigint,
+  boolean,
   check,
   foreignKey,
   index,
+  integer,
+  jsonb,
+  numeric,
   pgSchema,
+  pgTable,
   text,
   timestamp,
   unique,
@@ -333,5 +339,165 @@ export const principalBindings = authSchema.table(
     check('principal_bindings_issuer_non_empty_check', sql`length(btrim(${table.issuer})) > 0`),
     check('principal_bindings_subject_non_empty_check', sql`length(btrim(${table.subject})) > 0`),
     check('principal_bindings_status_check', sql`${table.status} in ('ACTIVE', 'REVOKED')`)
+  ]
+);
+export const marketplaceTravels = pgTable(
+  'marketplace_travels',
+  {
+    id: uuid('id').primaryKey(),
+    organizationId: uuid('organization_id')
+      .notNull()
+      .references(() => organizations.id),
+    displayName: text('display_name').notNull(),
+    logoUrl: text('logo_url'),
+    verificationStatus: text('verification_status').notNull(),
+    status: text('status').notNull(),
+    verifiedAt: timestamp('verified_at', { withTimezone: true }),
+    createdAt: timestamp('created_at', { withTimezone: true }).notNull().defaultNow(),
+    updatedAt: timestamp('updated_at', { withTimezone: true }).notNull().defaultNow()
+  },
+  (table) => [
+    unique('marketplace_travels_organization_id_unique').on(table.organizationId),
+    index('marketplace_travels_public_idx').on(
+      table.verificationStatus,
+      table.status,
+      table.displayName
+    ),
+    check(
+      'marketplace_travels_display_name_non_empty_check',
+      sql`length(btrim(${table.displayName})) > 0`
+    ),
+    check(
+      'marketplace_travels_verification_status_check',
+      sql`${table.verificationStatus} in ('PENDING', 'VERIFIED', 'REJECTED', 'SUSPENDED')`
+    ),
+    check('marketplace_travels_status_check', sql`${table.status} in ('ACTIVE', 'INACTIVE')`),
+    check(
+      'marketplace_travels_verified_at_check',
+      sql`${table.verificationStatus} <> 'VERIFIED' or ${table.verifiedAt} is not null`
+    )
+  ]
+);
+
+export const marketplacePackages = pgTable(
+  'marketplace_packages',
+  {
+    id: uuid('id').primaryKey(),
+    travelId: uuid('travel_id')
+      .notNull()
+      .references(() => marketplaceTravels.id),
+    categoryCode: text('category_code').notNull(),
+    titles: jsonb('titles').$type<Record<string, string>>().notNull(),
+    destinationLabels: jsonb('destination_labels').$type<Record<string, string>>().notNull(),
+    startingPriceAmountMinor: bigint('starting_price_amount_minor', { mode: 'number' }).notNull(),
+    currencyCode: text('currency_code').notNull(),
+    heroImageUrl: text('hero_image_url').notNull(),
+    durationDays: integer('duration_days').notNull(),
+    averageRating: numeric('average_rating', { precision: 2, scale: 1, mode: 'number' })
+      .notNull()
+      .default(0),
+    reviewCount: integer('review_count').notNull().default(0),
+    publicationStatus: text('publication_status').notNull(),
+    isActive: boolean('is_active').notNull().default(false),
+    isBookable: boolean('is_bookable').notNull().default(false),
+    publishedAt: timestamp('published_at', { withTimezone: true }),
+    createdAt: timestamp('created_at', { withTimezone: true }).notNull().defaultNow(),
+    updatedAt: timestamp('updated_at', { withTimezone: true }).notNull().defaultNow()
+  },
+  (table) => [
+    index('marketplace_packages_latest_public_idx').on(
+      table.publicationStatus,
+      table.isActive,
+      table.isBookable,
+      table.publishedAt
+    ),
+    index('marketplace_packages_travel_id_idx').on(table.travelId),
+    check(
+      'marketplace_packages_category_code_check',
+      sql`${table.categoryCode} in ('UMRAH', 'HALAL_TOUR', 'HAJJ', 'DOMESTIC', 'LAND_ARRANGEMENT', 'SEGADEALS')`
+    ),
+    check(
+      'marketplace_packages_titles_locales_check',
+      sql`jsonb_typeof(${table.titles}) = 'object' and ${table.titles} ?& array['id', 'en', 'ar']`
+    ),
+    check(
+      'marketplace_packages_destination_locales_check',
+      sql`jsonb_typeof(${table.destinationLabels}) = 'object' and ${table.destinationLabels} ?& array['id', 'en', 'ar']`
+    ),
+    check('marketplace_packages_amount_check', sql`${table.startingPriceAmountMinor} >= 0`),
+    check('marketplace_packages_currency_check', sql`${table.currencyCode} ~ '^[A-Z]{3}$'`),
+    check('marketplace_packages_duration_check', sql`${table.durationDays} > 0`),
+    check(
+      'marketplace_packages_rating_check',
+      sql`${table.averageRating} >= 0 and ${table.averageRating} <= 5`
+    ),
+    check('marketplace_packages_review_count_check', sql`${table.reviewCount} >= 0`),
+    check(
+      'marketplace_packages_publication_status_check',
+      sql`${table.publicationStatus} in ('DRAFT', 'PUBLISHED', 'ARCHIVED')`
+    ),
+    check(
+      'marketplace_packages_published_at_check',
+      sql`${table.publicationStatus} <> 'PUBLISHED' or ${table.publishedAt} is not null`
+    )
+  ]
+);
+
+export const marketplacePromotions = pgTable(
+  'marketplace_promotions',
+  {
+    id: uuid('id').primaryKey(),
+    placement: text('placement').notNull(),
+    packageId: uuid('package_id').references(() => marketplacePackages.id),
+    titles: jsonb('titles').$type<Record<string, string>>().notNull(),
+    descriptions: jsonb('descriptions').$type<Record<string, string>>().notNull(),
+    callToActionLabels: jsonb('call_to_action_labels').$type<Record<string, string>>().notNull(),
+    targetUri: text('target_uri').notNull(),
+    imageUrl: text('image_url'),
+    sortOrder: integer('sort_order').notNull().default(0),
+    isActive: boolean('is_active').notNull().default(false),
+    isSponsored: boolean('is_sponsored').notNull().default(false),
+    startsAt: timestamp('starts_at', { withTimezone: true }),
+    endsAt: timestamp('ends_at', { withTimezone: true }),
+    createdAt: timestamp('created_at', { withTimezone: true }).notNull().defaultNow(),
+    updatedAt: timestamp('updated_at', { withTimezone: true }).notNull().defaultNow()
+  },
+  (table) => [
+    index('marketplace_promotions_active_placement_idx').on(
+      table.placement,
+      table.isActive,
+      table.sortOrder,
+      table.startsAt,
+      table.endsAt
+    ),
+    index('marketplace_promotions_package_id_idx').on(table.packageId),
+    check(
+      'marketplace_promotions_placement_check',
+      sql`${table.placement} in ('hero_banner', 'popular_package', 'top_package')`
+    ),
+    check(
+      'marketplace_promotions_package_required_check',
+      sql`${table.placement} = 'hero_banner' or ${table.packageId} is not null`
+    ),
+    check(
+      'marketplace_promotions_titles_locales_check',
+      sql`jsonb_typeof(${table.titles}) = 'object' and ${table.titles} ?& array['id', 'en', 'ar']`
+    ),
+    check(
+      'marketplace_promotions_descriptions_locales_check',
+      sql`jsonb_typeof(${table.descriptions}) = 'object' and ${table.descriptions} ?& array['id', 'en', 'ar']`
+    ),
+    check(
+      'marketplace_promotions_cta_locales_check',
+      sql`jsonb_typeof(${table.callToActionLabels}) = 'object' and ${table.callToActionLabels} ?& array['id', 'en', 'ar']`
+    ),
+    check(
+      'marketplace_promotions_target_uri_non_empty_check',
+      sql`length(btrim(${table.targetUri})) > 0`
+    ),
+    check(
+      'marketplace_promotions_time_range_check',
+      sql`${table.startsAt} is null or ${table.endsAt} is null or ${table.endsAt} > ${table.startsAt}`
+    )
   ]
 );
