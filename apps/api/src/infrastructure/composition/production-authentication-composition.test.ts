@@ -1,10 +1,12 @@
 import type { DatabaseConnection } from '@segaloka/database';
 import { describe, expect, it, vi } from 'vitest';
 
+import { DefaultAuthenticatedRequestContextPipeline } from '../../application/authentication/authenticated-request-context-pipeline.js';
 import { DefaultAuthenticationPrincipalResolver } from '../../application/authentication/authentication-principal-resolver.js';
 import { DefaultRequestContextAssembler } from '../../application/authentication/request-context-assembler.js';
 
 import {
+  createProductionAuthenticatedRequestContextPipeline,
   createProductionAuthenticationPrincipalResolver,
   createProductionRequestContextAssembler
 } from './production-authentication-composition.js';
@@ -51,5 +53,41 @@ describe('production authentication composition', () => {
     expect(firstAssembler).toBeInstanceOf(DefaultRequestContextAssembler);
     expect(secondAssembler).toBeInstanceOf(DefaultRequestContextAssembler);
     expect(firstAssembler).not.toBe(secondAssembler);
+  });
+
+  it('creates the production authenticated request context pipeline', () => {
+    const database = createDatabaseConnectionStub();
+
+    const pipeline = createProductionAuthenticatedRequestContextPipeline({
+      database
+    });
+
+    expect(pipeline).toBeInstanceOf(DefaultAuthenticatedRequestContextPipeline);
+  });
+
+  it('does not take ownership of the database lifecycle when composing the authenticated request context pipeline', () => {
+    const database = createDatabaseConnectionStub();
+
+    createProductionAuthenticatedRequestContextPipeline({
+      database
+    });
+
+    expect(database.close).not.toHaveBeenCalled();
+  });
+
+  it('creates independent authenticated request context pipeline instances', () => {
+    const database = createDatabaseConnectionStub();
+
+    const firstPipeline = createProductionAuthenticatedRequestContextPipeline({
+      database
+    });
+
+    const secondPipeline = createProductionAuthenticatedRequestContextPipeline({
+      database
+    });
+
+    expect(firstPipeline).toBeInstanceOf(DefaultAuthenticatedRequestContextPipeline);
+    expect(secondPipeline).toBeInstanceOf(DefaultAuthenticatedRequestContextPipeline);
+    expect(firstPipeline).not.toBe(secondPipeline);
   });
 });
