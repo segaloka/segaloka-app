@@ -2,6 +2,7 @@ import { PostgresPrincipalBindingResolutionAdapter } from '@segaloka/auth-persis
 import type { DatabaseConnection } from '@segaloka/database';
 
 import { DefaultAuthenticationPrincipalResolver } from '../../application/authentication/authentication-principal-resolver.js';
+import { DefaultRequestContextAssembler } from '../../application/authentication/request-context-assembler.js';
 
 export interface ProductionAuthenticationCompositionDependencies {
   readonly database: DatabaseConnection;
@@ -15,4 +16,8 @@ export function createProductionAuthenticationPrincipalResolver(
   );
 
   return new DefaultAuthenticationPrincipalResolver(principalBindingResolution);
+}
+
+export function createProductionRequestContextAssembler(): DefaultRequestContextAssembler {
+  return new DefaultRequestContextAssembler();
 }

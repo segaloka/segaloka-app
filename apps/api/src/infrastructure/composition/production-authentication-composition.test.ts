@@ -2,8 +2,12 @@ import type { DatabaseConnection } from '@segaloka/database';
 import { describe, expect, it, vi } from 'vitest';
 
 import { DefaultAuthenticationPrincipalResolver } from '../../application/authentication/authentication-principal-resolver.js';
+import { DefaultRequestContextAssembler } from '../../application/authentication/request-context-assembler.js';
 
-import { createProductionAuthenticationPrincipalResolver } from './production-authentication-composition.js';
+import {
+  createProductionAuthenticationPrincipalResolver,
+  createProductionRequestContextAssembler
+} from './production-authentication-composition.js';
 
 function createDatabaseConnectionStub(): DatabaseConnection {
   return {
@@ -32,5 +36,20 @@ describe('production authentication composition', () => {
     });
 
     expect(database.close).not.toHaveBeenCalled();
+  });
+
+  it('creates the production request context assembler without infrastructure dependencies', () => {
+    const assembler = createProductionRequestContextAssembler();
+
+    expect(assembler).toBeInstanceOf(DefaultRequestContextAssembler);
+  });
+
+  it('creates independent stateless request context assembler instances', () => {
+    const firstAssembler = createProductionRequestContextAssembler();
+    const secondAssembler = createProductionRequestContextAssembler();
+
+    expect(firstAssembler).toBeInstanceOf(DefaultRequestContextAssembler);
+    expect(secondAssembler).toBeInstanceOf(DefaultRequestContextAssembler);
+    expect(firstAssembler).not.toBe(secondAssembler);
   });
 });
