@@ -17,7 +17,7 @@ import {
 } from 'drizzle-orm/pg-core';
 
 export const identitySchema = pgSchema('identity');
-export const authSchema = pgSchema('auth');
+export const iamSchema = pgSchema('iam');
 
 export const identities = identitySchema.table(
   'identities',
@@ -289,7 +289,7 @@ export const roleAssignments = identitySchema.table(
   ]
 );
 
-export const principals = authSchema.table(
+export const principals = iamSchema.table(
   'principals',
   {
     id: uuid('id').primaryKey(),
@@ -312,7 +312,7 @@ export const principals = authSchema.table(
   ]
 );
 
-export const principalBindings = authSchema.table(
+export const principalBindings = iamSchema.table(
   'principal_bindings',
   {
     id: uuid('id').primaryKey(),

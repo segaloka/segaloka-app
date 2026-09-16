@@ -177,7 +177,7 @@ describe('production authorization composition with PostgreSQL', () => {
       `;
 
       await connection.client`
-        insert into auth.principals (
+        insert into iam.principals (
           id,
           identity_id,
           status
@@ -234,7 +234,7 @@ describe('production authorization composition with PostgreSQL', () => {
         select
           identity_id::text,
           status
-        from auth.principals
+        from iam.principals
         where id = ${FIXTURE.principalId}::uuid
       `;
 
@@ -246,7 +246,7 @@ describe('production authorization composition with PostgreSQL', () => {
       ]);
     } finally {
       await connection.client`
-        delete from auth.principals
+        delete from iam.principals
         where id = ${FIXTURE.principalId}::uuid
       `;
 

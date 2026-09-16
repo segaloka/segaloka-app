@@ -62,7 +62,7 @@ describe('production authentication composition with PostgreSQL', () => {
 
     try {
       await connection.client`
-        insert into auth.principals (
+        insert into iam.principals (
           id,
           identity_id,
           status
@@ -91,7 +91,7 @@ describe('production authentication composition with PostgreSQL', () => {
       `;
 
       await connection.client`
-        insert into auth.principal_bindings (
+        insert into iam.principal_bindings (
           id,
           principal_id,
           issuer,
@@ -171,7 +171,7 @@ describe('production authentication composition with PostgreSQL', () => {
           issuer,
           subject,
           status
-        from auth.principal_bindings
+        from iam.principal_bindings
         where id in (
           ${FIXTURE.activeBindingId}::uuid,
           ${FIXTURE.revokedBindingId}::uuid,
@@ -184,7 +184,7 @@ describe('production authentication composition with PostgreSQL', () => {
       expect(persistedBindings).toHaveLength(4);
     } finally {
       await connection.client`
-        delete from auth.principal_bindings
+        delete from iam.principal_bindings
         where id in (
           ${FIXTURE.activeBindingId}::uuid,
           ${FIXTURE.revokedBindingId}::uuid,
@@ -194,7 +194,7 @@ describe('production authentication composition with PostgreSQL', () => {
       `;
 
       await connection.client`
-        delete from auth.principals
+        delete from iam.principals
         where id in (
           ${FIXTURE.activePrincipalId}::uuid,
           ${FIXTURE.revokedBindingPrincipalId}::uuid,

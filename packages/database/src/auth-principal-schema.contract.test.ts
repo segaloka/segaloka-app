@@ -36,11 +36,11 @@ function expectColumns(exportName: string, expectedColumns: readonly string[]): 
 }
 
 describe('authentication principal persistence schema contract', () => {
-  it('exports the dedicated auth PostgreSQL schema', () => {
-    const authSchema = getSchemaExport('authSchema');
+  it('exports the dedicated IAM PostgreSQL schema', () => {
+    const iamSchema = getSchemaExport('iamSchema');
 
-    expect(authSchema).toBeDefined();
-    expect(typeof authSchema).toBe('object');
+    expect(iamSchema).toBeDefined();
+    expect(typeof iamSchema).toBe('object');
   });
 
   it('exports the canonical authentication principal tables', () => {

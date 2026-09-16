@@ -439,9 +439,9 @@
       },
       "isRLSEnabled": false
     },
-    "auth.principal_bindings": {
+    "iam.principal_bindings": {
       "name": "principal_bindings",
-      "schema": "auth",
+      "schema": "iam",
       "columns": {
         "id": {
           "name": "id",
@@ -510,7 +510,7 @@
           "name": "principal_bindings_principal_id_principals_id_fk",
           "tableFrom": "principal_bindings",
           "tableTo": "principals",
-          "schemaTo": "auth",
+          "schemaTo": "iam",
           "columnsFrom": ["principal_id"],
           "columnsTo": ["id"],
           "onDelete": "no action",
@@ -529,22 +529,22 @@
       "checkConstraints": {
         "principal_bindings_issuer_non_empty_check": {
           "name": "principal_bindings_issuer_non_empty_check",
-          "value": "length(btrim(\"auth\".\"principal_bindings\".\"issuer\")) > 0"
+          "value": "length(btrim(\"iam\".\"principal_bindings\".\"issuer\")) > 0"
         },
         "principal_bindings_subject_non_empty_check": {
           "name": "principal_bindings_subject_non_empty_check",
-          "value": "length(btrim(\"auth\".\"principal_bindings\".\"subject\")) > 0"
+          "value": "length(btrim(\"iam\".\"principal_bindings\".\"subject\")) > 0"
         },
         "principal_bindings_status_check": {
           "name": "principal_bindings_status_check",
-          "value": "\"auth\".\"principal_bindings\".\"status\" in ('ACTIVE', 'REVOKED')"
+          "value": "\"iam\".\"principal_bindings\".\"status\" in ('ACTIVE', 'REVOKED')"
         }
       },
       "isRLSEnabled": false
     },
-    "auth.principals": {
+    "iam.principals": {
       "name": "principals",
-      "schema": "auth",
+      "schema": "iam",
       "columns": {
         "id": {
           "name": "id",
@@ -604,7 +604,7 @@
       "checkConstraints": {
         "principals_status_check": {
           "name": "principals_status_check",
-          "value": "\"auth\".\"principals\".\"status\" in ('ACTIVE', 'SUSPENDED', 'REVOKED')"
+          "value": "\"iam\".\"principals\".\"status\" in ('ACTIVE', 'SUSPENDED', 'REVOKED')"
         }
       },
       "isRLSEnabled": false
@@ -1009,7 +1009,7 @@
   },
   "enums": {},
   "schemas": {
-    "auth": "auth",
+    "iam": "iam",
     "identity": "identity"
   },
   "sequences": {},

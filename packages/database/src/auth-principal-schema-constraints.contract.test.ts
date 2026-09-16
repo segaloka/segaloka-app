@@ -13,8 +13,12 @@ function expectSourceNot(pattern: RegExp, description: string): void {
 }
 
 describe('authentication principal persistence constraint contract', () => {
-  it('uses a dedicated auth PostgreSQL schema', () => {
-    expectSource(/pgSchema\(\s*['"]auth['"]\s*\)/, 'the dedicated "auth" PostgreSQL schema');
+  it('uses a dedicated IAM PostgreSQL schema', () => {
+    expectSource(/pgSchema\(\s*['"]iam['"]\s*\)/, 'the dedicated "iam" PostgreSQL schema');
+    expectSourceNot(
+      /pgSchema\(\s*['"]auth['"]\s*\)/,
+      'the Supabase-managed "auth" PostgreSQL schema'
+    );
   });
 
   it('keeps principal and identity identifiers distinct', () => {
