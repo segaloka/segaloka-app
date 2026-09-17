@@ -61,8 +61,8 @@ describe('canonical authorization evaluator composition', () => {
     expect(evaluator).toBeInstanceOf(RegistryAuthorizationEvaluator);
   });
 
-  it('uses the canonical production permission registry and therefore fails closed for unknown permissions', () => {
-    expect(PERMISSION_REGISTRY.permissions).toEqual([]);
+  it('fails closed for an unknown permission even when a role grants it', () => {
+    expect(PERMISSION_REGISTRY.byKey.has('booking.read')).toBe(false);
 
     const evaluator = createCanonicalAuthorizationEvaluator();
 
@@ -73,12 +73,38 @@ describe('canonical authorization evaluator composition', () => {
     });
   });
 
+  it('does not automatically grant registered package publication permission', () => {
+    expect(PERMISSION_REGISTRY.byKey.has('package.publish')).toBe(true);
+
+    const evaluator = createCanonicalAuthorizationEvaluator();
+    const input: AuthorizationEvaluationInput = {
+      ...createInput(),
+      permissionKey: 'package.publish'
+    };
+
+    expect(evaluator.evaluate(input)).toEqual({
+      allowed: false,
+      permissionKey: 'package.publish',
+      reason: 'PERMISSION_NOT_GRANTED'
+    });
+  });
+
   it('creates independent evaluator instances without mutating the canonical registry', () => {
+    const permissionsBefore = [...PERMISSION_REGISTRY.permissions];
+    const entriesBefore = [...PERMISSION_REGISTRY.byKey.entries()];
+
     const first = createCanonicalAuthorizationEvaluator();
     const second = createCanonicalAuthorizationEvaluator();
 
+    first.evaluate(createInput());
+    second.evaluate(createInput());
+
     expect(first).not.toBe(second);
-    expect(PERMISSION_REGISTRY.permissions).toEqual([]);
-    expect(PERMISSION_REGISTRY.byKey.size).toBe(0);
+    expect(PERMISSION_REGISTRY.permissions).toEqual(permissionsBefore);
+    expect([...PERMISSION_REGISTRY.byKey.entries()]).toEqual(entriesBefore);
+    expect(PERMISSION_REGISTRY.permissions.map((permission) => permission.key)).toEqual([
+      'package.publish'
+    ]);
+    expect(PERMISSION_REGISTRY.byKey.size).toBe(1);
   });
 });
