@@ -40,6 +40,7 @@ function createValidInput(): AuthorizationEvaluationInput {
     entitlementState: 'NOT_REQUIRED',
     capabilityState: 'NOT_REQUIRED',
     relationshipState: 'NOT_REQUIRED',
+    resourcePolicyState: 'NOT_REQUIRED',
     riskPolicyState: 'NOT_REQUIRED'
   };
 }

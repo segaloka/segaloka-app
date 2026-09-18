@@ -31,6 +31,7 @@ export function composeAuthorizationEvaluationInput(
     entitlementState: policyFacts.entitlementState,
     capabilityState: policyFacts.capabilityState,
     relationshipState: policyFacts.relationshipState,
+    resourcePolicyState: policyFacts.resourcePolicyState,
     riskPolicyState: policyFacts.riskPolicyState
   };
 }

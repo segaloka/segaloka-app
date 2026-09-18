@@ -9,6 +9,7 @@ export interface AuthorizationPolicyFacts {
   readonly entitlementState: AuthorizationPolicyState;
   readonly capabilityState: AuthorizationPolicyState;
   readonly relationshipState: AuthorizationPolicyState;
+  readonly resourcePolicyState: AuthorizationPolicyState;
   readonly riskPolicyState: AuthorizationPolicyState;
 }
 

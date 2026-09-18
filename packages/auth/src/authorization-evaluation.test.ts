@@ -53,6 +53,7 @@ describe('Authorization evaluation input', () => {
       entitlementState: 'SATISFIED',
       capabilityState: 'SATISFIED',
       relationshipState: 'NOT_REQUIRED',
+      resourcePolicyState: 'NOT_REQUIRED',
       riskPolicyState: 'SATISFIED'
     };
 
@@ -97,6 +98,7 @@ describe('Authorization evaluation input', () => {
       entitlementState: 'NOT_REQUIRED',
       capabilityState: 'NOT_REQUIRED',
       relationshipState: 'NOT_REQUIRED',
+      resourcePolicyState: 'NOT_REQUIRED',
       riskPolicyState: 'NOT_REQUIRED'
     };
 
@@ -123,6 +125,7 @@ describe('Authorization evaluation input', () => {
       entitlementState: 'NOT_REQUIRED',
       capabilityState: 'NOT_REQUIRED',
       relationshipState: 'NOT_REQUIRED',
+      resourcePolicyState: 'NOT_REQUIRED',
       riskPolicyState: 'NOT_REQUIRED'
     };
 
@@ -162,6 +165,7 @@ describe('Authorization evaluation input', () => {
       entitlementState: 'SATISFIED',
       capabilityState: 'SATISFIED',
       relationshipState: 'NOT_REQUIRED',
+      resourcePolicyState: 'NOT_REQUIRED',
       riskPolicyState: 'UNSATISFIED'
     };
 

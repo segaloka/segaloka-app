@@ -57,6 +57,7 @@ function createInput(): AuthorizationEvaluationInput {
     entitlementState: 'NOT_REQUIRED',
     capabilityState: 'NOT_REQUIRED',
     relationshipState: 'NOT_REQUIRED',
+    resourcePolicyState: 'NOT_REQUIRED',
     riskPolicyState: 'NOT_REQUIRED'
   };
 }
@@ -91,6 +92,7 @@ describe('evaluateAuthorization', () => {
       entitlementState: 'NOT_REQUIRED',
       capabilityState: 'NOT_REQUIRED',
       relationshipState: 'NOT_REQUIRED',
+      resourcePolicyState: 'NOT_REQUIRED',
       riskPolicyState: 'NOT_REQUIRED'
     };
 
@@ -383,7 +385,8 @@ describe('evaluateAuthorization', () => {
           ]
         }
       ],
-      relationshipState: 'SATISFIED'
+      relationshipState: 'SATISFIED',
+      resourcePolicyState: 'NOT_REQUIRED',
     };
 
     expect(evaluateAuthorization(input, registry)).toMatchObject({
@@ -422,6 +425,20 @@ describe('evaluateAuthorization', () => {
     });
   });
 
+  it('denies an unsatisfied resource policy', () => {
+    expect(
+      evaluateAuthorization(
+        {
+          ...createInput(),
+          resourcePolicyState: 'UNSATISFIED'
+        },
+        registry
+      )
+    ).toMatchObject({
+      allowed: false,
+      reason: 'RESOURCE_POLICY_DENIED'
+    });
+  });
   it('denies an unsatisfied risk policy', () => {
     expect(
       evaluateAuthorization(
@@ -504,7 +521,8 @@ describe('evaluateAuthorization', () => {
           ]
         }
       ],
-      relationshipState: 'UNSATISFIED'
+      relationshipState: 'UNSATISFIED',
+      resourcePolicyState: 'NOT_REQUIRED',
     };
 
     expect(evaluateAuthorization(input, registry)).toMatchObject({

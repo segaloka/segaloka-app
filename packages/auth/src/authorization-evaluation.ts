@@ -57,5 +57,6 @@ export interface AuthorizationEvaluationInput {
   readonly entitlementState: AuthorizationPolicyState;
   readonly capabilityState: AuthorizationPolicyState;
   readonly relationshipState: AuthorizationPolicyState;
+  readonly resourcePolicyState: AuthorizationPolicyState;
   readonly riskPolicyState: AuthorizationPolicyState;
 }

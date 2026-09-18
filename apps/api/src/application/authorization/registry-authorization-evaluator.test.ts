@@ -51,6 +51,7 @@ function createInput(): AuthorizationEvaluationInput {
     entitlementState: 'SATISFIED',
     capabilityState: 'SATISFIED',
     relationshipState: 'NOT_REQUIRED',
+    resourcePolicyState: 'NOT_REQUIRED',
     riskPolicyState: 'SATISFIED'
   };
 }

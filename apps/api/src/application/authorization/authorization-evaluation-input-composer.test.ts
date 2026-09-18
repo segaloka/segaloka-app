@@ -74,6 +74,7 @@ function createPolicyFacts(
     entitlementState: 'SATISFIED',
     capabilityState: 'SATISFIED',
     relationshipState: 'NOT_REQUIRED',
+    resourcePolicyState: 'NOT_REQUIRED',
     riskPolicyState: 'SATISFIED',
     ...overrides
   };
@@ -133,6 +134,7 @@ describe('composeAuthorizationEvaluationInput', () => {
       entitlementState: 'UNSATISFIED',
       capabilityState: 'NOT_REQUIRED',
       relationshipState: 'SATISFIED',
+      resourcePolicyState: 'NOT_REQUIRED',
       riskPolicyState: 'UNSATISFIED'
     });
 
@@ -178,6 +180,7 @@ describe('composeAuthorizationEvaluationInput', () => {
         entitlementState: 'NOT_REQUIRED',
         capabilityState: 'NOT_REQUIRED',
         relationshipState: 'NOT_REQUIRED',
+        resourcePolicyState: 'NOT_REQUIRED',
         riskPolicyState: 'NOT_REQUIRED'
       })
     });

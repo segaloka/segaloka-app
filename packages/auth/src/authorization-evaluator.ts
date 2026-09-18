@@ -210,6 +210,10 @@ export function evaluateAuthorization(
     return denyAuthorization(input.permissionKey, 'CAPABILITY_RESTRICTED');
   }
 
+  if (input.resourcePolicyState === 'UNSATISFIED') {
+    return denyAuthorization(input.permissionKey, 'RESOURCE_POLICY_DENIED');
+  }
+
   if (input.riskPolicyState === 'UNSATISFIED') {
     return denyAuthorization(input.permissionKey, 'RISK_POLICY_DENIED');
   }
