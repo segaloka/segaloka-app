@@ -22,6 +22,13 @@
       "when": 1789511079368,
       "tag": "0002_ancient_owl",
       "breakpoints": true
+    },
+    {
+      "idx": 3,
+      "version": "7",
+      "when": 1789558101592,
+      "tag": "0003_repair_legacy_auth_iam_schema",
+      "breakpoints": true
     }
   ]
 }
