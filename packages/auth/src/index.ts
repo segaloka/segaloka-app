@@ -1,4 +1,7 @@
-export { AUTHORIZATION_DENY_REASONS } from './authorization-contract.js';
+export {
+  AUTHORIZATION_DENY_REASONS,
+  AUTHORIZATION_RESOURCE_TYPES
+} from './authorization-contract.js';
 
 export { isAuthorizationAllowed, isAuthorizationDenied } from './authorization-decision.js';
 
@@ -25,6 +28,8 @@ export type {
   AuthorizationDenyReason,
   AuthorizationRequest,
   AuthorizationResourceContext,
+  AuthorizationResourceId,
+  AuthorizationResourceType,
   AuthorizationSubjectId
 } from './authorization-contract.js';
 

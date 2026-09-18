@@ -6,7 +6,15 @@ import type { BranchId, RequestContext, TenantId } from './request-context.js';
 
 export type AuthorizationSubjectId = OpaqueId<'AuthorizationSubjectId'>;
 
+export type AuthorizationResourceId = OpaqueId<'AuthorizationResourceId'>;
+
+export const AUTHORIZATION_RESOURCE_TYPES = ['MARKETPLACE_PACKAGE'] as const;
+
+export type AuthorizationResourceType = (typeof AUTHORIZATION_RESOURCE_TYPES)[number];
+
 export interface AuthorizationResourceContext {
+  readonly resourceType?: AuthorizationResourceType;
+  readonly resourceId?: AuthorizationResourceId;
   readonly tenantId?: TenantId;
   readonly branchId?: BranchId;
   readonly ownerSubjectId?: AuthorizationSubjectId;

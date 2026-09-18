@@ -2,7 +2,10 @@ import { describe, expect, it } from 'vitest';
 
 import { asOpaqueId } from '@segaloka/shared-kernel';
 
-import { AUTHORIZATION_DENY_REASONS } from './authorization-contract.js';
+import {
+  AUTHORIZATION_DENY_REASONS,
+  AUTHORIZATION_RESOURCE_TYPES
+} from './authorization-contract.js';
 
 import type { AuthorizationDecision, AuthorizationRequest } from './authorization-contract.js';
 
@@ -29,6 +32,35 @@ describe('Authorization contract', () => {
     expect(request.permissionKey).toBe('booking.read');
 
     expect(request.resource?.tenantId).toBe(request.context.tenantId);
+  });
+
+  it('represents a typed authorization resource identity', () => {
+    const request: AuthorizationRequest = {
+      context: {
+        requestId: asOpaqueId<'RequestId'>('request_02'),
+        principalId: asOpaqueId<'PrincipalId'>('principal_02'),
+        tenantId: asOpaqueId<'TenantId'>('tenant_02'),
+        locale: 'id',
+        riskLevel: 'LOW'
+      },
+      permissionKey: 'package.publish',
+      resource: {
+        resourceType: 'MARKETPLACE_PACKAGE',
+        resourceId: asOpaqueId<'AuthorizationResourceId'>('package_01'),
+        tenantId: asOpaqueId<'TenantId'>('tenant_02')
+      }
+    };
+
+    expect(request.resource?.resourceType).toBe('MARKETPLACE_PACKAGE');
+    expect(request.resource?.resourceId).toBe('package_01');
+  });
+
+  it('contains unique canonical resource types', () => {
+    expect(AUTHORIZATION_RESOURCE_TYPES).toEqual(['MARKETPLACE_PACKAGE']);
+
+    expect(new Set(AUTHORIZATION_RESOURCE_TYPES).size).toBe(
+      AUTHORIZATION_RESOURCE_TYPES.length
+    );
   });
 
   it('represents an allow decision with the satisfied scope', () => {

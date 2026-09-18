@@ -11,6 +11,7 @@ describe('@segaloka/auth public API', () => {
         'AUTHORIZATION_MEMBERSHIP_STATES',
         'AUTHORIZATION_ORGANIZATION_STATES',
         'AUTHORIZATION_POLICY_STATES',
+        'AUTHORIZATION_RESOURCE_TYPES',
         'AUTHORIZATION_ROLE_ASSIGNMENT_STATES',
         'AuthorizationEvaluationInvariantError',
         'RISK_LEVELS',
