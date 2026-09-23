@@ -1,6 +1,7 @@
 cd /home/claude/sg
-cat i18n.js data.js core.js pages_a.js pages_b.js pages_c.js main.js pages_d.js pages_e.js pages_f.js pages_g.js portals.js sync.js boot.js > _all.js && node --check _all.js || exit 1
+cat i18n.js data.js core.js pages_a.js pages_b.js pages_c.js main.js pages_d.js pages_e.js pages_f.js pages_g.js portals.js segadeals.js sync.js boot.js > _all.js && node --check _all.js || exit 1
 { cat <<'H'
+<meta charset="utf-8">
 <title>SEGALOKA Control Center</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
