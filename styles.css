@@ -654,3 +654,27 @@ mark{background:var(--warn-bg);color:inherit;border-radius:2px;padding:0 1px}
 .uimg{width:84px;min-height:84px;border-radius:10px;background:linear-gradient(135deg,var(--accent),#57B8FF);color:#fff;display:flex;align-items:flex-end;padding:6px;font-size:11px;font-weight:700;flex:none}
 .deal{min-width:170px;display:grid;gap:4px;padding:10px;border-radius:12px;background:var(--promo-bg);color:var(--ink);border:1px solid var(--line);text-decoration:none}
 @media (max-width:640px){.wsbtn .wsl{display:none}}
+/* ---- responsive hardening (top bar & global) ---- */
+.top>*{flex-shrink:0}
+.top .searchbtn{flex:1 1 120px;min-width:36px;overflow:hidden}
+@media (max-width:1280px){.top .envpill span,.top .envpill .lbl{display:none}}
+@media (max-width:1100px){.hijri{display:none}.seg.theme{display:none}}
+@media (max-width:900px){.top .searchbtn span,.top .searchbtn kbd{display:none}.top .searchbtn{flex:0 0 36px;width:36px;padding:0;justify-content:center}.wsbtn .wsl{display:none}}
+@media (max-width:640px){.top .acctbtn .who,.top .acctbtn>svg{display:none}}
+html,body{max-width:100%;overflow-x:hidden}
+#work img,#work svg,#work canvas{max-width:100%}
+#work pre,#work code{white-space:pre-wrap;word-break:break-word}
+.flow{overflow-x:auto;scrollbar-width:thin}
+.panel-f,.panel-h{flex-wrap:wrap;row-gap:6px}
+.panel-h h3{min-width:0}
+.qitem .body{min-width:0;overflow:hidden}
+.qitem .t2{display:block;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.hbar{min-width:0}.hbar .val{overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+@media (max-width:640px){
+  .mpgrid,.apgrid,#work [style*="grid-template-columns:minmax(0"],#work [style*="grid-template-columns: minmax(0"]{grid-template-columns:minmax(0,1fr)!important}
+  .hbar{grid-template-columns:minmax(0,90px) minmax(0,1fr) auto!important}
+}
+#work .grid>*,#work [style*="display:grid"]>*,#work .kpis>*{min-width:0}
+#work .panel{max-width:100%}
+@media (max-width:1280px){.flow{flex-wrap:wrap}.flow .fs{min-width:25%;border-bottom:1px solid var(--line)}.flow .arrow{display:none}}
+@media (max-width:640px){.flow .fs{min-width:50%}}

@@ -6,7 +6,7 @@
 const SB = { project: 'lcfjqhnimbigwiqkrapm', mcp: null, on: false, seeding: false, room: null, flash: new Set(), seen: 0, peers: 1, changes: [], state: 'connecting', saved: {}, savedSet: {}, auditSaved: new Set(), lastPoll: 0, lastSave: 0, busy: false, again: false, err: null, pendingRemote: false };
 NOTIFS.forEach((n, i) => { if (!n.id) n.id = 'NTF-' + (500 + i); });
 const CORE = { travels: () => TRAVELS, mitra: () => MITRA, agen: () => AGEN, vendors: () => VENDORS, affiliates: () => AFFILIATES, travelers: () => TRAVELERS, packages: () => PACKAGES, bookings: () => BOOKINGS, payments: () => PAYMENTS, settlements: () => SETTLEMENTS, withdrawals: () => WITHDRAWALS, refunds: () => REFUNDS, campaigns: () => CAMPAIGNS, conversations: () => CONVERSATIONS, approvals: () => APPROVALS };
-const RECS = { branches: () => BRANCHES, notifications: () => NOTIFS, websites: () => WEBSITES, vendor_categories: () => VCATS, vendor_products: () => VPRODUCTS, referral_links: () => REFLINKS, commissions: () => COMMISSIONS, sd_requests: () => SD_REQ, sd_offers: () => SD_OFF, mp_categories: () => MPCATS, contacts: () => CONTACTS, templates: () => TPLS, broadcasts: () => BROADCASTS, automations: () => AUTOMATIONS, routing_rules: () => RULES, sla_policies: () => SLAS, adsets: () => ADSETS, ads: () => ADS, creatives: () => CREATIVES, placements: () => PLACEMENTS, ad_budgets: () => ADBUDGETS, vouchers: () => VOUCHERS, trackers: () => TRACKERS, conversion_defs: () => CONVDEFS, ops_documents: () => OPSDOCS, deposits: () => DEPOSITS, fees: () => FEES, plans: () => PLANS, addons: () => ADDONS, leads: () => LEADS, platform_users: () => USERS, security_events: () => SECEV, risk_cases: () => RISKS, config: () => CONFIG, currencies: () => CURS, feature_flags: () => FLAGS, integrations: () => INTEGS, incidents: () => INCIDENTS, webhooks: () => WEBHOOKS, bank_lines: () => BANK, departures: () => DEPS, channels: () => CHANNELS, providers: () => PROVIDERS };
+const RECS = { branches: () => BRANCHES, notifications: () => NOTIFS, websites: () => WEBSITES, vendor_categories: () => VCATS, vendor_products: () => VPRODUCTS, referral_links: () => REFLINKS, commissions: () => COMMISSIONS, sd_requests: () => SD_REQ, sd_offers: () => SD_OFF, mp_categories: () => MPCATS, contacts: () => CONTACTS, templates: () => TPLS, broadcasts: () => BROADCASTS, automations: () => AUTOMATIONS, routing_rules: () => RULES, sla_policies: () => SLAS, adsets: () => ADSETS, ads: () => ADS, creatives: () => CREATIVES, placements: () => PLACEMENTS, ad_budgets: () => ADBUDGETS, vouchers: () => VOUCHERS, trackers: () => TRACKERS, conversion_defs: () => CONVDEFS, ops_documents: () => OPSDOCS, deposits: () => DEPOSITS, fees: () => FEES, plans: () => PLANS, addons: () => ADDONS, leads: () => LEADS, platform_users: () => USERS, security_events: () => SECEV, risk_cases: () => RISKS, config: () => CONFIG, currencies: () => CURS, feature_flags: () => FLAGS, integrations: () => INTEGS, incidents: () => INCIDENTS, webhooks: () => WEBHOOKS, bank_lines: () => BANK, departures: () => DEPS, channels: () => CHANNELS, providers: () => PROVIDERS, vendor_orders: () => VORDERS };
 const SETS = { roles: [() => Object.fromEntries(Object.entries(ROLES).map(([k, r]) => [k, { label: r.label, perms: r.perms }])), v => { Object.keys(ROLES).forEach(k => { if (!v[k]) delete ROLES[k]; }); Object.entries(v).forEach(([k, r]) => ROLES[k] = { label: r.label, perms: r.perms }); }], paycfg: [() => PAYCFG, v => Object.assign(PAYCFG, v)], notif_cfg: [() => NCFG, v => Object.assign(NCFG, v)], security_policy: [() => SECPOL, v => Object.assign(SECPOL, v)], attribution: [() => ATTR, v => Object.assign(ATTR, v)], brand: [() => BRAND, v => Object.assign(BRAND, v)] };
 const ALLC = () => [...Object.keys(CORE).map(k => [k, CORE[k], true]), ...Object.keys(RECS).map(k => [k, RECS[k], false])];
 const tagFor = s => { let t; do { t = '$sg' + Math.random().toString(36).slice(2, 8) + '$'; } while (s.includes(t)); return t; };
@@ -24,9 +24,8 @@ function applyRows(rows, remote) { let changed = 0; const by = {}; rows.forEach(
 const auditFromRow = r => ({ id: r.id, ts: +r.t, actor: r.actor, action: r.action, resource: r.resource, result: r.result, source: r.source, before: r.before, after: r.after, reason: r.reason });
 async function sbLoad() {
   const core = Object.keys(CORE).map(k => `select '${k}' as c, id, data from control_center.${k}`).join(' union all ');
-  const [a, b, c, d, pr] = await Promise.all([sql(core), sql(`select collection as c, id, data from control_center.records`), sql(`select key, value from control_center.settings`), sql(`select id, (extract(epoch from ts)*1000)::bigint as t, actor, action, resource, result, source, before, after, reason from control_center.audit_log order by ts desc limit 400`), sql(PROBE_SQL()).catch(() => [])]);
+  const [a, b, c, d, pr] = await Promise.all([sql(core), sql(`select collection as c, id, data from control_center.records`), sql(`select key, value from control_center.settings`), sql(`select id, (extract(epoch from ts)*1000)::bigint as t, actor, action, resource, result, source, before, after, reason from control_center.audit_log where not is_demo order by ts desc limit 400`), sql(PROBE_SQL()).catch(() => [])]);
   SB.seen = +((pr && pr[0] && pr[0].m) || 0);
-  if (!a.length) throw { code: 'empty', message: 'Database kosong — seed belum dijalankan.' };
   applyRows([...a, ...b], false);
   c.forEach(r => { if (SETS[r.key]) { SETS[r.key][1](r.value); SB.savedSet[r.key] = snap(SETS[r.key][0]()); } });
   AUDIT.length = 0; d.forEach(r => { AUDIT.push(auditFromRow(r)); SB.auditSaved.add(r.id); });
@@ -87,22 +86,41 @@ const isMissing = e => /does not exist|relation .*control_center|schema "control
 const isDenied = e => /permission|not authorized|forbidden|-32600/i.test((e && e.message) || '');
 async function sbBootstrap(firstTime) {
   if (firstTime) { toast('info', L3(['Menyiapkan database…', 'Setting up the database…', 'جارٍ إعداد قاعدة البيانات…']), L3(['Membuat schema control_center', 'Creating control_center schema', 'إنشاء المخطط'])); await sql(SB_MIGRATION); }
-  SB.on = true; SB.seeding = true; SB.saved = {}; SB.savedSet = {}; SB.auditSaved = new Set(); await sbFlush(); SB.seeding = false;
-  if (SB.state === 'error') throw SB.err;
-  audit('System', 'database.seed', 'Supabase/' + SB.project + '/control_center', 'success', { source: 'Control Center bootstrap', after: 'demo seed (is_demo = true)' }); await sbFlush();
-  toast('ok', L3(['Database siap', 'Database ready', 'قاعدة البيانات جاهزة']), L3(['Seed demo tersimpan (ditandai is_demo)', 'Demo seed saved (flagged is_demo)', 'تم الحفظ']));
+  await sql(`insert into control_center.settings (key, value) values ('data_mode', '"production"'::jsonb) on conflict (key) do update set value = excluded.value`);
+  SB.on = true; await sbFlush(); if (SB.state === 'error') throw SB.err;
+}
+/* Produksi: data demo lama dicadangkan ke control_center.demo_backup lalu dihapus (sekali saja). Konfigurasi tetap. */
+const ENTITY_RECS = ['branches', 'notifications', 'websites', 'vendor_products', 'referral_links', 'commissions', 'sd_requests', 'sd_offers', 'contacts', 'broadcasts', 'adsets', 'ads', 'creatives', 'ad_budgets', 'vouchers', 'ops_documents', 'deposits', 'leads', 'platform_users', 'security_events', 'risk_cases', 'incidents', 'webhooks', 'bank_lines', 'departures', 'vendor_orders'];
+const CORE_DEL_ORDER = ['approvals', 'conversations', 'campaigns', 'refunds', 'withdrawals', 'settlements', 'payments', 'bookings', 'packages', 'travelers', 'affiliates', 'vendors', 'agen', 'mitra', 'travels'];
+async function sbProductionize() {
+  const r = await sql(`select value #>> '{}' as v from control_center.settings where key = 'data_mode'`);
+  if (r[0] && r[0].v === 'production') return false;
+  const n = await sql(`select (select count(*) from control_center.travels) + (select count(*) from control_center.bookings) as n`);
+  if (+(n[0] && n[0].n) > 0 && !SB.purgeOk) { SB.needPurge = true; return false; }
+  const inList = ENTITY_RECS.map(k => `'${k}'`).join(',');
+  await sql(['begin',
+    'create table if not exists control_center.demo_backup (tbl text not null, id text not null, data jsonb, backed_at timestamptz not null default now(), primary key (tbl, id))',
+    'alter table control_center.demo_backup enable row level security',
+    'revoke all on control_center.demo_backup from anon, authenticated',
+    ...CORE_DEL_ORDER.map(k => `insert into control_center.demo_backup (tbl, id, data) select '${k}', id, data from control_center.${k} on conflict do nothing`),
+    `insert into control_center.demo_backup (tbl, id, data) select 'records:' || collection, id, data from control_center.records where collection in (${inList}) on conflict do nothing`,
+    ...CORE_DEL_ORDER.map(k => `delete from control_center.${k}`),
+    `delete from control_center.records where collection in (${inList})`,
+    `insert into control_center.settings (key, value) values ('data_mode', '"production"'::jsonb) on conflict (key) do update set value = excluded.value`,
+    'commit'].join('; ') + ';');
+  return true;
 }
 async function sbConnect() {
   SB.state = 'connecting'; paintSync();
   let mcp = null; try { mcp = window.claude && window.claude.use ? await window.claude.use('mcp') : null; } catch (e) { mcp = null; }
-  if (!mcp) { SB.state = 'local'; paintSync(); renderBanners(); return; }
+  if (!mcp || DEMO) { SB.state = 'local'; paintSync(); renderBanners(); return; }
   SB.mcp = mcp;
   try {
-    try { await sbLoad(); }
-    catch (e) { if (isMissing(e)) await sbBootstrap(true); else if (e && e.code === 'empty') await sbBootstrap(false); else throw e; }
+    let purged = false; SB.needPurge = false;
+    try { purged = await sbProductionize(); await sbLoad(); }
+    catch (e) { if (isMissing(e)) { await sbBootstrap(true); await sbLoad(); } else throw e; }
     SB.on = true; SB.state = 'saved'; SB.err = null;
-    const fresh = ['agen', 'sd_requests', 'sd_offers'].filter(k => !Object.keys(SB.saved[k] || {}).length && ALLC().find(c => c[0] === k)[1]().length);
-    if (fresh.length) { SB.seeding = true; await sbFlush(); SB.seeding = false; }
+    if (purged) { clearFakeStats(); recompute(); audit('System', 'database.production', 'Supabase/' + SB.project + '/control_center', 'success', { source: 'Control Center', after: L3(['Data demo dicadangkan ke demo_backup & dihapus', 'Demo data backed up to demo_backup & removed', 'تم نسخ البيانات التجريبية وحذفها']) }); await sbFlush(); toast('ok', L3(['Mode produksi aktif', 'Production mode on', 'وضع الإنتاج']), L3(['Data demo dipindah ke cadangan', 'Demo data moved to backup', 'نُقلت البيانات'])); }
     if (migrateAdsInventory()) { audit('System', 'ads.inventory.migrate', 'Ads/placements', 'success', { source: 'Control Center v6', after: 'Iklan hanya di Website & Aplikasi Segaloka' }); await sbFlush(); }
     if (ensureLinks()) await sbFlush();
     renderShell(); render(); paintSync();
@@ -132,3 +150,6 @@ function rtEmit(n) { if (SB.room) SB.room.emit('sg.changed', { n }).catch(() => 
 
 /* seed export (dipakai sekali untuk mengisi database) */
 function sbExport() { const out = { core: {}, recs: {}, sets: {}, audit: AUDIT }; ALLC().forEach(([n, g, core]) => (core ? out.core : out.recs)[n] = g().filter(o => o && o.id)); Object.entries(SETS).forEach(([k, [g]]) => out.sets[k] = g()); return out; }
+
+/* pembersihan data demo hanya atas konfirmasi pemilik (tidak otomatis) */
+A['sb-purge'] = () => confirmAction({ title: L3(['Cadangkan & hapus data demo', 'Back up & remove demo data', 'نسخ وحذف البيانات التجريبية']), desc: L3(['Semua Travel, booking, pembayaran, dan entitas demo lain disalin ke tabel control_center.demo_backup lalu dihapus. Konfigurasi (fee, plan, slot iklan, template) tetap. Setelah ini semua angka dihitung dari data nyata.', 'All demo Travels, bookings, payments and other entities are copied to control_center.demo_backup and then removed. Configuration (fees, plans, ad slots, templates) is kept. Afterwards every figure is computed from real data.', 'سيتم النسخ ثم الحذف.']), tone: 'danger', reason: true, label: L3(['Cadangkan & hapus', 'Back up & remove', 'نسخ وحذف']), resource: 'Supabase/' + SB.project, onOk: async () => { SB.purgeOk = true; try { await sbProductionize(); ENTITY_ARRAYS().forEach(a => { a.length = 0; }); SB.saved = {}; await sbLoad(); clearFakeStats(); SB.needPurge = false; audit('Admin Pusat', 'database.production', 'Supabase/' + SB.project + '/control_center', 'success', { source: 'Control Center', after: 'demo data -> demo_backup' }); await sbFlush(); rtEmit(1); toast('ok', L3(['Mode produksi aktif', 'Production mode on', 'وضع الإنتاج']), L3(['Data demo dipindah ke cadangan', 'Demo data moved to backup', 'نُقلت'])); renderBanners(); rerender(); } catch (e) { toast('bad', L3(['Gagal', 'Failed', 'فشل']), String(e.message || e)); } } });
