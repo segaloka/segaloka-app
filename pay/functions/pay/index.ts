@@ -39,6 +39,12 @@ async function targetInfo(kind: string, id: string) {
     if (p.status !== "pending") return { done: true };
     return { amount: Number(p.amount), desc: `Booking ${b?.id || ""} · ${p.id}`, name: tv?.name || "Jamaah", email: tv?.email && tv.email !== "—" ? tv.email : undefined, phone: tv?.phone };
   }
+  if (kind === "subscription") {
+    const t = await sql`select data from control_center.travels where id = ${id}`;
+    if (!t.length) return null;
+    const d = t[0].data;
+    return { amount: Number(d.sub?.price || 0), desc: `Subscription ${d.sub?.plan || ""} · ${d.name}`, name: d.contact?.name || d.name, email: d.contact?.email && d.contact.email !== "—" ? d.contact.email : undefined, phone: d.contact?.phone };
+  }
   const r = await sql`select data from control_center.records where collection = 'sd_ledger' and id = ${id}`;
   if (!r.length) return null;
   const d = r[0].data;

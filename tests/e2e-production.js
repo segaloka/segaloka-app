@@ -120,6 +120,11 @@ let fails = 0; const ok = (c, m) => { console.log((c ? 'PASS ' : 'FAIL ') + m); 
     await wait(B, () => myNotifs().some(n => /Withdrawal/.test(n.title) && /Ditransfer|Disbursed|Dicairkan|disbursed/i.test(n.title)) || (sbPoll(true), false), null, 30000); ok(true, 'travel notified at each withdrawal step');
   }
 
+  // 7c) subscription dibayar lewat gateway -> aktif otomatis
+  const renew0 = +q(`select data#>>'{sub,renew}' from control_center.travels where id='${tid}'`);
+  await B.evaluate(() => { A['ts-pay'](); }); await B.waitForTimeout(1200);
+  ok(q(`select target_kind || '/' || target_id from control_center.pay_outbox where target_kind='subscription' order by created_at desc limit 1`) === 'subscription/' + tid, 'subscription checkout goes through gateway');
+  ok(q(`select control_center.sg_gateway_paid('subscription', '${tid}', 499000, 'MT-SUB-1', 'Midtrans')`) === 'ok' && +q(`select data#>>'{sub,renew}' from control_center.travels where id='${tid}'`) > renew0 && q(`select data#>>'{sub,state}' from control_center.travels where id='${tid}'`) === 'active', 'subscription activated/extended automatically by webhook');
   // 8) Vendor: daftar -> verifikasi -> produk -> dipesan Travel -> selesai -> saldo vendor
   const E = await mk(V6, '/p/vendor'); await fill(E, { 'ob-name': 'Hotel Makkah Sejahtera' }); await act(E, '[data-act="ob-save"][data-ws="vendor"]');
   const vid = await E.evaluate(() => VENDORS[0].id);

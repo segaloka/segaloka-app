@@ -1,7 +1,7 @@
 -- SEGALOKA Payment Gateway core (idempoten): pembayaran MASUK terkonfirmasi otomatis dari webhook gateway.
 create table if not exists control_center.pay_outbox (
   id text primary key default ('POB-' || upper(substr(md5(random()::text || clock_timestamp()::text), 1, 12))),
-  target_kind text not null check (target_kind in ('payment','sd_ledger')),
+  target_kind text not null,
   target_id text not null,
   amount numeric not null,
   order_id text unique,
@@ -13,13 +13,15 @@ create table if not exists control_center.pay_outbox (
   created_at timestamptz not null default now(),
   updated_at timestamptz not null default now()
 );
+do $x$ declare c text; begin for c in select conname from pg_constraint where conrelid = 'control_center.pay_outbox'::regclass and contype = 'c' and pg_get_constraintdef(oid) ilike '%target_kind%' loop execute format('alter table control_center.pay_outbox drop constraint %I', c); end loop; end $x$;
+alter table control_center.pay_outbox add constraint pay_outbox_target_kind check (target_kind in ('payment','sd_ledger','subscription'));
 create index if not exists pay_outbox_target on control_center.pay_outbox (target_kind, target_id);
 alter table control_center.pay_outbox enable row level security;
 revoke all on control_center.pay_outbox from anon, authenticated;
 
 create or replace function control_center.sg_notify(p_to text, p_cat text, p_tone text, p_title text, p_sub text, p_route text) returns void
 language sql security definer set search_path = '' as $f$
-  insert into control_center.records (collection, id, data) select 'notifications', x.id, jsonb_build_object('id', x.id, 'to', p_to, 'cat', p_cat, 'tone', p_tone, 'title', p_title, 'sub', p_sub, 'route', p_route, 'ts', (extract(epoch from now()) * 1000)::bigint, 'unread', true)
+  insert into control_center.records (collection, id, data) select 'notifications', x.id, jsonb_build_object('id', x.id, 'to', nullif(p_to, 'admin'), 'cat', p_cat, 'tone', p_tone, 'title', p_title, 'sub', p_sub, 'route', p_route, 'ts', (extract(epoch from now()) * 1000)::bigint, 'unread', true)
   from (select 'NTF-' || upper(substr(md5(random()::text || clock_timestamp()::text), 1, 10)) as id) x where p_to is not null
 $f$;
 
@@ -58,9 +60,17 @@ begin
       update control_center.bookings set data = data || jsonb_build_object('sdFeeState', 'paid'), updated_at = now() where id = r.data->>'booking';
     end loop;
     perform control_center.sg_notify('travel:' || tid, 'payment', 'ok', 'Deposit SegaDeals masuk (otomatis)', 'Rp ' || to_char(p_amount, 'FM999G999G999G999'), '/p/travel/segadeals');
+  elsif p_kind = 'subscription' then
+    update control_center.travels set data = jsonb_set(jsonb_set(data, '{sub,state}', '"active"'), '{sub,renew}', to_jsonb(greatest(now_ms, coalesce((data#>>'{sub,renew}')::bigint, 0)) + 30::bigint * 86400000))
+        || case when data->>'op' = 'inactive' and data->>'legal' in ('verified', 'expiring') then '{"op":"active"}'::jsonb else '{}'::jsonb end, updated_at = now()
+      where id = p_id returning data into led;
+    if led is null then return 'not_found'; end if;
+    update control_center.records set data = data || '{"state":"published","ssl":"active"}'::jsonb, updated_at = now() where collection = 'websites' and data->>'travel' = p_id;
+    perform control_center.sg_notify('travel:' || p_id, 'subscription', 'ok', 'Subscription dibayar (otomatis)', (led#>>'{sub,plan}') || ' · aktif s/d ' || to_char(to_timestamp((led#>>'{sub,renew}')::bigint / 1000), 'DD Mon YYYY'), '/p/travel/subscription');
+    perform control_center.sg_notify('admin', 'subscription', 'ok', 'Subscription dibayar', led->>'name', '/travel/' || p_id);
   else return 'bad_kind'; end if;
   insert into control_center.audit_log (id, ts, actor, action, resource, result, source, after)
-    values ('AUD-' || upper(substr(md5(random()::text || clock_timestamp()::text), 1, 12)), now(), 'System', 'webhook.payment.paid', case when p_kind = 'payment' then 'Payment/' else 'SegaDealsDeposit/' end || p_id, 'success', 'Gateway · ' || coalesce(p_provider, ''), coalesce(p_ref, '') || ' · ' || p_amount::text);
+    values ('AUD-' || upper(substr(md5(random()::text || clock_timestamp()::text), 1, 12)), now(), 'System', 'webhook.payment.paid', case p_kind when 'payment' then 'Payment/' when 'subscription' then 'Subscription/' else 'SegaDealsDeposit/' end || p_id, 'success', 'Gateway · ' || coalesce(p_provider, ''), coalesce(p_ref, '') || ' · ' || p_amount::text);
   update control_center.pay_outbox set status = 'paid', updated_at = now() where target_kind = p_kind and target_id = p_id;
   return 'ok';
 end $f$;
