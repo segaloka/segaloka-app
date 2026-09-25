@@ -182,6 +182,18 @@ let fails = 0; const ok = (c, m) => { console.log((c ? 'PASS ' : 'FAIL ') + m); 
   const pl = q(`select id from control_center.records where collection='letters' and data->>'type'='passport_rec' and data->>'booking'='${sdb.id}'`);
   await wait(B, id => LETTERS.some(l => l.id === id) || (sbPoll(true), false), pl, 30000); await go(B, '/p/travel/bookings/' + sdb.id); await act(B, `[data-act="lt-issue"][data-id="${pl}"]`); await fill(B, { 'li-no': '001/REK/IX/2026' }); await B.setInputFiles('#li-file', '/tmp/claude-0/doc.pdf'); await act(B, `[data-act="lt-issue-go"][data-id="${pl}"]`); await settle(B);
   ok(q(`select data->>'state' from control_center.records where collection='letters' and id='${pl}'`) === 'issued', 'travel issued passport recommendation letter');
+  // 9b4) refund diajukan pengguna -> Travel diberi tahu & memproses
+  const sdPay = q(`select id from control_center.payments where data->>'booking'='${sdb.id}' and data->>'status'='pending' limit 1`);
+  const sdProof = await Dp.evaluate(async ([pid, png]) => { const bin = Uint8Array.from(atob(png), c => c.charCodeAt(0)); return (await doUploadPay(PAYMENTS.find(x => x.id === pid), new File([bin], 'tf.png', { type: 'image/png' }))).id; }, [sdPay, 'iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVR42mP8z8BQDwAEhQGAhKmMIQAAAABJRU5ErkJggg==']); await settle(Dp);
+  await wait(B, id => UPLOADS.some(u => u.id === id) || (sbPoll(true), false), sdProof, 30000); await go(B, '/p/travel/bookings/' + sdb.id); await act(B, `[data-act="pay-confirm"][data-id="${sdProof}"]`); await settle(B);
+  await wait(Dp, id => (bookingById(id) || {}).paid > 0 || (sbPoll(true), false), sdb.id, 30000); await go(Dp, '/p/traveler/bookings/' + sdb.id); await act(Dp, `[data-act="u-cancel"][data-id="${sdb.id}"]`); await settle(Dp);
+  ok(q(`select data->>'state' from control_center.bookings where id='${sdb.id}'`) === 'refund_requested', 'user requests refund before departure');
+  await wait(B, () => myNotifs().some(n => /refund/i.test(n.title)) || (sbPoll(true), false), null, 30000); ok(true, 'travel notified of refund request (realtime)');
+  const rfid = q(`select id from control_center.refunds where data->>'booking'='${sdb.id}'`);
+  await wait(B, id => REFUNDS.some(r => r.id === id) || (sbPoll(true), false), rfid, 30000); await go(B, '/p/travel/bookings/' + sdb.id);
+  await act(B, `[data-act="rf-approve"][data-id="${rfid}"]`); await fill(B, { 'ra-amount': 15000000, 'ra-note': 'Potongan biaya visa' }); await act(B, `[data-act="rf-approve-go"][data-id="${rfid}"]`); await settle(B);
+  await act(B, `[data-act="rf-paid"][data-id="${rfid}"]`); await fill(B, { 'rp-ref': 'RF-TRF-01' }); await B.setInputFiles('#rp-file', '/tmp/claude-0/doc.pdf'); await act(B, `[data-act="rf-paid-go"][data-id="${rfid}"]`); await settle(B);
+  ok(q(`select (data->>'state') || '/' || (data->>'approved') from control_center.refunds where id='${rfid}'`) === 'refunded/15000000' && q(`select data->>'state' from control_center.bookings where id='${sdb.id}'`) === 'refunded', 'travel approves amount & marks refund paid with proof');
 
   // 9c) setelah berangkat: tidak bisa refund, hanya ulasan
   await B.evaluate(async id => { await sbPoll(true); const b = bookingById(id); b.state = 'departed'; audit(me('travel').name, 'booking.departed', 'Booking/' + id, 'success'); await sbFlush(); rtEmit(1); }, bk.id);
