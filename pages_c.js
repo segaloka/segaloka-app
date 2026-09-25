@@ -112,7 +112,7 @@ const BP = {
  fin_dep: { s: ['Deposit jaminan per Travel', 'Top-up & potongan', 'Riwayat'], e: ['Deposit{travelId, balance, movements[]}'], l: ['active', 'hold'], r: ['travel_all', 'fin_set'] },
  fin_rec: { s: ['Batch rekonsiliasi harian', 'Match bank vs ledger vs gateway', 'Unmatched & mismatch', 'Resolusi manual (audit)'], e: ['ReconBatch{id, date, matched, unmatched}', 'ReconItem{paymentId, bankRef, diff}'], l: ['pending', 'reconciled', 'unmatched', 'mismatch'], r: ['fin_tx', 'fin_set', 'audit'] },
  fin_fee: { s: ['Fee platform per plan/tenant', 'MDR gateway', 'Komisi affiliate', 'Simulasi'], e: ['FeeRule{scope, type, rate}'], l: ['draft', 'active', 'archived'], r: ['sys_pay', 'aff_com'] },
- plan: { s: ['Starter / Growth / Enterprise', 'Harga & siklus', 'Entitlement (website, cabang, CRM seat, omnichannel)'], e: ['Plan{id, price, entitlements}'], l: ['draft', 'active', 'archived'], r: ['sub', 'addon'] },
+ plan: { s: ['Starter / Growth / Scale', 'Harga & siklus', 'Entitlement (website, cabang, CRM seat, omnichannel)'], e: ['Plan{id, price, entitlements}'], l: ['draft', 'active', 'archived'], r: ['sub', 'addon'] },
  addon: { s: ['Cabang tambahan', 'Seat CRM', 'Nomor WhatsApp', 'Kredit broadcast'], e: ['Addon{id, unitPrice, entitlement}'], l: ['active', 'archived'], r: ['sub', 'travel_branch'] },
  website: { s: ['Semua website Travel', 'Template', 'Domain'], e: ['Website'], l: ['draft', 'published', 'unpublished'], r: ['travel_web', 'sub'] },
  crm: { s: ['Pipeline lead per Travel', 'Aktivitas sales', 'Integrasi Omnichannel'], e: ['Lead{id, stage, ownerId}'], l: ['open', 'in_progress', 'completed', 'closed'], r: ['om_contact', 'booking'] },

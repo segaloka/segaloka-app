@@ -482,6 +482,7 @@ mark{background:var(--warn-bg);color:inherit;border-radius:2px;padding:0 1px}
 .chan.wa{color:#17784A;border-color:var(--ok-line);background:var(--ok-bg)}
 .chan.ig{color:#A23B72;border-color:#E9C3D6;background:#FBEFF5}
 .chan.fb{color:#2447C4;border-color:var(--accent-line);background:var(--accent-soft)}
+.chan.tg{color:#1C7FB6;border-color:#BFE0F2;background:#EAF6FC}
 .chan.em{color:var(--warn);border-color:var(--warn-line);background:var(--warn-bg)}
 .chan.web{color:var(--info);border-color:var(--info-line);background:var(--info-bg)}
 :root[data-theme="dark"] .chan.ig{color:#F08BC0;border-color:#5B2A44;background:#2C1522}
@@ -678,3 +679,4 @@ html,body{max-width:100%;overflow-x:hidden}
 #work .panel{max-width:100%}
 @media (max-width:1280px){.flow{flex-wrap:wrap}.flow .fs{min-width:25%;border-bottom:1px solid var(--line)}.flow .arrow{display:none}}
 @media (max-width:640px){.flow .fs{min-width:50%}}
+.chan.app{color:#0B6E4F;border-color:#BFE6D6;background:#EAF7F1}.chan.dash{color:#6B4BB8;border-color:#D9CCF3;background:#F3EFFC}.chan.push{color:#8A5A00;border-color:#F0DDB0;background:#FBF4E3}

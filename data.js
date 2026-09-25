@@ -37,8 +37,8 @@ const TRAVELS = TRAVEL_NAMES.map((name, i) => {
   const has = s => lic.some(l => l.status === s);
   const legal = has('rejected') ? 'rejected' : has('expired') ? 'expired' : (has('under_review') || has('submitted')) ? 'under_review' : has('expiring') ? 'expiring' : 'verified';
   const subState = i === 4 ? 'grace' : i === 9 ? 'suspended' : wpick(['active','grace','suspended','expired','pending','cancelled','trial'], [74, 6, 3, 4, 5, 2, 4]);
-  const plan = wpick(['Starter','Growth','Enterprise'], [40, 42, 18]);
-  const addonBranch = plan === 'Enterprise' ? ri(1, 6) : wpick([0, 1, 2], [70, 20, 10]);
+  const plan = wpick(['Starter','Growth','Scale'], [40, 42, 18]);
+  const addonBranch = plan === 'Scale' ? ri(1, 6) : wpick([0, 1, 2], [70, 20, 10]);
   const quota = 2 + addonBranch;
   const branches = subState === 'pending' ? 0 : Math.min(quota, ri(1, quota));
   let op = legal === 'verified' || legal === 'expiring' ? 'active' : legal === 'under_review' ? 'review' : 'inactive';
@@ -48,7 +48,7 @@ const TRAVELS = TRAVEL_NAMES.map((name, i) => {
   const contact = PEOPLE[(i * 7) % PEOPLE.length];
   return {
     id: 'TRV-' + String(10231 + i * 47).padStart(5, '0'), name, city, prov, lic, legal, op, payMode,
-    sub: { plan, state: subState, renew: T0 + ri(-20, 300) * D, addonBranch, price: { Starter: 1490000, Growth: 3490000, Enterprise: 8900000 }[plan] },
+    sub: { plan, state: subState, renew: T0 + ri(-20, 300) * D, addonBranch, price: { Starter: 0, Growth: 499000, Scale: 1499000 }[plan] },
     branch: { used: branches, quota }, services: [umrah && 'Umrah', haji && 'Haji', tour && 'Halal Tour'].filter(Boolean),
     contact: { name: contact, role: 'Direktur Utama', phone: '+62 8' + ri(11, 59) + ' ' + ri(1000, 9999) + ' ' + ri(1000, 9999), email: contact.toLowerCase().replace(/[^a-z]+/g, '.').replace(/^\.|\.$/g, '') + '@' + name.toLowerCase().replace(/[^a-z]+/g, '').slice(0, 14) + '.example' },
     npwp: `${ri(10,99)}.${ri(100,999)}.${ri(100,999)}.${ri(1,9)}-${ri(100,999)}.000`, nib: String(ri(1e12, 9e12)),

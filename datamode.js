@@ -11,7 +11,7 @@ function clearFakeStats() {
   SERVICES.length = 0;
   AUTOMATIONS.forEach(a => a.runs = 0); SLAS.forEach(s => s.met = null); TRACKERS.forEach(t => t.match = null);
   INTEGS.forEach(i => i.last = null); CONFIG.forEach(c => c.version = 1); TPLS.forEach(t => t.uses = 0);
-  CHANNELS.forEach(c => { c.convs = 0; if (c.id === 'web') c.account = 'Widget Web Chat Segaloka'; });
+  CHANNELS.forEach(c => { c.convs = 0; c.quality = '—'; if (c.internal || c.id === 'web') { if (c.id === 'web') c.account = 'Widget Web Chat Segaloka'; c.state = c.id === 'push' ? 'inactive' : 'active'; } else { c.account = ''; c.state = 'inactive'; } });
   ADDONS.forEach(a => a.active = 0);
 }
 if (!DEMO) { ENTITY_ARRAYS().forEach(a => { a.length = 0; }); clearFakeStats(); }
@@ -20,6 +20,7 @@ DEPSEL = null; PKGSEL = null;
 /* ---------- angka turunan dari data nyata ---------- */
 const dayKey = ts => Math.floor((ts - (T0 % D)) / D);
 function recompute() {
+  CONVERSATIONS.forEach(c => { if (!Array.isArray(c.tags)) c.tags = []; if (!Array.isArray(c.messages)) c.messages = []; if (typeof c.unread !== 'number') c.unread = 0; if (!c.ts) c.ts = (c.messages[c.messages.length - 1] || {}).ts || nowTs(); if (c.sla === undefined) c.sla = null; });
   const now = nowTs(), d30 = now - 30 * D;
   const paid = PAYMENTS.filter(p => p.status === 'paid');
   TRAVELS.forEach(tr => { tr.gmv30 = paid.filter(p => p.travel === tr.id && p.ts >= d30).reduce((s, p) => s + p.amount, 0); tr.book30 = BOOKINGS.filter(b => b.travel === tr.id && b.created >= d30).length; tr.branch = tr.branch || { used: 0, quota: 2 }; tr.branch.used = BRANCHES.filter(b => b.travel === tr.id && b.status !== 'inactive').length; });

@@ -53,6 +53,23 @@ bash build.sh        # menghasilkan segaloka-control-center.html
 
 Catatan: path di `build.sh` diawali `cd /home/claude/sg`. Ubah ke folder repo Anda bila perlu.
 
+## Omnichannel (koneksi nyata)
+
+Channel: **WhatsApp Cloud API, Facebook Messenger, Instagram DM, Email (Resend + inbound), Telegram**, plus Web Chat.
+
+```
+Pelanggan → Meta / Telegram / email → Edge Function `omni` (/webhook/...) → control_center.conversations → realtime → Inbox
+Inbox (balas) → control_center.omni_outbox → trigger pg_net → Edge Function `omni` (/send) → API provider
+          ← status sent/delivered/read/failed ← webhook status ←
+```
+
+- `omni/functions/omni/index.ts`: Edge Function (sudah di-deploy, verify_jwt=false; webhook Meta diverifikasi dengan X-Hub-Signature-256, Telegram dengan secret token, email dengan kunci).
+- `omni/migration_omni.sql`: tabel `omni_outbox`, `omni_events`, trigger dispatch, fungsi `sg_omni_set_secret` / `sg_omni_secret_status` (token di Supabase Vault, tidak pernah dibaca balik ke browser).
+- Setup per channel ada di Omnichannel › Channel › (WhatsApp/Instagram/Facebook/Email/Telegram): isi ID, simpan token, salin Callback URL, klik **Cek koneksi**.
+- Callback URL Meta: `https://lcfjqhnimbigwiqkrapm.supabase.co/functions/v1/omni/webhook/meta`.
+- Aturan Meta dijaga: balasan bebas hanya dalam 24 jam sejak pesan terakhir pelanggan (di luar itu pakai template).
+- Tes: `node tests/e2e-omni.js` (21 pemeriksaan; memakai stub Vault lokal `tests/omni_local_stub.sql`).
+
 ## Mode data
 
 - **Produksi (default)**: tidak ada data rekaan. Semua entitas diisi lewat UI (Portal Travel/Vendor/Affiliate/Mitra/Agen/Pengguna atau Control Center) dan semua angka (GMV, revenue, saldo, komisi, SLA, FRT, grafik harian) dihitung dari transaksi di database.
