@@ -152,6 +152,28 @@ let fails = 0; const ok = (c, m) => { console.log((c ? 'PASS ' : 'FAIL ') + m); 
   await go(Dp, '/p/traveler/segadeals/' + rid); await wait(Dp, oid => !!document.querySelector(`[data-act="sd-accept"][data-id="${oid}"]`) || (rerender(), false), oid, 30000);
   await act(Dp, `[data-act="sd-accept"][data-id="${oid}"]`);
   ok(q(`select data->>'state' from control_center.records where collection='sd_requests' and id='${rid}'`) === 'accepted', 'SegaDeals request accepted -> booking');
+  const sdo = JSON.parse(q(`select data from control_center.records where collection='sd_offers' and id='${oid}'`));
+  ok(!sdo.pkg && sdo.custom && sdo.custom.name, 'SegaDeals offer sent without a package');
+  const sdb = JSON.parse(q(`select data from control_center.bookings where data->>'sdOffer'='${oid}'`) || 'null');
+  const sdp = sdb && JSON.parse(q(`select data from control_center.packages where id='${sdb.pkg}'`) || 'null');
+  ok(sdp && sdp.private === true && sdp.seats === 2 && sdp.price === 29500000 && sdb.total === 59000000, 'custom package created on acceptance + booking: ' + (sdp && sdp.id));
+
+  // 9c) setelah berangkat: tidak bisa refund, hanya ulasan
+  await B.evaluate(async id => { await sbPoll(true); const b = bookingById(id); b.state = 'departed'; audit(me('travel').name, 'booking.departed', 'Booking/' + id, 'success'); await sbFlush(); rtEmit(1); }, bk.id);
+  await wait(Dp, id => (bookingById(id) || {}).state === 'departed' || (sbPoll(true), false), bk.id, 30000); await go(Dp, '/p/traveler/bookings/' + bk.id);
+  ok(await Dp.evaluate(id => !document.querySelector(`[data-act="u-cancel"]`) && !!document.querySelector(`[data-act="rv-new"][data-id="${id}"]`), bk.id), 'departed: no refund button, review offered');
+  await wait(A, id => (bookingById(id) || {}).state === 'departed' || (sbPoll(true), false), bk.id, 30000);
+  const nRef = +q("select count(*) from control_center.refunds"); await A.evaluate(id => A['bk-cancel']({ dataset: { id } }), bk.id); await settle(A);
+  ok(+q("select count(*) from control_center.refunds") === nRef && q(`select data->>'state' from control_center.bookings where id='${bk.id}'`) === 'departed', 'refund/cancel blocked after departure (admin too)');
+  await act(Dp, `[data-act="rv-new"][data-id="${bk.id}"]`); await Dp.selectOption('#rv-rTravel', '5'); await Dp.selectOption('#rv-rPkg', '4'); await fill(Dp, { 'rv-text': 'Pelayanan ramah, hotel dekat Masjidil Haram.' }); await act(Dp, `[data-act="rv-save"][data-id="${bk.id}"]`); await settle(Dp);
+  const rev = JSON.parse(q(`select data from control_center.records where collection='reviews' and data->>'booking'='${bk.id}'`) || 'null');
+  ok(rev && rev.rTravel === 5 && rev.rPkg === 4, 'review stored');
+  await wait(B, id => REVIEWS.some(r => r.id === id) || (sbPoll(true), false), rev.id, 30000); await go(B, '/p/travel/reviews');
+  await act(B, `[data-act="rv-reply"][data-id="${rev.id}"]`); await fill(B, { 'rr-reply': 'Terima kasih, semoga mabrur.' }); await act(B, `[data-act="rv-reply-go"][data-id="${rev.id}"]`); await settle(B);
+  ok(q(`select data->>'reply' from control_center.records where collection='reviews' and id='${rev.id}'`) === 'Terima kasih, semoga mabrur.', 'travel replied to review');
+  ok(await B.evaluate(tid => (recompute(), travelById(tid).rating === 5), tid), 'travel rating derived from reviews');
+  await wait(A, id => REVIEWS.some(r => r.id === id) || (sbPoll(true), false), rev.id, 30000); await go(A, '/marketplace/reviews'); await act(A, `[data-act="rv-mod"][data-id="${rev.id}"]`); await settle(A);
+  ok(q(`select data->>'state' from control_center.records where collection='reviews' and id='${rev.id}'`) === 'hidden', 'admin can hide review');
 
 
   // 9b) suspend / status -> notifikasi ke pihak terdampak (realtime)
