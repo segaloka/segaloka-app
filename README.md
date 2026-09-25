@@ -102,3 +102,16 @@ Hasil terakhir: E2E produksi 34/34 lulus di 1440px dan 390px. Crawler tanpa erro
 - Portal masih berupa pratinjau "masuk sebagai". Untuk produksi, setiap portal perlu login sendiri (Supabase Auth) dan RLS per tenant.
 - Simulasi role di UI bukan kontrol keamanan.
 - Konflik tulis memakai prinsip *last-writer-wins*.
+
+## Pembayaran digital otomatis (v9.4+)
+- Pembayaran MASUK (DP/pelunasan jamaah, deposit SegaDeals, subscription Travel) dibuat di gateway lewat Edge Function `pay` (`pay/functions/pay/index.ts`) dan terkonfirmasi otomatis dari webhook:
+  - Midtrans: `https://lcfjqhnimbigwiqkrapm.supabase.co/functions/v1/pay/webhook/midtrans`
+  - Xendit: `https://lcfjqhnimbigwiqkrapm.supabase.co/functions/v1/pay/webhook/xendit`
+- Pembayaran KELUAR (refund, withdrawal) tetap konfirmasi manual.
+- SQL: `pay/gateway_core.sql` (tabel `pay_outbox`, fungsi `sg_gateway_paid/failed`, `sg_notify`) + `pay/gateway_live.sql` (trigger pg_net & Vault). Kunci diisi di Control Center › System › Payment.
+
+## Deploy
+1. `bash build.sh` → menghasilkan `segaloka-control-center.html` (satu file, siap dibuka/di-host).
+2. Database: `migration.sql`, `omni/migration_omni.sql`, `pay/gateway_core.sql`, `pay/gateway_live.sql` (idempoten).
+3. Edge Functions: `omni/functions/omni`, `pay/functions/pay` (verify_jwt = false; autentikasi lewat signature/kunci).
+4. Tes: `tests/e2e-production.js`, `tests/e2e-omni.js`, `tests/crawl-all-actions.js` (butuh Postgres lokal + Playwright).
