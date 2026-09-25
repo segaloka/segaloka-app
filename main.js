@@ -18,7 +18,7 @@ Object.assign(A, {
   'cmd-scope': el => { CMD.scope = el.dataset.v; CMD.i = 0; document.querySelectorAll('[data-act="cmd-scope"]').forEach(b => b.setAttribute('aria-pressed', b === el)); drawCmd(); document.getElementById('cmdq').focus(); },
   'cmd-go': el => { closeOverlays(); go(el.dataset.r); },
   ncat: el => { NCAT = el.dataset.v; document.getElementById('pop').innerHTML = notifHTML(); },
-  'notif-read': () => { NOTIFS.forEach(n => n.unread = false); document.getElementById('pop').innerHTML = notifHTML(); renderTop(); },
+  'notif-read': () => { (typeof myNotifs === 'function' ? myNotifs() : NOTIFS).forEach(n => n.unread = false); document.getElementById('pop').innerHTML = notifHTML(); renderTop(); },
   'notif-go': el => { const n = NOTIFS[+el.dataset.i]; n.unread = false; renderTop(); closeOverlays(); go(n.route); },
   /* tables */
   'tbl-f': el => { const T = TBL[el.dataset.tbl]; T.fval = el.dataset.v; T.page = 1; refreshTable(el.dataset.tbl); },

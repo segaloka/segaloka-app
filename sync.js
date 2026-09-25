@@ -32,6 +32,7 @@ async function sbLoad() {
   syncTpl(); SB.lastPoll = Date.now();
 }
 function buildFlush() {
+  if (typeof ntScan === 'function') ntScan();
   const stmts = []; const commit = [];
   ALLC().forEach(([name, get, core]) => { const saved = SB.saved[name] = SB.saved[name] || {}; const cur = {}; const up = []; get().forEach(o => { if (!o || !o.id) return; const j = snap(o); cur[o.id] = j; if (saved[o.id] !== j) up.push(o); }); const del = Object.keys(saved).filter(id => !(id in cur));
     if (up.length) { const js = dq(JSON.stringify(up)); stmts.push(core ? `insert into control_center.${name} (id, data, is_demo) select x->>'id', x, ${SB.seeding} from jsonb_array_elements(${js}::jsonb) x on conflict (id) do update set data = excluded.data, updated_at = now()` : `insert into control_center.records (collection, id, data, is_demo) select '${name}', x->>'id', x, ${SB.seeding} from jsonb_array_elements(${js}::jsonb) x on conflict (collection, id) do update set data = excluded.data, updated_at = now()`); }
@@ -136,6 +137,7 @@ function announce() { const C = SB.changes.splice(0); if (!C.length) return; con
   else if (c.name === 'approvals' && !b) msgs.push(['warn', L3(['Approval baru', 'New approval', 'موافقة جديدة']), a.title, '/approval/' + a.id]);
   else if (c.name === 'payments' && b && b.status !== 'paid' && a.status === 'paid') msgs.push(['ok', L3(['Pembayaran masuk', 'Payment received', 'دفعة واردة']), a.id + ' · ' + money(a.amount), '/finance/payment/' + a.id]);
   else if (c.name === 'conversations' && (a.messages || []).length > ((b && b.messages) || []).length) { const m = a.messages[a.messages.length - 1]; msgs.push(['info', (m.dir === 'in' ? a.contact : (m.by || 'Travel')), m.text, wsOf() === 'traveler' ? '/p/traveler/chat' : '/omni/inbox/' + a.id]); if (window.OMNI && OMNI.active === a.id) { const ch = document.getElementById('chat'); if (ch) setTimeout(() => { const x = document.getElementById('chat'); if (x) x.scrollTop = x.scrollHeight; }, 50); } }
+  else if (c.name === 'notifications' && !b && a.to && typeof myNotifKey === 'function' && a.to === myNotifKey()) msgs.push([a.tone === 'bad' ? 'bad' : a.tone === 'warn' ? 'warn' : a.tone === 'ok' ? 'ok' : 'info', a.title, a.sub, a.route]);
   else if (c.name === 'sd_requests' && !b) msgs.push(['info', L3(['Permintaan SegaDeals baru', 'New SegaDeals request', 'طلب SegaDeals جديد']), sdTitle(a) + ' · ' + a.pax + ' pax', wsOf() === 'travel' ? '/p/travel/segadeals' : '/marketplace/segadeals']);
   else if (c.name === 'sd_offers' && !b) msgs.push(['info', L3(['Penawaran SegaDeals baru', 'New SegaDeals offer', 'عرض جديد']), ((travelById(a.travel) || {}).name || '') + ' · ' + money(a.price) + '/pax', wsOf() === 'traveler' ? '/p/traveler/segadeals/' + a.request : '/marketplace/segadeals']);
   else if (c.name === 'sd_offers' && b && b.state !== a.state && a.state === 'accepted') msgs.push(['ok', L3(['Penawaran Anda dipilih pengguna', 'Your offer was chosen', 'تم اختيار عرضك']), a.request + ' · ' + money(a.price) + '/pax', wsOf() === 'travel' ? '/p/travel/segadeals' : '/marketplace/segadeals']);

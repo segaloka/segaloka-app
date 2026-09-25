@@ -158,7 +158,7 @@ function renderSide() {
 }
 function hijri() { try { return new Intl.DateTimeFormat((S.lang === 'ar' ? 'ar-SA' : S.lang === 'en' ? 'en' : 'id') + '-u-ca-islamic-umalqura-nu-latn', { day: 'numeric', month: 'long', year: 'numeric' }).format(nowTs()); } catch (e) { return ''; } }
 function renderTop() {
-  const unread = NOTIFS.filter(n => n.unread).length; const r = ROLES[S.role];
+  const unread = (typeof myNotifs === 'function' ? myNotifs() : NOTIFS).filter(n => n.unread).length; const r = ROLES[S.role];
   document.getElementById('top').innerHTML = `
     <button class="iconbtn mob-only" data-act="drawer" aria-label="Menu">${ic('menu')}</button>
     <button class="wsbtn" data-act="ws" aria-haspopup="menu">${ic(wsOf() === 'admin' ? 'shieldc' : WS[wsOf()].icon, 'sm')}<span class="wsl">${esc(wsOf() === 'admin' ? 'Super Admin' : L3(WS[wsOf()].label))}</span>${ic('chevD', 'sm')}</button>
@@ -291,7 +291,7 @@ function cmdKey(e) { if (e.key === 'ArrowDown' || e.key === 'ArrowUp') { e.preve
 
 /* ======================= NOTIFICATIONS ======================= */
 let NCAT = 'all';
-function notifHTML() { const cats = ['all', 'approval', 'booking', 'payment', 'settlement', 'legal', 'security', 'subscription', 'marketplace', 'omnichannel', 'ads']; const list = NOTIFS.filter(n => NCAT === 'all' || n.cat === NCAT); const icn = { approval: 'approval', booking: 'calendar', payment: 'card', settlement: 'landmark', legal: 'filecheck', security: 'shield', subscription: 'refresh', marketplace: 'bag', omnichannel: 'msg', ads: 'megaphone' };
+function notifHTML() { const cats = ['all', 'approval', 'booking', 'payment', 'settlement', 'legal', 'security', 'subscription', 'marketplace', 'omnichannel', 'ads']; const list = (typeof myNotifs === 'function' ? myNotifs() : NOTIFS).filter(n => NCAT === 'all' || n.cat === NCAT); const icn = { approval: 'approval', booking: 'calendar', payment: 'card', settlement: 'landmark', legal: 'filecheck', security: 'shield', subscription: 'refresh', marketplace: 'bag', omnichannel: 'msg', ads: 'megaphone' };
   return `<div class="npanel"><div class="nh"><h4>${t('notifications')}</h4><button class="btn sm ghost" data-act="notif-read">${t('mark_all')}</button></div><div class="cmd-scopes">${cats.map(c => `<button class="fchip" data-act="ncat" data-v="${c}" aria-pressed="${NCAT === c}">${c === 'all' ? t('all') : c[0].toUpperCase() + c.slice(1)}</button>`).join('')}</div><div class="nlist">${list.length ? list.map((n, i) => `<button class="nitem ${n.unread ? 'unread' : ''}" data-act="notif-go" data-i="${NOTIFS.indexOf(n)}"><span class="ni ${n.tone}">${ic(icn[n.cat] || 'bell', 'sm')}</span><span style="flex:1;min-width:0"><b>${esc(n.title)}</b><span class="s">${esc(n.sub)}</span><div class="w">${esc(n.cat)} · ${esc(rel(n.ts))}</div></span>${n.unread ? '<span class="unread" style="width:8px;height:8px;border-radius:50%;background:var(--accent);margin-top:6px"></span>' : ''}</button>`).join('') : stateBlock('empty')}</div><div class="panel-f"><a href="#/platform/notification">${L3(['Pengaturan notifikasi', 'Notification settings', 'إعدادات الإشعارات'])}</a><span style="flex:1"></span>${mockmark()}</div></div>`; }
 
 /* ======================= ACCOUNT MENU ======================= */

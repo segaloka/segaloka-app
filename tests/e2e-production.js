@@ -116,6 +116,21 @@ let fails = 0; const ok = (c, m) => { console.log((c ? 'PASS ' : 'FAIL ') + m); 
   await act(Dp, `[data-act="sd-accept"][data-id="${oid}"]`);
   ok(q(`select data->>'state' from control_center.records where collection='sd_requests' and id='${rid}'`) === 'accepted', 'SegaDeals request accepted -> booking');
 
+
+  // 9b) suspend / status -> notifikasi ke pihak terdampak (realtime)
+  await go(B, '/p/travel/mitra'); await act(B, '[data-act="tm-new"]'); await fill(B, { 'tm-name': 'Mitra Barokah' }); await act(B, '[data-act="tm-save"]'); await settle(B);
+  const M = await mk(V6, '/p/mitra'); await M.waitForTimeout(800);
+  const stid = await B.evaluate(() => me('travel').id);
+  await A.evaluate(async stid => { await sbPoll(true); const tr = travelById(stid); tr.op = 'inactive'; audit('Admin Pusat', 'travel.suspend', 'Travel/' + stid, 'success', { reason: 'Izin PPIU sedang diperiksa' }); await sbFlush(); rtEmit(1); }, stid);
+  ok(+q(`select count(*) from control_center.records where collection='notifications' and data->>'to' like 'mitra:%' and data->>'title' like '%Status Travel%'`) >= 1, 'suspend Travel -> notification stored for its Mitra');
+  await wait(M, () => myNotifs().some(n => /Status Travel/.test(n.title) && n.unread) || (sbPoll(true), false), null, 30000);
+  await M.evaluate(() => rerender()); await M.waitForTimeout(300);
+  ok(await M.evaluate(() => !!document.querySelector('#bellbtn .nbadge') && /ditangguhkan|suspended/i.test(document.querySelector('.banner.bad') ? document.querySelector('.banner.bad').textContent : '')), 'Mitra portal: bell badge + suspension banner (realtime)');
+  await wait(B, () => myNotifs().some(n => /Status Travel/.test(n.title) && /Izin PPIU/.test(n.sub)) || (sbPoll(true), false), null, 30000);
+  ok(true, 'Travel portal receives suspension notice with reason');
+  ok(await A.evaluate(() => !myNotifs().some(n => n.to)), 'admin bell does not show party-targeted notices');
+  await A.evaluate(async stid => { travelById(stid).op = 'active'; await sbFlush(); }, stid);
+
   // 10) audit & kebersihan
   ok(+q("select count(*) from control_center.audit_log where not is_demo") >= 15, 'all actions audited (' + q("select count(*) from control_center.audit_log where not is_demo") + ')');
   ok(+q("select count(*) from control_center.travels where is_demo")+ +q("select count(*) from control_center.records where is_demo and collection in ('vendor_orders','commissions','sd_requests')") === 0, 'no new rows flagged demo');

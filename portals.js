@@ -32,7 +32,7 @@ const wsLabel = ws => ws === 'admin' ? 'Super Admin · ' + t('control_center') :
 const pAudit = (ws, action, resource, extra) => audit(me(ws).name, action, resource, 'success', Object.assign({ source: L3(WS[ws].label) }, extra || {}));
 const pNotif = (cat, tone, title, sub, route) => { NOTIFS.unshift({ id: uid('NTF'), cat, tone, title, sub, route, ts: nowTs(), unread: true }); renderTop(); };
 const pApproval = o => { const a = Object.assign({ id: uid('APR'), status: 'waiting', priority: 'p2', assignee: null, ts: nowTs(), risk: 15, docs: [], ctx: [], notes: [], fresh: true }, o); a.history = [{ t: 'Diajukan dari ' + o.source, ts: nowTs(), tone: 'info' }]; delete a.source; APPROVALS.unshift(a); return a; };
-const pHead = (ws, title, desc, actions) => phead({ crumbs: [[L3(WS[ws].label), WS[ws].home], [title, '']], title, desc, actions });
+const pHead = (ws, title, desc, actions) => phead({ crumbs: [[L3(WS[ws].label), WS[ws].home], [title, '']], title, desc, actions }) + (typeof portalStatusBanner === 'function' ? portalStatusBanner(ws) : '');
 const licFor = { Umrah: 'PPIU', Haji: 'PIHK', 'Halal Tour': 'BPW', Tour: 'BPW' };
 const licOk = (tr, cat) => { const l = tr.lic.find(x => x.type === licFor[cat]); return l && ['verified', 'expiring'].includes(l.status); };
 
