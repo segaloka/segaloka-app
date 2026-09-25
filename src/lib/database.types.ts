@@ -808,8 +808,6 @@ export type Database = {
           body: string | null
           category: string
           created_at: string
-          entity_id: string | null
-          entity_type: string | null
           id: string
           org_id: string | null
           priority: string
@@ -821,8 +819,6 @@ export type Database = {
           body?: string | null
           category: string
           created_at?: string
-          entity_id?: string | null
-          entity_type?: string | null
           id?: string
           org_id?: string | null
           priority?: string
@@ -834,8 +830,6 @@ export type Database = {
           body?: string | null
           category?: string
           created_at?: string
-          entity_id?: string | null
-          entity_type?: string | null
           id?: string
           org_id?: string | null
           priority?: string
@@ -1716,10 +1710,40 @@ export type Database = {
         Args: { p_permission_key: string }
         Returns: boolean
       }
+      invite_mitra_by_email: {
+        Args: {
+          p_commission_type: string
+          p_commission_value: number
+          p_email: string
+          p_org_id: string
+        }
+        Returns: Json
+      }
+      invite_staff_by_email: {
+        Args: {
+          p_branch_id?: string
+          p_email: string
+          p_org_id: string
+          p_role_slug: string
+        }
+        Returns: Json
+      }
       is_affiliate_self: { Args: { p_affiliate_id: string }; Returns: boolean }
       is_org_member: { Args: { p_org_id: string }; Returns: boolean }
       is_platform_admin: { Args: never; Returns: boolean }
       is_vendor_member: { Args: { p_vendor_id: string }; Returns: boolean }
+      link_affiliate_to_org: { Args: { p_org_slug: string }; Returns: Json }
+      register_affiliate: { Args: never; Returns: string }
+      register_vendor: {
+        Args: {
+          p_category_code: string
+          p_contact_email: string
+          p_contact_phone: string
+          p_legal_name: string
+          p_name: string
+        }
+        Returns: string
+      }
     }
     Enums: {
       [_ in never]: never

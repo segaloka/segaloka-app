@@ -1,15 +1,3 @@
--- PENDING: could not be applied during this session because the Supabase
--- project ("segaloka") was auto-paused and the account was at its 2-project
--- free-tier limit, so mcp__Supabase__apply_migration kept timing out.
--- Apply this migration (via Supabase MCP apply_migration, or the Supabase
--- CLI / SQL editor) as soon as the project is reactivated — the following
--- app code already depends on these functions existing:
---   - src/app/dashboard/[org]/team/actions.ts -> invite_staff_by_email
---   - src/app/onboarding/vendor/actions.ts    -> register_vendor
---   - src/app/onboarding/affiliate/actions.ts -> register_affiliate
---   - src/app/affiliate/page.tsx (link form)  -> link_affiliate_to_org
---   - src/app/dashboard/[org]/mitra/actions.ts -> invite_mitra_by_email
-
 create or replace function invite_staff_by_email(
   p_org_id uuid,
   p_email text,
