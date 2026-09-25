@@ -35,8 +35,8 @@ export default async function TravelStorefrontPage({ params }: { params: { slug:
           <h1 className="mt-1 font-display text-3xl font-bold text-text-primary">{org.name}</h1>
           {org.address && <p className="mt-2 text-sm text-text-secondary">{org.address}</p>}
           <div className="mt-3 flex flex-wrap gap-4 text-sm text-text-secondary">
-            {org.support_phone && <span>Telp: {org.support_phone}</span>}
-            {org.support_email && <span>Email: {org.support_email}</span>}
+            {/* No phone / WhatsApp / email shown publicly: all contact goes through Segaloka's in-app Pesan. */}
+            <span>Hubungi Travel ini lewat fitur Pesan di Segaloka setelah masuk.</span>
           </div>
         </div>
       </div>

@@ -1,0 +1,126 @@
+<!doctype html>
+<html lang="id">
+<head>
+<meta charset="utf-8">
+<title>Control Center — Ringkasan</title>
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&amp;display=swap">
+<style>
+body{margin:0;font-family:'Plus Jakarta Sans',system-ui,sans-serif;color:#0f1b2d}
+a{color:#0a66e0;text-decoration:none}a:hover{color:#0852b8}
+</style>
+</helmet>
+<div style="width: 1440px; height: 1080px; box-sizing: border-box; background: #f3f6fb; display: flex">
+
+  <div style="width: 264px; flex-shrink: 0; background: #0b1f3f"><dc-import name="AdminSidebar" active="overview" hint-size="264px,1080px"></dc-import></div>
+
+  <main style="flex-grow: 1; display: flex; flex-direction: column; min-width: 0">
+    <dc-import name="AdminTopbar" hint-size="1176px,72px"></dc-import>
+
+    <div style="padding: 28px 32px; display: flex; flex-direction: column; gap: 22px">
+      <div style="display: flex; align-items: flex-end; justify-content: space-between">
+        <div style="display: flex; flex-direction: column; gap: 4px"><h1 style="margin: 0; font-size: 26px; font-weight: 800; letter-spacing: -0.01em">Ringkasan Platform</h1><div style="font-size: 14px; color: #4a5870">Kondisi ekosistem Segaloka secara realtime · diperbarui baru saja</div></div>
+        <div style="display: flex; gap: 4px; padding: 4px; background: #ffffff; border: 1px solid #e1e7f0; border-radius: 12px"><button type="button" style="height: 36px; padding: 0 14px; border: 0; border-radius: 9px; background: transparent; color: #4a5870; font: inherit; font-weight: 600; font-size: 13px">Hari ini</button><button type="button" style="height: 36px; padding: 0 14px; border: 0; border-radius: 9px; background: #e6f0fd; color: #0852b8; font: inherit; font-weight: 700; font-size: 13px">30 hari</button><button type="button" style="height: 36px; padding: 0 14px; border: 0; border-radius: 9px; background: transparent; color: #4a5870; font: inherit; font-weight: 600; font-size: 13px">12 bulan</button></div>
+      </div>
+
+      <div style="display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 16px">
+        <sc-for list="{{kpis}}" as="k" hint-placeholder-count="4">
+          <div style="background: #ffffff; border: 1px solid #e1e7f0; border-radius: 18px; padding: 18px 20px; display: flex; flex-direction: column; gap: 8px">
+            <div style="font-size: 13px; font-weight: 700; color: #4a5870">{{k.label}}</div>
+            <div style="font-size: 28px; font-weight: 800; letter-spacing: -0.02em">{{k.value}}</div>
+            <div style="font-size: 13px; font-weight: 700; color: {{k.deltaColor}}">{{k.delta}}</div>
+          </div>
+        </sc-for>
+      </div>
+
+      <div style="display: grid; grid-template-columns: 1.6fr 1fr; gap: 16px">
+        <div style="background: #ffffff; border: 1px solid #e1e7f0; border-radius: 18px; padding: 20px 22px; display: flex; flex-direction: column; gap: 16px">
+          <div style="display: flex; align-items: center; justify-content: space-between"><div style="font-size: 17px; font-weight: 800">Booking per minggu</div><div style="display: flex; gap: 14px; font-size: 13px; color: #4a5870"><span style="display: flex; align-items: center; gap: 6px"><span style="width: 10px; height: 10px; border-radius: 3px; background: #0a66e0"></span>Umrah</span><span style="display: flex; align-items: center; gap: 6px"><span style="width: 10px; height: 10px; border-radius: 3px; background: #ff9f1c"></span>Halal Tour &amp; lainnya</span></div></div>
+          <div style="height: 230px; display: flex; align-items: flex-end; gap: 14px; border-bottom: 1px solid #e1e7f0; padding: 0 4px">
+            <sc-for list="{{bars}}" as="b" hint-placeholder-count="12">
+              <div style="flex-grow: 1; display: flex; flex-direction: column; justify-content: flex-end; gap: 2px; height: 100%">
+                <div style="height: {{b.b}}; background: #ff9f1c; border-radius: 4px 4px 0 0"></div>
+                <div style="height: {{b.a}}; background: #0a66e0; border-radius: 0 0 2px 2px"></div>
+              </div>
+            </sc-for>
+          </div>
+          <div style="display: flex; justify-content: space-between; font-size: 12px; color: #4a5870; padding: 0 4px"><span>Mg 1</span><span>Mg 4</span><span>Mg 8</span><span>Mg 12</span></div>
+        </div>
+        <div style="background: #ffffff; border: 1px solid #e1e7f0; border-radius: 18px; padding: 20px 22px; display: flex; flex-direction: column; gap: 14px">
+          <div style="display: flex; align-items: center; justify-content: space-between"><div style="font-size: 17px; font-weight: 800">Perlu tindakan</div><span style="padding: 3px 10px; border-radius: 999px; background: #fff1dc; color: #8a4a00; font-size: 12px; font-weight: 800">12</span></div>
+          <sc-for list="{{actions}}" as="a" hint-placeholder-count="4">
+            <a href="#" style="display: flex; align-items: center; gap: 12px; padding: 12px; border-radius: 14px; background: #f3f6fb; color: #0f1b2d">
+              <span style="width: 36px; height: 36px; flex-shrink: 0; border-radius: 10px; background: {{a.bg}}; color: {{a.fg}}; display: flex; align-items: center; justify-content: center; font-weight: 800; font-size: 15px">{{a.count}}</span>
+              <div style="display: flex; flex-direction: column; gap: 2px; min-width: 0; flex-grow: 1"><span style="font-size: 14px; font-weight: 700">{{a.title}}</span><span style="font-size: 12px; color: #4a5870">{{a.sub}}</span></div>
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#4a5870" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="m9 18 6-6-6-6"></path></svg>
+            </a>
+          </sc-for>
+        </div>
+      </div>
+
+      <div style="display: grid; grid-template-columns: 1.6fr 1fr; gap: 16px">
+        <div style="background: #ffffff; border: 1px solid #e1e7f0; border-radius: 18px; overflow: hidden">
+          <div style="display: flex; align-items: center; justify-content: space-between; padding: 18px 22px"><div style="font-size: 17px; font-weight: 800">Antrean verifikasi Travel</div><a href="#" style="font-size: 14px; font-weight: 700">Lihat semua</a></div>
+          <div style="display: grid; grid-template-columns: 2fr 1fr 1fr 1fr 110px; padding: 10px 22px; background: #f7f9fc; font-size: 12px; font-weight: 800; letter-spacing: .06em; color: #4a5870; border-top: 1px solid #e1e7f0; border-bottom: 1px solid #e1e7f0"><span>TRAVEL</span><span>IZIN</span><span>DOKUMEN</span><span>MASUK</span><span></span></div>
+          <sc-for list="{{queue}}" as="q" hint-placeholder-count="4">
+            <div style="display: grid; grid-template-columns: 2fr 1fr 1fr 1fr 110px; align-items: center; padding: 12px 22px; border-bottom: 1px solid #eef1f6; font-size: 14px">
+              <div style="display: flex; align-items: center; gap: 10px"><span style="width: 34px; height: 34px; border-radius: 10px; background: #e6f0fd; color: #0852b8; font-weight: 800; display: flex; align-items: center; justify-content: center">{{q.initial}}</span><div style="display: flex; flex-direction: column"><span style="font-weight: 700">{{q.name}}</span><span style="font-size: 12px; color: #4a5870">{{q.city}}</span></div></div>
+              <span>{{q.license}}</span>
+              <span style="font-weight: 700; color: {{q.docColor}}">{{q.docs}}</span>
+              <span style="color: #4a5870">{{q.when}}</span>
+              <a href="#" style="height: 36px; border-radius: 10px; background: #0a66e0; color: #ffffff; font-weight: 700; font-size: 13px; display: flex; align-items: center; justify-content: center">Tinjau</a>
+            </div>
+          </sc-for>
+        </div>
+        <div style="background: #ffffff; border: 1px solid #e1e7f0; border-radius: 18px; padding: 18px 22px; display: flex; flex-direction: column; gap: 12px">
+          <div style="display: flex; align-items: center; justify-content: space-between"><div style="font-size: 17px; font-weight: 800">Aktivitas terbaru</div><a href="#" style="font-size: 14px; font-weight: 700">Audit Log</a></div>
+          <sc-for list="{{logs}}" as="l" hint-placeholder-count="5">
+            <div style="display: flex; gap: 12px; align-items: flex-start"><span style="width: 8px; height: 8px; margin-top: 7px; flex-shrink: 0; border-radius: 999px; background: {{l.dot}}"></span><div style="display: flex; flex-direction: column; gap: 2px"><span style="font-size: 14px; line-height: 1.4">{{l.text}}</span><span style="font-size: 12px; color: #4a5870">{{l.when}}</span></div></div>
+          </sc-for>
+        </div>
+      </div>
+    </div>
+  </main>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"$preview":{"width":1440,"height":1080}}'>
+class Component extends DCLogic {
+  renderVals() {
+    var a = [34,42,38,51,47,58,62,55,68,74,70,82];
+    var b = [10,12,9,15,14,18,16,20,22,19,24,26];
+    return {
+      kpis: [
+        { label: 'Travel aktif', value: '128', delta: '+9 bulan ini', deltaColor: '#0a6b0a' },
+        { label: 'Booking (30 hari)', value: '2.431', delta: '+14% vs bulan lalu', deltaColor: '#0a6b0a' },
+        { label: 'Nilai transaksi (GMV)', value: 'Rp 78,2 M', delta: '+11% vs bulan lalu', deltaColor: '#0a6b0a' },
+        { label: 'Permintaan SegaDeals', value: '316', delta: '41 belum ada penawaran', deltaColor: '#8a5300' }
+      ],
+      bars: a.map(function (v, i) { return { a: (v * 2) + 'px', b: (b[i] * 2) + 'px' }; }),
+      actions: [
+        { count: '7', title: 'Verifikasi Travel', sub: 'Dokumen izin menunggu ditinjau', bg: '#fff1dc', fg: '#8a4a00' },
+        { count: '3', title: 'Verifikasi Vendor', sub: 'Hotel, visa & transportasi', bg: '#e6f0fd', fg: '#0852b8' },
+        { count: '2', title: 'Settlement tertunda', sub: 'Lewat 3 hari kerja', bg: '#fbe7e7', fg: '#a42424' }
+      ],
+      queue: [
+        { initial: 'A', name: '[Travel A]', city: 'Makassar', license: 'PPIU', docs: '5/5 lengkap', docColor: '#0a6b0a', when: '2 jam lalu' },
+        { initial: 'B', name: '[Travel B]', city: 'Jakarta', license: 'PPIU + PIHK', docs: '4/5', docColor: '#8a5300', when: '5 jam lalu' },
+        { initial: 'C', name: '[Travel C]', city: 'Medan', license: 'PPIU', docs: '5/5 lengkap', docColor: '#0a6b0a', when: 'Kemarin' },
+        { initial: 'D', name: '[Travel D]', city: 'Bandung', license: 'Biro wisata', docs: '3/5', docColor: '#8a5300', when: 'Kemarin' }
+      ],
+      logs: [
+        { text: 'Travel [Travel E] disetujui oleh Admin 2', when: '10 menit lalu', dot: '#0ca30c' },
+        { text: 'Paket langganan Pro diperbarui', when: '1 jam lalu', dot: '#0a66e0' },
+        { text: 'Vendor [Hotel F] ditangguhkan', when: '3 jam lalu', dot: '#c53030' },
+        { text: 'Pengaturan komisi affiliate diubah', when: 'Kemarin', dot: '#ff9f1c' },
+        { text: 'Staf baru ditambahkan ke tim verifikasi', when: 'Kemarin', dot: '#0a66e0' }
+      ]
+    };
+  }
+}
+</script>
+</body>
+</html>

@@ -34,6 +34,8 @@ const paths: Record<string, string> = {
   filter: "M22 3H2l8 9.46V19l4 2v-8.54L22 3z",
   download: "M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4M7 10l5 5 5-5M12 15V3",
   external: "M18 13v6a2 2 0 01-2 2H5a2 2 0 01-2-2V8a2 2 0 012-2h6M15 3h6v6M10 14L21 3",
+  inbox: "M22 12h-6l-2 3h-4l-2-3H2M5.45 5.11L2 12v6a2 2 0 002 2h16a2 2 0 002-2v-6l-3.45-6.89A2 2 0 0016.76 4H7.24a2 2 0 00-1.79 1.11z",
+  lock: "M5 11h14v10H5V11zM8 11V7a4 4 0 118 0v4",
   handshake: "M11 17l-3 3a2 2 0 01-3-3l5-5M15 13l-2 2M2 12l5-5 3 3-5 5-3-3z",
 };
 

@@ -1,0 +1,91 @@
+<!doctype html>
+<html lang="id">
+<head>
+<meta charset="utf-8">
+<title>Travel — Buat / Ubah Paket</title>
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&amp;display=swap">
+<style>
+body{margin:0;font-family:'Plus Jakarta Sans',system-ui,sans-serif;color:#0f1b2d}
+a{color:#0a66e0;text-decoration:none}a:hover{color:#0852b8}
+</style>
+</helmet>
+<div style="width: 1440px; height: 1080px; box-sizing: border-box; background: #f3f6fb; display: flex">
+  <dc-import name="TravelSidebar" active="paket" hint-size="264px,1080px"></dc-import>
+  <main style="flex-grow: 1; padding: 24px 32px; display: flex; flex-direction: column; gap: 16px; min-width: 0">
+    <div style="display: flex; align-items: center; gap: 12px">
+      <div style="display: flex; flex-direction: column; gap: 4px; flex-grow: 1"><span style="font-size: 13px; color: #4a5870"><a href="#">Paket &amp; Keberangkatan</a> / Umrah Reguler 9 Hari</span><h1 style="margin: 0; font-size: 24px; font-weight: 800">Ubah paket</h1></div>
+      <span style="padding: 5px 12px; border-radius: 999px; background: #eef1f6; color: #4a5870; font-size: 12px; font-weight: 800">Draf · tersimpan otomatis</span>
+      <button type="button" style="height: 44px; padding: 0 16px; border: 1.5px solid #c9d3e2; border-radius: 12px; background: #ffffff; font: inherit; font-weight: 700">Pratinjau</button>
+      <button type="button" style="height: 44px; padding: 0 18px; border: 0; border-radius: 12px; background: #0a66e0; color: #ffffff; font: inherit; font-weight: 800">Terbitkan</button>
+    </div>
+    <div style="display: flex; gap: 6px; border-bottom: 1px solid #e1e7f0">
+      <sc-for list="{{steps}}" as="s" hint-placeholder-count="7"><a href="#" style="padding: 10px 14px; border-bottom: {{s.bb}}; color: {{s.c}}; font-weight: 800; font-size: 14px; display: flex; align-items: center; gap: 6px"><span style="width: 20px; height: 20px; border-radius: 999px; background: {{s.dot}}; color: #ffffff; font-size: 11px; display: flex; align-items: center; justify-content: center">{{s.m}}</span>{{s.l}}</a></sc-for>
+    </div>
+    <div style="display: flex; gap: 16px">
+      <div style="flex-grow: 1; display: flex; flex-direction: column; gap: 16px; min-width: 0">
+        <div style="background: #ffffff; border: 1px solid #e1e7f0; border-radius: 18px; padding: 20px 22px; display: flex; flex-direction: column; gap: 14px">
+          <span style="font-size: 17px; font-weight: 800">Jadwal keberangkatan &amp; harga</span>
+          <div style="display: grid; grid-template-columns: 1.2fr 0.8fr 0.8fr 0.8fr 0.8fr 0.8fr 44px; gap: 10px; font-size: 12px; font-weight: 800; letter-spacing: .04em; color: #4a5870"><span>TANGGAL BERANGKAT</span><span>KURSI</span><span>QUAD</span><span>TRIPLE</span><span>DOUBLE</span><span>DP MIN.</span><span></span></div>
+          <sc-for list="{{deps}}" as="d" hint-placeholder-count="3">
+            <div style="display: grid; grid-template-columns: 1.2fr 0.8fr 0.8fr 0.8fr 0.8fr 0.8fr 44px; gap: 10px; align-items: center">
+              <input aria-label="Tanggal" value="{{d.date}}" style="height: 42px; padding: 0 10px; border: 1.5px solid #c9d3e2; border-radius: 10px; font: inherit; font-size: 14px">
+              <input aria-label="Kursi" value="{{d.seat}}" style="height: 42px; padding: 0 10px; border: 1.5px solid #c9d3e2; border-radius: 10px; font: inherit; font-size: 14px">
+              <input aria-label="Harga Quad" value="{{d.q}}" style="height: 42px; padding: 0 10px; border: 1.5px solid #c9d3e2; border-radius: 10px; font: inherit; font-size: 14px">
+              <input aria-label="Harga Triple" value="{{d.t}}" style="height: 42px; padding: 0 10px; border: 1.5px solid #c9d3e2; border-radius: 10px; font: inherit; font-size: 14px">
+              <input aria-label="Harga Double" value="{{d.db}}" style="height: 42px; padding: 0 10px; border: 1.5px solid #c9d3e2; border-radius: 10px; font: inherit; font-size: 14px">
+              <input aria-label="DP" value="{{d.dp}}" style="height: 42px; padding: 0 10px; border: 1.5px solid #c9d3e2; border-radius: 10px; font: inherit; font-size: 14px">
+              <button type="button" aria-label="Hapus jadwal" style="width: 42px; height: 42px; border: 0; border-radius: 10px; background: #fbe7e7; color: #a42424; font: inherit; font-weight: 800">×</button>
+            </div>
+          </sc-for>
+          <button type="button" style="height: 42px; border: 1.5px dashed #0a66e0; border-radius: 12px; background: #f5f9ff; color: #0852b8; font: inherit; font-weight: 800">+ Tambah tanggal keberangkatan</button>
+        </div>
+        <div style="background: #ffffff; border: 1px solid #e1e7f0; border-radius: 18px; padding: 20px 22px; display: flex; flex-direction: column; gap: 14px">
+          <span style="font-size: 17px; font-weight: 800">Hotel &amp; penerbangan</span>
+          <div style="display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 14px">
+            <div style="display: flex; flex-direction: column; gap: 6px"><label for="h1" style="font-size: 14px; font-weight: 600">Hotel Madinah (dari Vendor terhubung)</label><select id="h1" style="height: 46px; padding: 0 12px; border: 1.5px solid #c9d3e2; border-radius: 12px; font: inherit; font-size: 14px; background: #ffffff"><option>[Hotel I] Madinah · 4★ · 200 m</option></select></div>
+            <div style="display: flex; flex-direction: column; gap: 6px"><label for="h2" style="font-size: 14px; font-weight: 600">Hotel Makkah</label><select id="h2" style="height: 46px; padding: 0 12px; border: 1.5px solid #c9d3e2; border-radius: 12px; font: inherit; font-size: 14px; background: #ffffff"><option>[Hotel F] Makkah · 4★ · 300 m</option></select></div>
+            <div style="display: flex; flex-direction: column; gap: 6px"><label for="h3" style="font-size: 14px; font-weight: 600">Maskapai</label><input id="h3" value="[Maskapai]" style="height: 46px; padding: 0 12px; border: 1.5px solid #c9d3e2; border-radius: 12px; font: inherit; font-size: 14px"></div>
+            <div style="display: flex; flex-direction: column; gap: 6px"><label for="h4" style="font-size: 14px; font-weight: 600">Rute</label><input id="h4" value="UPG → JED · MED → UPG" style="height: 46px; padding: 0 12px; border: 1.5px solid #c9d3e2; border-radius: 12px; font: inherit; font-size: 14px"></div>
+          </div>
+        </div>
+      </div>
+      <aside style="width: 330px; flex-shrink: 0; display: flex; flex-direction: column; gap: 14px">
+        <span style="font-size: 12px; font-weight: 800; letter-spacing: .08em; color: #4a5870">PRATINJAU DI SEGALOKA</span>
+        <div style="background: #ffffff; border: 1px solid #e1e7f0; border-radius: 20px; overflow: hidden; box-shadow: 0 8px 20px -12px rgba(15,40,80,.18)">
+          <div style="height: 150px; background: #dbe7f8; display: flex; align-items: center; justify-content: center; color: #4a5870; font-size: 13px; font-weight: 600">[Foto utama]</div>
+          <div style="padding: 14px 16px; display: flex; flex-direction: column; gap: 6px"><span style="font-size: 12px; color: #4a5870">[Travel A] · Terverifikasi</span><span style="font-size: 16px; font-weight: 800">Umrah Reguler 9 Hari</span><span style="font-size: 12px; color: #4a5870">12 Des · 9 hari · Dari Makassar</span><span style="font-size: 20px; font-weight: 800; color: #e25d00; text-align: right">Rp 32,5 jt</span></div>
+        </div>
+        <div style="background: #ffffff; border: 1px solid #e1e7f0; border-radius: 18px; padding: 16px; display: flex; flex-direction: column; gap: 8px">
+          <span style="font-size: 14px; font-weight: 800">Kelengkapan paket · 5/7</span>
+          <div style="height: 8px; border-radius: 999px; background: #eef1f6"><div style="width: 71%; height: 8px; border-radius: 999px; background: #0a66e0"></div></div>
+          <span style="font-size: 13px; color: #8a5300; font-weight: 700">Belum: itinerary hari 6–8, syarat pembatalan</span>
+          <span style="font-size: 12px; color: #4a5870; line-height: 1.5">Hindari nomor telepon/link di foto &amp; deskripsi — paket akan ditahan moderasi.</span>
+        </div>
+      </aside>
+    </div>
+  </main>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"$preview":{"width":1440,"height":1080}}'>
+class Component extends DCLogic {
+  renderVals() {
+    var names = ['Info dasar', 'Jadwal & harga', 'Hotel & penerbangan', 'Itinerary', 'Termasuk / tidak', 'Foto', 'Syarat'];
+    var state = ['d', 'a', 'd', 'w', 'd', 'd', 'w'];
+    return {
+      steps: names.map(function (n, i) { var s = state[i]; return { l: n, m: s === 'd' ? '✓' : s === 'w' ? '!' : i + 1, dot: s === 'd' ? '#0ca30c' : s === 'w' ? '#ff9f1c' : '#0a66e0', c: s === 'a' ? '#0a66e0' : '#4a5870', bb: s === 'a' ? '3px solid #0a66e0' : '3px solid transparent' }; }),
+      deps: [
+        { date: 'Sab, 12 Des 2026', seat: '45', q: '32.500.000', t: '34.500.000', db: '37.000.000', dp: '5.000.000' },
+        { date: 'Sab, 9 Jan 2027', seat: '45', q: '31.500.000', t: '33.500.000', db: '36.000.000', dp: '5.000.000' },
+        { date: 'Sab, 6 Feb 2027', seat: '45', q: '31.500.000', t: '33.500.000', db: '36.000.000', dp: '5.000.000' }
+      ]
+    };
+  }
+}
+</script>
+</body>
+</html>

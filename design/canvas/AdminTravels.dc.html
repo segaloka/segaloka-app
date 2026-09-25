@@ -1,0 +1,74 @@
+<!doctype html>
+<html lang="id">
+<head>
+<meta charset="utf-8">
+<title>Control Center — Travel &amp; Cabang</title>
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&amp;display=swap">
+<style>
+body{margin:0;font-family:'Plus Jakarta Sans',system-ui,sans-serif;color:#0f1b2d}
+a{color:#0a66e0;text-decoration:none}a:hover{color:#0852b8}
+</style>
+</helmet>
+<div style="width: 1440px; height: 1080px; box-sizing: border-box; background: #f3f6fb; display: flex">
+  <div style="width: 264px; flex-shrink: 0; background: #0b1f3f"><dc-import name="AdminSidebar" active="travel_all" hint-size="264px,1080px"></dc-import></div>
+  <main style="flex-grow: 1; display: flex; flex-direction: column; min-width: 0">
+    <dc-import name="AdminTopbar" hint-size="1176px,72px"></dc-import>
+    <div style="padding: 24px 32px; display: flex; flex-direction: column; gap: 18px">
+      <div style="display: flex; align-items: flex-end; justify-content: space-between">
+        <div style="display: flex; flex-direction: column; gap: 4px"><h1 style="margin: 0; font-size: 26px; font-weight: 800">Travel &amp; Cabang</h1><div style="font-size: 14px; color: #4a5870">Semua Travel (tenant) di Segaloka beserta cabang, langganan dan kesehatan akunnya.</div></div>
+        <button type="button" style="height: 44px; padding: 0 16px; border: 1.5px solid #c9d3e2; border-radius: 12px; background: #ffffff; font: inherit; font-weight: 700">Ekspor CSV</button>
+      </div>
+      <div style="display: grid; grid-template-columns: repeat(5, minmax(0, 1fr)); gap: 12px">
+        <sc-for list="{{stats}}" as="s" hint-placeholder-count="5"><div style="background: #ffffff; border: 1px solid #e1e7f0; border-radius: 14px; padding: 14px 16px; display: flex; flex-direction: column; gap: 4px"><span style="font-size: 13px; font-weight: 700; color: #4a5870">{{s.k}}</span><span style="font-size: 24px; font-weight: 800">{{s.v}}</span></div></sc-for>
+      </div>
+      <div style="display: flex; gap: 10px; align-items: center">
+        <label for="tf" style="width: 320px; height: 42px; border-radius: 12px; background: #ffffff; border: 1px solid #e1e7f0; display: flex; align-items: center; padding: 0 12px"><input id="tf" placeholder="Cari nama Travel, kota, no. izin" style="border: 0; outline: 0; font: inherit; font-size: 14px; width: 100%"></label>
+        <sc-for list="{{filters}}" as="f" hint-placeholder-count="4"><span style="height: 42px; padding: 0 14px; border-radius: 12px; background: #ffffff; border: 1px solid #e1e7f0; font-size: 13px; font-weight: 700; display: flex; align-items: center; gap: 6px">{{f}}<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="m6 9 6 6 6-6"></path></svg></span></sc-for>
+      </div>
+      <div style="background: #ffffff; border: 1px solid #e1e7f0; border-radius: 18px; overflow: hidden">
+        <div style="display: grid; grid-template-columns: 2.2fr 1fr 1fr 0.8fr 0.9fr 1fr 1fr 60px; padding: 12px 20px; background: #f7f9fc; border-bottom: 1px solid #e1e7f0; font-size: 12px; font-weight: 800; letter-spacing: .06em; color: #4a5870"><span>TRAVEL</span><span>IZIN</span><span>LANGGANAN</span><span>CABANG</span><span>PAKET AKTIF</span><span>BOOKING 30H</span><span>STATUS</span><span></span></div>
+        <sc-for list="{{rows}}" as="r" hint-placeholder-count="9">
+          <div style="display: grid; grid-template-columns: 2.2fr 1fr 1fr 0.8fr 0.9fr 1fr 1fr 60px; align-items: center; padding: 11px 20px; border-bottom: 1px solid #eef1f6; font-size: 14px">
+            <div style="display: flex; align-items: center; gap: 10px"><span style="width: 34px; height: 34px; border-radius: 10px; background: #e6f0fd; color: #0852b8; font-weight: 800; display: flex; align-items: center; justify-content: center">{{r.i}}</span><div style="display: flex; flex-direction: column"><span style="font-weight: 800">{{r.name}}</span><span style="font-size: 12px; color: #4a5870">{{r.city}}</span></div></div>
+            <span>{{r.lic}}</span><span style="font-weight: 700">{{r.plan}}</span><span>{{r.br}}</span><span>{{r.pk}}</span><span style="font-weight: 700">{{r.bk}}</span>
+            <span style="padding: 3px 10px; border-radius: 999px; background: {{r.sbg}}; color: {{r.sfg}}; font-size: 12px; font-weight: 800; width: max-content">{{r.st}}</span>
+            <button type="button" aria-label="Aksi lain" style="width: 36px; height: 36px; border: 0; border-radius: 10px; background: #f3f6fb; font: inherit; font-weight: 800">⋯</button>
+          </div>
+        </sc-for>
+        <div style="display: flex; justify-content: space-between; align-items: center; padding: 12px 20px; font-size: 13px; color: #4a5870"><span>Menampilkan 1–9 dari 128</span><div style="display: flex; gap: 6px"><span style="width: 34px; height: 34px; border-radius: 9px; background: #0a66e0; color: #ffffff; font-weight: 800; display: flex; align-items: center; justify-content: center">1</span><span style="width: 34px; height: 34px; border-radius: 9px; border: 1px solid #e1e7f0; display: flex; align-items: center; justify-content: center">2</span><span style="width: 34px; height: 34px; border-radius: 9px; border: 1px solid #e1e7f0; display: flex; align-items: center; justify-content: center">3</span></div></div>
+      </div>
+      <div style="font-size: 13px; color: #4a5870">Menu ⋯ : Lihat profil · Masuk sebagai Travel (mode lihat saja, tercatat di Audit Log) · Ubah langganan · Tangguhkan · Kirim pesan</div>
+    </div>
+  </main>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"$preview":{"width":1440,"height":1080}}'>
+class Component extends DCLogic {
+  renderVals() {
+    var S = { a: ['Aktif', '#e4f3e4', '#0a6b0a'], t: ['Trial', '#e6f0fd', '#0852b8'], w: ['Peringatan', '#fdf0da', '#8a5300'], s: ['Ditangguhkan', '#fbe7e7', '#a42424'] };
+    var r = function (i, name, city, lic, plan, br, pk, bk, s) { return { i: i, name: name, city: city, lic: lic, plan: plan, br: br, pk: pk, bk: bk, st: S[s][0], sbg: S[s][1], sfg: S[s][2] }; };
+    return {
+      stats: [{ k: 'Travel aktif', v: '128' }, { k: 'Trial', v: '17' }, { k: 'Cabang', v: '214' }, { k: 'Langganan berbayar', v: '86' }, { k: 'Ditangguhkan', v: '3' }],
+      filters: ['Status', 'Langganan', 'Provinsi', 'Jenis izin'],
+      rows: [
+        r('A', '[Travel A]', 'Makassar', 'PPIU', 'Scale', 4, 18, 214, 'a'),
+        r('B', '[Travel B]', 'Surabaya', 'PPIU + PIHK', 'Scale', 7, 26, 188, 'a'),
+        r('C', '[Travel C]', 'Medan', 'PPIU', 'Growth', 2, 9, 61, 'a'),
+        r('D', '[Travel D]', 'Bandung', 'Biro wisata', 'Growth', 1, 7, 34, 'w'),
+        r('E', '[Travel E]', 'Jakarta', 'PPIU', 'Starter', 1, 4, 12, 't'),
+        r('F', '[Travel F]', 'Pekanbaru', 'PPIU', 'Growth', 3, 11, 58, 'a'),
+        r('G', '[Travel G]', 'Kendari', 'Biro wisata', 'Starter', 1, 2, 3, 's'),
+        r('H', '[Travel H]', 'Banjarmasin', 'PPIU', 'Starter', 1, 5, 19, 't'),
+        r('I', '[Travel I]', 'Palembang', 'PPIU', 'Growth', 2, 8, 47, 'a')
+      ]
+    };
+  }
+}
+</script>
+</body>
+</html>

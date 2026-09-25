@@ -1,0 +1,72 @@
+<!doctype html>
+<html lang="id">
+<head>
+<meta charset="utf-8">
+<title>Control Center — Audit Log</title>
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&amp;display=swap">
+<style>
+body{margin:0;font-family:'Plus Jakarta Sans',system-ui,sans-serif;color:#0f1b2d}
+a{color:#0a66e0;text-decoration:none}a:hover{color:#0852b8}
+</style>
+</helmet>
+<div style="width: 1440px; height: 1080px; box-sizing: border-box; background: #f3f6fb; display: flex">
+  <div style="width: 264px; flex-shrink: 0; background: #0b1f3f"><dc-import name="AdminSidebar" active="audit" hint-size="264px,1080px"></dc-import></div>
+  <main style="flex-grow: 1; display: flex; flex-direction: column; min-width: 0">
+    <dc-import name="AdminTopbar" hint-size="1176px,72px"></dc-import>
+    <div style="padding: 24px 32px; display: flex; flex-direction: column; gap: 18px">
+      <div style="display: flex; align-items: flex-end; justify-content: space-between">
+        <div style="display: flex; flex-direction: column; gap: 4px"><h1 style="margin: 0; font-size: 26px; font-weight: 800">Audit Log</h1><div style="font-size: 14px; color: #4a5870">Jejak semua perubahan penting oleh admin &amp; pengguna. Tidak bisa diubah atau dihapus.</div></div>
+        <button type="button" style="height: 44px; padding: 0 16px; border: 1.5px solid #c9d3e2; border-radius: 12px; background: #ffffff; font: inherit; font-weight: 700">Ekspor</button>
+      </div>
+      <div style="display: flex; gap: 10px">
+        <label for="af" style="width: 320px; height: 42px; border-radius: 12px; background: #ffffff; border: 1px solid #e1e7f0; display: flex; align-items: center; padding: 0 12px"><input id="af" placeholder="Cari pelaku, objek, ID…" style="border: 0; outline: 0; font: inherit; font-size: 14px; width: 100%"></label>
+        <sc-for list="{{filters}}" as="f" hint-placeholder-count="4"><span style="height: 42px; padding: 0 14px; border-radius: 12px; background: #ffffff; border: 1px solid #e1e7f0; font-size: 13px; font-weight: 700; display: flex; align-items: center">{{f}}</span></sc-for>
+      </div>
+      <div style="background: #ffffff; border: 1px solid #e1e7f0; border-radius: 18px; overflow: hidden">
+        <div style="display: grid; grid-template-columns: 150px 1.3fr 1.2fr 2.4fr 130px; padding: 12px 20px; background: #f7f9fc; border-bottom: 1px solid #e1e7f0; font-size: 12px; font-weight: 800; letter-spacing: .06em; color: #4a5870"><span>WAKTU</span><span>PELAKU</span><span>AKSI</span><span>DETAIL</span><span>IP / PERANGKAT</span></div>
+        <sc-for list="{{rows}}" as="r" hint-placeholder-count="12">
+          <div style="display: grid; grid-template-columns: 150px 1.3fr 1.2fr 2.4fr 130px; align-items: center; padding: 11px 20px; border-bottom: 1px solid #eef1f6; font-size: 13px">
+            <span style="color: #4a5870">{{r.w}}</span>
+            <div style="display: flex; flex-direction: column"><span style="font-weight: 800">{{r.who}}</span><span style="font-size: 12px; color: #4a5870">{{r.role}}</span></div>
+            <span style="padding: 3px 10px; border-radius: 8px; background: {{r.bg}}; color: {{r.fg}}; font-size: 12px; font-weight: 800; width: max-content">{{r.a}}</span>
+            <span>{{r.d}}</span>
+            <span style="color: #4a5870; font-size: 12px">{{r.ip}}</span>
+          </div>
+        </sc-for>
+      </div>
+    </div>
+  </main>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"$preview":{"width":1440,"height":1080}}'>
+class Component extends DCLogic {
+  renderVals() {
+    var A = { ok: ['#e4f3e4', '#0a6b0a'], edit: ['#e6f0fd', '#0852b8'], bad: ['#fbe7e7', '#a42424'], money: ['#efe8fb', '#5b36a8'], warn: ['#fdf0da', '#8a5300'] };
+    var r = function (w, who, role, a, t, d, ip) { return { w: w, who: who, role: role, a: a, bg: A[t][0], fg: A[t][1], d: d, ip: ip }; };
+    return {
+      filters: ['Semua pelaku', 'Semua aksi', '7 hari terakhir', 'Tingkat: penting'],
+      rows: [
+        r('25 Sep, 12:48', 'Zautour Admin 1', 'Super Admin', 'Setujui Travel', 'ok', '[Travel E] disetujui · izin PPIU [nomor]', '103.x.x.21 · Chrome'),
+        r('25 Sep, 12:31', 'Admin 2', 'Finance', 'Rilis settlement', 'money', 'Rp 1,25 M ke [Travel A] · keberangkatan 12 Des', '103.x.x.40 · Edge'),
+        r('25 Sep, 11:02', 'Admin 4', 'Moderator', 'Turunkan paket', 'bad', '“Umrah Super Hemat 9 Hari” · [Travel G]', '114.x.x.9 · Chrome'),
+        r('25 Sep, 10:15', 'Zautour Admin 1', 'Super Admin', 'Ubah langganan', 'edit', 'Harga Growth Rp 449 rb → Rp 499 rb', '103.x.x.21 · Chrome'),
+        r('25 Sep, 09:40', 'Admin 3', 'Verifikator', 'Tangguhkan vendor', 'bad', '[Bus L] · 3 komplain dalam 30 hari', '36.x.x.77 · Safari'),
+        r('25 Sep, 09:12', 'Admin 2', 'Support', 'Minta bukti', 'edit', 'KP-0231 · minta bukti kesetaraan hotel ke [Travel D]', '103.x.x.40 · Edge'),
+        r('24 Sep, 22:05', 'Sistem', 'Otomatis', 'Tahan settlement', 'warn', 'Komplain KP-0231 aktif · Rp 0,47 M ditahan', '—'),
+        r('24 Sep, 18:30', 'Admin 5', 'Marketing', 'Setujui iklan', 'ok', 'Kampanye “Umrah Akhir Tahun” · [Travel C]', '182.x.x.3 · Chrome'),
+        r('24 Sep, 16:11', 'Zautour Admin 1', 'Super Admin', 'Masuk sebagai Travel', 'warn', 'Mode lihat saja · [Travel D] · 12 menit', '103.x.x.21 · Chrome'),
+        r('24 Sep, 14:48', '[Pemilik Travel B]', 'Travel owner', 'Ubah rekening', 'warn', 'Rekening pencairan diganti · perlu verifikasi ulang', '120.x.x.88 · Android'),
+        r('24 Sep, 10:02', 'Zautour Admin 1', 'Super Admin', 'Undang admin', 'edit', 'Undangan Support dikirim', '103.x.x.21 · Chrome'),
+        r('23 Sep, 20:17', 'Sistem', 'Otomatis', 'Blokir akun', 'bad', '[Akun spam] · 40 SegaDeals palsu dalam 1 jam', '—')
+      ]
+    };
+  }
+}
+</script>
+</body>
+</html>

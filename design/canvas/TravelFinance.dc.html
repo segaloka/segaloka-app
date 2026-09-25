@@ -1,0 +1,79 @@
+<!doctype html>
+<html lang="id">
+<head>
+<meta charset="utf-8">
+<title>Travel — Keuangan &amp; Ledger</title>
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&amp;display=swap">
+<style>
+body{margin:0;font-family:'Plus Jakarta Sans',system-ui,sans-serif;color:#0f1b2d}
+a{color:#0a66e0;text-decoration:none}a:hover{color:#0852b8}
+</style>
+</helmet>
+<div style="width: 1440px; height: 1080px; box-sizing: border-box; background: #f3f6fb; display: flex">
+  <dc-import name="TravelSidebar" active="finance" hint-size="264px,1080px"></dc-import>
+  <main style="flex-grow: 1; padding: 24px 32px; display: flex; flex-direction: column; gap: 16px; min-width: 0">
+    <div style="display: flex; align-items: flex-end; justify-content: space-between">
+      <div style="display: flex; flex-direction: column; gap: 4px"><h1 style="margin: 0; font-size: 26px; font-weight: 800">Keuangan &amp; Ledger</h1><div style="font-size: 14px; color: #4a5870">Semua uang masuk &amp; keluar [Travel A] — pembayaran jamaah, settlement dari Segaloka, bayar Vendor &amp; komisi.</div></div>
+      <div style="display: flex; gap: 8px"><button type="button" style="height: 44px; padding: 0 14px; border: 1.5px solid #c9d3e2; border-radius: 12px; background: #ffffff; font: inherit; font-weight: 700">September 2026</button><button type="button" style="height: 44px; padding: 0 14px; border: 1.5px solid #c9d3e2; border-radius: 12px; background: #ffffff; font: inherit; font-weight: 700">Laporan laba-rugi</button></div>
+    </div>
+    <div style="display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 14px">
+      <sc-for list="{{kpis}}" as="k" hint-placeholder-count="4"><div style="background: #ffffff; border: 1px solid #e1e7f0; border-radius: 16px; padding: 16px 18px; display: flex; flex-direction: column; gap: 6px"><span style="font-size: 13px; font-weight: 700; color: #4a5870">{{k.l}}</span><span style="font-size: 24px; font-weight: 800">{{k.v}}</span><span style="font-size: 13px; font-weight: 700; color: {{k.c}}">{{k.d}}</span></div></sc-for>
+    </div>
+    <div style="display: flex; gap: 16px">
+      <div style="flex-grow: 1; background: #ffffff; border: 1px solid #e1e7f0; border-radius: 18px; overflow: hidden; min-width: 0">
+        <div style="display: flex; gap: 6px; padding: 14px 20px"><span style="padding: 7px 12px; border-radius: 999px; background: #0f1b2d; color: #ffffff; font-size: 13px; font-weight: 700">Semua</span><span style="padding: 7px 12px; border-radius: 999px; background: #eef1f6; font-size: 13px; font-weight: 600">Masuk</span><span style="padding: 7px 12px; border-radius: 999px; background: #eef1f6; font-size: 13px; font-weight: 600">Keluar</span><span style="padding: 7px 12px; border-radius: 999px; background: #eef1f6; font-size: 13px; font-weight: 600">Piutang jamaah</span><span style="padding: 7px 12px; border-radius: 999px; background: #eef1f6; font-size: 13px; font-weight: 600">Hutang Vendor</span></div>
+        <div style="display: grid; grid-template-columns: 120px 2fr 1.2fr 1fr 1fr; padding: 10px 20px; background: #f7f9fc; border-top: 1px solid #e1e7f0; border-bottom: 1px solid #e1e7f0; font-size: 12px; font-weight: 800; letter-spacing: .06em; color: #4a5870"><span>TANGGAL</span><span>KETERANGAN</span><span>AKUN</span><span style="text-align: right">MASUK</span><span style="text-align: right">KELUAR</span></div>
+        <sc-for list="{{ledger}}" as="l" hint-placeholder-count="9">
+          <div style="display: grid; grid-template-columns: 120px 2fr 1.2fr 1fr 1fr; align-items: center; padding: 10px 20px; border-bottom: 1px solid #eef1f6; font-size: 13px">
+            <span style="color: #4a5870">{{l.d}}</span><div style="display: flex; flex-direction: column"><span style="font-weight: 700">{{l.t}}</span><span style="font-size: 12px; color: #4a5870">{{l.ref}}</span></div><span style="color: #4a5870">{{l.a}}</span>
+            <span style="text-align: right; font-weight: 800; color: #0a6b0a">{{l.in}}</span><span style="text-align: right; font-weight: 800; color: #a42424">{{l.out}}</span>
+          </div>
+        </sc-for>
+      </div>
+      <div style="width: 320px; flex-shrink: 0; display: flex; flex-direction: column; gap: 14px">
+        <div style="background: #ffffff; border: 1px solid #e1e7f0; border-radius: 18px; padding: 16px; display: flex; flex-direction: column; gap: 10px">
+          <span style="font-size: 15px; font-weight: 800">Settlement dari Segaloka</span>
+          <div style="display: flex; justify-content: space-between; font-size: 14px"><span>Dijadwalkan 12 Nov</span><b>Rp 1,25 M</b></div>
+          <div style="display: flex; justify-content: space-between; font-size: 14px"><span>Dijadwalkan 20 Nov</span><b>Rp 0,86 M</b></div>
+          <div style="display: flex; justify-content: space-between; font-size: 14px; color: #4a5870"><span>Rekening pencairan</span><span>BSI ••• 4471</span></div>
+        </div>
+        <div style="background: #ffffff; border: 1px solid #e1e7f0; border-radius: 18px; padding: 16px; display: flex; flex-direction: column; gap: 10px">
+          <span style="font-size: 15px; font-weight: 800">Harus dibayar</span>
+          <div style="display: flex; justify-content: space-between; font-size: 14px"><span>Vendor (7 invoice)</span><b>Rp 486 jt</b></div>
+          <div style="display: flex; justify-content: space-between; font-size: 14px"><span>Komisi Mitra &amp; Agen</span><b>Rp 58,5 jt</b></div>
+          <div style="display: flex; justify-content: space-between; font-size: 14px"><span>Komisi Affiliate</span><b>Rp 14,2 jt</b></div>
+          <button type="button" style="height: 42px; border: 0; border-radius: 12px; background: #0a66e0; color: #ffffff; font: inherit; font-weight: 800">Bayar lewat sistem</button>
+        </div>
+      </div>
+    </div>
+  </main>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"$preview":{"width":1440,"height":1080}}'>
+class Component extends DCLogic {
+  renderVals() {
+    var l = function (d, t, ref, a, i, o) { return { d: d, t: t, ref: ref, a: a, in: i || '', out: o || '' }; };
+    return {
+      kpis: [{ l: 'Diterima dari jamaah', v: 'Rp 2,8 M', d: '86 booking', c: '#0a6b0a' }, { l: 'Piutang jamaah', v: 'Rp 640 jt', d: '12 lewat jatuh tempo', c: '#a42424' }, { l: 'Dana di Segaloka', v: 'Rp 2,11 M', d: 'menunggu jadwal rilis', c: '#8a5300' }, { l: 'Laba kotor (est.)', v: 'Rp 412 jt', d: 'margin 14,7%', c: '#0a6b0a' }],
+      ledger: [
+        l('25 Sep', 'DP booking SGL-24817', 'Hj. Siti Aminah · VA BSI', 'Pendapatan diterima di muka', 'Rp 10 jt'),
+        l('25 Sep', 'Pelunasan SGL-24790', 'Ahmad Fauzi · QRIS', 'Pendapatan diterima di muka', 'Rp 36,9 jt'),
+        l('24 Sep', 'Bayar [Hotel I] Madinah', 'VO-3302', 'Hutang vendor', '', 'Rp 168 jt'),
+        l('24 Sep', 'Settlement dari Segaloka', 'Keberangkatan 15 Okt', 'Kas bank', 'Rp 1,18 M'),
+        l('23 Sep', 'Komisi [Mitra Bone]', '9 jamaah · Sep', 'Beban komisi', '', 'Rp 13,5 jt'),
+        l('23 Sep', 'Komisi [Affiliate Nur]', '4 booking', 'Beban komisi', '', 'Rp 3,7 jt'),
+        l('22 Sep', 'Bayar [Visa K]', '39 visa', 'Hutang vendor', '', 'Rp 62 jt'),
+        l('22 Sep', 'Langganan Segaloka · Scale', 'Sep 2026', 'Beban langganan', '', 'Rp 1,5 jt'),
+        l('21 Sep', 'DP booking SGL-24744', 'Rahmawati · VA BRI', 'Pendapatan diterima di muka', 'Rp 5 jt')
+      ]
+    };
+  }
+}
+</script>
+</body>
+</html>

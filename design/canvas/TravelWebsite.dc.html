@@ -1,0 +1,66 @@
+<!doctype html>
+<html lang="id">
+<head>
+<meta charset="utf-8">
+<title>Travel — Website Travel</title>
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&amp;display=swap">
+<style>
+body{margin:0;font-family:'Plus Jakarta Sans',system-ui,sans-serif;color:#0f1b2d}
+a{color:#0a66e0;text-decoration:none}a:hover{color:#0852b8}
+</style>
+</helmet>
+<div style="width: 1440px; height: 1080px; box-sizing: border-box; background: #f3f6fb; display: flex">
+  <dc-import name="TravelSidebar" active="website" hint-size="264px,1080px"></dc-import>
+  <main style="flex-grow: 1; padding: 24px 32px; display: flex; flex-direction: column; gap: 16px; min-width: 0">
+    <div style="display: flex; align-items: flex-end; justify-content: space-between">
+      <div style="display: flex; flex-direction: column; gap: 4px"><h1 style="margin: 0; font-size: 26px; font-weight: 800">Website Travel</h1><div style="font-size: 14px; color: #4a5870">Halaman resmi [Travel A] di Segaloka. Paket &amp; booking otomatis tersambung, pembayaran tetap lewat Segaloka.</div></div>
+      <div style="display: flex; gap: 8px; align-items: center"><span style="font-size: 13px; font-weight: 700; color: #0a6b0a">● Tayang di segaloka.com/travel-a</span><button type="button" style="height: 44px; padding: 0 16px; border: 0; border-radius: 12px; background: #0a66e0; color: #ffffff; font: inherit; font-weight: 800">Terbitkan perubahan</button></div>
+    </div>
+    <div style="display: flex; gap: 16px; flex-grow: 1; min-height: 0">
+      <div style="width: 300px; flex-shrink: 0; background: #ffffff; border: 1px solid #e1e7f0; border-radius: 18px; padding: 16px; display: flex; flex-direction: column; gap: 10px">
+        <span style="font-size: 15px; font-weight: 800">Bagian halaman</span>
+        <sc-for list="{{blocks}}" as="b" hint-placeholder-count="7"><div style="display: flex; align-items: center; gap: 10px; height: 44px; padding: 0 12px; border-radius: 12px; border: {{b.b}}; background: {{b.bg}}; font-size: 14px; font-weight: 700"><span style="color: #7c8aa0; letter-spacing: -2px">⋮⋮</span><span style="flex-grow: 1">{{b.l}}</span><span style="width: 36px; height: 20px; border-radius: 999px; background: {{b.tg}}; position: relative"><span style="position: absolute; top: 2px; left: {{b.x}}; width: 16px; height: 16px; border-radius: 999px; background: #ffffff"></span></span></div></sc-for>
+        <span style="font-size: 15px; font-weight: 800; padding-top: 8px">Warna merek</span>
+        <div style="display: flex; gap: 8px"><span style="width: 36px; height: 36px; border-radius: 10px; background: #0e6b5e; border: 3px solid #0f1b2d"></span><span style="width: 36px; height: 36px; border-radius: 10px; background: #0a66e0"></span><span style="width: 36px; height: 36px; border-radius: 10px; background: #8a2be2"></span><span style="width: 36px; height: 36px; border-radius: 10px; background: #b8862e"></span></div>
+        <span style="font-size: 12px; color: #4a5870; line-height: 1.5">Nomor telepon &amp; WhatsApp tidak bisa dicantumkan — tombol “Kirim pesan” otomatis ke menu Pesan.</span>
+      </div>
+      <div style="flex-grow: 1; background: #ffffff; border: 1px solid #e1e7f0; border-radius: 18px; padding: 14px; display: flex; flex-direction: column; gap: 10px; min-width: 0">
+        <div style="display: flex; gap: 6px; align-items: center"><span style="width: 10px; height: 10px; border-radius: 999px; background: #e1e7f0"></span><span style="width: 10px; height: 10px; border-radius: 999px; background: #e1e7f0"></span><span style="width: 10px; height: 10px; border-radius: 999px; background: #e1e7f0"></span><span style="margin-left: 10px; flex-grow: 1; height: 30px; border-radius: 8px; background: #f3f6fb; font-size: 12px; color: #4a5870; display: flex; align-items: center; padding: 0 10px">segaloka.com/travel-a</span><span style="font-size: 12px; font-weight: 700">Desktop · HP</span></div>
+        <div style="border: 1px solid #e1e7f0; border-radius: 12px; overflow: hidden; display: flex; flex-direction: column; flex-grow: 1">
+          <div style="background: #0e6b5e; color: #ffffff; padding: 28px 32px; display: flex; flex-direction: column; gap: 10px">
+            <div style="display: flex; align-items: center; gap: 10px"><span style="width: 40px; height: 40px; border-radius: 10px; background: #ffffff; color: #0e6b5e; font-weight: 800; display: flex; align-items: center; justify-content: center">A</span><span style="font-size: 18px; font-weight: 800">[Travel A]</span><span style="padding: 3px 10px; border-radius: 999px; background: #ffffff; color: #0a6b0a; font-size: 11px; font-weight: 800">Terverifikasi Segaloka</span></div>
+            <span style="font-size: 28px; font-weight: 800; line-height: 1.2">Melayani tamu Allah dari Makassar sejak [tahun]</span>
+            <div style="display: flex; gap: 8px"><span style="padding: 10px 16px; border-radius: 10px; background: #ff9f1c; color: #241400; font-weight: 800; font-size: 14px">Lihat paket</span><span style="padding: 10px 16px; border-radius: 10px; background: #ffffff; color: #0e6b5e; font-weight: 800; font-size: 14px">Kirim pesan</span></div>
+          </div>
+          <div style="padding: 20px 32px; display: flex; flex-direction: column; gap: 12px">
+            <span style="font-size: 17px; font-weight: 800">Paket kami</span>
+            <div style="display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 12px">
+              <sc-for list="{{pk}}" as="p" hint-placeholder-count="3"><div style="border: 1px solid #e1e7f0; border-radius: 12px; overflow: hidden"><div style="height: 80px; background: #dbe7f8"></div><div style="padding: 10px; display: flex; flex-direction: column; gap: 3px"><span style="font-size: 13px; font-weight: 800">{{p.n}}</span><span style="font-size: 12px; color: #4a5870">{{p.d}}</span><span style="font-size: 14px; font-weight: 800; color: #e25d00">{{p.p}}</span></div></div></sc-for>
+            </div>
+            <span style="font-size: 17px; font-weight: 800; padding-top: 6px">Kantor &amp; cabang</span>
+            <span style="font-size: 13px; color: #4a5870">Pusat Makassar · Cabang Bone · Cabang Parepare</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </main>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"$preview":{"width":1440,"height":1080}}'>
+class Component extends DCLogic {
+  renderVals() {
+    var b = function (l, on, sel) { return { l: l, tg: on ? '#0a66e0' : '#c9d3e2', x: on ? '18px' : '2px', b: sel ? '2px solid #0a66e0' : '1px solid #e1e7f0', bg: sel ? '#f5f9ff' : '#ffffff' }; };
+    return {
+      blocks: [b('Sampul & slogan', true, true), b('Paket kami', true), b('Tentang kami', true), b('Legalitas & izin', true), b('Galeri keberangkatan', true), b('Kantor & cabang', true), b('Pertanyaan umum (FAQ)', false)],
+      pk: [{ n: 'Umrah Reguler 9 Hari', d: '12 Des 2026', p: 'Rp 32,5 jt' }, { n: 'Umrah Akhir Tahun', d: '20 Des 2026', p: 'Rp 38 jt' }, { n: 'Umrah Ramadhan 15 Hari', d: 'Mar 2027', p: 'Rp 48 jt' }]
+    };
+  }
+}
+</script>
+</body>
+</html>

@@ -1,0 +1,173 @@
+<!doctype html>
+<html lang="id">
+<head>
+<meta charset="utf-8">
+<title>Segaloka — Fondasi Desain</title>
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&amp;family=IBM+Plex+Sans+Arabic:wght@400;600&amp;display=swap">
+<style>
+body{margin:0;font-family:'Plus Jakarta Sans',system-ui,sans-serif;color:#0f1b2d}
+a{color:#0a66e0;text-decoration:none}a:hover{color:#0852b8}
+</style>
+</helmet>
+<div style="width: 1440px; height: 1320px; box-sizing: border-box; padding: 64px 72px; background: #f3f6fb; display: flex; flex-direction: column; gap: 40px">
+
+  <div style="display: flex; align-items: flex-end; justify-content: space-between">
+    <div style="display: flex; flex-direction: column; gap: 8px">
+      <div style="display: flex; align-items: center; gap: 12px">
+        <div style="width: 44px; height: 44px; border-radius: 12px; background: #0a66e0; color: #ffffff; display: flex; align-items: center; justify-content: center; font-weight: 800; font-size: 22px">S</div>
+        <div style="font-size: 28px; font-weight: 800; letter-spacing: -0.02em">Segaloka</div>
+      </div>
+      <div style="font-size: 15px; color: #4a5870">Fondasi desain · Biru cerah gaya OTA · Terang / Gelap · ID · EN · العربية</div>
+    </div>
+    <div style="font-size: 13px; color: #4a5870">Huruf: Plus Jakarta Sans (Latin) · IBM Plex Sans Arabic (Arab)</div>
+  </div>
+
+  <div style="display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 32px">
+    <div style="background: #ffffff; border: 1px solid #e1e7f0; border-radius: 20px; padding: 28px; display: flex; flex-direction: column; gap: 18px">
+      <div style="font-size: 13px; font-weight: 700; letter-spacing: .08em; color: #4a5870">WARNA — MODE TERANG</div>
+      <div style="display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 14px">
+        <sc-for list="{{light}}" as="c" hint-placeholder-count="12">
+          <div style="display: flex; flex-direction: column; gap: 6px">
+            <div style="height: 64px; border-radius: 12px; border: 1px solid #e1e7f0; background: {{c.hex}}"></div>
+            <div style="font-size: 13px; font-weight: 600">{{c.name}}</div>
+            <div style="font-size: 12px; color: #4a5870">{{c.hex}}</div>
+          </div>
+        </sc-for>
+      </div>
+    </div>
+    <div style="background: #0b1220; border: 1px solid #22304a; border-radius: 20px; padding: 28px; display: flex; flex-direction: column; gap: 18px; color: #eef3fa">
+      <div style="font-size: 13px; font-weight: 700; letter-spacing: .08em; color: #b6c2d6">WARNA — MODE GELAP</div>
+      <div style="display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 14px">
+        <sc-for list="{{dark}}" as="c" hint-placeholder-count="12">
+          <div style="display: flex; flex-direction: column; gap: 6px">
+            <div style="height: 64px; border-radius: 12px; border: 1px solid #2e3f5e; background: {{c.hex}}"></div>
+            <div style="font-size: 13px; font-weight: 600">{{c.name}}</div>
+            <div style="font-size: 12px; color: #b6c2d6">{{c.hex}}</div>
+          </div>
+        </sc-for>
+      </div>
+    </div>
+  </div>
+
+  <div style="display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 32px">
+    <div style="background: #ffffff; border: 1px solid #e1e7f0; border-radius: 20px; padding: 28px; display: flex; flex-direction: column; gap: 14px">
+      <div style="font-size: 13px; font-weight: 700; letter-spacing: .08em; color: #4a5870">TIPOGRAFI</div>
+      <div style="font-size: 40px; font-weight: 800; letter-spacing: -0.02em; line-height: 1.1">Display 40 / 800</div>
+      <div style="font-size: 28px; font-weight: 700; letter-spacing: -0.01em">Judul 28 / 700</div>
+      <div style="font-size: 20px; font-weight: 700">Subjudul 20 / 700</div>
+      <div style="font-size: 16px; line-height: 1.6">Isi 16 / 400 — teks paragraf utama, deskripsi paket dan formulir.</div>
+      <div style="font-size: 14px; color: #4a5870">Kecil 14 / 400 — keterangan, label tabel</div>
+      <div style="font-size: 12px; font-weight: 700; letter-spacing: .08em; color: #4a5870">LABEL 12 / 700 KAPITAL</div>
+      <div dir="rtl" style="font-family: 'IBM Plex Sans Arabic', sans-serif; font-size: 20px; font-weight: 600; text-align: right; padding-top: 6px; border-top: 1px solid #e1e7f0">باقات العمرة والحج</div>
+    </div>
+
+    <div style="background: #ffffff; border: 1px solid #e1e7f0; border-radius: 20px; padding: 28px; display: flex; flex-direction: column; gap: 18px">
+      <div style="font-size: 13px; font-weight: 700; letter-spacing: .08em; color: #4a5870">TOMBOL</div>
+      <div style="display: flex; flex-wrap: wrap; gap: 12px">
+        <button type="button" style="height: 48px; padding: 0 22px; border: 0; border-radius: 12px; background: #0a66e0; color: #ffffff; font: inherit; font-weight: 700; font-size: 15px">Utama</button>
+        <button type="button" style="height: 48px; padding: 0 22px; border: 0; border-radius: 12px; background: #ff9f1c; color: #241400; font: inherit; font-weight: 700; font-size: 15px">Ajakan (CTA)</button>
+        <button type="button" style="height: 48px; padding: 0 22px; border: 1.5px solid #c9d3e2; border-radius: 12px; background: #ffffff; color: #0f1b2d; font: inherit; font-weight: 600; font-size: 15px">Kedua</button>
+        <button type="button" style="height: 48px; padding: 0 18px; border: 0; border-radius: 12px; background: #e6f0fd; color: #0852b8; font: inherit; font-weight: 700; font-size: 15px">Lembut</button>
+        <button type="button" style="height: 48px; padding: 0 18px; border: 0; border-radius: 12px; background: #fbe7e7; color: #a42424; font: inherit; font-weight: 700; font-size: 15px">Hapus</button>
+      </div>
+      <div style="font-size: 13px; font-weight: 700; letter-spacing: .08em; color: #4a5870; padding-top: 6px">STATUS</div>
+      <div style="display: flex; flex-wrap: wrap; gap: 8px">
+        <span style="padding: 5px 12px; border-radius: 999px; background: #e4f3e4; color: #0a6b0a; font-size: 13px; font-weight: 700">Aktif</span>
+        <span style="padding: 5px 12px; border-radius: 999px; background: #fdf0da; color: #8a5300; font-size: 13px; font-weight: 700">Menunggu</span>
+        <span style="padding: 5px 12px; border-radius: 999px; background: #fbe7e7; color: #a42424; font-size: 13px; font-weight: 700">Ditangguhkan</span>
+        <span style="padding: 5px 12px; border-radius: 999px; background: #e6f0fd; color: #0852b8; font-size: 13px; font-weight: 700">Terbit</span>
+        <span style="padding: 5px 12px; border-radius: 999px; background: #eef1f6; color: #4a5870; font-size: 13px; font-weight: 700">Draf</span>
+      </div>
+      <div style="font-size: 13px; color: #4a5870; line-height: 1.5">Tinggi tombol minimal 44px. Oranye hanya untuk 1 ajakan utama per layar (Cari, Pesan, Daftarkan Travel).</div>
+    </div>
+
+    <div style="background: #ffffff; border: 1px solid #e1e7f0; border-radius: 20px; padding: 28px; display: flex; flex-direction: column; gap: 16px">
+      <div style="font-size: 13px; font-weight: 700; letter-spacing: .08em; color: #4a5870">FORMULIR</div>
+      <div style="display: flex; flex-direction: column; gap: 6px">
+        <label for="f1" style="font-size: 14px; font-weight: 600">Email</label>
+        <input id="f1" type="email" placeholder="nama@email.com" style="height: 48px; padding: 0 14px; border: 1.5px solid #c9d3e2; border-radius: 12px; font: inherit; font-size: 15px; background: #ffffff">
+      </div>
+      <div style="display: flex; flex-direction: column; gap: 6px">
+        <label for="f2" style="font-size: 14px; font-weight: 600">Kata sandi</label>
+        <input id="f2" type="password" value="rahasia12" style="height: 48px; padding: 0 14px; border: 2px solid #0a66e0; border-radius: 12px; font: inherit; font-size: 15px; background: #ffffff; box-shadow: 0 0 0 4px #e6f0fd">
+        <div style="font-size: 13px; color: #4a5870">Fokus: garis biru 2px + cincin lembut</div>
+      </div>
+      <div style="display: flex; flex-direction: column; gap: 6px">
+        <label for="f3" style="font-size: 14px; font-weight: 600">No. HP</label>
+        <input id="f3" type="tel" value="0812" style="height: 48px; padding: 0 14px; border: 2px solid #c53030; border-radius: 12px; font: inherit; font-size: 15px; background: #ffffff">
+        <div style="font-size: 13px; color: #a42424; font-weight: 600">Nomor terlalu pendek</div>
+      </div>
+    </div>
+  </div>
+
+  <div style="display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 32px">
+    <div style="background: #ffffff; border: 1px solid #e1e7f0; border-radius: 20px; overflow: hidden; box-shadow: 0 1px 2px rgba(15,40,80,.05), 0 8px 20px -12px rgba(15,40,80,.18)">
+      <div style="height: 150px; background: #dbe7f8; display: flex; align-items: center; justify-content: center; color: #4a5870; font-size: 13px; font-weight: 600; position: relative">[Foto paket]
+        <span style="position: absolute; top: 12px; left: 12px; padding: 4px 10px; border-radius: 999px; background: #0a66e0; color: #ffffff; font-size: 12px; font-weight: 700">Umrah</span>
+      </div>
+      <div style="padding: 16px 18px 18px; display: flex; flex-direction: column; gap: 8px">
+        <div style="font-size: 13px; color: #4a5870; display: flex; align-items: center; gap: 6px"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#0a66e0" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path><path d="m9 12 2 2 4-4"></path></svg>[Nama Travel] · Terverifikasi</div>
+        <div style="font-size: 17px; font-weight: 700">Kartu Paket — [Nama paket]</div>
+        <div style="font-size: 13px; color: #4a5870">[Tanggal] · [Durasi] · Dari [Kota]</div>
+        <div style="display: flex; align-items: baseline; justify-content: space-between; padding-top: 6px">
+          <div style="font-size: 12px; color: #4a5870">mulai</div>
+          <div style="font-size: 20px; font-weight: 800; color: #e25d00">Rp [Harga]</div>
+        </div>
+      </div>
+    </div>
+    <div style="background: #ffffff; border: 1px solid #e1e7f0; border-radius: 20px; padding: 28px; display: flex; flex-direction: column; gap: 14px">
+      <div style="font-size: 13px; font-weight: 700; letter-spacing: .08em; color: #4a5870">MENU SAMPING DASHBOARD</div>
+      <div style="display: flex; align-items: center; gap: 12px; height: 44px; padding: 0 14px; border-radius: 12px; background: #e6f0fd; color: #0852b8; font-weight: 700; font-size: 15px">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="7" height="9" rx="1.5"></rect><rect x="14" y="3" width="7" height="5" rx="1.5"></rect><rect x="14" y="12" width="7" height="9" rx="1.5"></rect><rect x="3" y="16" width="7" height="5" rx="1.5"></rect></svg>Aktif</div>
+      <div style="display: flex; align-items: center; gap: 12px; height: 44px; padding: 0 14px; border-radius: 12px; background: #f3f6fb; color: #0f1b2d; font-weight: 600; font-size: 15px">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="18" rx="2"></rect><path d="M16 2v4M8 2v4M3 10h18"></path></svg>Saat disorot</div>
+      <div style="display: flex; align-items: center; gap: 12px; height: 44px; padding: 0 14px; border-radius: 12px; color: #4a5870; font-weight: 600; font-size: 15px">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 8a6 6 0 0 1 12 0c0 7 3 9 3 9H3s3-2 3-9"></path><path d="M10.3 21a1.94 1.94 0 0 0 3.4 0"></path></svg>Normal<span style="margin-left: auto; min-width: 22px; height: 22px; border-radius: 999px; background: #ff9f1c; color: #241400; font-size: 12px; font-weight: 800; display: flex; align-items: center; justify-content: center">3</span></div>
+      <div style="font-size: 13px; color: #4a5870; line-height: 1.5; padding-top: 4px">Ikon garis 20px, lebar sidebar 264px. Dalam bahasa Arab, sidebar pindah ke kanan dan ikon panah dibalik.</div>
+    </div>
+    <div style="background: #ffffff; border: 1px solid #e1e7f0; border-radius: 20px; padding: 28px; display: flex; flex-direction: column; gap: 14px">
+      <div style="font-size: 13px; font-weight: 700; letter-spacing: .08em; color: #4a5870">PEMILIH BAHASA &amp; TEMA</div>
+      <div style="display: flex; gap: 4px; padding: 4px; background: #eef1f6; border-radius: 12px; width: max-content">
+        <button type="button" style="height: 40px; padding: 0 16px; border: 0; border-radius: 9px; background: #ffffff; color: #0f1b2d; font: inherit; font-weight: 700; font-size: 14px; box-shadow: 0 1px 2px rgba(15,40,80,.12)">ID</button>
+        <button type="button" style="height: 40px; padding: 0 16px; border: 0; border-radius: 9px; background: transparent; color: #4a5870; font: inherit; font-weight: 600; font-size: 14px">EN</button>
+        <button type="button" style="height: 40px; padding: 0 16px; border: 0; border-radius: 9px; background: transparent; color: #4a5870; font-family: 'IBM Plex Sans Arabic', sans-serif; font-weight: 600; font-size: 15px">عربي</button>
+      </div>
+      <div style="display: flex; gap: 4px; padding: 4px; background: #eef1f6; border-radius: 12px; width: max-content">
+        <button type="button" style="height: 40px; padding: 0 14px; border: 0; border-radius: 9px; background: transparent; color: #4a5870; font: inherit; font-weight: 600; font-size: 14px">Terang</button>
+        <button type="button" style="height: 40px; padding: 0 14px; border: 0; border-radius: 9px; background: transparent; color: #4a5870; font: inherit; font-weight: 600; font-size: 14px">Gelap</button>
+        <button type="button" style="height: 40px; padding: 0 14px; border: 0; border-radius: 9px; background: #ffffff; color: #0f1b2d; font: inherit; font-weight: 700; font-size: 14px; box-shadow: 0 1px 2px rgba(15,40,80,.12)">Sistem</button>
+      </div>
+      <div style="font-size: 13px; color: #4a5870; line-height: 1.5">Ada di header publik dan di menu profil dashboard. Pilihan disimpan per pengguna.</div>
+    </div>
+  </div>
+
+  <div style="display: flex; gap: 24px; font-size: 13px; color: #4a5870">
+    <span>Sudut: 8 · 12 · 20 · 28px</span><span>Jarak: kelipatan 4px (8, 12, 16, 24, 32, 48, 64)</span><span>Bayangan kartu: halus, kebiruan</span><span>Kontras teks minimal 4.5:1</span>
+  </div>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"$preview":{"width":1440,"height":1320}}'>
+class Component extends DCLogic {
+  renderVals() {
+    return {
+      light: [
+        { name: 'Primary', hex: '#0a66e0' }, { name: 'Primary hover', hex: '#0852b8' }, { name: 'CTA oranye', hex: '#ff9f1c' }, { name: 'Harga', hex: '#e25d00' },
+        { name: 'Latar', hex: '#f3f6fb' }, { name: 'Permukaan', hex: '#ffffff' }, { name: 'Garis', hex: '#e1e7f0' }, { name: 'Teks', hex: '#0f1b2d' },
+        { name: 'Sukses', hex: '#0ca30c' }, { name: 'Peringatan', hex: '#a86b00' }, { name: 'Bahaya', hex: '#c53030' }, { name: 'Teks kedua', hex: '#4a5870' }
+      ],
+      dark: [
+        { name: 'Primary', hex: '#4d9bff' }, { name: 'Primary hover', hex: '#74b1ff' }, { name: 'CTA oranye', hex: '#ffb547' }, { name: 'Harga', hex: '#ffb547' },
+        { name: 'Latar', hex: '#0b1220' }, { name: 'Permukaan', hex: '#111a2b' }, { name: 'Garis', hex: '#22304a' }, { name: 'Teks', hex: '#eef3fa' },
+        { name: 'Sukses', hex: '#4ed18c' }, { name: 'Peringatan', hex: '#f0b93d' }, { name: 'Bahaya', hex: '#ff7a7a' }, { name: 'Teks kedua', hex: '#b6c2d6' }
+      ]
+    };
+  }
+}
+</script>
+</body>
+</html>

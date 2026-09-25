@@ -2,13 +2,14 @@
 
 import { createClient } from "@/lib/supabase/server";
 import { redirect } from "next/navigation";
+import { safeNextPath } from "@/lib/site";
 
 export type FormState = { error?: string } | null;
 
 export async function loginAction(_prev: FormState, formData: FormData): Promise<FormState> {
   const email = String(formData.get("email") ?? "").trim();
   const password = String(formData.get("password") ?? "");
-  const next = String(formData.get("next") ?? "/akun");
+  const next = safeNextPath(String(formData.get("next") ?? ""));
 
   if (!email || !password) return { error: "Email dan kata sandi wajib diisi." };
 
@@ -19,5 +20,5 @@ export async function loginAction(_prev: FormState, formData: FormData): Promise
     return { error: error.message === "Invalid login credentials" ? "Email atau kata sandi salah." : error.message };
   }
 
-  redirect(next || "/akun");
+  redirect(next);
 }

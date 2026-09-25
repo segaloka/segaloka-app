@@ -1,0 +1,95 @@
+<!doctype html>
+<html lang="id">
+<head>
+<meta charset="utf-8">
+<title>Control Center — Komplain &amp; Refund</title>
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&amp;display=swap">
+<style>
+body{margin:0;font-family:'Plus Jakarta Sans',system-ui,sans-serif;color:#0f1b2d}
+a{color:#0a66e0;text-decoration:none}a:hover{color:#0852b8}
+</style>
+</helmet>
+<div style="width: 1440px; height: 1080px; box-sizing: border-box; background: #f3f6fb; display: flex">
+  <div style="width: 264px; flex-shrink: 0; background: #0b1f3f"><dc-import name="AdminSidebar" active="fin_ref" hint-size="264px,1080px"></dc-import></div>
+  <main style="flex-grow: 1; display: flex; flex-direction: column; min-width: 0">
+    <dc-import name="AdminTopbar" hint-size="1176px,72px"></dc-import>
+    <div style="padding: 24px 32px; display: flex; flex-direction: column; gap: 18px; flex-grow: 1; min-height: 0">
+      <div style="display: flex; flex-direction: column; gap: 4px"><h1 style="margin: 0; font-size: 26px; font-weight: 800">Komplain &amp; Refund</h1><div style="font-size: 14px; color: #4a5870">Sengketa antara jamaah dan Travel/Vendor. Bukti diambil langsung dari riwayat Pesan &amp; pembayaran di sistem.</div></div>
+      <div style="display: flex; gap: 16px; flex-grow: 1; min-height: 0">
+        <div style="width: 380px; flex-shrink: 0; background: #ffffff; border: 1px solid #e1e7f0; border-radius: 18px; overflow: hidden">
+          <sc-for list="{{cases}}" as="c" hint-placeholder-count="6">
+            <a href="#" style="display: flex; flex-direction: column; gap: 4px; padding: 14px 16px; border-bottom: 1px solid #eef1f6; background: {{c.bg}}; border-left: {{c.bar}}; color: #0f1b2d">
+              <div style="display: flex; justify-content: space-between"><span style="font-size: 12px; font-weight: 800; color: #0852b8">{{c.id}}</span><span style="padding: 2px 8px; border-radius: 999px; background: {{c.sbg}}; color: {{c.sfg}}; font-size: 11px; font-weight: 800">{{c.st}}</span></div>
+              <span style="font-size: 14px; font-weight: 800">{{c.t}}</span>
+              <span style="font-size: 12px; color: #4a5870">{{c.m}}</span>
+            </a>
+          </sc-for>
+        </div>
+        <div style="flex-grow: 1; background: #ffffff; border: 1px solid #e1e7f0; border-radius: 18px; display: flex; flex-direction: column; min-width: 0">
+          <div style="padding: 18px 22px; border-bottom: 1px solid #eef1f6; display: flex; flex-direction: column; gap: 6px">
+            <div style="display: flex; justify-content: space-between; align-items: center"><span style="font-size: 13px; font-weight: 800; color: #0852b8">KP-0231 · Booking SGL-23990</span><span style="font-size: 13px; font-weight: 700; color: #a42424">Batas respons Travel: 18 jam lagi</span></div>
+            <span style="font-size: 20px; font-weight: 800">Hotel Makkah tidak sesuai paket (bintang 3, bukan 4)</span>
+            <span style="font-size: 13px; color: #4a5870">Pelapor: Ahmad Fauzi (Jamaah) · Terlapor: [Travel D] · Nilai booking Rp 41,9 jt · Settlement ke Travel otomatis ditahan</span>
+          </div>
+          <div style="padding: 18px 22px; display: flex; gap: 20px; flex-grow: 1; min-height: 0">
+            <div style="flex-grow: 1; display: flex; flex-direction: column; gap: 12px">
+              <span style="font-size: 15px; font-weight: 800">Kronologi</span>
+              <sc-for list="{{timeline}}" as="t" hint-placeholder-count="5">
+                <div style="display: flex; gap: 12px"><span style="width: 10px; height: 10px; margin-top: 5px; border-radius: 999px; background: {{t.c}}; flex-shrink: 0"></span><div style="display: flex; flex-direction: column; gap: 2px"><span style="font-size: 14px; font-weight: 700">{{t.t}}</span><span style="font-size: 13px; color: #4a5870; line-height: 1.4">{{t.d}}</span></div></div>
+              </sc-for>
+            </div>
+            <div style="width: 300px; flex-shrink: 0; display: flex; flex-direction: column; gap: 12px">
+              <span style="font-size: 15px; font-weight: 800">Bukti</span>
+              <div style="display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 8px"><div style="height: 80px; border-radius: 10px; background: #dbe7f8; color: #4a5870; font-size: 12px; font-weight: 600; display: flex; align-items: center; justify-content: center">[Foto kamar]</div><div style="height: 80px; border-radius: 10px; background: #dbe7f8; color: #4a5870; font-size: 12px; font-weight: 600; display: flex; align-items: center; justify-content: center">[Voucher hotel]</div></div>
+              <a href="Messages.dc.html" style="font-size: 13px; font-weight: 700">Buka riwayat Pesan (24 pesan)</a>
+              <span style="font-size: 15px; font-weight: 800; padding-top: 6px">Keputusan</span>
+              <label style="display: flex; align-items: center; gap: 10px; font-size: 14px"><input type="radio" name="dec" style="width: 18px; height: 18px; accent-color: #0a66e0; margin: 0">Tolak komplain</label>
+              <label style="display: flex; align-items: center; gap: 10px; font-size: 14px"><input type="radio" name="dec" checked="{{yes}}" style="width: 18px; height: 18px; accent-color: #0a66e0; margin: 0">Refund sebagian</label>
+              <label style="display: flex; align-items: center; gap: 10px; font-size: 14px"><input type="radio" name="dec" style="width: 18px; height: 18px; accent-color: #0a66e0; margin: 0">Refund penuh</label>
+              <label for="amt" style="font-size: 13px; font-weight: 700">Jumlah refund</label>
+              <input id="amt" value="Rp 3.500.000" style="height: 44px; padding: 0 12px; border: 1.5px solid #c9d3e2; border-radius: 12px; font: inherit; font-size: 15px; font-weight: 700">
+            </div>
+          </div>
+          <div style="padding: 14px 22px; border-top: 1px solid #eef1f6; display: flex; gap: 10px; justify-content: flex-end">
+            <button type="button" style="height: 44px; padding: 0 16px; border: 1.5px solid #c9d3e2; border-radius: 12px; background: #ffffff; font: inherit; font-weight: 700">Minta keterangan Travel</button>
+            <button type="button" style="height: 44px; padding: 0 20px; border: 0; border-radius: 12px; background: #0a66e0; color: #ffffff; font: inherit; font-weight: 800">Putuskan &amp; proses refund</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </main>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"$preview":{"width":1440,"height":1080}}'>
+class Component extends DCLogic {
+  renderVals() {
+    var S = { n: ['Baru', '#fdf0da', '#8a5300'], w: ['Menunggu Travel', '#e6f0fd', '#0852b8'], d: ['Selesai', '#e4f3e4', '#0a6b0a'] };
+    var c = function (id, t, m, s, sel) { return { id: id, t: t, m: m, st: S[s][0], sbg: S[s][1], sfg: S[s][2], bg: sel ? '#f5f9ff' : '#ffffff', bar: sel ? '4px solid #0a66e0' : '4px solid transparent' }; };
+    return {
+      yes: true,
+      cases: [
+        c('KP-0231', 'Hotel tidak sesuai paket', 'Ahmad Fauzi vs [Travel D] · Rp 41,9 jt', 'w', true),
+        c('KP-0230', 'Pembatalan sebelum berangkat', 'Rahmawati vs [Travel C] · Rp 38 jt', 'n', false),
+        c('KP-0229', 'Bus terlambat 5 jam', '[Travel B] vs [Bus L] (Vendor)', 'n', false),
+        c('KP-0227', 'Visa terbit terlambat', 'M. Yusuf vs [Travel E]', 'w', false),
+        c('KP-0224', 'Double charge VA', 'Nurhayati · Rp 10 jt', 'd', false),
+        c('KP-0220', 'Kamar dipisah dari keluarga', 'Irfan H. vs [Travel F]', 'd', false)
+      ],
+      timeline: [
+        { t: 'Komplain dibuat jamaah', d: '23 Sep 2026, 21:40 · dari aplikasi, 2 foto dilampirkan', c: '#c53030' },
+        { t: 'Settlement ditahan otomatis', d: 'Rp 0,47 M untuk keberangkatan 18 Des', c: '#ff9f1c' },
+        { t: 'Travel menanggapi', d: '“Hotel bintang 4 penuh, diganti setara.” — tanpa bukti kesetaraan', c: '#0a66e0' },
+        { t: 'Admin meminta bukti tambahan', d: '24 Sep 2026, 09:12 · oleh Admin 2', c: '#0a66e0' },
+        { t: 'Menunggu keputusan', d: 'Rekomendasi: refund selisih kelas hotel', c: '#7c8aa0' }
+      ]
+    };
+  }
+}
+</script>
+</body>
+</html>

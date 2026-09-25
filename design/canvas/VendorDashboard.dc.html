@@ -1,0 +1,83 @@
+<!doctype html>
+<html lang="id">
+<head>
+<meta charset="utf-8">
+<title>Dashboard Vendor</title>
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&amp;display=swap">
+<style>
+body{margin:0;font-family:'Plus Jakarta Sans',system-ui,sans-serif;color:#0f1b2d}
+a{color:#0a66e0;text-decoration:none}a:hover{color:#0852b8}
+</style>
+</helmet>
+<div style="width: 1440px; height: 1080px; box-sizing: border-box; background: #f3f6fb; display: flex">
+  <aside style="width: 264px; flex-shrink: 0; background: #ffffff; border-right: 1px solid #e1e7f0; display: flex; flex-direction: column; padding: 18px 14px; gap: 2px; font-size: 14px; font-weight: 600">
+    <div style="display: flex; align-items: center; gap: 10px; padding: 10px; border: 1px solid #e1e7f0; border-radius: 14px; background: #f7f9fc; margin-bottom: 12px"><span style="width: 38px; height: 38px; border-radius: 10px; background: #5b36a8; color: #ffffff; display: flex; align-items: center; justify-content: center; font-weight: 800">HI</span><span style="display: flex; flex-direction: column"><span style="font-weight: 800">[Hotel I] Madinah</span><span style="font-size: 12px; color: #4a5870">Vendor · Hotel · Terverifikasi</span></span></div>
+    <sc-for list="{{nav}}" as="n" hint-placeholder-count="9"><a href="#" style="height: 40px; padding: 0 12px; border-radius: 10px; background: {{n.bg}}; color: {{n.fg}}; font-weight: {{n.w}}; display: flex; align-items: center">{{n.l}}<sc-if value="{{n.b}}" hint-placeholder-val="{{false}}"><span style="margin-left: auto; padding: 1px 8px; border-radius: 999px; background: #ff9f1c; color: #241400; font-size: 12px; font-weight: 800">{{n.b}}</span></sc-if></a></sc-for>
+  </aside>
+  <main style="flex-grow: 1; padding: 28px 32px; display: flex; flex-direction: column; gap: 18px; min-width: 0">
+    <div style="display: flex; align-items: flex-end; justify-content: space-between">
+      <div style="display: flex; flex-direction: column; gap: 4px"><h1 style="margin: 0; font-size: 26px; font-weight: 800">Ringkasan Vendor</h1><div style="font-size: 14px; color: #4a5870">Pesanan dari Travel yang terhubung · diperbarui realtime</div></div>
+      <button type="button" style="height: 44px; padding: 0 18px; border: 0; border-radius: 12px; background: #0a66e0; color: #ffffff; font: inherit; font-weight: 800">Perbarui ketersediaan</button>
+    </div>
+    <div style="display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 14px">
+      <sc-for list="{{kpis}}" as="k" hint-placeholder-count="4"><div style="background: #ffffff; border: 1px solid #e1e7f0; border-radius: 16px; padding: 16px 18px; display: flex; flex-direction: column; gap: 6px"><span style="font-size: 13px; font-weight: 700; color: #4a5870">{{k.l}}</span><span style="font-size: 26px; font-weight: 800">{{k.v}}</span><span style="font-size: 13px; font-weight: 700; color: {{k.c}}">{{k.d}}</span></div></sc-for>
+    </div>
+    <div style="display: flex; gap: 16px">
+      <div style="flex-grow: 1; background: #ffffff; border: 1px solid #e1e7f0; border-radius: 18px; overflow: hidden; min-width: 0">
+        <div style="padding: 16px 20px; font-size: 16px; font-weight: 800">Pesanan masuk dari Travel</div>
+        <div style="display: grid; grid-template-columns: 110px 1.4fr 1.4fr 1fr 150px; padding: 10px 20px; background: #f7f9fc; border-top: 1px solid #e1e7f0; border-bottom: 1px solid #e1e7f0; font-size: 12px; font-weight: 800; letter-spacing: .06em; color: #4a5870"><span>NO.</span><span>TRAVEL</span><span>KEBUTUHAN</span><span>NILAI</span><span>STATUS</span></div>
+        <sc-for list="{{orders}}" as="o" hint-placeholder-count="6">
+          <div style="display: grid; grid-template-columns: 110px 1.4fr 1.4fr 1fr 150px; align-items: center; padding: 11px 20px; border-bottom: 1px solid #eef1f6; font-size: 14px">
+            <span style="font-weight: 700; color: #0852b8">{{o.id}}</span><span style="font-weight: 700">{{o.t}}</span><span style="color: #4a5870">{{o.need}}</span><span style="font-weight: 700">{{o.v}}</span>
+            <select aria-label="Ubah status" style="height: 36px; padding: 0 8px; border: 1.5px solid {{o.bc}}; border-radius: 10px; background: {{o.bg}}; color: {{o.fg}}; font: inherit; font-size: 13px; font-weight: 700"><option>{{o.st}}</option></select>
+          </div>
+        </sc-for>
+      </div>
+      <div style="width: 360px; flex-shrink: 0; background: #ffffff; border: 1px solid #e1e7f0; border-radius: 18px; padding: 18px; display: flex; flex-direction: column; gap: 12px">
+        <div style="display: flex; justify-content: space-between; align-items: center"><span style="font-size: 16px; font-weight: 800">Ketersediaan kamar</span><span style="font-size: 13px; font-weight: 700">Des 2026</span></div>
+        <div style="display: grid; grid-template-columns: repeat(7, minmax(0, 1fr)); gap: 4px; font-size: 11px; font-weight: 700; color: #4a5870; text-align: center"><span>Sen</span><span>Sel</span><span>Rab</span><span>Kam</span><span>Jum</span><span>Sab</span><span>Min</span></div>
+        <div style="display: grid; grid-template-columns: repeat(7, minmax(0, 1fr)); gap: 4px">
+          <sc-for list="{{cal}}" as="d" hint-placeholder-count="35"><div style="height: 40px; border-radius: 8px; background: {{d.bg}}; color: {{d.fg}}; display: flex; flex-direction: column; align-items: center; justify-content: center; font-size: 12px; font-weight: 700">{{d.n}}<span style="font-size: 10px; font-weight: 600">{{d.s}}</span></div></sc-for>
+        </div>
+        <div style="display: flex; gap: 12px; font-size: 12px; color: #4a5870"><span style="display: flex; align-items: center; gap: 5px"><span style="width: 10px; height: 10px; border-radius: 3px; background: #e4f3e4"></span>Tersedia</span><span style="display: flex; align-items: center; gap: 5px"><span style="width: 10px; height: 10px; border-radius: 3px; background: #fdf0da"></span>Hampir penuh</span><span style="display: flex; align-items: center; gap: 5px"><span style="width: 10px; height: 10px; border-radius: 3px; background: #fbe7e7"></span>Penuh</span></div>
+      </div>
+    </div>
+    <div style="background: #ffffff; border: 1px solid #e1e7f0; border-radius: 18px; padding: 16px 20px; display: flex; align-items: center; gap: 24px">
+      <span style="font-size: 16px; font-weight: 800">Tagihan ke Travel</span>
+      <span style="font-size: 14px">Belum dibayar <b>Rp 486 jt</b> (7 invoice)</span><span style="font-size: 14px; color: #a42424; font-weight: 700">2 lewat jatuh tempo</span>
+      <a href="#" style="margin-left: auto; font-size: 14px; font-weight: 700">Buat invoice</a>
+    </div>
+  </main>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"$preview":{"width":1440,"height":1080}}'>
+class Component extends DCLogic {
+  renderVals() {
+    var navs = [['Ringkasan', 0], ['Pesanan dari Travel', '4'], ['Layanan & harga', 0], ['Ketersediaan', 0], ['Travel terhubung', 0], ['Tagihan & pembayaran', 0], ['Pesan', '3'], ['Iklan di Segaloka', 0], ['Profil & dokumen', 0]];
+    var S = { n: ['Baru', '#fdf0da', '#8a5300', '#f0c98a'], c: ['Dikonfirmasi', '#e6f0fd', '#0852b8', '#a9c8f3'], d: ['Selesai', '#e4f3e4', '#0a6b0a', '#a8d8a8'] };
+    var o = function (id, t, need, v, s) { return { id: id, t: t, need: need, v: v, st: S[s][0], bg: S[s][1], fg: S[s][2], bc: S[s][3] }; };
+    var cal = [];
+    for (var i = 0; i < 35; i++) { var day = i - 1; var full = [10, 11, 12, 18, 19].indexOf(day) >= 0; var near = [9, 13, 17, 20, 24].indexOf(day) >= 0; cal.push(day < 1 || day > 31 ? { n: '', s: '', bg: 'transparent', fg: '#4a5870' } : { n: day, s: full ? '0' : near ? '6' : '24', bg: full ? '#fbe7e7' : near ? '#fdf0da' : '#e4f3e4', fg: full ? '#a42424' : near ? '#8a5300' : '#0a6b0a' }); }
+    return {
+      nav: navs.map(function (n, i) { return { l: n[0], b: n[1], bg: i === 0 ? '#e6f0fd' : 'transparent', fg: i === 0 ? '#0852b8' : '#0f1b2d', w: i === 0 ? 800 : 600 }; }),
+      kpis: [{ l: 'Pesanan baru', v: '4', d: 'perlu konfirmasi', c: '#8a5300' }, { l: 'Kamar terjual Des', v: '612', d: '78% okupansi', c: '#0a6b0a' }, { l: 'Travel terhubung', v: '14', d: '+2 bulan ini', c: '#0a6b0a' }, { l: 'Pendapatan Sep', v: 'Rp 1,9 M', d: '+12%', c: '#0a6b0a' }],
+      orders: [
+        o('VO-3321', '[Travel A]', '20 kamar Quad · 12–15 Des', 'Rp 186 jt', 'n'),
+        o('VO-3320', '[Travel C]', '14 kamar Quad · 20–23 Des', 'Rp 131 jt', 'n'),
+        o('VO-3318', '[Travel B]', '22 kamar Triple · 15–18 Des', 'Rp 214 jt', 'c'),
+        o('VO-3315', '[Travel F]', '10 kamar Double · 9–12 Des', 'Rp 98 jt', 'c'),
+        o('VO-3310', '[Travel I]', '8 kamar Quad · 1–4 Des', 'Rp 74 jt', 'n'),
+        o('VO-3302', '[Travel A]', '18 kamar Quad · Nov', 'Rp 168 jt', 'd')
+      ],
+      cal: cal
+    };
+  }
+}
+</script>
+</body>
+</html>

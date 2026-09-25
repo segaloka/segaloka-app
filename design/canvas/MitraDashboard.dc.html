@@ -1,0 +1,78 @@
+<!doctype html>
+<html lang="id">
+<head>
+<meta charset="utf-8">
+<title>Dashboard Mitra Travel</title>
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&amp;display=swap">
+<style>
+body{margin:0;font-family:'Plus Jakarta Sans',system-ui,sans-serif;color:#0f1b2d}
+a{color:#0a66e0;text-decoration:none}a:hover{color:#0852b8}
+</style>
+</helmet>
+<div style="width: 1440px; height: 1080px; box-sizing: border-box; background: #f3f6fb; display: flex">
+  <aside style="width: 264px; flex-shrink: 0; background: #ffffff; border-right: 1px solid #e1e7f0; display: flex; flex-direction: column; padding: 18px 14px; gap: 2px; font-size: 14px; font-weight: 600">
+    <div style="display: flex; align-items: center; gap: 10px; padding: 10px; border: 1px solid #e1e7f0; border-radius: 14px; background: #f7f9fc; margin-bottom: 4px"><span style="width: 38px; height: 38px; border-radius: 10px; background: #fff1dc; color: #8a4a00; display: flex; align-items: center; justify-content: center; font-weight: 800">MB</span><span style="display: flex; flex-direction: column"><span style="font-weight: 800">[Mitra Bone]</span><span style="font-size: 12px; color: #4a5870">Mitra Travel</span></span></div>
+    <div style="font-size: 12px; color: #4a5870; padding: 4px 10px 12px">Mitra resmi dari <b style="color: #0f1b2d">[Travel A]</b></div>
+    <sc-for list="{{nav}}" as="n" hint-placeholder-count="8"><a href="#" style="height: 40px; padding: 0 12px; border-radius: 10px; background: {{n.bg}}; color: {{n.fg}}; font-weight: {{n.w}}; display: flex; align-items: center">{{n.l}}</a></sc-for>
+  </aside>
+  <main style="flex-grow: 1; padding: 28px 32px; display: flex; flex-direction: column; gap: 18px; min-width: 0">
+    <div style="display: flex; align-items: flex-end; justify-content: space-between">
+      <div style="display: flex; flex-direction: column; gap: 4px"><h1 style="margin: 0; font-size: 26px; font-weight: 800">Ringkasan Mitra</h1><div style="font-size: 14px; color: #4a5870">Jual paket [Travel A] bersama Agen di bawah Anda.</div></div>
+      <div style="display: flex; gap: 8px"><button type="button" style="height: 44px; padding: 0 16px; border: 1.5px solid #c9d3e2; border-radius: 12px; background: #ffffff; font: inherit; font-weight: 700">+ Undang Agen</button><button type="button" style="height: 44px; padding: 0 18px; border: 0; border-radius: 12px; background: #0a66e0; color: #ffffff; font: inherit; font-weight: 800">Booking untuk jamaah</button></div>
+    </div>
+    <div style="display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 14px">
+      <sc-for list="{{kpis}}" as="k" hint-placeholder-count="4"><div style="background: #ffffff; border: 1px solid #e1e7f0; border-radius: 16px; padding: 16px 18px; display: flex; flex-direction: column; gap: 6px"><span style="font-size: 13px; font-weight: 700; color: #4a5870">{{k.l}}</span><span style="font-size: 26px; font-weight: 800">{{k.v}}</span><span style="font-size: 13px; font-weight: 700; color: {{k.c}}">{{k.d}}</span></div></sc-for>
+    </div>
+    <div style="background: #ffffff; border: 1px solid #e1e7f0; border-radius: 18px; padding: 18px 22px; display: flex; flex-direction: column; gap: 10px">
+      <div style="display: flex; justify-content: space-between"><span style="font-size: 16px; font-weight: 800">Target keberangkatan Desember</span><span style="font-size: 14px; font-weight: 700">34 / 50 jamaah</span></div>
+      <div style="height: 14px; border-radius: 999px; background: #eef1f6; overflow: hidden"><div style="width: 68%; height: 14px; background: #0a66e0; border-radius: 999px"></div></div>
+      <span style="font-size: 13px; color: #4a5870">Capai 50 jamaah untuk bonus komisi tambahan dari [Travel A] (ketentuan diatur Travel).</span>
+    </div>
+    <div style="display: flex; gap: 16px">
+      <div style="flex-grow: 1; background: #ffffff; border: 1px solid #e1e7f0; border-radius: 18px; overflow: hidden; min-width: 0">
+        <div style="padding: 16px 20px; font-size: 16px; font-weight: 800">Agen saya · 12</div>
+        <div style="display: grid; grid-template-columns: 1.6fr 1fr 1fr 1fr 1fr; padding: 10px 20px; background: #f7f9fc; border-top: 1px solid #e1e7f0; border-bottom: 1px solid #e1e7f0; font-size: 12px; font-weight: 800; letter-spacing: .06em; color: #4a5870"><span>AGEN</span><span>WILAYAH</span><span>CALON JAMAAH</span><span>BOOKING</span><span>KOMISI</span></div>
+        <sc-for list="{{agents}}" as="a" hint-placeholder-count="6">
+          <div style="display: grid; grid-template-columns: 1.6fr 1fr 1fr 1fr 1fr; align-items: center; padding: 11px 20px; border-bottom: 1px solid #eef1f6; font-size: 14px">
+            <div style="display: flex; align-items: center; gap: 10px"><span style="width: 32px; height: 32px; border-radius: 999px; background: #eef1f6; font-weight: 800; font-size: 12px; display: flex; align-items: center; justify-content: center">{{a.i}}</span><span style="font-weight: 800">{{a.n}}</span></div>
+            <span style="color: #4a5870">{{a.w}}</span><span>{{a.l}}</span><span style="font-weight: 700">{{a.b}}</span><span style="font-weight: 700">{{a.k}}</span>
+          </div>
+        </sc-for>
+      </div>
+      <div style="width: 340px; flex-shrink: 0; background: #ffffff; border: 1px solid #e1e7f0; border-radius: 18px; padding: 18px; display: flex; flex-direction: column; gap: 12px">
+        <span style="font-size: 16px; font-weight: 800">Pembagian komisi</span>
+        <div style="display: flex; justify-content: space-between; font-size: 14px"><span>Dari [Travel A] per jamaah</span><b>Rp 1.500.000</b></div>
+        <div style="display: flex; justify-content: space-between; font-size: 14px"><span>Bagian Agen</span><b>Rp 750.000</b></div>
+        <div style="display: flex; justify-content: space-between; font-size: 14px; padding-top: 8px; border-top: 1px dashed #e1e7f0"><span>Bagian Mitra</span><b>Rp 750.000</b></div>
+        <span style="font-size: 12px; color: #4a5870; line-height: 1.5">Komisi dibayar oleh Travel lewat sistem setelah jamaah lunas, lalu otomatis dibagi ke Agen.</span>
+      </div>
+    </div>
+  </main>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"$preview":{"width":1440,"height":1080}}'>
+class Component extends DCLogic {
+  renderVals() {
+    var navs = ['Ringkasan', 'Paket [Travel A]', 'Booking jamaah', 'Calon jamaah', 'Agen saya', 'Komisi', 'Pesan', 'Profil'];
+    return {
+      nav: navs.map(function (n, i) { return { l: n, bg: i === 0 ? '#e6f0fd' : 'transparent', fg: i === 0 ? '#0852b8' : '#0f1b2d', w: i === 0 ? 800 : 600 }; }),
+      kpis: [{ l: 'Jamaah terdaftar (Des)', v: '34', d: 'target 50', c: '#8a5300' }, { l: 'Calon jamaah aktif', v: '61', d: '19 perlu follow-up', c: '#4a5870' }, { l: 'Komisi bulan ini', v: 'Rp 25,5 jt', d: 'bagian Mitra', c: '#0a6b0a' }, { l: 'Agen aktif', v: '12', d: '+3 bulan ini', c: '#0a6b0a' }],
+      agents: [
+        { i: 'AS', n: '[Agen Sinjai]', w: 'Sinjai', l: '14', b: '9', k: 'Rp 6,75 jt' },
+        { i: 'AW', n: '[Agen Watampone]', w: 'Bone', l: '11', b: '7', k: 'Rp 5,25 jt' },
+        { i: 'AP', n: '[Agen Pare]', w: 'Parepare', l: '9', b: '6', k: 'Rp 4,5 jt' },
+        { i: 'AS', n: '[Agen Soppeng]', w: 'Soppeng', l: '8', b: '5', k: 'Rp 3,75 jt' },
+        { i: 'AW', n: '[Agen Wajo]', w: 'Wajo', l: '10', b: '4', k: 'Rp 3 jt' },
+        { i: 'AB', n: '[Agen Bulukumba]', w: 'Bulukumba', l: '9', b: '3', k: 'Rp 2,25 jt' }
+      ]
+    };
+  }
+}
+</script>
+</body>
+</html>

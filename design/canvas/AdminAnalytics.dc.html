@@ -1,0 +1,74 @@
+<!doctype html>
+<html lang="id">
+<head>
+<meta charset="utf-8">
+<title>Control Center — Executive Analytics</title>
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&amp;display=swap">
+<style>
+body{margin:0;font-family:'Plus Jakarta Sans',system-ui,sans-serif;color:#0f1b2d}
+a{color:#0a66e0;text-decoration:none}a:hover{color:#0852b8}
+</style>
+</helmet>
+<div style="width: 1440px; height: 1080px; box-sizing: border-box; background: #f3f6fb; display: flex">
+  <div style="width: 264px; flex-shrink: 0; background: #0b1f3f"><dc-import name="AdminSidebar" active="an_exec" hint-size="264px,1080px"></dc-import></div>
+  <main style="flex-grow: 1; display: flex; flex-direction: column; min-width: 0">
+    <dc-import name="AdminTopbar" hint-size="1176px,72px"></dc-import>
+    <div style="padding: 24px 32px; display: flex; flex-direction: column; gap: 16px">
+      <div style="display: flex; align-items: flex-end; justify-content: space-between">
+        <div style="display: flex; flex-direction: column; gap: 4px"><h1 style="margin: 0; font-size: 26px; font-weight: 800">Executive Analytics</h1><div style="font-size: 14px; color: #4a5870">Ringkasan untuk pimpinan: pertumbuhan, pendapatan dan kesehatan ekosistem.</div></div>
+        <div style="display: flex; gap: 4px; padding: 4px; background: #ffffff; border: 1px solid #e1e7f0; border-radius: 12px"><span style="height: 34px; padding: 0 12px; border-radius: 9px; color: #4a5870; font-weight: 600; font-size: 13px; display: flex; align-items: center">30 hari</span><span style="height: 34px; padding: 0 12px; border-radius: 9px; background: #e6f0fd; color: #0852b8; font-weight: 700; font-size: 13px; display: flex; align-items: center">12 bulan</span><span style="height: 34px; padding: 0 12px; border-radius: 9px; color: #4a5870; font-weight: 600; font-size: 13px; display: flex; align-items: center">Musim haji</span></div>
+      </div>
+      <div style="display: grid; grid-template-columns: repeat(5, minmax(0, 1fr)); gap: 12px">
+        <sc-for list="{{kpis}}" as="k" hint-placeholder-count="5"><div style="background: #ffffff; border: 1px solid #e1e7f0; border-radius: 16px; padding: 14px 16px; display: flex; flex-direction: column; gap: 4px"><span style="font-size: 13px; font-weight: 700; color: #4a5870">{{k.l}}</span><span style="font-size: 24px; font-weight: 800">{{k.v}}</span><span style="font-size: 12px; font-weight: 700; color: {{k.c}}">{{k.d}}</span></div></sc-for>
+      </div>
+      <div style="display: flex; gap: 16px">
+        <div style="flex-grow: 1; background: #ffffff; border: 1px solid #e1e7f0; border-radius: 18px; padding: 18px 20px; display: flex; flex-direction: column; gap: 12px; min-width: 0">
+          <div style="display: flex; justify-content: space-between; align-items: center"><span style="font-size: 16px; font-weight: 800">GMV per bulan (Rp miliar)</span><span style="display: flex; gap: 14px; font-size: 12px; color: #4a5870"><span style="display: flex; align-items: center; gap: 6px"><span style="width: 10px; height: 10px; border-radius: 3px; background: #0a66e0"></span>2026</span><span style="display: flex; align-items: center; gap: 6px"><span style="width: 10px; height: 10px; border-radius: 3px; background: #c9d3e2"></span>2025</span></span></div>
+          <div style="height: 260px; display: flex; align-items: flex-end; gap: 10px; border-bottom: 1px solid #e1e7f0; padding: 0 4px">
+            <sc-for list="{{bars}}" as="b" hint-placeholder-count="12"><div style="flex-grow: 1; display: flex; flex-direction: column; align-items: center; gap: 4px; height: 100%; justify-content: flex-end"><span style="font-size: 11px; font-weight: 800">{{b.v}}</span><div style="width: 100%; display: flex; gap: 3px; align-items: flex-end"><div style="flex-grow: 1; height: {{b.ly}}; background: #c9d3e2; border-radius: 3px 3px 0 0"></div><div style="flex-grow: 1; height: {{b.h}}; background: #0a66e0; border-radius: 3px 3px 0 0"></div></div></div></sc-for>
+          </div>
+          <div style="display: flex; gap: 10px; padding: 0 4px; font-size: 11px; color: #4a5870"><sc-for list="{{bars}}" as="b" hint-placeholder-count="12"><span style="flex-grow: 1; text-align: center">{{b.m}}</span></sc-for></div>
+        </div>
+        <div style="width: 340px; flex-shrink: 0; background: #ffffff; border: 1px solid #e1e7f0; border-radius: 18px; padding: 18px; display: flex; flex-direction: column; gap: 12px">
+          <span style="font-size: 16px; font-weight: 800">Sumber booking</span>
+          <sc-for list="{{src}}" as="s" hint-placeholder-count="6"><div style="display: flex; flex-direction: column; gap: 5px"><div style="display: flex; justify-content: space-between; font-size: 13px"><span style="font-weight: 700">{{s.l}}</span><span>{{s.v}}</span></div><div style="height: 8px; border-radius: 999px; background: #eef1f6"><div style="height: 8px; width: {{s.v}}; border-radius: 999px; background: {{s.c}}"></div></div></div></sc-for>
+        </div>
+      </div>
+      <div style="display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 16px">
+        <sc-for list="{{cards}}" as="c" hint-placeholder-count="3">
+          <div style="background: #ffffff; border: 1px solid #e1e7f0; border-radius: 18px; padding: 16px 18px; display: flex; flex-direction: column; gap: 10px">
+            <span style="font-size: 15px; font-weight: 800">{{c.t}}</span>
+            <sc-for list="{{c.rows}}" as="r" hint-placeholder-count="4"><div style="display: flex; justify-content: space-between; font-size: 13px; padding-bottom: 8px; border-bottom: 1px solid #eef1f6"><span>{{r.a}}</span><span style="font-weight: 800">{{r.b}}</span></div></sc-for>
+          </div>
+        </sc-for>
+      </div>
+    </div>
+  </main>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"$preview":{"width":1440,"height":1080}}'>
+class Component extends DCLogic {
+  renderVals() {
+    var m = ['Okt', 'Nov', 'Des', 'Jan', 'Feb', 'Mar', 'Apr', 'Mei', 'Jun', 'Jul', 'Agu', 'Sep'];
+    var v = [28, 34, 52, 44, 39, 58, 41, 49, 56, 62, 70, 78];
+    var ly = [18, 22, 36, 30, 27, 41, 29, 33, 38, 43, 47, 52];
+    return {
+      kpis: [{ l: 'GMV 12 bulan', v: 'Rp 611 M', d: '+48% YoY', c: '#0a6b0a' }, { l: 'Pendapatan Segaloka', v: 'Rp 3,1 M', d: '+52% YoY', c: '#0a6b0a' }, { l: 'Jamaah berangkat', v: '19.840', d: '+41% YoY', c: '#0a6b0a' }, { l: 'Travel berbayar', v: '86', d: '67% dari aktif', c: '#4a5870' }, { l: 'NPS jamaah', v: '62', d: '+5 poin', c: '#0a6b0a' }],
+      bars: m.map(function (x, i) { return { m: x, v: v[i], h: (v[i] * 2.6) + 'px', ly: (ly[i] * 2.6) + 'px' }; }),
+      src: [{ l: 'Pencarian langsung', v: '41%', c: '#0a66e0' }, { l: 'Mitra & Agen', v: '23%', c: '#ff9f1c' }, { l: 'Affiliate', v: '18%', c: '#5b36a8' }, { l: 'Iklan Segaloka', v: '8%', c: '#0e7490' }, { l: 'SegaDeals', v: '6%', c: '#0ca30c' }, { l: 'Website Travel', v: '4%', c: '#7c8aa0' }],
+      cards: [
+        { t: 'Travel dengan pertumbuhan tertinggi', rows: [{ a: '[Travel A]', b: '+64%' }, { a: '[Travel F]', b: '+51%' }, { a: '[Travel B]', b: '+38%' }, { a: '[Travel I]', b: '+31%' }] },
+        { t: 'Kota asal jamaah terbanyak', rows: [{ a: 'Makassar', b: '3.912' }, { a: 'Surabaya', b: '3.104' }, { a: 'Jakarta', b: '2.880' }, { a: 'Medan', b: '1.640' }] },
+        { t: 'Risiko yang perlu diputuskan', rows: [{ a: 'Travel berisiko tinggi', b: '3' }, { a: 'Dana ditahan', b: 'Rp 0,6 M' }, { a: 'Komplain terbuka', b: '4' }, { a: 'Izin habis ≤ 60 hari', b: '6' }] }
+      ]
+    };
+  }
+}
+</script>
+</body>
+</html>

@@ -1,0 +1,123 @@
+<!doctype html>
+<html lang="id">
+<head>
+<meta charset="utf-8">
+<title>Control Center — Verifikasi Travel</title>
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&amp;display=swap">
+<style>
+body{margin:0;font-family:'Plus Jakarta Sans',system-ui,sans-serif;color:#0f1b2d}
+a{color:#0a66e0;text-decoration:none}a:hover{color:#0852b8}
+</style>
+</helmet>
+<div style="width: 1440px; height: 1080px; box-sizing: border-box; background: #f3f6fb; display: flex">
+  <div style="width: 264px; flex-shrink: 0; background: #0b1f3f"><dc-import name="AdminSidebar" active="travel_legal" hint-size="264px,1080px"></dc-import></div>
+  <main style="flex-grow: 1; display: flex; flex-direction: column; min-width: 0">
+    <dc-import name="AdminTopbar" hint-size="1176px,72px"></dc-import>
+    <div style="padding: 24px 32px; display: flex; flex-direction: column; gap: 18px; flex-grow: 1; min-height: 0">
+      <div style="display: flex; align-items: flex-end; justify-content: space-between">
+        <div style="display: flex; flex-direction: column; gap: 4px"><h1 style="margin: 0; font-size: 26px; font-weight: 800">Verifikasi Travel</h1><div style="font-size: 14px; color: #4a5870">Travel baru hanya bisa berjualan setelah legalitasnya disetujui. Target tinjau: 1×24 jam kerja.</div></div>
+        <div style="display: flex; gap: 6px">
+          <span style="padding: 8px 14px; border-radius: 999px; background: #0f1b2d; color: #ffffff; font-size: 13px; font-weight: 700">Menunggu · 7</span>
+          <span style="padding: 8px 14px; border-radius: 999px; background: #ffffff; border: 1px solid #e1e7f0; font-size: 13px; font-weight: 600">Perlu revisi · 2</span>
+          <span style="padding: 8px 14px; border-radius: 999px; background: #ffffff; border: 1px solid #e1e7f0; font-size: 13px; font-weight: 600">Disetujui</span>
+          <span style="padding: 8px 14px; border-radius: 999px; background: #ffffff; border: 1px solid #e1e7f0; font-size: 13px; font-weight: 600">Ditolak</span>
+        </div>
+      </div>
+
+      <div style="display: flex; gap: 16px; flex-grow: 1; min-height: 0">
+        <div style="width: 380px; flex-shrink: 0; background: #ffffff; border: 1px solid #e1e7f0; border-radius: 18px; overflow: hidden; display: flex; flex-direction: column">
+          <sc-for list="{{queue}}" as="q" hint-placeholder-count="6">
+            <a href="#" style="display: flex; gap: 12px; padding: 14px 16px; border-bottom: 1px solid #eef1f6; background: {{q.bg}}; border-left: {{q.bar}}; color: #0f1b2d">
+              <span style="width: 40px; height: 40px; flex-shrink: 0; border-radius: 10px; background: #e6f0fd; color: #0852b8; font-weight: 800; display: flex; align-items: center; justify-content: center">{{q.initial}}</span>
+              <div style="display: flex; flex-direction: column; gap: 3px; flex-grow: 1; min-width: 0">
+                <div style="display: flex; justify-content: space-between"><span style="font-size: 14px; font-weight: 800">{{q.name}}</span><span style="font-size: 12px; color: {{q.slaColor}}; font-weight: 700">{{q.sla}}</span></div>
+                <span style="font-size: 12px; color: #4a5870">{{q.meta}}</span>
+                <span style="font-size: 12px; font-weight: 700; color: {{q.docColor}}">{{q.docs}}</span>
+              </div>
+            </a>
+          </sc-for>
+        </div>
+
+        <div style="flex-grow: 1; background: #ffffff; border: 1px solid #e1e7f0; border-radius: 18px; display: flex; flex-direction: column; min-width: 0">
+          <div style="padding: 18px 22px; border-bottom: 1px solid #eef1f6; display: flex; align-items: center; gap: 14px">
+            <span style="width: 52px; height: 52px; border-radius: 14px; background: #e6f0fd; color: #0852b8; font-size: 20px; font-weight: 800; display: flex; align-items: center; justify-content: center">A</span>
+            <div style="display: flex; flex-direction: column; gap: 3px; flex-grow: 1"><span style="font-size: 19px; font-weight: 800">[Travel A]</span><span style="font-size: 13px; color: #4a5870">Diajukan 25 Sep 2026, 10:12 oleh [Nama pemilik] · Paket langganan: Growth (trial)</span></div>
+            <span style="padding: 5px 12px; border-radius: 999px; background: #fdf0da; color: #8a5300; font-size: 12px; font-weight: 800">Menunggu tinjauan</span>
+          </div>
+          <div style="padding: 18px 22px; display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 12px 20px; border-bottom: 1px solid #eef1f6">
+            <sc-for list="{{info}}" as="f" hint-placeholder-count="6"><div style="display: flex; flex-direction: column; gap: 3px"><span style="font-size: 12px; font-weight: 700; color: #4a5870">{{f.k}}</span><span style="font-size: 14px; font-weight: 700">{{f.v}}</span></div></sc-for>
+          </div>
+          <div style="padding: 16px 22px; display: flex; gap: 18px; flex-grow: 1; min-height: 0">
+            <div style="flex-grow: 1; display: flex; flex-direction: column; gap: 8px">
+              <span style="font-size: 15px; font-weight: 800">Dokumen legalitas</span>
+              <sc-for list="{{docs}}" as="d" hint-placeholder-count="5">
+                <div style="display: flex; align-items: center; gap: 12px; padding: 10px 12px; border: 1px solid #e1e7f0; border-radius: 12px">
+                  <span style="width: 36px; height: 36px; border-radius: 9px; background: #fbe7e7; color: #a42424; font-size: 10px; font-weight: 800; display: flex; align-items: center; justify-content: center">PDF</span>
+                  <div style="display: flex; flex-direction: column; flex-grow: 1"><span style="font-size: 14px; font-weight: 700">{{d.name}}</span><span style="font-size: 12px; color: #4a5870">{{d.meta}}</span></div>
+                  <span style="padding: 3px 10px; border-radius: 999px; background: {{d.bg}}; color: {{d.fg}}; font-size: 12px; font-weight: 800">{{d.status}}</span>
+                  <a href="#" style="font-size: 13px; font-weight: 700">Lihat</a>
+                </div>
+              </sc-for>
+            </div>
+            <div style="width: 300px; flex-shrink: 0; display: flex; flex-direction: column; gap: 10px">
+              <span style="font-size: 15px; font-weight: 800">Checklist peninjau</span>
+              <sc-for list="{{checks}}" as="c" hint-placeholder-count="5"><label style="display: flex; gap: 10px; font-size: 14px; align-items: flex-start; line-height: 1.4"><input type="checkbox" checked="{{c.on}}" style="width: 18px; height: 18px; margin: 1px 0 0; accent-color: #0a66e0; flex-shrink: 0">{{c.label}}</label></sc-for>
+              <label for="rn" style="font-size: 13px; font-weight: 700; padding-top: 6px">Catatan untuk Travel</label>
+              <textarea id="rn" rows="3" style="padding: 10px 12px; border: 1.5px solid #c9d3e2; border-radius: 12px; font: inherit; font-size: 14px; resize: none">Mohon unggah ulang izin PPIU halaman 2 dengan resolusi lebih jelas.</textarea>
+            </div>
+          </div>
+          <div style="padding: 14px 22px; border-top: 1px solid #eef1f6; display: flex; align-items: center; gap: 10px">
+            <span style="font-size: 12px; color: #4a5870; flex-grow: 1">Keputusan tercatat di Audit Log dan dikirim ke Travel lewat Pesan &amp; notifikasi.</span>
+            <button type="button" style="height: 44px; padding: 0 16px; border: 0; border-radius: 12px; background: #fbe7e7; color: #a42424; font: inherit; font-weight: 700">Tolak</button>
+            <button type="button" style="height: 44px; padding: 0 16px; border: 1.5px solid #c9d3e2; border-radius: 12px; background: #ffffff; font: inherit; font-weight: 700">Minta revisi</button>
+            <button type="button" style="height: 44px; padding: 0 20px; border: 0; border-radius: 12px; background: #0a66e0; color: #ffffff; font: inherit; font-weight: 800">Setujui Travel</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </main>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"$preview":{"width":1440,"height":1080}}'>
+class Component extends DCLogic {
+  renderVals() {
+    var q = function (initial, name, meta, docs, ok, sla, late, sel) { return { initial: initial, name: name, meta: meta, docs: docs, docColor: ok ? '#0a6b0a' : '#8a5300', sla: sla, slaColor: late ? '#a42424' : '#4a5870', bg: sel ? '#f5f9ff' : '#ffffff', bar: sel ? '4px solid #0a66e0' : '4px solid transparent' }; };
+    return {
+      queue: [
+        q('A', '[Travel A]', 'Makassar · PPIU', '5/5 dokumen', true, '2 jam', false, true),
+        q('B', '[Travel B]', 'Jakarta · PPIU + PIHK', '4/5 dokumen', false, '5 jam', false, false),
+        q('C', '[Travel C]', 'Medan · PPIU', '5/5 dokumen', true, '26 jam', true, false),
+        q('D', '[Travel D]', 'Bandung · Biro wisata', '3/5 dokumen', false, '28 jam', true, false),
+        q('E', '[Travel E]', 'Surabaya · PPIU', '5/5 dokumen', true, 'Kemarin', false, false),
+        q('F', '[Travel F]', 'Pekanbaru · PPIU', '5/5 dokumen', true, 'Kemarin', false, false),
+        q('G', '[Travel G]', 'Kendari · Biro wisata', '4/5 dokumen', false, '2 hari', true, false)
+      ],
+      info: [
+        { k: 'Nama badan usaha', v: 'PT [Nama Badan Usaha]' }, { k: 'NIB', v: '[Nomor NIB]' }, { k: 'Izin PPIU', v: '[Nomor izin] · s/d 2029' },
+        { k: 'Izin PIHK (Haji Khusus)', v: 'Tidak ada' }, { k: 'Alamat kantor pusat', v: 'Jl. [Alamat], Makassar' }, { k: 'Cabang diajukan', v: '2 (Bone, Parepare)' }
+      ],
+      docs: [
+        { name: 'Akta pendirian & SK Kemenkumham', meta: '3,2 MB · diunggah 25 Sep', status: 'Sesuai', bg: '#e4f3e4', fg: '#0a6b0a' },
+        { name: 'NIB / OSS', meta: '0,8 MB', status: 'Sesuai', bg: '#e4f3e4', fg: '#0a6b0a' },
+        { name: 'Izin PPIU Kemenag', meta: '1,4 MB', status: 'Kurang jelas', bg: '#fdf0da', fg: '#8a5300' },
+        { name: 'NPWP badan', meta: '0,5 MB', status: 'Sesuai', bg: '#e4f3e4', fg: '#0a6b0a' },
+        { name: 'Rekening bank atas nama badan', meta: '0,6 MB', status: 'Belum dicek', bg: '#eef1f6', fg: '#4a5870' }
+      ],
+      checks: [
+        { label: 'Nama di akta = nama di izin PPIU', on: true },
+        { label: 'Izin PPIU masih berlaku', on: true },
+        { label: 'Nomor izin cocok dengan data Kemenag', on: false },
+        { label: 'Rekening atas nama badan usaha', on: false },
+        { label: 'Alamat kantor sesuai', on: true }
+      ]
+    };
+  }
+}
+</script>
+</body>
+</html>

@@ -1,0 +1,72 @@
+<!doctype html>
+<html lang="id">
+<head>
+<meta charset="utf-8">
+<title>Travel — Room List</title>
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&amp;display=swap">
+<style>
+body{margin:0;font-family:'Plus Jakarta Sans',system-ui,sans-serif;color:#0f1b2d}
+a{color:#0a66e0;text-decoration:none}a:hover{color:#0852b8}
+</style>
+</helmet>
+<div style="width: 1440px; height: 1080px; box-sizing: border-box; background: #f3f6fb; display: flex">
+  <dc-import name="TravelSidebar" active="roomlist" hint-size="264px,1080px"></dc-import>
+  <main style="flex-grow: 1; padding: 24px 32px; display: flex; flex-direction: column; gap: 16px; min-width: 0">
+    <div style="display: flex; align-items: flex-end; justify-content: space-between">
+      <div style="display: flex; flex-direction: column; gap: 4px"><h1 style="margin: 0; font-size: 26px; font-weight: 800">Room List · 12 Des · [Hotel F] Makkah</h1><div style="font-size: 14px; color: #4a5870">Seret jamaah ke kamar. Sistem memberi tanda jika kamar campur laki-laki/perempuan bukan mahram.</div></div>
+      <div style="display: flex; gap: 8px"><button type="button" style="height: 44px; padding: 0 14px; border: 1.5px solid #c9d3e2; border-radius: 12px; background: #ffffff; font: inherit; font-weight: 700">Susun otomatis</button><button type="button" style="height: 44px; padding: 0 16px; border: 0; border-radius: 12px; background: #0a66e0; color: #ffffff; font: inherit; font-weight: 800">Kirim ke Vendor hotel</button></div>
+    </div>
+    <div style="display: flex; gap: 16px">
+      <div style="width: 280px; flex-shrink: 0; background: #ffffff; border: 1px solid #e1e7f0; border-radius: 18px; padding: 16px; display: flex; flex-direction: column; gap: 8px">
+        <span style="font-size: 15px; font-weight: 800">Belum dapat kamar · 5</span>
+        <sc-for list="{{free}}" as="f" hint-placeholder-count="5"><div style="display: flex; align-items: center; gap: 10px; padding: 10px; border: 1.5px dashed #c9d3e2; border-radius: 12px; font-size: 13px; cursor: grab"><span style="width: 28px; height: 28px; border-radius: 999px; background: {{f.bg}}; color: {{f.fg}}; font-weight: 800; font-size: 11px; display: flex; align-items: center; justify-content: center">{{f.g}}</span><div style="display: flex; flex-direction: column"><span style="font-weight: 800">{{f.n}}</span><span style="font-size: 11px; color: #4a5870">{{f.m}}</span></div></div></sc-for>
+      </div>
+      <div style="flex-grow: 1; display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 14px; align-content: start; min-width: 0">
+        <sc-for list="{{rooms}}" as="r" hint-placeholder-count="9">
+          <div style="background: #ffffff; border: {{r.b}}; border-radius: 16px; padding: 14px; display: flex; flex-direction: column; gap: 8px">
+            <div style="display: flex; justify-content: space-between; align-items: center"><span style="font-size: 14px; font-weight: 800">Kamar {{r.no}}</span><span style="font-size: 12px; font-weight: 700; color: #4a5870">{{r.type}}</span></div>
+            <sc-for list="{{r.occ}}" as="o" hint-placeholder-count="4"><div style="display: flex; align-items: center; gap: 8px; height: 32px; padding: 0 10px; border-radius: 10px; background: {{o.bg}}; font-size: 13px; font-weight: 700; color: {{o.fg}}">{{o.n}}</div></sc-for>
+            <sc-if value="{{r.warn}}" hint-placeholder-val="{{false}}"><span style="font-size: 12px; font-weight: 700; color: #a42424">{{r.warn}}</span></sc-if>
+          </div>
+        </sc-for>
+      </div>
+    </div>
+  </main>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"$preview":{"width":1440,"height":1080}}'>
+class Component extends DCLogic {
+  renderVals() {
+    var p = function (n) { return { n: n, bg: '#f3f6fb', fg: '#0f1b2d' }; };
+    var e = { n: 'Kosong — seret jamaah ke sini', bg: '#ffffff', fg: '#7c8aa0' };
+    var room = function (no, type, occ, warn) { return { no: no, type: type, occ: occ, warn: warn || '', b: warn ? '2px solid #f3a8a8' : '1px solid #e1e7f0' }; };
+    return {
+      free: [
+        { n: 'Rahmawati', m: 'P · Quad · keluarga #12', g: 'P', bg: '#fde7f1', fg: '#9b1c5a' },
+        { n: 'H. Baharuddin', m: 'L · Double · suami', g: 'L', bg: '#e6f0fd', fg: '#0852b8' },
+        { n: 'Hj. Baharuddin', m: 'P · Double · istri', g: 'P', bg: '#fde7f1', fg: '#9b1c5a' },
+        { n: 'Andi Bahar', m: 'L · Quad', g: 'L', bg: '#e6f0fd', fg: '#0852b8' },
+        { n: 'Irfan Hidayat', m: 'L · Quad', g: 'L', bg: '#e6f0fd', fg: '#0852b8' }
+      ],
+      rooms: [
+        room('701', 'Quad · L', [p('Abdul Rahman'), p('Muhammad Yusuf'), p('Ahmad Fauzi'), e]),
+        room('702', 'Quad · P', [p('Siti Aminah'), p('Nurhayati'), p('Fauziah'), p('St. Rahmah')]),
+        room('703', 'Quad · keluarga', [p('Fam. Hasan (L)'), p('Fam. Hasan (P)'), p('Anak 1'), p('Anak 2')]),
+        room('704', 'Quad · P', [p('Nurlina'), p('Hasnah'), e, e]),
+        room('705', 'Triple · L', [p('Andi Muh.'), p('Syamsul'), p('Rusdi (P?)')], 'Periksa: jenis kelamin tidak cocok'),
+        room('706', 'Double', [e, e]),
+        room('707', 'Quad · L', [p('Tour leader'), p('Muthawwif'), e, e]),
+        room('708', 'Quad · P', [e, e, e, e]),
+        room('709', 'Double', [p('Pasangan Ilham'), p('Pasangan Ilham')])
+      ]
+    };
+  }
+}
+</script>
+</body>
+</html>

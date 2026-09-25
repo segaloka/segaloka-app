@@ -1,0 +1,86 @@
+<!doctype html>
+<html lang="id">
+<head>
+<meta charset="utf-8">
+<title>Control Center — Approval Center</title>
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&amp;display=swap">
+<style>
+body{margin:0;font-family:'Plus Jakarta Sans',system-ui,sans-serif;color:#0f1b2d}
+a{color:#0a66e0;text-decoration:none}a:hover{color:#0852b8}
+</style>
+</helmet>
+<div style="width: 1440px; height: 1080px; box-sizing: border-box; background: #f3f6fb; display: flex">
+  <div style="width: 264px; flex-shrink: 0; background: #0b1f3f"><dc-import name="AdminSidebar" active="approval" hint-size="264px,1080px"></dc-import></div>
+  <main style="flex-grow: 1; display: flex; flex-direction: column; min-width: 0">
+    <dc-import name="AdminTopbar" hint-size="1176px,72px"></dc-import>
+    <div style="padding: 24px 32px; display: flex; flex-direction: column; gap: 16px; flex-grow: 1; min-height: 0">
+      <div style="display: flex; align-items: flex-end; justify-content: space-between">
+        <div style="display: flex; flex-direction: column; gap: 4px"><h1 style="margin: 0; font-size: 26px; font-weight: 800">Approval Center</h1><div style="font-size: 14px; color: #4a5870">Satu antrean untuk semua persetujuan. Setiap keputusan butuh alasan dan tercatat di Audit Log.</div></div>
+        <div style="display: flex; gap: 6px"><span style="padding: 8px 14px; border-radius: 999px; background: #0f1b2d; color: #ffffff; font-size: 13px; font-weight: 700">Semua · 9</span><span style="padding: 8px 14px; border-radius: 999px; background: #ffffff; border: 1px solid #e1e7f0; font-size: 13px; font-weight: 600">Milik saya · 3</span><span style="padding: 8px 14px; border-radius: 999px; background: #fbe7e7; color: #a42424; font-size: 13px; font-weight: 700">Lewat SLA · 3</span></div>
+      </div>
+      <div style="display: grid; grid-template-columns: repeat(7, minmax(0, 1fr)); gap: 10px">
+        <sc-for list="{{types}}" as="t" hint-placeholder-count="7"><div style="background: #ffffff; border: {{t.b}}; border-radius: 14px; padding: 12px; display: flex; flex-direction: column; gap: 2px"><span style="font-size: 12px; font-weight: 700; color: #4a5870">{{t.l}}</span><span style="font-size: 22px; font-weight: 800">{{t.n}}</span></div></sc-for>
+      </div>
+      <div style="display: flex; gap: 16px; flex-grow: 1; min-height: 0">
+        <div style="flex-grow: 1; background: #ffffff; border: 1px solid #e1e7f0; border-radius: 18px; overflow: hidden; min-width: 0">
+          <div style="display: grid; grid-template-columns: 40px 2fr 1fr 1.1fr 0.9fr 1fr; padding: 11px 18px; background: #f7f9fc; border-bottom: 1px solid #e1e7f0; font-size: 12px; font-weight: 800; letter-spacing: .05em; color: #4a5870"><span></span><span>PERMINTAAN</span><span>JENIS</span><span>PENGAJU</span><span>SLA</span><span>PETUGAS</span></div>
+          <sc-for list="{{rows}}" as="r" hint-placeholder-count="9">
+            <div style="display: grid; grid-template-columns: 40px 2fr 1fr 1.1fr 0.9fr 1fr; align-items: center; padding: 12px 18px; border-bottom: 1px solid #eef1f6; font-size: 14px; background: {{r.bg}}">
+              <input type="checkbox" aria-label="Pilih" style="width: 18px; height: 18px; margin: 0; accent-color: #0a66e0">
+              <div style="display: flex; flex-direction: column"><span style="font-weight: 800">{{r.t}}</span><span style="font-size: 12px; color: #4a5870">{{r.m}}</span></div>
+              <span style="padding: 3px 10px; border-radius: 8px; background: {{r.tbg}}; color: {{r.tfg}}; font-size: 12px; font-weight: 800; width: max-content">{{r.type}}</span>
+              <span style="color: #4a5870">{{r.by}}</span>
+              <span style="font-weight: 800; color: {{r.sc}}">{{r.sla}}</span>
+              <span style="color: #4a5870">{{r.who}}</span>
+            </div>
+          </sc-for>
+        </div>
+        <div style="width: 360px; flex-shrink: 0; background: #ffffff; border: 1px solid #e1e7f0; border-radius: 18px; display: flex; flex-direction: column">
+          <div style="padding: 16px 18px; border-bottom: 1px solid #eef1f6; display: flex; flex-direction: column; gap: 6px"><span style="font-size: 12px; font-weight: 800; color: #a42424">LEWAT SLA · 1 hari</span><span style="font-size: 17px; font-weight: 800">[Travel B] mengganti rekening pencairan</span><span style="font-size: 13px; color: #4a5870">BSI ••4471 → Bank [baru] ••9902 · diajukan oleh [Pemilik Travel B] dari perangkat Android baru</span></div>
+          <div style="padding: 16px 18px; display: flex; flex-direction: column; gap: 10px; flex-grow: 1">
+            <span style="font-size: 14px; font-weight: 800">Sinyal risiko</span>
+            <div style="display: flex; gap: 8px; font-size: 13px"><span style="color: #a42424; font-weight: 800">●</span>Withdrawal Rp 0,4 M diajukan 20 menit setelah ganti rekening</div>
+            <div style="display: flex; gap: 8px; font-size: 13px"><span style="color: #8a5300; font-weight: 800">●</span>Nama pemilik rekening berbeda dari badan usaha</div>
+            <div style="display: flex; gap: 8px; font-size: 13px"><span style="color: #0a6b0a; font-weight: 800">●</span>Login dengan 2FA berhasil</div>
+            <span style="font-size: 14px; font-weight: 800; padding-top: 6px">Dokumen</span>
+            <div style="display: flex; justify-content: space-between; font-size: 13px"><span>Buku tabungan / surat bank</span><a href="#" style="font-weight: 700">Lihat</a></div>
+            <div style="display: flex; justify-content: space-between; font-size: 13px"><span>Surat kuasa direksi</span><span style="color: #a42424; font-weight: 700">Belum ada</span></div>
+            <label for="ap" style="font-size: 13px; font-weight: 700; padding-top: 6px">Alasan keputusan (wajib)</label>
+            <textarea id="ap" rows="3" style="padding: 10px 12px; border: 1.5px solid #c9d3e2; border-radius: 12px; font: inherit; font-size: 14px; resize: none">Minta surat kuasa direksi &amp; rekening atas nama badan usaha.</textarea>
+          </div>
+          <div style="padding: 14px 18px; border-top: 1px solid #eef1f6; display: flex; gap: 8px"><button type="button" style="flex-grow: 1; height: 44px; border: 0; border-radius: 12px; background: #fbe7e7; color: #a42424; font: inherit; font-weight: 700">Tolak</button><button type="button" style="flex-grow: 1; height: 44px; border: 1.5px solid #c9d3e2; border-radius: 12px; background: #ffffff; font: inherit; font-weight: 700">Minta data</button><button type="button" style="flex-grow: 1; height: 44px; border: 0; border-radius: 12px; background: #0a66e0; color: #ffffff; font: inherit; font-weight: 800">Setujui</button></div>
+        </div>
+      </div>
+    </div>
+  </main>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"$preview":{"width":1440,"height":1080}}'>
+class Component extends DCLogic {
+  renderVals() {
+    var T = { leg: ['Legalitas', '#e6f0fd', '#0852b8'], ven: ['Vendor', '#efe8fb', '#5b36a8'], pkg: ['Paket', '#fff1dc', '#8a4a00'], ads: ['Iklan', '#e0f4f8', '#0e7490'], wd: ['Withdrawal', '#e4f3e4', '#0a6b0a'], ref: ['Refund', '#fbe7e7', '#a42424'], bank: ['Rekening', '#fdf0da', '#8a5300'] };
+    var r = function (t, m, k, by, sla, late, who, sel) { return { t: t, m: m, type: T[k][0], tbg: T[k][1], tfg: T[k][2], by: by, sla: sla, sc: late ? '#a42424' : '#4a5870', who: who, bg: sel ? '#f5f9ff' : '#ffffff' }; };
+    return {
+      types: [{ l: 'Legalitas', n: 2, b: '1px solid #e1e7f0' }, { l: 'Vendor', n: 1, b: '1px solid #e1e7f0' }, { l: 'Paket', n: 2, b: '1px solid #e1e7f0' }, { l: 'Iklan', n: 1, b: '1px solid #e1e7f0' }, { l: 'Withdrawal', n: 1, b: '1px solid #e1e7f0' }, { l: 'Refund', n: 1, b: '1px solid #e1e7f0' }, { l: 'Rekening', n: 1, b: '2px solid #0a66e0' }],
+      rows: [
+        r('[Travel B] ganti rekening pencairan', 'Diikuti withdrawal Rp 0,4 M', 'bank', '[Pemilik Travel B]', 'Lewat 1 hari', true, 'Admin 2', true),
+        r('[Travel C] · izin PPIU', '5/5 dokumen', 'leg', '[Pemilik Travel C]', 'Lewat 2 jam', true, '—', false),
+        r('[Travel A] withdrawal Rp 1,25 M', 'Settlement 12 Des', 'wd', '[Finance Travel A]', '3 jam lagi', false, 'Admin 2', false),
+        r('Umrah Super Hemat 9 Hari', 'Harga −54% pasar', 'pkg', '[Travel G]', 'Lewat 1 jam', true, 'Admin 4', false),
+        r('[Hotel F] Makkah', 'Hotel · 3/4 dokumen', 'ven', '[PIC Hotel F]', '5 jam lagi', false, 'Admin 3', false),
+        r('[Travel A] · izin PPIU', '5/5 dokumen', 'leg', '[Pemilik Travel A]', '22 jam lagi', false, 'Admin 3', false),
+        r('Kampanye Umrah Plus Turki', 'Banner beranda · 1–14 Okt', 'ads', '[Travel B]', '1 hari lagi', false, 'Admin 5', false),
+        r('Refund RF-0412 Rp 3,5 jt', 'Keputusan komplain KP-0231', 'ref', 'Sistem', '2 hari lagi', false, 'Admin 2', false),
+        r('Halal Tour Korea 8 Hari', 'No. telepon di foto', 'pkg', '[Travel D]', '1 hari lagi', false, 'Admin 4', false)
+      ]
+    };
+  }
+}
+</script>
+</body>
+</html>

@@ -1,0 +1,105 @@
+<!doctype html>
+<html lang="id">
+<head>
+<meta charset="utf-8">
+<title>Hasil Pencarian Paket</title>
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&amp;display=swap">
+<style>
+body{margin:0;font-family:'Plus Jakarta Sans',system-ui,sans-serif;color:#0f1b2d}
+a{color:#0a66e0;text-decoration:none}a:hover{color:#0852b8}
+</style>
+</helmet>
+<div style="width: 1440px; height: 1500px; box-sizing: border-box; background: #f3f6fb; display: flex; flex-direction: column">
+
+  <header style="height: 72px; flex-shrink: 0; background: #ffffff; border-bottom: 1px solid #e1e7f0; display: flex; align-items: center; padding: 0 72px; gap: 36px">
+    <a href="Home.dc.html" style="display: flex; align-items: center; gap: 10px; color: #0f1b2d"><span style="width: 36px; height: 36px; border-radius: 10px; background: #0a66e0; color: #ffffff; display: flex; align-items: center; justify-content: center; font-weight: 800">S</span><span style="font-size: 21px; font-weight: 800">Segaloka</span></a>
+    <nav style="display: flex; gap: 26px; font-size: 15px; font-weight: 600"><a href="#" style="color: #0a66e0">Umrah</a><a href="#" style="color: #0f1b2d">Haji</a><a href="#" style="color: #0f1b2d">Halal Tour</a><a href="#" style="color: #0f1b2d">Tour</a><a href="#" style="color: #0f1b2d">SegaDeals</a></nav>
+    <div style="margin-left: auto; display: flex; align-items: center; gap: 12px"><span style="font-weight: 600; font-size: 14px">ID</span><span style="width: 40px; height: 40px; border-radius: 999px; background: #ff9f1c; color: #241400; font-weight: 800; display: flex; align-items: center; justify-content: center">Z</span></div>
+  </header>
+
+  <div style="background: #0a66e0; padding: 16px 72px; display: flex; align-items: center; gap: 10px">
+    <span style="height: 48px; padding: 0 16px; border-radius: 12px; background: #ffffff; display: flex; align-items: center; gap: 8px; font-weight: 700; font-size: 15px">Umrah</span>
+    <span style="height: 48px; padding: 0 16px; border-radius: 12px; background: #ffffff; display: flex; align-items: center; gap: 8px; font-size: 15px"><span style="color: #4a5870">Dari</span><b>Makassar</b></span>
+    <span style="height: 48px; padding: 0 16px; border-radius: 12px; background: #ffffff; display: flex; align-items: center; gap: 8px; font-size: 15px"><span style="color: #4a5870">Bulan</span><b>Des 2026 – Feb 2027</b></span>
+    <span style="height: 48px; padding: 0 16px; border-radius: 12px; background: #ffffff; display: flex; align-items: center; gap: 8px; font-size: 15px"><span style="color: #4a5870">Jamaah</span><b>2 orang</b></span>
+    <button type="button" style="margin-left: auto; height: 48px; padding: 0 22px; border: 0; border-radius: 12px; background: #ff9f1c; color: #241400; font: inherit; font-weight: 800; font-size: 15px">Ubah pencarian</button>
+  </div>
+
+  <div style="padding: 24px 72px; display: flex; gap: 24px; align-items: flex-start">
+    <aside style="width: 300px; flex-shrink: 0; background: #ffffff; border: 1px solid #e1e7f0; border-radius: 18px; padding: 20px; display: flex; flex-direction: column; gap: 20px">
+      <div style="display: flex; justify-content: space-between; align-items: center"><span style="font-size: 17px; font-weight: 800">Filter</span><a href="#" style="font-size: 14px; font-weight: 700">Reset</a></div>
+      <div style="display: flex; flex-direction: column; gap: 10px">
+        <span style="font-size: 14px; font-weight: 800">Harga per orang</span>
+        <div style="position: relative; height: 24px"><div style="position: absolute; top: 10px; left: 0; right: 0; height: 4px; border-radius: 999px; background: #e1e7f0"></div><div style="position: absolute; top: 10px; left: 12%; right: 30%; height: 4px; border-radius: 999px; background: #0a66e0"></div><span style="position: absolute; top: 2px; left: 12%; width: 20px; height: 20px; margin-left: -10px; border-radius: 999px; background: #ffffff; border: 3px solid #0a66e0; box-sizing: border-box"></span><span style="position: absolute; top: 2px; right: 30%; width: 20px; height: 20px; margin-right: -10px; border-radius: 999px; background: #ffffff; border: 3px solid #0a66e0; box-sizing: border-box"></span></div>
+        <div style="display: flex; justify-content: space-between; font-size: 13px; font-weight: 600"><span>Rp 25 jt</span><span>Rp 45 jt</span></div>
+      </div>
+      <div style="height: 1px; background: #eef1f6"></div>
+      <sc-for list="{{groups}}" as="g" hint-placeholder-count="4">
+        <div style="display: flex; flex-direction: column; gap: 10px; padding-bottom: 16px; border-bottom: 1px solid #eef1f6">
+          <span style="font-size: 14px; font-weight: 800">{{g.title}}</span>
+          <sc-for list="{{g.items}}" as="i" hint-placeholder-count="3">
+            <label style="display: flex; align-items: center; gap: 10px; font-size: 14px; min-height: 28px"><input type="checkbox" checked="{{i.on}}" style="width: 18px; height: 18px; accent-color: #0a66e0; margin: 0"><span style="flex-grow: 1">{{i.label}}</span><span style="color: #7c8aa0; font-size: 13px">{{i.n}}</span></label>
+          </sc-for>
+        </div>
+      </sc-for>
+    </aside>
+
+    <div style="flex-grow: 1; display: flex; flex-direction: column; gap: 16px; min-width: 0">
+      <div style="display: flex; align-items: center; justify-content: space-between">
+        <div style="font-size: 15px"><b>24 paket</b> <span style="color: #4a5870">dari 11 Travel terverifikasi</span></div>
+        <div style="display: flex; gap: 4px; padding: 4px; background: #ffffff; border: 1px solid #e1e7f0; border-radius: 12px">
+          <button type="button" style="height: 36px; padding: 0 14px; border: 0; border-radius: 9px; background: #e6f0fd; color: #0852b8; font: inherit; font-weight: 700; font-size: 13px">Paling sesuai</button>
+          <button type="button" style="height: 36px; padding: 0 14px; border: 0; border-radius: 9px; background: transparent; color: #4a5870; font: inherit; font-weight: 600; font-size: 13px">Termurah</button>
+          <button type="button" style="height: 36px; padding: 0 14px; border: 0; border-radius: 9px; background: transparent; color: #4a5870; font: inherit; font-weight: 600; font-size: 13px">Berangkat terdekat</button>
+          <button type="button" style="height: 36px; padding: 0 14px; border: 0; border-radius: 9px; background: transparent; color: #4a5870; font: inherit; font-weight: 600; font-size: 13px">Hotel terdekat Masjid</button>
+        </div>
+      </div>
+      <sc-for list="{{results}}" as="r" hint-placeholder-count="5">
+        <div style="background: #ffffff; border: 1px solid #e1e7f0; border-radius: 20px; overflow: hidden; display: flex; box-shadow: 0 1px 2px rgba(15,40,80,.05), 0 8px 20px -12px rgba(15,40,80,.18)">
+          <div style="width: 230px; flex-shrink: 0; background: #dbe7f8; display: flex; align-items: center; justify-content: center; color: #4a5870; font-size: 13px; font-weight: 600; position: relative">[Foto paket]<span style="position: absolute; top: 12px; left: 12px; padding: 4px 10px; border-radius: 999px; background: #0a66e0; color: #ffffff; font-size: 12px; font-weight: 700">{{r.type}}</span></div>
+          <div style="flex-grow: 1; padding: 18px 20px; display: flex; flex-direction: column; gap: 8px; min-width: 0">
+            <div style="font-size: 13px; color: #4a5870; display: flex; align-items: center; gap: 6px"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#0a66e0" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path><path d="m9 12 2 2 4-4"></path></svg>{{r.travel}}</div>
+            <div style="font-size: 19px; font-weight: 800">{{r.name}}</div>
+            <div style="display: flex; flex-wrap: wrap; gap: 16px; font-size: 13px; color: #4a5870"><span>{{r.date}}</span><span>{{r.route}}</span><span>{{r.airline}}</span></div>
+            <div style="display: flex; flex-wrap: wrap; gap: 6px; padding-top: 2px">
+              <sc-for list="{{r.tags}}" as="t" hint-placeholder-count="3"><span style="padding: 4px 10px; border-radius: 8px; background: #f3f6fb; font-size: 12px; font-weight: 700; color: #0f1b2d">{{t}}</span></sc-for>
+            </div>
+          </div>
+          <div style="width: 220px; flex-shrink: 0; border-left: 1px dashed #e1e7f0; padding: 18px 20px; display: flex; flex-direction: column; align-items: flex-end; justify-content: space-between">
+            <span style="font-size: 12px; font-weight: 800; color: #a42424">{{r.seats}}</span>
+            <div style="display: flex; flex-direction: column; align-items: flex-end; gap: 2px"><span style="font-size: 12px; color: #4a5870">mulai / orang (Quad)</span><span style="font-size: 24px; font-weight: 800; color: #e25d00">{{r.price}}</span></div>
+            <a href="PackageDetail.dc.html" style="height: 44px; width: 100%; border-radius: 12px; background: #0a66e0; color: #ffffff; font-weight: 700; font-size: 14px; display: flex; align-items: center; justify-content: center">Lihat detail</a>
+          </div>
+        </div>
+      </sc-for>
+    </div>
+  </div>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"$preview":{"width":1440,"height":1500}}'>
+class Component extends DCLogic {
+  renderVals() {
+    return {
+      groups: [
+        { title: 'Durasi', items: [{ label: '9 hari', n: 8, on: true }, { label: '12 hari', n: 10, on: true }, { label: '15 hari atau lebih', n: 6, on: false }] },
+        { title: 'Hotel Makkah', items: [{ label: 'Bintang 5', n: 7, on: false }, { label: 'Bintang 4', n: 12, on: true }, { label: 'Bintang 3', n: 5, on: false }] },
+        { title: 'Program', items: [{ label: 'Plus Turki', n: 4, on: false }, { label: 'Plus Dubai', n: 3, on: false }, { label: 'Ramadhan', n: 2, on: false }] },
+        { title: 'Penerbangan', items: [{ label: 'Langsung (direct)', n: 9, on: false }, { label: 'Transit 1 kali', n: 15, on: false }] }
+      ],
+      results: [
+        { type: 'Umrah', travel: '[Travel A] · Makassar', name: 'Umrah Reguler 9 Hari', date: '12 Des 2026', route: 'UPG → JED', airline: '[Maskapai]', tags: ['Hotel 4★ 300 m', 'Muthawwif', 'Manasik 2x'], seats: 'Sisa 6 kursi', price: 'Rp 32,5 jt' },
+        { type: 'Umrah', travel: '[Travel B] · Surabaya', name: 'Umrah Plus Turki 12 Hari', date: '5 Jan 2027', route: 'UPG → IST → JED', airline: '[Maskapai]', tags: ['Hotel 5★', 'City tour Istanbul', 'Kereta cepat'], seats: 'Sisa 12 kursi', price: 'Rp 41,9 jt' },
+        { type: 'Umrah', travel: '[Travel C] · Makassar', name: 'Umrah Akhir Tahun 12 Hari', date: '20 Des 2026', route: 'UPG → MED', airline: '[Maskapai]', tags: ['Hotel 5★ 100 m', 'Direct flight'], seats: 'Sisa 3 kursi', price: 'Rp 38,0 jt' },
+        { type: 'Umrah', travel: '[Travel D] · Jakarta', name: 'Umrah Hemat 9 Hari', date: '15 Jan 2027', route: 'UPG → CGK → JED', airline: '[Maskapai]', tags: ['Hotel 3★', 'Termasuk perlengkapan'], seats: 'Sisa 20 kursi', price: 'Rp 27,9 jt' }
+      ]
+    };
+  }
+}
+</script>
+</body>
+</html>

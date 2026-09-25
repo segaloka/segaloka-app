@@ -1,0 +1,73 @@
+<!doctype html>
+<html lang="id">
+<head>
+<meta charset="utf-8">
+<title>Aplikasi Agen (HP)</title>
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&amp;display=swap">
+<style>
+body{margin:0;font-family:'Plus Jakarta Sans',system-ui,sans-serif;color:#0f1b2d}
+a{color:#0a66e0;text-decoration:none}a:hover{color:#0852b8}
+</style>
+</helmet>
+<div style="width: 390px; height: 1500px; box-sizing: border-box; background: #f3f6fb; display: flex; flex-direction: column; position: relative">
+  <div style="background: #0a66e0; color: #ffffff; padding: 18px 16px 76px; display: flex; flex-direction: column; gap: 14px">
+    <div style="display: flex; align-items: center; gap: 10px"><span style="width: 40px; height: 40px; border-radius: 999px; background: #ffffff; color: #0a66e0; font-weight: 800; display: flex; align-items: center; justify-content: center">AS</span><div style="display: flex; flex-direction: column"><span style="font-weight: 800">[Agen Sinjai]</span><span style="font-size: 12px; color: #d6e7ff">Agen · [Mitra Bone] · [Travel A]</span></div><button type="button" aria-label="Notifikasi" style="margin-left: auto; width: 44px; height: 44px; border: 0; border-radius: 10px; background: #1f78ea; color: #ffffff; display: flex; align-items: center; justify-content: center"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 8a6 6 0 0 1 12 0c0 7 3 9 3 9H3s3-2 3-9"></path><path d="M10.3 21a1.94 1.94 0 0 0 3.4 0"></path></svg></button></div>
+  </div>
+  <div style="margin: -60px 16px 0; background: #ffffff; border-radius: 18px; box-shadow: 0 20px 40px -20px rgba(15,40,80,.35); padding: 16px; display: flex; flex-direction: column; gap: 12px">
+    <span style="font-size: 13px; color: #4a5870; font-weight: 700">Komisi bulan ini</span>
+    <span style="font-size: 28px; font-weight: 800">Rp 6.750.000</span>
+    <div style="display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 8px">
+      <div style="background: #f3f6fb; border-radius: 12px; padding: 10px; display: flex; flex-direction: column"><span style="font-size: 11px; font-weight: 700; color: #4a5870">Jamaah</span><span style="font-size: 18px; font-weight: 800">9</span></div>
+      <div style="background: #f3f6fb; border-radius: 12px; padding: 10px; display: flex; flex-direction: column"><span style="font-size: 11px; font-weight: 700; color: #4a5870">Calon</span><span style="font-size: 18px; font-weight: 800">14</span></div>
+      <div style="background: #f3f6fb; border-radius: 12px; padding: 10px; display: flex; flex-direction: column"><span style="font-size: 11px; font-weight: 700; color: #4a5870">Cair</span><span style="font-size: 18px; font-weight: 800">Rp 3 jt</span></div>
+    </div>
+  </div>
+  <div style="padding: 16px 16px 0; display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 10px">
+    <a href="#" style="height: 52px; border-radius: 14px; background: #ff9f1c; color: #241400; font-weight: 800; font-size: 15px; display: flex; align-items: center; justify-content: center">+ Calon jamaah</a>
+    <a href="#" style="height: 52px; border-radius: 14px; background: #ffffff; border: 1.5px solid #c9d3e2; color: #0f1b2d; font-weight: 800; font-size: 15px; display: flex; align-items: center; justify-content: center">Bagikan paket</a>
+  </div>
+  <div style="padding: 20px 16px 8px; display: flex; justify-content: space-between"><span style="font-size: 16px; font-weight: 800">Perlu follow-up</span><a href="#" style="font-size: 13px; font-weight: 700">Semua</a></div>
+  <div style="margin: 0 16px; background: #ffffff; border: 1px solid #e1e7f0; border-radius: 18px; overflow: hidden">
+    <sc-for list="{{leads}}" as="l" hint-placeholder-count="4">
+      <div style="display: flex; align-items: center; gap: 12px; padding: 12px 14px; border-bottom: 1px solid #eef1f6">
+        <span style="width: 38px; height: 38px; border-radius: 999px; background: #e6f0fd; color: #0852b8; font-weight: 800; font-size: 13px; display: flex; align-items: center; justify-content: center">{{l.i}}</span>
+        <div style="display: flex; flex-direction: column; flex-grow: 1; min-width: 0"><span style="font-size: 14px; font-weight: 800">{{l.n}}</span><span style="font-size: 12px; color: #4a5870">{{l.m}}</span></div>
+        <span style="padding: 3px 9px; border-radius: 999px; background: {{l.bg}}; color: {{l.fg}}; font-size: 11px; font-weight: 800">{{l.s}}</span>
+      </div>
+    </sc-for>
+  </div>
+  <div style="padding: 20px 16px 8px; font-size: 16px; font-weight: 800">Paket untuk dibagikan</div>
+  <div style="margin: 0 16px; display: flex; flex-direction: column; gap: 10px">
+    <sc-for list="{{pk}}" as="p" hint-placeholder-count="2">
+      <div style="background: #ffffff; border: 1px solid #e1e7f0; border-radius: 16px; padding: 12px; display: flex; gap: 12px; align-items: center">
+        <div style="width: 64px; height: 64px; border-radius: 12px; background: #dbe7f8; flex-shrink: 0"></div>
+        <div style="display: flex; flex-direction: column; gap: 2px; flex-grow: 1"><span style="font-size: 14px; font-weight: 800">{{p.n}}</span><span style="font-size: 12px; color: #4a5870">{{p.m}}</span><span style="font-size: 12px; font-weight: 700; color: #0a6b0a">Komisi {{p.k}}/jamaah</span></div>
+        <button type="button" aria-label="Bagikan" style="width: 44px; height: 44px; border: 0; border-radius: 12px; background: #e6f0fd; color: #0852b8; display: flex; align-items: center; justify-content: center"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="18" cy="5" r="3"></circle><circle cx="6" cy="12" r="3"></circle><circle cx="18" cy="19" r="3"></circle><path d="m8.6 13.5 6.8 4M15.4 6.5l-6.8 4"></path></svg></button>
+      </div>
+    </sc-for>
+  </div>
+  <nav style="position: absolute; left: 0; right: 0; bottom: 0; height: 76px; background: #ffffff; border-top: 1px solid #e1e7f0; display: grid; grid-template-columns: repeat(5, minmax(0, 1fr)); padding-bottom: 8px">
+    <sc-for list="{{tabs}}" as="t" hint-placeholder-count="5"><a href="#" style="display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 4px; color: {{t.c}}; font-size: 11px; font-weight: 800"><span style="width: 24px; height: 4px; border-radius: 999px; background: {{t.bar}}"></span>{{t.l}}</a></sc-for>
+  </nav>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"$preview":{"width":390,"height":1500}}'>
+class Component extends DCLogic {
+  renderVals() {
+    var S = { h: ['Tertarik', '#fff1dc', '#8a4a00'], d: ['Tunggu DP', '#e6f0fd', '#0852b8'], n: ['Baru', '#eef1f6', '#4a5870'] };
+    var l = function (i, n, m, s) { return { i: i, n: n, m: m, s: S[s][0], bg: S[s][1], fg: S[s][2] }; };
+    return {
+      leads: [l('HB', 'H. Baharuddin', 'Umrah Des · 2 orang · terakhir dihubungi 3 hari lalu', 'h'), l('ST', 'St. Rahmah', 'Umrah Jan · booking dibuat, belum DP', 'd'), l('AM', 'Andi Muh.', 'Tanya Haji Khusus', 'n'), l('NR', 'Nurlina', 'Umrah keluarga · 5 orang', 'h')],
+      pk: [{ n: 'Umrah Reguler 9 Hari', m: '12 Des · Rp 32,5 jt', k: 'Rp 750 rb' }, { n: 'Umrah Akhir Tahun 12 Hari', m: '20 Des · Rp 38 jt', k: 'Rp 750 rb' }],
+      tabs: ['Beranda', 'Calon', 'Booking', 'Pesan', 'Akun'].map(function (x, i) { return { l: x, c: i === 0 ? '#0a66e0' : '#4a5870', bar: i === 0 ? '#0a66e0' : 'transparent' }; })
+    };
+  }
+}
+</script>
+</body>
+</html>

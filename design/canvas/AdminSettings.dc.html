@@ -1,0 +1,93 @@
+<!doctype html>
+<html lang="id">
+<head>
+<meta charset="utf-8">
+<title>Control Center — Pengaturan Platform</title>
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&amp;display=swap">
+<style>
+body{margin:0;font-family:'Plus Jakarta Sans',system-ui,sans-serif;color:#0f1b2d}
+a{color:#0a66e0;text-decoration:none}a:hover{color:#0852b8}
+</style>
+</helmet>
+<div style="width: 1440px; height: 1080px; box-sizing: border-box; background: #f3f6fb; display: flex">
+  <div style="width: 264px; flex-shrink: 0; background: #0b1f3f"><dc-import name="AdminSidebar" active="sys_pay" hint-size="264px,1080px"></dc-import></div>
+  <main style="flex-grow: 1; display: flex; flex-direction: column; min-width: 0">
+    <dc-import name="AdminTopbar" hint-size="1176px,72px"></dc-import>
+    <div style="padding: 24px 32px; display: flex; flex-direction: column; gap: 18px">
+      <div style="display: flex; align-items: flex-end; justify-content: space-between">
+        <div style="display: flex; flex-direction: column; gap: 4px"><h1 style="margin: 0; font-size: 26px; font-weight: 800">Pengaturan Platform</h1><div style="font-size: 14px; color: #4a5870">Perubahan di sini berlaku untuk seluruh Segaloka dan tercatat di Audit Log.</div></div>
+        <div style="display: flex; gap: 8px"><button type="button" style="height: 44px; padding: 0 16px; border: 1.5px solid #c9d3e2; border-radius: 12px; background: #ffffff; font: inherit; font-weight: 700">Batalkan</button><button type="button" style="height: 44px; padding: 0 20px; border: 0; border-radius: 12px; background: #0a66e0; color: #ffffff; font: inherit; font-weight: 800">Simpan perubahan</button></div>
+      </div>
+      <div style="display: flex; gap: 16px">
+        <nav style="width: 230px; flex-shrink: 0; background: #ffffff; border: 1px solid #e1e7f0; border-radius: 18px; padding: 10px; display: flex; flex-direction: column; gap: 2px; font-size: 14px; font-weight: 600">
+          <sc-for list="{{tabs}}" as="t" hint-placeholder-count="8"><a href="#" style="height: 40px; padding: 0 12px; border-radius: 10px; background: {{t.bg}}; color: {{t.fg}}; font-weight: {{t.w}}; display: flex; align-items: center">{{t.l}}</a></sc-for>
+        </nav>
+        <div style="flex-grow: 1; display: flex; flex-direction: column; gap: 16px; min-width: 0">
+          <div style="background: #ffffff; border: 1px solid #e1e7f0; border-radius: 18px; padding: 20px 22px; display: flex; flex-direction: column; gap: 16px">
+            <span style="font-size: 17px; font-weight: 800">Pembayaran jamaah</span>
+            <div style="display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 16px">
+              <div style="display: flex; flex-direction: column; gap: 6px"><label for="s1" style="font-size: 14px; font-weight: 600">Batas waktu bayar</label><input id="s1" value="24 jam" style="height: 46px; padding: 0 12px; border: 1.5px solid #c9d3e2; border-radius: 12px; font: inherit; font-size: 15px"></div>
+              <div style="display: flex; flex-direction: column; gap: 6px"><label for="s2" style="font-size: 14px; font-weight: 600">Biaya layanan ke jamaah</label><input id="s2" value="0%" style="height: 46px; padding: 0 12px; border: 1.5px solid #c9d3e2; border-radius: 12px; font: inherit; font-size: 15px"></div>
+              <div style="display: flex; flex-direction: column; gap: 6px"><label for="s3" style="font-size: 14px; font-weight: 600">Biaya transaksi ke Travel</label><input id="s3" value="1,5% per booking" style="height: 46px; padding: 0 12px; border: 1.5px solid #c9d3e2; border-radius: 12px; font: inherit; font-size: 15px"></div>
+            </div>
+            <div style="display: flex; flex-direction: column; gap: 8px">
+              <span style="font-size: 14px; font-weight: 700">Metode pembayaran aktif</span>
+              <div style="display: flex; flex-wrap: wrap; gap: 10px">
+                <sc-for list="{{methods}}" as="m" hint-placeholder-count="5"><label style="height: 42px; padding: 0 14px; border-radius: 12px; border: 1.5px solid #c9d3e2; display: flex; align-items: center; gap: 8px; font-size: 14px; font-weight: 600"><input type="checkbox" checked="{{m.on}}" style="width: 18px; height: 18px; margin: 0; accent-color: #0a66e0">{{m.l}}</label></sc-for>
+              </div>
+            </div>
+          </div>
+
+          <div style="background: #ffffff; border: 1px solid #e1e7f0; border-radius: 18px; padding: 20px 22px; display: flex; flex-direction: column; gap: 16px">
+            <span style="font-size: 17px; font-weight: 800">Settlement ke Travel</span>
+            <div style="display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 16px">
+              <div style="display: flex; flex-direction: column; gap: 6px"><label for="s4" style="font-size: 14px; font-weight: 600">Rilis DP &amp; pelunasan</label><input id="s4" value="H-30 keberangkatan" style="height: 46px; padding: 0 12px; border: 1.5px solid #c9d3e2; border-radius: 12px; font: inherit; font-size: 15px"></div>
+              <div style="display: flex; flex-direction: column; gap: 6px"><label for="s5" style="font-size: 14px; font-weight: 600">Rilis sisa dana</label><input id="s5" value="H+3 kepulangan" style="height: 46px; padding: 0 12px; border: 1.5px solid #c9d3e2; border-radius: 12px; font: inherit; font-size: 15px"></div>
+              <div style="display: flex; flex-direction: column; gap: 6px"><label for="s6" style="font-size: 14px; font-weight: 600">Persetujuan manual di atas</label><input id="s6" value="Rp 1.000.000.000" style="height: 46px; padding: 0 12px; border: 1.5px solid #c9d3e2; border-radius: 12px; font: inherit; font-size: 15px"></div>
+            </div>
+            <sc-for list="{{toggles}}" as="t" hint-placeholder-count="3">
+              <div style="display: flex; align-items: center; justify-content: space-between; gap: 16px; padding: 10px 0; border-top: 1px solid #eef1f6">
+                <div style="display: flex; flex-direction: column"><span style="font-size: 14px; font-weight: 700">{{t.l}}</span><span style="font-size: 13px; color: #4a5870">{{t.d}}</span></div>
+                <span style="width: 46px; height: 26px; border-radius: 999px; background: {{t.bg}}; position: relative; flex-shrink: 0"><span style="position: absolute; top: 3px; left: {{t.x}}; width: 20px; height: 20px; border-radius: 999px; background: #ffffff"></span></span>
+              </div>
+            </sc-for>
+          </div>
+
+          <div style="background: #ffffff; border: 1px solid #e1e7f0; border-radius: 18px; padding: 20px 22px; display: flex; flex-direction: column; gap: 14px">
+            <span style="font-size: 17px; font-weight: 800">Komisi default jaringan</span>
+            <div style="display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 16px">
+              <div style="display: flex; flex-direction: column; gap: 6px"><label for="k1" style="font-size: 14px; font-weight: 600">Affiliate</label><input id="k1" value="2% dari nilai paket" style="height: 46px; padding: 0 12px; border: 1.5px solid #c9d3e2; border-radius: 12px; font: inherit; font-size: 15px"></div>
+              <div style="display: flex; flex-direction: column; gap: 6px"><label for="k2" style="font-size: 14px; font-weight: 600">Mitra Travel</label><input id="k2" value="Ditentukan Travel" style="height: 46px; padding: 0 12px; border: 1.5px solid #c9d3e2; border-radius: 12px; font: inherit; font-size: 15px"></div>
+              <div style="display: flex; flex-direction: column; gap: 6px"><label for="k3" style="font-size: 14px; font-weight: 600">Batas bayar komisi</label><input id="k3" value="14 hari setelah lunas" style="height: 46px; padding: 0 12px; border: 1.5px solid #c9d3e2; border-radius: 12px; font: inherit; font-size: 15px"></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </main>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"$preview":{"width":1440,"height":1080}}'>
+class Component extends DCLogic {
+  renderVals() {
+    var names = ['Umum & merek', 'Bahasa & tampilan', 'Pembayaran & settlement', 'Verifikasi & moderasi', 'Notifikasi & email', 'Pesan & komunikasi', 'Keamanan', 'Integrasi'];
+    var on = { bg: '#0a66e0', x: '23px' }, off = { bg: '#c9d3e2', x: '3px' };
+    return {
+      tabs: names.map(function (n, i) { var a = i === 2; return { l: n, bg: a ? '#e6f0fd' : 'transparent', fg: a ? '#0852b8' : '#0f1b2d', w: a ? 800 : 600 }; }),
+      methods: [{ l: 'Virtual Account', on: true }, { l: 'QRIS / e-wallet', on: true }, { l: 'Transfer manual ke Travel', on: true }, { l: 'Kartu kredit', on: false }, { l: 'Cicilan / paylater', on: false }],
+      toggles: [
+        Object.assign({ l: 'Tahan settlement otomatis saat ada komplain', d: 'Dana untuk keberangkatan terkait ditahan sampai komplain selesai' }, on),
+        Object.assign({ l: 'Tahan settlement jika rekening Travel baru diganti', d: 'Sampai rekening baru diverifikasi admin' }, on),
+        Object.assign({ l: 'Izinkan Travel menarik dana lebih awal', d: 'Dengan biaya tambahan — belum direkomendasikan' }, off)
+      ]
+    };
+  }
+}
+</script>
+</body>
+</html>

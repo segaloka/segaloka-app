@@ -1,0 +1,45 @@
+<!doctype html>
+<html lang="id">
+<head>
+<meta charset="utf-8">
+<title>Komponen — Menu Travel</title>
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&amp;display=swap">
+<style>body{margin:0}a{text-decoration:none}</style>
+</helmet>
+<div style="width: 264px; height: 1080px; box-sizing: border-box; background: #ffffff; border-right: 1px solid #e1e7f0; display: flex; flex-direction: column; padding: 18px 14px; font-family: 'Plus Jakarta Sans', system-ui, sans-serif; color: #0f1b2d">
+  <div style="display: flex; align-items: center; gap: 10px; padding: 10px; border: 1px solid #e1e7f0; border-radius: 14px; background: #f7f9fc; margin-bottom: 8px">
+    <span style="width: 38px; height: 38px; border-radius: 10px; background: #0a66e0; color: #ffffff; display: flex; align-items: center; justify-content: center; font-weight: 800">A</span>
+    <span style="display: flex; flex-direction: column; flex-grow: 1"><span style="font-weight: 800; font-size: 14px">[Travel A]</span><span style="font-size: 12px; color: #4a5870">Pusat · Paket Scale</span></span>
+  </div>
+  <nav style="display: flex; flex-direction: column; gap: 1px; font-size: 14px; font-weight: 600">
+    <sc-for list="{{groups}}" as="g" hint-placeholder-count="5">
+      <div style="font-size: 11px; font-weight: 800; letter-spacing: .1em; color: #7c8aa0; padding: 10px 12px 4px">{{g.t}}</div>
+      <sc-for list="{{g.items}}" as="i" hint-placeholder-count="3">
+        <a href="{{i.href}}" style="height: 38px; padding: 0 12px; border-radius: 10px; background: {{i.bg}}; color: {{i.fg}}; font-weight: {{i.w}}; display: flex; align-items: center">{{i.l}}<sc-if value="{{i.b}}" hint-placeholder-val="{{false}}"><span style="margin-left: auto; padding: 1px 8px; border-radius: 999px; background: #ff9f1c; color: #241400; font-size: 12px; font-weight: 800">{{i.b}}</span></sc-if></a>
+      </sc-for>
+    </sc-for>
+  </nav>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"active":{"editor":"enum","options":["home","messages","booking","crm","segadeals","paket","manifest","roomlist","network","vendor","finance","analytics","website","settings"],"default":"home"},"$preview":{"width":264,"height":1080}}'>
+class Component extends DCLogic {
+  renderVals() {
+    var a = this.props.active || 'home';
+    var G = [
+      ['', [['home', 'Ringkasan', 'TravelDashboard.dc.html'], ['messages', 'Pesan', 'Messages.dc.html', '5']]],
+      ['PENJUALAN', [['booking', 'Booking', '#', '4'], ['crm', 'CRM / Leads', '#'], ['segadeals', 'SegaDeals Masuk', '#', '9']]],
+      ['PRODUK & OPERASIONAL', [['paket', 'Paket & Keberangkatan', 'TravelPackageEditor.dc.html'], ['manifest', 'Manifest', 'TravelManifest.dc.html'], ['roomlist', 'Room List', 'TravelRoomList.dc.html']]],
+      ['EKOSISTEM', [['network', 'Mitra, Agen & Affiliate', '#'], ['vendor', 'Vendor', '#']]],
+      ['BISNIS', [['finance', 'Keuangan & Ledger', 'TravelFinance.dc.html'], ['analytics', 'Analitik', '#'], ['website', 'Website Travel', 'TravelWebsite.dc.html'], ['settings', 'Staf, Cabang & Pengaturan', '#']]]
+    ];
+    return { groups: G.map(function (g) { return { t: g[0], items: g[1].map(function (i) { var on = i[0] === a; return { l: i[1], href: i[2], b: i[3] || '', bg: on ? '#e6f0fd' : 'transparent', fg: on ? '#0852b8' : '#0f1b2d', w: on ? 800 : 600 }; }) }; }) };
+  }
+}
+</script>
+</body>
+</html>

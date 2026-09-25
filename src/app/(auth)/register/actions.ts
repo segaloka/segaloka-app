@@ -2,6 +2,7 @@
 
 import { createClient } from "@/lib/supabase/server";
 import { redirect } from "next/navigation";
+import { getSiteUrl } from "@/lib/site";
 
 export type FormState = { error?: string; needsConfirmation?: boolean; email?: string } | null;
 
@@ -19,7 +20,10 @@ export async function registerAction(_prev: FormState, formData: FormData): Prom
   const { data, error } = await supabase.auth.signUp({
     email,
     password,
-    options: { data: { full_name: fullName } },
+    options: {
+      data: { full_name: fullName },
+      emailRedirectTo: `${getSiteUrl()}/auth/callback?next=/akun`,
+    },
   });
 
   if (error) {

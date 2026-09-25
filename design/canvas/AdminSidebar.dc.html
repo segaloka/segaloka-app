@@ -1,0 +1,81 @@
+<!doctype html>
+<html lang="id">
+<head>
+<meta charset="utf-8">
+<title>Komponen — Menu Super Admin (lengkap)</title>
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&amp;display=swap">
+<style>body{margin:0}a{text-decoration:none}</style>
+</helmet>
+<div style="width: 264px; height: 1080px; box-sizing: border-box; background: #0b1f3f; color: #c7d6ee; display: flex; flex-direction: column; padding: 14px 12px; font-family: 'Plus Jakarta Sans', system-ui, sans-serif; overflow: hidden">
+  <div style="display: flex; align-items: center; gap: 10px; padding: 2px 6px 12px">
+    <span style="width: 34px; height: 34px; border-radius: 10px; background: #0a66e0; color: #ffffff; display: flex; align-items: center; justify-content: center; font-weight: 800">S</span>
+    <div style="display: flex; flex-direction: column; flex-grow: 1"><span style="color: #ffffff; font-weight: 800; font-size: 16px">Segaloka</span><span style="font-size: 10px; font-weight: 800; letter-spacing: .08em; color: #8fb3e8">CONTROL CENTER · SUPER ADMIN</span></div>
+  </div>
+  <label style="height: 34px; border-radius: 9px; background: #13305c; display: flex; align-items: center; gap: 8px; padding: 0 10px; margin-bottom: 6px; color: #8fb3e8; font-size: 12px"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="7"></circle><path d="m20 20-3.5-3.5"></path></svg><input aria-label="Filter menu" placeholder="Filter menu… (101 menu)" style="border: 0; outline: 0; background: transparent; color: #ffffff; font: inherit; width: 100%"></label>
+  <nav style="display: flex; flex-direction: column; gap: 0; font-size: 13px; font-weight: 600">
+    <sc-for list="{{groups}}" as="g" hint-placeholder-count="13">
+      <a href="{{g.href}}" style="height: 30px; padding: 0 8px; display: flex; align-items: center; gap: 8px; color: {{g.fg}}; font-size: 11px; font-weight: 800; letter-spacing: .08em">
+        <span style="flex-grow: 1">{{g.title}}</span>
+        <sc-if value="{{g.badge}}" hint-placeholder-val="{{false}}"><span style="padding: 0 7px; border-radius: 999px; background: #ff9f1c; color: #241400; font-size: 11px; font-weight: 800">{{g.badge}}</span></sc-if>
+        <span style="font-size: 11px; color: #7f98c0; font-weight: 700">{{g.mark}}</span>
+      </a>
+      <sc-for list="{{g.items}}" as="i" hint-placeholder-count="0">
+        <a href="{{i.href}}" style="height: 30px; padding: 0 10px 0 {{i.pad}}; border-radius: 8px; background: {{i.bg}}; color: {{i.fg}}; font-weight: {{i.w}}; display: flex; align-items: center; gap: 8px">
+          <span style="width: 6px; height: 6px; border-radius: 2px; background: {{i.dot}}; flex-shrink: 0"></span><span style="flex-grow: 1; white-space: nowrap; overflow: hidden; text-overflow: ellipsis">{{i.l}}</span>
+          <sc-if value="{{i.badge}}" hint-placeholder-val="{{false}}"><span style="padding: 0 7px; border-radius: 999px; background: {{i.bb}}; color: {{i.bf}}; font-size: 11px; font-weight: 800">{{i.badge}}</span></sc-if>
+        </a>
+      </sc-for>
+    </sc-for>
+  </nav>
+  <div style="margin-top: auto; display: flex; align-items: center; gap: 10px; padding: 10px; border-radius: 12px; background: #13305c">
+    <span style="width: 32px; height: 32px; border-radius: 999px; background: #ff9f1c; color: #241400; font-weight: 800; font-size: 13px; display: flex; align-items: center; justify-content: center">SA</span>
+    <div style="display: flex; flex-direction: column; min-width: 0"><span style="color: #ffffff; font-weight: 700; font-size: 13px">Admin Pusat</span><span style="font-size: 11px; color: #8fb3e8">Super Admin</span></div>
+  </div>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"active":{"editor":"text","default":"overview"},"$preview":{"width":264,"height":1080}}'>
+class Component extends DCLogic {
+  renderVals() {
+    var active = this.props.active || 'overview';
+    var B = { overview: 'AdminOverview', approval: 'AdminApproval', travel_all: 'AdminTravels', travel_legal: 'AdminVerifyTravel', vendor_verif: 'AdminVerifyVendor', aff_all: 'AdminEcosystem', traveler: 'AdminUsers', mp_mod: 'AdminModeration', segadeals: 'AdminSegaDeals', om_inbox: 'AdminOmniInbox', om_conv: 'AdminSupport', ads_ov: 'AdminAds', fin_ov: 'AdminFinance', fin_set: 'AdminFinance', fin_ref: 'AdminDisputes', plan: 'AdminPlans', roles: 'AdminTeam', audit: 'AdminAudit', sys_pay: 'AdminSettings', an_exec: 'AdminAnalytics', sys_health: 'AdminHealth' };
+    var BADGE = { approval: 9, travel_legal: 7, vendor_verif: 3, mp_mod: 5, om_inbox: 12, ads_camp: 3, fin_wd: 4, fin_ref: 4 };
+    var URG = { approval: 1, om_inbox: 1, fin_wd: 1 };
+    var N = [
+      ['UTAMA', [['overview', 'Overview'], ['approval', 'Approval Center']]],
+      ['EKOSISTEM', [['travel', 'Travel', [['travel_all', 'Semua Travel'], ['travel_branch', 'Cabang Travel'], ['travel_legal', 'Legalitas & Perizinan'], ['travel_subs', 'Subscription Travel'], ['travel_web', 'Website Travel']]], ['vendor', 'Vendor', [['vendor_all', 'Semua Vendor'], ['vendor_cat', 'Kategori Vendor'], ['vendor_verif', 'Verifikasi Vendor'], ['vendor_prod', 'Produk & Layanan']]], ['affiliate', 'Affiliate', [['aff_all', 'Semua Affiliate'], ['aff_ref', 'Referral'], ['aff_com', 'Komisi'], ['aff_perf', 'Performance']]], ['mitra', 'Mitra Travel'], ['agen', 'Agen'], ['traveler', 'Traveler']]],
+      ['MARKETPLACE', [['mp_ov', 'Overview Marketplace'], ['mp_pkg', 'Paket Travel'], ['mp_vprod', 'Produk Vendor'], ['segadeals', 'SegaDeals'], ['mp_cat', 'Kategori'], ['mp_mod', 'Moderasi Produk']]],
+      ['PESAN & OMNICHANNEL', [['om_ov', 'Overview'], ['om_inbox', 'Inbox'], ['om_conv', 'Percakapan & Tiket'], ['om_chan', 'Channel', [['om_app', 'Pesan Aplikasi'], ['om_web', 'Web Chat'], ['om_email', 'Email'], ['om_push', 'Push & Notifikasi']]], ['om_contact', 'Kontak / Audiens'], ['om_tpl', 'Template Pesan'], ['om_bc', 'Broadcast'], ['om_auto', 'Otomasi'], ['om_route', 'Routing & Penugasan'], ['om_sla', 'SLA & Respons'], ['om_ana', 'Analitik Pesan']]],
+      ['IKLAN & PROMOSI', [['ads_ov', 'Overview Iklan'], ['ads_camp', 'Kampanye'], ['ads_ads', 'Iklan'], ['ads_set', 'Ad Set / Audiens'], ['ads_cre', 'Materi Iklan'], ['ads_plc', 'Slot Tayang'], ['ads_bud', 'Budget'], ['ads_vou', 'Voucher & Promo'], ['ads_trk', 'Tracking'], ['ads_conv', 'Konversi'], ['ads_attr', 'Atribusi'], ['ads_perf', 'Performa Iklan']]],
+      ['BOOKING & OPERASIONAL', [['booking', 'Booking'], ['manifest', 'Manifest'], ['roomlist', 'Room List'], ['pkginfo', 'Paket Info'], ['opsdoc', 'Dokumen Operasional']]],
+      ['KEUANGAN', [['fin_ov', 'Overview Keuangan'], ['fin_tx', 'Transaksi'], ['fin_pg', 'Payment Gateway'], ['fin_set', 'Settlement'], ['fin_wd', 'Withdrawal'], ['fin_dep', 'Deposit Travel'], ['fin_ref', 'Refund & Komplain'], ['fin_rec', 'Rekonsiliasi'], ['fin_fee', 'Fee & Komisi']]],
+      ['SAAS & LANGGANAN', [['sub', 'Subscription'], ['plan', 'Plan & Pricing'], ['addon', 'Add-on'], ['website', 'Website Travel'], ['crm', 'CRM']]],
+      ['PLATFORM', [['users', 'User Management'], ['roles', 'Role & Permission'], ['notif', 'Notifikasi'], ['ai', 'Segaloka AI']]],
+      ['COMPLIANCE & KEAMANAN', [['legal', 'Legalitas'], ['audit', 'Audit Log'], ['security', 'Keamanan'], ['risk', 'Risiko & Fraud']]],
+      ['ANALYTICS', [['an_exec', 'Executive'], ['an_mp', 'Marketplace'], ['an_travel', 'Travel'], ['an_vendor', 'Vendor'], ['an_fin', 'Keuangan'], ['an_omni', 'Pesan'], ['an_ads', 'Iklan'], ['an_camp', 'Kampanye'], ['an_conv', 'Konversi & Atribusi'], ['an_growth', 'Growth']]],
+      ['SYSTEM', [['sys_cfg', 'Konfigurasi'], ['sys_brand', 'Brand & Tampilan'], ['sys_lang', 'Bahasa & Lokalisasi'], ['sys_cur', 'Mata Uang'], ['sys_pay', 'Konfigurasi Pembayaran'], ['sys_ncfg', 'Konfigurasi Notifikasi'], ['sys_flag', 'Feature Flags'], ['sys_int', 'Integrasi & API'], ['sys_health', 'Kesehatan Sistem']]]
+    ];
+    var href = function (id) { return (B[id] || 'AdminApp') + '.dc.html'; };
+    var inGroup = function (g) { return g[1].some(function (it) { return it[0] === active || (it[2] || []).some(function (k) { return k[0] === active; }); }); };
+    var mk = function (id, l, pad) { var on = id === active; var b = BADGE[id] || ''; return { l: l, href: href(id), pad: pad, badge: b, bb: URG[id] ? '#ff9f1c' : '#22406e', bf: URG[id] ? '#241400' : '#ffffff', bg: on ? '#0a66e0' : 'transparent', fg: on ? '#ffffff' : '#c7d6ee', w: on ? 800 : 600, dot: on ? '#ffffff' : '#3b5a8a' }; };
+    return {
+      groups: N.map(function (g) {
+        var open = inGroup(g); var items = [];
+        var sum = 0; g[1].forEach(function (it) { sum += (BADGE[it[0]] || 0); (it[2] || []).forEach(function (k) { sum += (BADGE[k[0]] || 0); }); });
+        if (open) g[1].forEach(function (it) {
+          if (it[2]) { var kidOn = it[2].some(function (k) { return k[0] === active; }); items.push(Object.assign(mk(it[0], it[1] + (kidOn ? '  ▾' : '  ▸'), '10px'), { href: href(it[2][0][0]) })); if (kidOn) it[2].forEach(function (k) { items.push(mk(k[0], k[1], '26px')); }); }
+          else items.push(mk(it[0], it[1], '10px'));
+        });
+        var first = g[1][0][2] ? g[1][0][2][0][0] : g[1][0][0];
+        return { title: g[0], items: items, mark: open ? '▾' : (g[1].length + (g[1].reduce(function (s, it) { return s + (it[2] ? it[2].length - 1 : 0); }, 0))), badge: open ? '' : (sum || ''), fg: open ? '#ffffff' : '#8fb3e8', href: href(first) };
+      })
+    };
+  }
+}
+</script>
+</body>
+</html>

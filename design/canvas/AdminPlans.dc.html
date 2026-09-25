@@ -1,0 +1,78 @@
+<!doctype html>
+<html lang="id">
+<head>
+<meta charset="utf-8">
+<title>Control Center — Paket Langganan</title>
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&amp;display=swap">
+<style>
+body{margin:0;font-family:'Plus Jakarta Sans',system-ui,sans-serif;color:#0f1b2d}
+a{color:#0a66e0;text-decoration:none}a:hover{color:#0852b8}
+</style>
+</helmet>
+<div style="width: 1440px; height: 1080px; box-sizing: border-box; background: #f3f6fb; display: flex">
+  <div style="width: 264px; flex-shrink: 0; background: #0b1f3f"><dc-import name="AdminSidebar" active="plan" hint-size="264px,1080px"></dc-import></div>
+  <main style="flex-grow: 1; display: flex; flex-direction: column; min-width: 0">
+    <dc-import name="AdminTopbar" hint-size="1176px,72px"></dc-import>
+    <div style="padding: 24px 32px; display: flex; flex-direction: column; gap: 18px">
+      <div style="display: flex; align-items: flex-end; justify-content: space-between">
+        <div style="display: flex; flex-direction: column; gap: 4px"><h1 style="margin: 0; font-size: 26px; font-weight: 800">Paket Langganan</h1><div style="font-size: 14px; color: #4a5870">Paket SaaS untuk Travel. Modul yang tidak termasuk paket akan terkunci di dashboard Travel.</div></div>
+        <button type="button" style="height: 44px; padding: 0 18px; border: 0; border-radius: 12px; background: #0a66e0; color: #ffffff; font: inherit; font-weight: 800">+ Paket baru</button>
+      </div>
+      <div style="display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 16px">
+        <sc-for list="{{plans}}" as="p" hint-placeholder-count="3">
+          <div style="background: #ffffff; border: {{p.border}}; border-radius: 20px; padding: 20px; display: flex; flex-direction: column; gap: 12px">
+            <div style="display: flex; justify-content: space-between; align-items: center"><span style="font-size: 20px; font-weight: 800">{{p.name}}</span><span style="padding: 3px 10px; border-radius: 999px; background: #e4f3e4; color: #0a6b0a; font-size: 12px; font-weight: 800">{{p.subs}}</span></div>
+            <div style="display: flex; align-items: baseline; gap: 6px"><span style="font-size: 26px; font-weight: 800">{{p.price}}</span><span style="font-size: 13px; color: #4a5870">{{p.per}}</span></div>
+            <div style="display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 8px">
+              <div style="background: #f3f6fb; border-radius: 10px; padding: 8px 10px"><div style="font-size: 11px; color: #4a5870; font-weight: 700">Cabang</div><div style="font-weight: 800">{{p.br}}</div></div>
+              <div style="background: #f3f6fb; border-radius: 10px; padding: 8px 10px"><div style="font-size: 11px; color: #4a5870; font-weight: 700">Pengguna</div><div style="font-weight: 800">{{p.us}}</div></div>
+              <div style="background: #f3f6fb; border-radius: 10px; padding: 8px 10px"><div style="font-size: 11px; color: #4a5870; font-weight: 700">Storage</div><div style="font-weight: 800">{{p.st}}</div></div>
+            </div>
+            <div style="display: flex; flex-direction: column; gap: 6px">
+              <sc-for list="{{p.mods}}" as="m" hint-placeholder-count="7"><div style="display: flex; align-items: center; gap: 8px; font-size: 13px; color: {{m.c}}"><span style="width: 18px; height: 18px; border-radius: 999px; background: {{m.bg}}; color: #ffffff; font-size: 11px; font-weight: 800; display: flex; align-items: center; justify-content: center">{{m.mark}}</span>{{m.label}}</div></sc-for>
+            </div>
+            <button type="button" style="height: 42px; border: 1.5px solid #c9d3e2; border-radius: 12px; background: #ffffff; font: inherit; font-weight: 700">Ubah paket</button>
+          </div>
+        </sc-for>
+      </div>
+      <div style="background: #ffffff; border: 1px solid #e1e7f0; border-radius: 18px; overflow: hidden">
+        <div style="display: flex; justify-content: space-between; align-items: center; padding: 14px 20px"><span style="font-size: 16px; font-weight: 800">Langganan yang perlu perhatian</span><span style="font-size: 13px; color: #4a5870">Trial 14 hari · tagihan otomatis</span></div>
+        <sc-for list="{{subs}}" as="s" hint-placeholder-count="4">
+          <div style="display: grid; grid-template-columns: 1.6fr 1fr 1.6fr 160px; align-items: center; padding: 11px 20px; border-top: 1px solid #eef1f6; font-size: 14px">
+            <span style="font-weight: 800">{{s.t}}</span><span>{{s.p}}</span><span style="color: {{s.c}}; font-weight: 700">{{s.note}}</span>
+            <button type="button" style="height: 36px; border: 1.5px solid #c9d3e2; border-radius: 10px; background: #ffffff; font: inherit; font-weight: 700; font-size: 13px">{{s.a}}</button>
+          </div>
+        </sc-for>
+      </div>
+    </div>
+  </main>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"$preview":{"width":1440,"height":1080}}'>
+class Component extends DCLogic {
+  renderVals() {
+    var all = [['booking', 'Booking & jamaah'], ['crm', 'CRM / Leads'], ['affiliate', 'Affiliate'], ['mitra', 'Mitra & Agen'], ['website', 'Website Travel'], ['vendor', 'Vendor'], ['segadeals', 'SegaDeals']];
+    var mods = function (have) { return all.map(function (a) { var on = have.indexOf(a[0]) >= 0; return { label: a[1], mark: on ? '✓' : '–', bg: on ? '#0ca30c' : '#c9d3e2', c: on ? '#0f1b2d' : '#7c8aa0' }; }); };
+    return {
+      plans: [
+        { name: 'Starter', price: 'Gratis', per: '', br: '1', us: '5', st: '2 GB', subs: '42 Travel', border: '1px solid #e1e7f0', mods: mods(['booking', 'crm']) },
+        { name: 'Growth', price: 'Rp 499 rb', per: '/ bulan · Rp 4,99 jt/tahun', br: '3', us: '20', st: '10 GB', subs: '51 Travel', border: '2px solid #0a66e0', mods: mods(['booking', 'crm', 'affiliate', 'mitra', 'website']) },
+        { name: 'Scale', price: 'Rp 1,499 jt', per: '/ bulan · Rp 14,99 jt/tahun', br: '10', us: 'Tanpa batas', st: '50 GB', subs: '35 Travel', border: '1px solid #e1e7f0', mods: mods(['booking', 'crm', 'affiliate', 'mitra', 'website', 'vendor', 'segadeals']) }
+      ],
+      subs: [
+        { t: '[Travel E]', p: 'Growth · trial', note: 'Trial berakhir 2 hari lagi', c: '#8a5300', a: 'Kirim pengingat' },
+        { t: '[Travel H]', p: 'Starter', note: 'Sudah 5/5 pengguna — kandidat upgrade', c: '#0852b8', a: 'Tawarkan Growth' },
+        { t: '[Travel D]', p: 'Growth', note: 'Tagihan gagal 2x', c: '#a42424', a: 'Lihat tagihan' },
+        { t: '[Travel G]', p: 'Starter', note: 'Ditangguhkan', c: '#a42424', a: 'Detail' }
+      ]
+    };
+  }
+}
+</script>
+</body>
+</html>

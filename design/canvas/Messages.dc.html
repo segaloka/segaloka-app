@@ -1,0 +1,113 @@
+<!doctype html>
+<html lang="id">
+<head>
+<meta charset="utf-8">
+<title>Pesan — Chat dalam Sistem</title>
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&amp;display=swap">
+<style>
+body{margin:0;font-family:'Plus Jakarta Sans',system-ui,sans-serif;color:#0f1b2d}
+a{color:#0a66e0;text-decoration:none}a:hover{color:#0852b8}
+</style>
+</helmet>
+<div style="width: 1440px; height: 1000px; box-sizing: border-box; background: #f3f6fb; display: flex">
+
+  <aside style="width: 76px; flex-shrink: 0; background: #ffffff; border-right: 1px solid #e1e7f0; display: flex; flex-direction: column; align-items: center; padding: 18px 0; gap: 10px">
+    <span style="width: 40px; height: 40px; border-radius: 11px; background: #0a66e0; color: #ffffff; display: flex; align-items: center; justify-content: center; font-weight: 800; margin-bottom: 10px">S</span>
+    <a href="TravelDashboard.dc.html" aria-label="Ringkasan" style="width: 48px; height: 48px; border-radius: 12px; color: #4a5870; display: flex; align-items: center; justify-content: center"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="7" height="9" rx="1.5"></rect><rect x="14" y="3" width="7" height="5" rx="1.5"></rect><rect x="14" y="12" width="7" height="9" rx="1.5"></rect><rect x="3" y="16" width="7" height="5" rx="1.5"></rect></svg></a>
+    <a href="#" aria-label="Pesan" style="width: 48px; height: 48px; border-radius: 12px; background: #e6f0fd; color: #0852b8; display: flex; align-items: center; justify-content: center"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path></svg></a>
+    <a href="#" aria-label="Booking" style="width: 48px; height: 48px; border-radius: 12px; color: #4a5870; display: flex; align-items: center; justify-content: center"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="7" width="20" height="14" rx="2"></rect><path d="M16 7V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v2"></path></svg></a>
+  </aside>
+
+  <section style="width: 360px; flex-shrink: 0; background: #ffffff; border-right: 1px solid #e1e7f0; display: flex; flex-direction: column">
+    <div style="padding: 20px 18px 12px; display: flex; flex-direction: column; gap: 12px">
+      <div style="display: flex; align-items: center; justify-content: space-between"><h1 style="margin: 0; font-size: 22px; font-weight: 800">Pesan</h1><button type="button" aria-label="Pesan baru" style="width: 40px; height: 40px; border: 0; border-radius: 10px; background: #0a66e0; color: #ffffff; display: flex; align-items: center; justify-content: center"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M12 5v14M5 12h14"></path></svg></button></div>
+      <label for="ms" style="height: 42px; border-radius: 12px; background: #f3f6fb; display: flex; align-items: center; gap: 8px; padding: 0 12px; color: #4a5870"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="7"></circle><path d="m20 20-3.5-3.5"></path></svg><input id="ms" placeholder="Cari nama atau kode booking" style="border: 0; outline: 0; background: transparent; font: inherit; font-size: 14px; width: 100%"></label>
+      <div style="display: flex; gap: 6px; flex-wrap: wrap">
+        <span style="padding: 6px 12px; border-radius: 999px; background: #0f1b2d; color: #ffffff; font-size: 13px; font-weight: 700">Semua</span>
+        <span style="padding: 6px 12px; border-radius: 999px; background: #eef1f6; font-size: 13px; font-weight: 600">Jamaah</span>
+        <span style="padding: 6px 12px; border-radius: 999px; background: #eef1f6; font-size: 13px; font-weight: 600">Vendor</span>
+        <span style="padding: 6px 12px; border-radius: 999px; background: #eef1f6; font-size: 13px; font-weight: 600">Mitra &amp; Agen</span>
+        <span style="padding: 6px 12px; border-radius: 999px; background: #eef1f6; font-size: 13px; font-weight: 600">Segaloka</span>
+      </div>
+    </div>
+    <sc-for list="{{threads}}" as="t" hint-placeholder-count="6">
+      <a href="#" style="display: flex; gap: 12px; padding: 14px 18px; border-top: 1px solid #eef1f6; background: {{t.bg}}; color: #0f1b2d">
+        <span style="width: 44px; height: 44px; flex-shrink: 0; border-radius: 999px; background: {{t.avBg}}; color: {{t.avFg}}; font-weight: 800; display: flex; align-items: center; justify-content: center">{{t.initial}}</span>
+        <div style="flex-grow: 1; min-width: 0; display: flex; flex-direction: column; gap: 3px">
+          <div style="display: flex; justify-content: space-between; gap: 8px"><span style="font-size: 14px; font-weight: 800; white-space: nowrap; overflow: hidden; text-overflow: ellipsis">{{t.name}}</span><span style="font-size: 12px; color: #4a5870; flex-shrink: 0">{{t.when}}</span></div>
+          <span style="font-size: 12px; font-weight: 700; color: {{t.roleColor}}">{{t.role}}</span>
+          <div style="display: flex; justify-content: space-between; gap: 8px"><span style="font-size: 13px; color: #4a5870; white-space: nowrap; overflow: hidden; text-overflow: ellipsis">{{t.last}}</span><sc-if value="{{t.unread}}" hint-placeholder-val="{{false}}"><span style="min-width: 20px; height: 20px; padding: 0 6px; box-sizing: border-box; border-radius: 999px; background: #ff9f1c; color: #241400; font-size: 11px; font-weight: 800; display: flex; align-items: center; justify-content: center">{{t.unread}}</span></sc-if></div>
+        </div>
+      </a>
+    </sc-for>
+  </section>
+
+  <main style="flex-grow: 1; display: flex; flex-direction: column; min-width: 0">
+    <div style="height: 72px; flex-shrink: 0; background: #ffffff; border-bottom: 1px solid #e1e7f0; display: flex; align-items: center; gap: 12px; padding: 0 22px">
+      <span style="width: 42px; height: 42px; border-radius: 999px; background: #e6f0fd; color: #0852b8; font-weight: 800; display: flex; align-items: center; justify-content: center">SA</span>
+      <div style="display: flex; flex-direction: column"><span style="font-size: 16px; font-weight: 800">Hj. Siti Aminah</span><span style="font-size: 12px; color: #4a5870">Jamaah · Booking SGL-24817 · aktif 5 menit lalu</span></div>
+      <span style="margin-left: auto; font-size: 12px; color: #4a5870; display: flex; align-items: center; gap: 6px"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="11" width="18" height="11" rx="2"></rect><path d="M7 11V7a5 5 0 0 1 10 0v4"></path></svg>Percakapan tercatat di Segaloka</span>
+    </div>
+
+    <div style="flex-grow: 1; padding: 20px 28px; display: flex; flex-direction: column; gap: 14px; overflow: hidden">
+      <div style="align-self: center; padding: 6px 14px; border-radius: 999px; background: #e6edf7; color: #4a5870; font-size: 12px; font-weight: 700">Hari ini</div>
+      <div style="align-self: center; padding: 10px 14px; border-radius: 12px; background: #e4f3e4; color: #0a6b0a; font-size: 13px; font-weight: 700">Sistem · Pembayaran DP Rp 10.000.000 untuk SGL-24817 diterima</div>
+      <div style="align-self: flex-start; max-width: 520px; background: #ffffff; border: 1px solid #e1e7f0; border-radius: 16px 16px 16px 4px; padding: 12px 14px; font-size: 14px; line-height: 1.5">Assalamu’alaikum, kartu vaksin meningitis ibu saya baru keluar minggu depan. Apakah masih bisa menyusul?<div style="font-size: 11px; color: #7c8aa0; margin-top: 4px">10:12</div></div>
+      <div style="align-self: flex-end; max-width: 520px; background: #0a66e0; color: #ffffff; border-radius: 16px 16px 4px 16px; padding: 12px 14px; font-size: 14px; line-height: 1.5">Wa’alaikumussalam Bu. Bisa, paling lambat 14 hari sebelum berangkat. Silakan unggah di menu Booking Saya → Dokumen.<div style="font-size: 11px; color: #cfe1fb; margin-top: 4px">10:15 · Dibaca</div></div>
+      <div style="align-self: flex-end; width: 320px; background: #ffffff; border: 1px solid #e1e7f0; border-radius: 16px; padding: 12px; display: flex; align-items: center; gap: 12px"><span style="width: 40px; height: 40px; border-radius: 10px; background: #fbe7e7; color: #a42424; font-size: 11px; font-weight: 800; display: flex; align-items: center; justify-content: center">PDF</span><div style="display: flex; flex-direction: column; flex-grow: 1"><span style="font-size: 14px; font-weight: 700">Jadwal-Manasik-Des.pdf</span><span style="font-size: 12px; color: #4a5870">240 KB</span></div><a href="#" style="font-size: 13px; font-weight: 700">Unduh</a></div>
+      <div style="align-self: flex-start; max-width: 520px; background: #ffffff; border: 1px solid #e1e7f0; border-radius: 16px 16px 16px 4px; padding: 12px 14px; font-size: 14px; line-height: 1.5">Baik, terima kasih. Manasiknya di kantor Makassar ya?<div style="font-size: 11px; color: #7c8aa0; margin-top: 4px">10:21</div></div>
+    </div>
+
+    <div style="background: #ffffff; border-top: 1px solid #e1e7f0; padding: 12px 22px 16px; display: flex; flex-direction: column; gap: 10px">
+      <div style="display: flex; gap: 8px"><span style="padding: 7px 12px; border-radius: 999px; border: 1px solid #c9d3e2; font-size: 13px; font-weight: 600">Kirim jadwal manasik</span><span style="padding: 7px 12px; border-radius: 999px; border: 1px solid #c9d3e2; font-size: 13px; font-weight: 600">Minta dokumen</span><span style="padding: 7px 12px; border-radius: 999px; border: 1px solid #c9d3e2; font-size: 13px; font-weight: 600">Kirim tagihan</span></div>
+      <div style="display: flex; align-items: center; gap: 10px">
+        <button type="button" aria-label="Lampirkan file" style="width: 44px; height: 44px; border: 0; border-radius: 12px; background: #f3f6fb; color: #4a5870; display: flex; align-items: center; justify-content: center"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m21.4 11.1-9.2 9.2a6 6 0 0 1-8.5-8.5l9.2-9.2a4 4 0 0 1 5.7 5.7l-9.2 9.2a2 2 0 0 1-2.8-2.8l8.5-8.5"></path></svg></button>
+        <label for="mc" style="flex-grow: 1"><input id="mc" placeholder="Tulis pesan…" style="width: 100%; box-sizing: border-box; height: 44px; padding: 0 14px; border: 1.5px solid #c9d3e2; border-radius: 12px; font: inherit; font-size: 15px"></label>
+        <button type="button" style="height: 44px; padding: 0 20px; border: 0; border-radius: 12px; background: #0a66e0; color: #ffffff; font: inherit; font-weight: 700">Kirim</button>
+      </div>
+    </div>
+  </main>
+
+  <aside style="width: 300px; flex-shrink: 0; background: #ffffff; border-left: 1px solid #e1e7f0; padding: 20px; display: flex; flex-direction: column; gap: 16px">
+    <span style="font-size: 12px; font-weight: 800; letter-spacing: .08em; color: #4a5870">TERKAIT PERCAKAPAN</span>
+    <div style="border: 1px solid #e1e7f0; border-radius: 16px; padding: 14px; display: flex; flex-direction: column; gap: 6px">
+      <span style="font-size: 13px; font-weight: 800; color: #0852b8">SGL-24817</span>
+      <span style="font-size: 15px; font-weight: 800">Umrah Reguler 9 Hari</span>
+      <span style="font-size: 13px; color: #4a5870">12 Des 2026 · Quad · 2 jamaah</span>
+      <span style="padding: 4px 10px; border-radius: 999px; background: #e6f0fd; color: #0852b8; font-size: 12px; font-weight: 800; width: max-content">DP diterima</span>
+    </div>
+    <div style="display: flex; flex-direction: column; gap: 8px">
+      <span style="font-size: 14px; font-weight: 800">Dokumen</span>
+      <div style="display: flex; justify-content: space-between; font-size: 13px"><span>Paspor</span><span style="color: #0a6b0a; font-weight: 700">Lengkap</span></div>
+      <div style="display: flex; justify-content: space-between; font-size: 13px"><span>Vaksin meningitis</span><span style="color: #8a5300; font-weight: 700">Menyusul</span></div>
+      <div style="display: flex; justify-content: space-between; font-size: 13px"><span>Jamaah 2</span><span style="color: #8a5300; font-weight: 700">Belum diisi</span></div>
+    </div>
+    <a href="#" style="height: 44px; border-radius: 12px; border: 1.5px solid #c9d3e2; color: #0f1b2d; font-weight: 700; font-size: 14px; display: flex; align-items: center; justify-content: center">Buka booking</a>
+    <div style="margin-top: auto; background: #f3f6fb; border-radius: 14px; padding: 12px 14px; font-size: 12px; color: #4a5870; line-height: 1.5">Nomor telepon &amp; email tidak ditampilkan. Semua komunikasi Jamaah, Travel, Vendor, Mitra, Agen dan Segaloka lewat Pesan ini, dan tersimpan sebagai jejak jika ada komplain.</div>
+  </aside>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"$preview":{"width":1440,"height":1000}}'>
+class Component extends DCLogic {
+  renderVals() {
+    var sel = '#f5f9ff', none = '#ffffff';
+    return {
+      threads: [
+        { initial: 'SA', name: 'Hj. Siti Aminah', role: 'Jamaah · SGL-24817', roleColor: '#0852b8', last: 'Baik, terima kasih. Manasiknya di kantor…', when: '10:21', unread: 0, bg: sel, avBg: '#e6f0fd', avFg: '#0852b8' },
+        { initial: 'HF', name: '[Hotel F] Makkah', role: 'Vendor · Hotel', roleColor: '#5b36a8', last: 'Rooming list Desember sudah kami terima', when: '09:48', unread: 2, bg: none, avBg: '#efe8fb', avFg: '#5b36a8' },
+        { initial: 'AF', name: 'Ahmad Fauzi', role: 'Jamaah · SGL-24815', roleColor: '#0852b8', last: 'Apakah bisa upgrade ke kamar Double?', when: '09:30', unread: 1, bg: none, avBg: '#e6f0fd', avFg: '#0852b8' },
+        { initial: 'MB', name: '[Mitra Bone]', role: 'Mitra Travel', roleColor: '#8a4a00', last: 'Ada 3 calon jamaah dari Agen kami', when: 'Kemarin', unread: 2, bg: none, avBg: '#fff1dc', avFg: '#8a4a00' },
+        { initial: 'S', name: 'Tim Segaloka', role: 'Segaloka · Verifikasi', roleColor: '#0a6b0a', last: 'Dokumen izin Anda telah diperbarui', when: 'Kemarin', unread: 0, bg: none, avBg: '#e4f3e4', avFg: '#0a6b0a' },
+        { initial: 'VB', name: '[Vendor Visa B]', role: 'Vendor · Visa', roleColor: '#5b36a8', last: 'Visa 39 jamaah sudah terbit', when: 'Sen', unread: 0, bg: none, avBg: '#efe8fb', avFg: '#5b36a8' }
+      ]
+    };
+  }
+}
+</script>
+</body>
+</html>

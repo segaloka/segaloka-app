@@ -1,0 +1,70 @@
+<!doctype html>
+<html lang="id">
+<head>
+<meta charset="utf-8">
+<title>Control Center — SegaDeals</title>
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&amp;display=swap">
+<style>
+body{margin:0;font-family:'Plus Jakarta Sans',system-ui,sans-serif;color:#0f1b2d}
+a{color:#0a66e0;text-decoration:none}a:hover{color:#0852b8}
+</style>
+</helmet>
+<div style="width: 1440px; height: 1080px; box-sizing: border-box; background: #f3f6fb; display: flex">
+  <div style="width: 264px; flex-shrink: 0; background: #0b1f3f"><dc-import name="AdminSidebar" active="segadeals" hint-size="264px,1080px"></dc-import></div>
+  <main style="flex-grow: 1; display: flex; flex-direction: column; min-width: 0">
+    <dc-import name="AdminTopbar" hint-size="1176px,72px"></dc-import>
+    <div style="padding: 24px 32px; display: flex; flex-direction: column; gap: 18px">
+      <div style="display: flex; flex-direction: column; gap: 4px"><h1 style="margin: 0; font-size: 26px; font-weight: 800">SegaDeals</h1><div style="font-size: 14px; color: #4a5870">Permintaan dari jamaah yang ditawar oleh Travel. Admin memantau, tidak membuat penawaran.</div></div>
+      <div style="display: grid; grid-template-columns: repeat(5, minmax(0, 1fr)); gap: 12px">
+        <sc-for list="{{stats}}" as="s" hint-placeholder-count="5"><div style="background: #ffffff; border: 1px solid #e1e7f0; border-radius: 14px; padding: 14px 16px; display: flex; flex-direction: column; gap: 4px"><span style="font-size: 13px; font-weight: 700; color: #4a5870">{{s.k}}</span><span style="font-size: 24px; font-weight: 800">{{s.v}}</span><span style="font-size: 12px; font-weight: 700; color: {{s.c}}">{{s.d}}</span></div></sc-for>
+      </div>
+      <div style="display: flex; gap: 16px">
+        <div style="flex-grow: 1; background: #ffffff; border: 1px solid #e1e7f0; border-radius: 18px; overflow: hidden; min-width: 0">
+          <div style="display: flex; gap: 6px; padding: 14px 20px"><span style="padding: 7px 12px; border-radius: 999px; background: #0f1b2d; color: #ffffff; font-size: 13px; font-weight: 700">Belum ada penawaran · 41</span><span style="padding: 7px 12px; border-radius: 999px; background: #eef1f6; font-size: 13px; font-weight: 600">Menerima penawaran</span><span style="padding: 7px 12px; border-radius: 999px; background: #eef1f6; font-size: 13px; font-weight: 600">Diterima</span><span style="padding: 7px 12px; border-radius: 999px; background: #eef1f6; font-size: 13px; font-weight: 600">Kedaluwarsa</span></div>
+          <div style="display: grid; grid-template-columns: 90px 2.2fr 1fr 1fr 1fr 130px; padding: 10px 20px; background: #f7f9fc; border-top: 1px solid #e1e7f0; border-bottom: 1px solid #e1e7f0; font-size: 12px; font-weight: 800; letter-spacing: .06em; color: #4a5870"><span>ID</span><span>KEBUTUHAN</span><span>BUDGET/ORG</span><span>DIKIRIM KE</span><span>SISA WAKTU</span><span></span></div>
+          <sc-for list="{{rows}}" as="r" hint-placeholder-count="7">
+            <div style="display: grid; grid-template-columns: 90px 2.2fr 1fr 1fr 1fr 130px; align-items: center; padding: 11px 20px; border-bottom: 1px solid #eef1f6; font-size: 14px">
+              <span style="font-weight: 700; color: #0852b8">{{r.id}}</span>
+              <div style="display: flex; flex-direction: column"><span style="font-weight: 800">{{r.t}}</span><span style="font-size: 12px; color: #4a5870">{{r.m}}</span></div>
+              <span>{{r.b}}</span><span>{{r.to}}</span><span style="font-weight: 700; color: {{r.lc}}">{{r.left}}</span>
+              <button type="button" style="height: 36px; border: 1.5px solid #c9d3e2; border-radius: 10px; background: #ffffff; font: inherit; font-weight: 700; font-size: 13px">Dorong ke Travel</button>
+            </div>
+          </sc-for>
+        </div>
+        <div style="width: 320px; flex-shrink: 0; background: #ffffff; border: 1px solid #e1e7f0; border-radius: 18px; padding: 18px; display: flex; flex-direction: column; gap: 12px">
+          <span style="font-size: 16px; font-weight: 800">Travel paling responsif</span>
+          <sc-for list="{{top}}" as="t" hint-placeholder-count="5"><div style="display: flex; align-items: center; gap: 10px; font-size: 14px"><span style="width: 26px; height: 26px; border-radius: 8px; background: #e6f0fd; color: #0852b8; font-weight: 800; font-size: 12px; display: flex; align-items: center; justify-content: center">{{t.n}}</span><span style="flex-grow: 1; font-weight: 700">{{t.name}}</span><span style="color: #4a5870">{{t.v}}</span></div></sc-for>
+          <div style="border-top: 1px solid #eef1f6; padding-top: 12px; font-size: 13px; color: #4a5870; line-height: 1.5">“Dorong ke Travel” mengirim notifikasi ulang ke Travel yang cocok (kota, jenis paket, budget) — tanpa membuka data kontak jamaah.</div>
+        </div>
+      </div>
+    </div>
+  </main>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"$preview":{"width":1440,"height":1080}}'>
+class Component extends DCLogic {
+  renderVals() {
+    var r = function (id, t, m, b, to, left, urgent) { return { id: id, t: t, m: m, b: b, to: to, left: left, lc: urgent ? '#a42424' : '#4a5870' }; };
+    return {
+      stats: [{ k: 'Permintaan aktif', v: '316', d: '+42 minggu ini', c: '#0a6b0a' }, { k: 'Belum ada penawaran', v: '41', d: '13%', c: '#8a5300' }, { k: 'Rata-rata penawaran', v: '3,4', d: 'per permintaan', c: '#4a5870' }, { k: 'Waktu respons', v: '5,2 jam', d: 'median', c: '#4a5870' }, { k: 'Jadi booking', v: '28%', d: '+4 poin', c: '#0a6b0a' }],
+      rows: [
+        r('SD-1107', 'Umrah keluarga · 8 org', 'Mar 2027 · Dari Kendari', 'Rp 30–40 jt', '6 Travel', '6 jam', true),
+        r('SD-1105', 'Halal Tour Turki · 2 org', 'Apr 2027 · Dari Jakarta', 'Rp 25–35 jt', '11 Travel', '1 hari', false),
+        r('SD-1101', 'Umrah Ramadhan · 4 org', 'Mar 2027 · Dari Ambon', '> Rp 55 jt', '3 Travel', '9 jam', true),
+        r('SD-1098', 'Haji Khusus · 2 org', '2027 · Dari Makassar', '> Rp 55 jt', '2 Travel', '2 hari', false),
+        r('SD-1096', 'Umrah lansia · 3 org', 'Jan 2027 · Dari Gorontalo', 'Rp 30–40 jt', '4 Travel', '3 jam', true),
+        r('SD-1093', 'Tour Jepang · 5 org', 'Mei 2027 · Dari Surabaya', 'Rp 25–35 jt', '9 Travel', '3 hari', false),
+        r('SD-1090', 'Umrah plus Dubai · 2 org', 'Feb 2027 · Dari Medan', 'Rp 40–55 jt', '7 Travel', '2 hari', false)
+      ],
+      top: [{ n: 1, name: '[Travel A]', v: '1,4 jam' }, { n: 2, name: '[Travel B]', v: '2,1 jam' }, { n: 3, name: '[Travel F]', v: '3,0 jam' }, { n: 4, name: '[Travel C]', v: '3,8 jam' }, { n: 5, name: '[Travel I]', v: '4,5 jam' }]
+    };
+  }
+}
+</script>
+</body>
+</html>
