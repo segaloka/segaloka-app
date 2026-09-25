@@ -2,12 +2,12 @@
 <title>SEGALOKA Control Center</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500;12..96,600;12..96,700&family=IBM+Plex+Mono:wght@400;500;600&family=IBM+Plex+Sans+Arabic:wght@400;500;600;700&family=IBM+Plex+Sans:wght@400;500;600;700&display=swap">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:ital,wght@0,200..800;1,200..800&family=IBM+Plex+Sans+Arabic:wght@400;500;600;700&display=swap">
 <style>
 :root{
-  --font-ui:"IBM Plex Sans","IBM Plex Sans Arabic",system-ui,-apple-system,"Segoe UI",sans-serif;
-  --font-display:"Bricolage Grotesque","IBM Plex Sans","IBM Plex Sans Arabic",system-ui,sans-serif;
-  --font-mono:"IBM Plex Mono",ui-monospace,SFMono-Regular,Menlo,monospace;
+  --font-ui:"Plus Jakarta Sans","IBM Plex Sans Arabic",system-ui,-apple-system,"Segoe UI",sans-serif;
+  --font-display:"Plus Jakarta Sans","IBM Plex Sans Arabic",system-ui,sans-serif;
+  --font-mono:"Plus Jakarta Sans","IBM Plex Sans Arabic",ui-monospace,SFMono-Regular,Menlo,monospace;
   --r-sm:6px; --r:8px; --r-lg:12px;
   --side-w:264px; --side-w-c:64px; --top-h:56px;
   --bg:#F3F6FA; --surface:#FFFFFF; --surface-2:#F7F9FC; --surface-3:#ECF1F8; --hover:#EFF4FB;
@@ -73,7 +73,7 @@ a:hover{text-decoration:underline}
 .ic.sm{width:14px;height:14px}.ic.lg{width:20px;height:20px}
 [dir="rtl"] .flip{transform:scaleX(-1)}
 .num,.tnum{font-variant-numeric:tabular-nums}
-.mono{font-family:var(--font-mono);font-size:.92em;letter-spacing:-.01em}
+.mono{font-family:var(--font-mono);font-variant-numeric:tabular-nums;font-size:.92em;letter-spacing:-.01em}
 .muted{color:var(--ink-3)}.ink2{color:var(--ink-2)}
 .sr{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
 
@@ -234,7 +234,7 @@ kbd{font-family:var(--font-mono);font-size:10.5px;border:1px solid var(--line);b
 .st.neu{color:var(--neu);background:var(--neu-bg);border-color:var(--neu-line)}
 .st.info{color:var(--info);background:var(--info-bg);border-color:var(--info-line)}
 .chip{display:inline-flex;align-items:center;gap:5px;height:22px;padding:0 8px;border-radius:6px;font-size:11.5px;background:var(--surface-3);color:var(--ink-2);white-space:nowrap}
-.chip.mono{font-family:var(--font-mono);font-size:11px}
+.chip.mono{font-family:var(--font-mono);font-variant-numeric:tabular-nums;font-size:11px}
 .prio{display:inline-flex;align-items:center;gap:5px;font-size:12px;font-weight:550}
 .prio i{display:inline-block;width:8px;height:8px;border-radius:2px}
 .prio.p1{color:var(--bad)}.prio.p1 i{background:var(--bad)}
@@ -803,7 +803,7 @@ const pick = a => a[Math.floor(rnd() * a.length)];
 const wpick = (a, w) => { let s = w.reduce((x, y) => x + y, 0), r = rnd() * s; for (let i = 0; i < a.length; i++) { if ((r -= w[i]) < 0) return a[i]; } return a[a.length - 1]; };
 const H = 3600e3, D = 24 * H;
 
-const BRAND = { name: 'SEGALOKA', legal: 'PT Segaloka Teknologi Nusantara (demo)', tagline: 'Control Center', color: '#0A6CF0', mark: 'S', typePreset: 'Plex / Bricolage', support: 'support@segaloka.example' };
+const BRAND = { name: 'SEGALOKA', legal: 'PT Segaloka Teknologi Nusantara (demo)', tagline: 'Control Center', color: '#0A6CF0', mark: 'S', typePreset: 'Plus Jakarta Sans', support: 'support@segaloka.example' };
 
 const CITIES = [['Jakarta Selatan','DKI Jakarta'],['Surabaya','Jawa Timur'],['Makassar','Sulawesi Selatan'],['Bandung','Jawa Barat'],['Medan','Sumatera Utara'],['Yogyakarta','DI Yogyakarta'],['Semarang','Jawa Tengah'],['Banjarmasin','Kalimantan Selatan'],['Palembang','Sumatera Selatan'],['Pekanbaru','Riau'],['Mataram','NTB'],['Balikpapan','Kalimantan Timur'],['Banda Aceh','Aceh'],['Depok','Jawa Barat'],['Malang','Jawa Timur']];
 const LOGO_COLORS = ['#2F5D50','#3A4F8F','#7A4B2A','#5B3F86','#23606F','#8A3B3B','#4E6A2B','#2B4E72','#6B5431','#3F6F5E'];
@@ -1724,7 +1724,7 @@ route('/compliance/audit', () => dirPage({ nav: 'audit', desc: L3(['Jejak seluru
 
 /* Brand & Appearance (configurable identity) */
 route('/system/brand', () => { const html = `<div class="page">${phead({ crumbs: [[t('g_sys'), '/system/config'], [t('sys_brand'), '/system/brand']], title: t('sys_brand'), desc: L3(['Identitas perusahaan tidak di-hardcode. Nilai di bawah dibaca shell (logo, nama, warna, preset tipografi) dan dapat diubah tanpa deploy.', 'Company identity is not hard-coded. The shell reads these values (logo, name, color, type preset) and they can change without a deploy.', 'الهوية قابلة للتهيئة.']) })}
-  <div class="grid g12"><div class="c7">${pnl(L3(['Identitas', 'Identity', 'الهوية']), `<div class="grid g2" style="gap:10px"><div class="field"><label for="br-name">${L3(['Nama publik', 'Public name', 'الاسم العام'])}</label><input type="text" id="br-name" value="${esc(BRAND.name)}"></div><div class="field"><label for="br-mark">${L3(['Logo mark (teks/inisial)', 'Logo mark (text/initial)', 'الشعار'])}</label><input type="text" id="br-mark" maxlength="2" value="${esc(BRAND.mark)}"></div></div><div class="field"><label for="br-legal">${L3(['Nama badan hukum', 'Legal entity', 'الكيان القانوني'])}</label><input type="text" id="br-legal" value="${esc(BRAND.legal)}"></div><div class="field"><label for="br-color">${L3(['Warna brand', 'Brand color', 'لون العلامة'])}</label><div style="display:flex;gap:8px;align-items:center"><input type="color" id="br-color" value="${BRAND.color}" style="width:48px;height:36px;border:1px solid var(--line-strong);border-radius:8px;background:var(--surface)"><span class="mono">${BRAND.color}</span><span class="hint">${L3(['Dipakai untuk brandmark; warna status semantik tetap terpisah.', 'Used for the brand mark; semantic status colors stay separate.', 'ألوان الحالة منفصلة.'])}</span></div></div><div class="field"><label for="br-type">Typography preset</label><select id="br-type"><option>Plex / Bricolage</option><option>Plex only</option><option>System UI</option></select></div><div class="field"><label>Assets</label><div style="display:flex;gap:8px;flex-wrap:wrap">${['Logo (SVG)', 'Favicon', 'Email header', 'Invoice header'].map(a => `<span class="docrow" style="margin:0;padding:6px 10px">${ic('upload', 'sm')}<span style="font-size:12.5px">${a}</span></span>`).join('')}</div></div>`, { icon: 'palette', foot: `${permBtn('system.brand', ic('check') + t('save'), 'data-act="brand-save" data-mut', 'primary')}<span class="muted">${L3(['Perubahan tercatat di audit (before/after).', 'Changes are audited (before/after).', 'تُسجَّل التغييرات.'])}</span>` })}</div>
+  <div class="grid g12"><div class="c7">${pnl(L3(['Identitas', 'Identity', 'الهوية']), `<div class="grid g2" style="gap:10px"><div class="field"><label for="br-name">${L3(['Nama publik', 'Public name', 'الاسم العام'])}</label><input type="text" id="br-name" value="${esc(BRAND.name)}"></div><div class="field"><label for="br-mark">${L3(['Logo mark (teks/inisial)', 'Logo mark (text/initial)', 'الشعار'])}</label><input type="text" id="br-mark" maxlength="2" value="${esc(BRAND.mark)}"></div></div><div class="field"><label for="br-legal">${L3(['Nama badan hukum', 'Legal entity', 'الكيان القانوني'])}</label><input type="text" id="br-legal" value="${esc(BRAND.legal)}"></div><div class="field"><label for="br-color">${L3(['Warna brand', 'Brand color', 'لون العلامة'])}</label><div style="display:flex;gap:8px;align-items:center"><input type="color" id="br-color" value="${BRAND.color}" style="width:48px;height:36px;border:1px solid var(--line-strong);border-radius:8px;background:var(--surface)"><span class="mono">${BRAND.color}</span><span class="hint">${L3(['Dipakai untuk brandmark; warna status semantik tetap terpisah.', 'Used for the brand mark; semantic status colors stay separate.', 'ألوان الحالة منفصلة.'])}</span></div></div><div class="field"><label for="br-type">Typography preset</label><select id="br-type"><option>Plus Jakarta Sans</option><option>System UI</option></select></div><div class="field"><label>Assets</label><div style="display:flex;gap:8px;flex-wrap:wrap">${['Logo (SVG)', 'Favicon', 'Email header', 'Invoice header'].map(a => `<span class="docrow" style="margin:0;padding:6px 10px">${ic('upload', 'sm')}<span style="font-size:12.5px">${a}</span></span>`).join('')}</div></div>`, { icon: 'palette', foot: `${permBtn('system.brand', ic('check') + t('save'), 'data-act="brand-save" data-mut', 'primary')}<span class="muted">${L3(['Perubahan tercatat di audit (before/after).', 'Changes are audited (before/after).', 'تُسجَّل التغييرات.'])}</span>` })}</div>
   <div class="c5">${pnl('Preview', `<div class="brandprev"><div style="background:var(--side-bg);border-bottom:1px solid var(--side-line);padding:14px;display:flex;gap:10px;align-items:center"><div class="brandmark" id="bp-mark" style="background:${BRAND.color}">${esc(BRAND.mark)}</div><div><div class="brandname" id="bp-name">${esc(BRAND.name)}</div><div class="brandsub">${esc(t('control_center'))}</div></div></div><div style="padding:14px;font-size:12.5px" class="muted" id="bp-legal">${esc(BRAND.legal)}</div></div>`, { icon: 'eye' })}</div></div></div>`; return { html, mount() { ['br-name', 'br-mark', 'br-color', 'br-legal'].forEach(id => document.getElementById(id).addEventListener('input', () => { const g = i => document.getElementById(i).value; document.getElementById('bp-name').textContent = g('br-name'); document.getElementById('bp-mark').textContent = g('br-mark'); document.getElementById('bp-mark').style.background = g('br-color'); document.getElementById('bp-legal').textContent = g('br-legal'); })); } }; });
 
 /* =============================== BLUEPRINTS (placeholder pages) =============================== */

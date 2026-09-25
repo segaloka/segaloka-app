@@ -15,7 +15,7 @@ const pick = a => a[Math.floor(rnd() * a.length)];
 const wpick = (a, w) => { let s = w.reduce((x, y) => x + y, 0), r = rnd() * s; for (let i = 0; i < a.length; i++) { if ((r -= w[i]) < 0) return a[i]; } return a[a.length - 1]; };
 const H = 3600e3, D = 24 * H;
 
-const BRAND = { name: 'SEGALOKA', legal: 'PT Segaloka Teknologi Nusantara (demo)', tagline: 'Control Center', color: '#0A6CF0', mark: 'S', typePreset: 'Plex / Bricolage', support: 'support@segaloka.example' };
+const BRAND = { name: 'SEGALOKA', legal: 'PT Segaloka Teknologi Nusantara (demo)', tagline: 'Control Center', color: '#0A6CF0', mark: 'S', typePreset: 'Plus Jakarta Sans', support: 'support@segaloka.example' };
 
 const CITIES = [['Jakarta Selatan','DKI Jakarta'],['Surabaya','Jawa Timur'],['Makassar','Sulawesi Selatan'],['Bandung','Jawa Barat'],['Medan','Sumatera Utara'],['Yogyakarta','DI Yogyakarta'],['Semarang','Jawa Tengah'],['Banjarmasin','Kalimantan Selatan'],['Palembang','Sumatera Selatan'],['Pekanbaru','Riau'],['Mataram','NTB'],['Balikpapan','Kalimantan Timur'],['Banda Aceh','Aceh'],['Depok','Jawa Barat'],['Malang','Jawa Timur']];
 const LOGO_COLORS = ['#2F5D50','#3A4F8F','#7A4B2A','#5B3F86','#23606F','#8A3B3B','#4E6A2B','#2B4E72','#6B5431','#3F6F5E'];
