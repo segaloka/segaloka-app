@@ -53,10 +53,9 @@ let fails = 0; const ok = (c, m) => { console.log((c ? 'PASS ' : 'FAIL ') + m); 
   // 4) Travel membuat paket -> moderasi admin -> published
   await wait(B, tid => (TRAVELS.find(t => t.id === tid) || {}).op === 'active', tid); ok(true, 'travel portal sees activation (realtime)');
   await go(B, '/p/travel/packages'); await act(B, '[data-act="tp-new"]'); await fill(B, { 'tp-name': 'Umrah Hemat E2E', 'tp-price': 30000000, 'tp-seats': 40 }); await act(B, '[data-act="tp-save"]');
-  const pid = await B.evaluate(() => PACKAGES[0].id); await act(B, `[data-act="tp-set"][data-id="${pid}"][data-v="review"]`);
-  await wait(A, pid => (PACKAGES.find(p => p.id === pid) || {}).state === 'review', pid);
-  await go(A, '/marketplace/moderation'); await act(A, `[data-act="res-act"][data-id="${pid}"][data-a="Publish"]`);
-  ok(q(`select data->>'state' from control_center.packages where id='${pid}'`) === 'published', 'package published after moderation: ' + pid);
+  const pid = await B.evaluate(() => PACKAGES[0].id); await act(B, `[data-act="tp-set"][data-id="${pid}"][data-v="published"]`); await settle(B);
+  ok(q(`select data->>'state' from control_center.packages where id='${pid}'`) === 'published', 'travel publishes package directly (no admin approval): ' + pid);
+  await wait(A, pid => (PACKAGES.find(p => p.id === pid) || {}).state === 'published', pid); ok(true, 'admin sees published package (realtime)');
 
   // 5) Affiliate mendaftar (layar C)
   const C = await mk(V6, '/p/affiliate'); await fill(C, { 'ob-name': 'Komunitas Hijrah' }); await act(C, '[data-act="ob-save"][data-ws="affiliate"]');
@@ -70,8 +69,22 @@ let fails = 0; const ok = (c, m) => { console.log((c ? 'PASS ' : 'FAIL ') + m); 
   ok(bk && bk.total === 60000000 && bk.aff === aff.id && bk.source === 'Affiliate', 'booking with referral: ' + (bk && bk.id));
   ok(+q(`select (data->>'amount')::bigint from control_center.payments where data->>'booking'='${bk.id}'`) === 18000000, 'DP 30% invoice');
   ok(+q(`select (data->>'amount')::bigint from control_center.records where collection='commissions' and data->>'booking'='${bk.id}' and data->>'state'='pending'`) === 1500000, 'pending affiliate commission 2.5%');
-  await go(Dp, '/p/traveler/bookings/' + bk.id); await act(Dp, `[data-act="u-pay"][data-id="${bk.id}"]`);
-  ok(+q(`select count(*) from control_center.payments where data->>'booking'='${bk.id}' and data->>'status'='paid'`) === 1, 'payment marked paid');
+  // 6b) jamaah melengkapi data, unggah dokumen & bukti bayar -> Travel memeriksa
+  const PNG = 'iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVR42mP8z8BQDwAEhQGAhKmMIQAAAABJRU5ErkJggg==';
+  await go(Dp, '/p/traveler/bookings/' + bk.id);
+  await act(Dp, `[data-act="pg-edit"][data-b="${bk.id}"][data-i="0"]`); await fill(Dp, { 'pg-name': 'SITI AMINAH', 'pg-nik': '3201010101900001', 'pg-birth': '1990-01-01', 'pg-passport': 'C1234567', 'pg-gender': 'P' }); await act(Dp, `[data-act="pg-save"][data-b="${bk.id}"][data-i="0"]`);
+  const up = async (fn, args) => Dp.evaluate(async ([fn, args, png]) => { const bin = Uint8Array.from(atob(png), c => c.charCodeAt(0)); const f = new File([bin], 'scan.png', { type: 'image/png' }); if (fn === 'doc') return (await doUploadDoc(bookingById(args.b), args.k, args.i, f)).id; return (await doUploadPay(PAYMENTS.find(x => x.id === args.p), f)).id; }, [fn, args, PNG]);
+  const upPass = await up('doc', { b: bk.id, k: 'passport', i: 0 }); const upKtp = await up('doc', { b: bk.id, k: 'ktp', i: 0 });
+  const payId = q(`select id from control_center.payments where data->>'booking'='${bk.id}'`); const upPay = await up('pay', { p: payId }); await settle(Dp);
+  ok(+q(`select count(*) from control_center.files where ref='${bk.id}'`) === 3 && +q(`select count(*) from control_center.records where collection='uploads' and data->>'booking'='${bk.id}'`) === 3, 'uploads stored (files + metadata)');
+  ok(q(`select data#>>'{pilgrims,0,nik}' from control_center.bookings where id='${bk.id}'`) === '3201010101900001', 'pilgrim data saved');
+  await wait(B, id => UPLOADS.some(u => u.id === id) || (sbPoll(true), false), upPay, 30000); await go(B, '/p/travel/bookings/' + bk.id);
+  ok(await B.evaluate(id => !!document.querySelector(`[data-act="pay-confirm"][data-id="${id}"]`) && /SITI AMINAH/.test(document.body.textContent) && /3201010101900001/.test(document.body.textContent), upPay), 'travel sees full pilgrim data + payment proof (realtime)');
+  ok(await B.evaluate(async id => { const u = await fileURL(id); return /^data:image\//.test(u || ''); }, upPass), 'travel can open the uploaded file');
+  await act(B, `[data-act="up-verify"][data-id="${upPass}"]`); await act(B, `[data-act="up-reject"][data-id="${upKtp}"]`); await act(B, `[data-act="pay-confirm"][data-id="${upPay}"]`); await settle(B);
+  ok(+q(`select count(*) from control_center.payments where data->>'booking'='${bk.id}' and data->>'status'='paid'`) === 1, 'payment confirmed by travel from proof');
+  ok(q(`select data->>'state' from control_center.records where collection='uploads' and id='${upKtp}'`) === 'rejected', 'document rejected with reason');
+  await wait(Dp, () => myNotifs().some(n => /KTP/.test(n.title) && n.tone === 'bad') || (sbPoll(true), false), null, 30000); ok(true, 'pilgrim notified of rejected document (realtime)');
 
   // 7) Angka di admin dihitung dari transaksi nyata
   await wait(A, bid => BOOKINGS.some(b => b.id === bid && b.paid > 0), bk.id);
@@ -79,6 +92,30 @@ let fails = 0; const ok = (c, m) => { console.log((c ? 'PASS ' : 'FAIL ') + m); 
   ok(nums.gmv30 === 18000000 && nums.seriesGmv === 18000000, 'GMV derived from real payment: ' + JSON.stringify(nums));
   ok(nums.book30 === 1 && nums.affConv === 1 && nums.affComm === 1500000, 'bookings & affiliate stats derived');
   ok(nums.pay !== 'VIA_SEGALOKA' || nums.bal > 0, 'travel balance derived from paid payments');
+
+  // 7b) Withdrawal: ajukan -> dikembalikan -> kirim lagi -> disetujui -> ditransfer; batal -> saldo kembali
+  if (nums.pay === 'VIA_SEGALOKA') {
+    await wait(B, bid => BOOKINGS.some(b => b.id === bid && b.paid > 0), bk.id); await B.evaluate(() => recompute());
+    const bal0 = await B.evaluate(() => me('travel').balance);
+    await go(B, '/p/travel/finance'); await act(B, '[data-act="wd-req"][data-ws="travel"]'); await fill(B, { 'wr-amount': 5000000, 'wr-no': '7001234567', 'wr-holder': 'PT Amanah Wisata' }); await act(B, '[data-act="wd-go"][data-ws="travel"]'); await settle(B);
+    const wid = q(`select id from control_center.withdrawals order by created_at desc limit 1`);
+    ok(await B.evaluate(() => me('travel').balance) === bal0 - 5000000, 'balance held on request');
+    await wait(A, id => WITHDRAWALS.some(w => w.id === id) || (sbPoll(true), false), wid, 30000); await go(A, '/finance/withdrawal/' + wid);
+    await act(A, `[data-act="wd-do"][data-a="revise"][data-id="${wid}"]`); await settle(A);
+    ok(q(`select data->>'state' from control_center.withdrawals where id='${wid}'`) === 'needs_revision', 'finance returns withdrawal for revision');
+    await wait(B, id => (WITHDRAWALS.find(w => w.id === id) || {}).state === 'needs_revision' || (sbPoll(true), false), wid, 30000); await go(B, '/p/travel/finance');
+    await act(B, `[data-act="wd-edit"][data-id="${wid}"]`); await fill(B, { 'we-amount': 4000000 }); await act(B, `[data-act="wd-resubmit"][data-id="${wid}"]`); await settle(B);
+    ok(q(`select data->>'state' || '/' || (data->>'resubmits') || '/' || (data->>'amount') from control_center.withdrawals where id='${wid}'`) === 'pending/1/4000000', 'party fixes & resubmits');
+    await wait(A, id => (WITHDRAWALS.find(w => w.id === id) || {}).state === 'pending' || (sbPoll(true), false), wid, 30000); await go(A, '/finance/withdrawal/' + wid);
+    await act(A, `[data-act="wd-do"][data-a="approve"][data-id="${wid}"]`); await settle(A); await go(A, '/finance/withdrawal/' + wid);
+    await act(A, `[data-act="wd-do"][data-a="pay"][data-id="${wid}"]`); await fill(A, { 'wp-ref': 'BSI-TRF-0001' }); await act(A, `[data-act="wd-pay-go"][data-id="${wid}"]`); await settle(A);
+    ok(q(`select data->>'state' || '/' || (data->>'transferRef') || '/' || jsonb_array_length(data->'history') from control_center.withdrawals where id='${wid}'`) === 'disbursed/BSI-TRF-0001/5', 'approved -> transferred with ref, full history');
+    await go(B, '/p/travel/finance'); await act(B, '[data-act="wd-req"][data-ws="travel"]'); await fill(B, { 'wr-amount': 1000000, 'wr-no': '7001234567', 'wr-holder': 'PT Amanah Wisata' }); await act(B, '[data-act="wd-go"][data-ws="travel"]'); await settle(B);
+    const wid2 = await B.evaluate(() => WITHDRAWALS.filter(w => w.ref === me('travel').id).sort((a, b) => b.ts - a.ts)[0].id);
+    await act(B, `[data-act="wd-cancel"][data-id="${wid2}"]`); await settle(B);
+    ok(q(`select data->>'state' from control_center.withdrawals where id='${wid2}'`) === 'cancelled' && await B.evaluate(() => (recompute(), me('travel').balance)) === bal0 - 4000000, 'cancel returns balance');
+    await wait(B, () => myNotifs().some(n => /Withdrawal/.test(n.title) && /Ditransfer|Disbursed|Dicairkan|disbursed/i.test(n.title)) || (sbPoll(true), false), null, 30000); ok(true, 'travel notified at each withdrawal step');
+  }
 
   // 8) Vendor: daftar -> verifikasi -> produk -> dipesan Travel -> selesai -> saldo vendor
   const E = await mk(V6, '/p/vendor'); await fill(E, { 'ob-name': 'Hotel Makkah Sejahtera' }); await act(E, '[data-act="ob-save"][data-ws="vendor"]');
