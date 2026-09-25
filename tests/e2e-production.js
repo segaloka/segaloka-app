@@ -189,6 +189,16 @@ let fails = 0; const ok = (c, m) => { console.log((c ? 'PASS ' : 'FAIL ') + m); 
   ok(true, 'Travel portal receives suspension notice with reason');
   ok(await A.evaluate(() => !myNotifs().some(n => n.to)), 'admin bell does not show party-targeted notices');
   await A.evaluate(async stid => { travelById(stid).op = 'active'; await sbFlush(); }, stid);
+  // 9b2) Mitra mendaftarkan jamaah -> lengkapi data & dokumen -> Travel & admin melihat
+  await wait(M, stid => travelById(stid).op === 'active' || (sbPoll(true), false), stid, 30000); await go(M, '/p/mitra/packages');
+  await act(M, `[data-act="ma-reg"][data-id="${pid}"]`); await M.selectOption('#mr-who', 'new'); await fill(M, { 'mr-name': 'Ahmad Mitra', 'mr-pax': 1 }); await act(M, `[data-act="ma-reg-go"][data-id="${pid}"]`); await settle(M);
+  const mbk = await M.evaluate(() => myBookings('mitra')[0].id); await go(M, '/p/mitra/bookings/' + mbk);
+  ok(await M.evaluate(() => !!document.querySelector('[data-act="up-doc"]') && !!document.querySelector('[data-act="pg-edit"]')), 'mitra opens registrant detail with upload & data form');
+  const mup = await M.evaluate(async ([id, png]) => { const bin = Uint8Array.from(atob(png), c => c.charCodeAt(0)); return (await doUploadDoc(bookingById(id), 'ktp', 0, new File([bin], 'ktp.png', { type: 'image/png' }))).id; }, [mbk, 'iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVR42mP8z8BQDwAEhQGAhKmMIQAAAABJRU5ErkJggg==']); await settle(M);
+  await wait(B, id => UPLOADS.some(u => u.id === id) || (sbPoll(true), false), mup, 30000); await go(B, '/p/travel/bookings/' + mbk);
+  ok(await B.evaluate(id => !!document.querySelector(`[data-act="up-verify"][data-id="${id}"]`), mup), 'travel can verify document uploaded by mitra');
+  await wait(A, id => UPLOADS.some(u => u.id === id) || (sbPoll(true), false), mup, 30000); await go(A, '/booking/' + mbk);
+  ok(await A.evaluate(id => /Ahmad Mitra/.test(document.body.textContent) && !!document.querySelector(`[data-act="file-view"][data-id="${id}"]`), mup), 'admin booking detail shows pilgrim data & documents');
 
   // 10) audit & kebersihan
   ok(+q("select count(*) from control_center.audit_log where not is_demo") >= 15, 'all actions audited (' + q("select count(*) from control_center.audit_log where not is_demo") + ')');
