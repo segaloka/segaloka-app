@@ -2,8 +2,8 @@
 //   POST /pay/create              dipanggil trigger pay_outbox (header x-sg-key) -> buat transaksi di gateway
 //   POST /pay/webhook/midtrans    notifikasi Midtrans (signature SHA512 diverifikasi)
 //   POST /pay/webhook/xendit      callback Xendit Invoice (header x-callback-token diverifikasi)
-// Pembayaran MASUK dikonfirmasi otomatis lewat control_center.sg_gateway_paid(). Pembayaran KELUAR
-// (refund, withdrawal) tetap konfirmasi manual di dashboard.
+// Pembayaran MASUK (booking, deposit SegaDeals, subscription) dikonfirmasi otomatis lewat
+// control_center.sg_gateway_paid(). Pembayaran KELUAR (refund, withdrawal) tetap manual.
 import postgres from "npm:postgres@3.4.4";
 
 const sql = postgres(Deno.env.get("SUPABASE_DB_URL")!, { prepare: false, max: 3 });
@@ -63,6 +63,7 @@ async function create(id: string) {
   if (!info) return fail("target not found");
   if (info.done) return fail("already paid / not pending");
   const amount = Math.round(info.amount);
+  if (!(amount > 0)) return fail("invalid amount");
   const orderId = `${ob.target_id}-${Date.now().toString(36).toUpperCase()}`;
   let url = "", ref = "";
   try {
@@ -83,7 +84,7 @@ async function create(id: string) {
   } catch (e) { return fail(String(e)); }
   await sql`update control_center.pay_outbox set status = 'created', order_id = ${orderId}, provider = ${provider}, checkout_url = ${url}, updated_at = now() where id = ${id}`;
   if (ob.target_kind === "payment") await sql`update control_center.payments set data = data || ${sql.json({ checkoutUrl: url, orderId, gateway: provider, gatewayToken: ref })}, updated_at = now() where id = ${ob.target_id}`;
-  else await sql`update control_center.records set data = data || ${sql.json({ checkoutUrl: url, orderId, gateway: provider })}, updated_at = now() where collection = 'sd_ledger' and id = ${ob.target_id}`;
+  else if (ob.target_kind === "sd_ledger") await sql`update control_center.records set data = data || ${sql.json({ checkoutUrl: url, orderId, gateway: provider })}, updated_at = now() where collection = 'sd_ledger' and id = ${ob.target_id}`;
   return { ok: true, url };
 }
 
