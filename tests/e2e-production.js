@@ -81,7 +81,7 @@ let fails = 0; const ok = (c, m) => { console.log((c ? 'PASS ' : 'FAIL ') + m); 
   await wait(B, id => UPLOADS.some(u => u.id === id) || (sbPoll(true), false), upPay, 30000); await go(B, '/p/travel/bookings/' + bk.id);
   ok(await B.evaluate(id => !!document.querySelector(`[data-act="pay-confirm"][data-id="${id}"]`) && /SITI AMINAH/.test(document.body.textContent) && /3201010101900001/.test(document.body.textContent), upPay), 'travel sees full pilgrim data + payment proof (realtime)');
   ok(await B.evaluate(async id => { const u = await fileURL(id); return /^data:image\//.test(u || ''); }, upPass), 'travel can open the uploaded file');
-  await act(B, `[data-act="up-verify"][data-id="${upPass}"]`); await act(B, `[data-act="up-reject"][data-id="${upKtp}"]`); await act(B, `[data-act="pay-confirm"][data-id="${upPay}"]`); await settle(B);
+  await act(B, `[data-act="up-verify"][data-id="${upPass}"]`); await settle(B); await act(B, `[data-act="up-reject"][data-id="${upKtp}"]`); await settle(B); await act(B, `[data-act="pay-confirm"][data-id="${upPay}"]`); await settle(B); await B.waitForFunction(() => !SB.busy && !SB.again, null, { timeout: 20000 }); await B.waitForTimeout(1500);
   ok(+q(`select count(*) from control_center.payments where data->>'booking'='${bk.id}' and data->>'status'='paid'`) === 1, 'payment confirmed by travel from proof');
   ok(q(`select data->>'state' from control_center.records where collection='uploads' and id='${upKtp}'`) === 'rejected', 'document rejected with reason');
   await wait(Dp, () => myNotifs().some(n => /KTP/.test(n.title) && n.tone === 'bad') || (sbPoll(true), false), null, 30000); ok(true, 'pilgrim notified of rejected document (realtime)');
