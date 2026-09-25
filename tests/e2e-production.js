@@ -146,7 +146,10 @@ let fails = 0; const ok = (c, m) => { console.log((c ? 'PASS ' : 'FAIL ') + m); 
   // 9) SegaDeals end-to-end
   await go(Dp, '/p/traveler/segadeals/new'); await Dp.selectOption('#sd-type', 'Umrah'); await fill(Dp, { 'sd-dest': 'Umrah Ramadhan E2E', 'sd-month': '2027-03', 'sd-pax': 2, 'sd-budget': 40000000 }); await act(Dp, '[data-act="sd-submit"]');
   const rid = await Dp.evaluate(() => SD_REQ[0].id);
-  await go(B, '/p/travel/segadeals'); await wait(B, rid => !!document.querySelector(`[data-act="sd-offer"][data-id="${rid}"]`) || (rerender(), false), rid, 30000);
+  await go(B, '/p/travel/segadeals'); await wait(B, rid => document.body.textContent.includes(rid) || (sbPoll(true), rerender(), false), rid, 30000);
+  ok(await B.evaluate(rid => !!document.querySelector('[data-act="sd-terms-accept"]') && !document.querySelector(`[data-act="sd-offer"][data-id="${rid}"]:not([aria-disabled])`), rid), 'SegaDeals locked until Travel accepts T&C');
+  await B.check('#sd-agree'); await act(B, '[data-act="sd-terms-accept"]'); await settle(B);
+  ok(!!JSON.parse(q(`select data from control_center.travels where id='${tid}'`)).sdTerms, 'Travel accepted SegaDeals T&C');
   await B.click(`[data-act="sd-offer"][data-id="${rid}"]`); await fill(B, { 'so-price': 29500000 }); await act(B, '[data-act="sd-offer-go"]');
   const oid = await B.evaluate(() => SD_OFF[0].id);
   await go(Dp, '/p/traveler/segadeals/' + rid); await wait(Dp, oid => !!document.querySelector(`[data-act="sd-accept"][data-id="${oid}"]`) || (rerender(), false), oid, 30000);
@@ -157,6 +160,28 @@ let fails = 0; const ok = (c, m) => { console.log((c ? 'PASS ' : 'FAIL ') + m); 
   const sdb = JSON.parse(q(`select data from control_center.bookings where data->>'sdOffer'='${oid}'`) || 'null');
   const sdp = sdb && JSON.parse(q(`select data from control_center.packages where id='${sdb.pkg}'`) || 'null');
   ok(sdp && sdp.private === true && sdp.seats === 2 && sdp.price === 29500000 && sdb.total === 59000000, 'custom package created on acceptance + booking: ' + (sdp && sdp.id));
+  // 9b3) langsung isi data peserta; biaya SegaDeals & deposit; rekomendasi paspor & surat cuti
+  ok(await Dp.evaluate(id => location.hash === '#/p/traveler/sd-data/' + id, sdb.id), 'user lands on traveller-data page after choosing the offer');
+  await fill(Dp, { 'sdd-name-0': 'SITI AMINAH' }); await Dp.check('#sdd-rep-1'); await Dp.selectOption('#sdd-pp-1', 'no'); await act(Dp, `[data-act="sdd-save"][data-id="${sdb.id}"]`); await settle(Dp);
+  ok(JSON.parse(q(`select data->'pilgrims' from control_center.bookings where id='${sdb.id}'`))[1].represented === true, 'second traveller represented by booker');
+  const fee = JSON.parse(q(`select data from control_center.records where collection='sd_ledger' and data->>'booking'='${sdb.id}'`) || 'null');
+  ok(fee && fee.amount === 400000 && fee.state === 'awaiting_deposit', 'SegaDeals fee 200k x 2 pax awaiting Travel deposit');
+  await wait(B, id => SD_LEDGER.some(x => x.booking === id) || (sbPoll(true), false), sdb.id, 30000); await go(B, '/p/travel/segadeals'); await act(B, '[data-act="sd-topup"]');
+  await fill(B, { 'st-amount': 300000, 'st-ref': 'TRF-SD-1' }); await B.setInputFiles('#st-file', '/tmp/claude-0/doc.pdf'); await B.click('[data-act="sd-topup-go"]'); await B.waitForTimeout(400);
+  ok(!(await B.evaluate(() => SD_LEDGER.some(x => x.kind === 'topup'))), 'top-up below requirement is refused');
+  await fill(B, { 'st-amount': 500000 }); await act(B, '[data-act="sd-topup-go"]'); await settle(B);
+  const tup = q(`select id from control_center.records where collection='sd_ledger' and data->>'kind'='topup'`);
+  await wait(A, id => SD_LEDGER.some(x => x.id === id) || (sbPoll(true), false), tup, 30000); await go(A, '/marketplace/segadeals'); await act(A, `[data-act="sd-dep-ok"][data-id="${tup}"]`); await settle(A);
+  ok(q(`select data->>'state' from control_center.records where collection='sd_ledger' and data->>'booking'='${sdb.id}'`) === 'confirmed' && q(`select data->>'sdFeeState' from control_center.bookings where id='${sdb.id}'`) === 'paid', 'deposit confirmed -> fee charged, booking unblocked');
+  await wait(Dp, id => (bookingById(id) || {}).pilgrims || (sbPoll(true), false), sdb.id, 30000); await go(Dp, '/p/traveler/bookings/' + sdb.id);
+  await act(Dp, `[data-act="lt-pass"][data-b="${sdb.id}"][data-i="1"]`); await Dp.setInputFiles('#lp-ktp', '/tmp/claude-0/doc.pdf'); await Dp.selectOption('#lp-office', 'Kanim Makassar'); await act(Dp, `[data-act="lt-pass-go"][data-b="${sdb.id}"][data-i="1"]`); await settle(Dp);
+  ok(q(`select data->>'office' from control_center.records where collection='letters' and data->>'type'='passport_rec' and data->>'booking'='${sdb.id}'`) === 'Kanim Makassar', 'passport recommendation requested with KTP + immigration office');
+  await act(Dp, `[data-act="pg-edit"][data-b="${sdb.id}"][data-i="0"]`); await fill(Dp, { 'pg-nik': '3201010101900001', 'pg-birth': '1990-01-01' }); await act(Dp, `[data-act="pg-save"][data-b="${sdb.id}"][data-i="0"]`); await settle(Dp);
+  await act(Dp, `[data-act="lt-leave"][data-b="${sdb.id}"][data-all="1"]`); await fill(Dp, { 'll-employer': 'PT Maju Bersama' }); await act(Dp, `[data-act="lt-leave-go"][data-b="${sdb.id}"]`); await settle(Dp);
+  ok(+q(`select count(*) from control_center.records where collection='letters' and data->>'type'='leave' and data->>'booking'='${sdb.id}'`) === 1, 'leave letter requested for pilgrims with complete data');
+  const pl = q(`select id from control_center.records where collection='letters' and data->>'type'='passport_rec' and data->>'booking'='${sdb.id}'`);
+  await wait(B, id => LETTERS.some(l => l.id === id) || (sbPoll(true), false), pl, 30000); await go(B, '/p/travel/bookings/' + sdb.id); await act(B, `[data-act="lt-issue"][data-id="${pl}"]`); await fill(B, { 'li-no': '001/REK/IX/2026' }); await B.setInputFiles('#li-file', '/tmp/claude-0/doc.pdf'); await act(B, `[data-act="lt-issue-go"][data-id="${pl}"]`); await settle(B);
+  ok(q(`select data->>'state' from control_center.records where collection='letters' and id='${pl}'`) === 'issued', 'travel issued passport recommendation letter');
 
   // 9c) setelah berangkat: tidak bisa refund, hanya ulasan
   await B.evaluate(async id => { await sbPoll(true); const b = bookingById(id); b.state = 'departed'; audit(me('travel').name, 'booking.departed', 'Booking/' + id, 'success'); await sbFlush(); rtEmit(1); }, bk.id);
