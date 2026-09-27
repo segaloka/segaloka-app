@@ -244,6 +244,18 @@ let fails = 0; const ok = (c, m) => { console.log((c ? 'PASS ' : 'FAIL ') + m); 
   ok(await B.evaluate(id => !!document.querySelector(`[data-act="up-verify"][data-id="${id}"]`), mup), 'travel can verify document uploaded by mitra');
   await wait(A, id => UPLOADS.some(u => u.id === id) || (sbPoll(true), false), mup, 30000); await go(A, '/booking/' + mbk);
   ok(await A.evaluate(id => /Ahmad Mitra/.test(document.body.textContent) && !!document.querySelector(`[data-act="file-view"][data-id="${id}"]`), mup), 'admin booking detail shows pilgrim data & documents');
+  // 9b2b) biaya pendaftaran Mitra/Agen oleh Travel, fee Segaloka 20%
+  await go(B, '/p/travel/mitra'); await act(B, '[data-act="reg-set"]'); await fill(B, { 'rg-mitra': 500000, 'rg-agen': 250000 }); await act(B, '[data-act="reg-set-go"]'); await settle(B);
+  ok(q(`select data->'regFee'->>'agen' from control_center.travels where id='${stid}'`) === '250000', 'travel sets registration fees');
+  await wait(M, stid => ((travelById(stid) || {}).regFee || {}).agen === 250000 || (sbPoll(true), false), stid, 30000);
+  await go(M, '/p/mitra/agen'); await act(M, '[data-act="ag-new"]'); await fill(M, { 'ag-name': 'Agen Berbayar' }); await act(M, '[data-act="ag-save"]'); await settle(M);
+  const agid = q(`select id from control_center.agen where data->>'name'='Agen Berbayar'`);
+  ok(q(`select (data->>'regState') || '/' || (data->>'regFee') || '/' || (data->>'regPct') || '/' || (data->>'status') from control_center.agen where id='${agid}'`) === 'awaiting_payment/250000/20/review', 'new agent must pay registration fee (awaiting payment)');
+  const bal0r = await B.evaluate(() => (recompute(), me('travel').balance));
+  ok(q(`select control_center.sg_gateway_paid('registration', '${agid}', 250000, 'MT-REG-1', 'Midtrans')`) === 'ok' && q(`select data->>'status' from control_center.agen where id='${agid}'`) === 'active', 'gateway payment activates agent automatically');
+  ok(q(`select (data->>'segFee') || '/' || (data->>'net') from control_center.records where collection='reg_fees' and data->>'party'='${agid}'`) === '50000/200000', 'Segaloka takes 20%, travel nets 80%');
+  await wait(B, id => REG_FEES.some(r => r.party === id) || (sbPoll(true), false), agid, 30000);
+  ok(await B.evaluate(b0 => (recompute(), me('travel').balance) === b0 + 200000, bal0r), 'net registration income added to travel balance');
 
   // 10) audit & kebersihan
   ok(+q("select count(*) from control_center.audit_log where not is_demo") >= 15, 'all actions audited (' + q("select count(*) from control_center.audit_log where not is_demo") + ')');

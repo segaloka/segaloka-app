@@ -2,7 +2,7 @@
 //   POST /pay/create              dipanggil trigger pay_outbox (header x-sg-key) -> buat transaksi di gateway
 //   POST /pay/webhook/midtrans    notifikasi Midtrans (signature SHA512 diverifikasi)
 //   POST /pay/webhook/xendit      callback Xendit Invoice (header x-callback-token diverifikasi)
-// Pembayaran MASUK (booking, deposit SegaDeals, subscription) dikonfirmasi otomatis lewat
+// Pembayaran MASUK (booking, deposit SegaDeals, subscription, pendaftaran Mitra/Agen) dikonfirmasi otomatis lewat
 // control_center.sg_gateway_paid(). Pembayaran KELUAR (refund, withdrawal) tetap manual.
 import postgres from "npm:postgres@3.4.4";
 
@@ -44,6 +44,14 @@ async function targetInfo(kind: string, id: string) {
     if (!t.length) return null;
     const d = t[0].data;
     return { amount: Number(d.sub?.price || 0), desc: `Subscription ${d.sub?.plan || ""} · ${d.name}`, name: d.contact?.name || d.name, email: d.contact?.email && d.contact.email !== "—" ? d.contact.email : undefined, phone: d.contact?.phone };
+  }
+  if (kind === "registration") {
+    let t = await sql`select data from control_center.mitra where id = ${id}`;
+    if (!t.length) t = await sql`select data from control_center.agen where id = ${id}`;
+    if (!t.length) return null;
+    const d = t[0].data;
+    if (d.regState === "paid") return { done: true };
+    return { amount: Number(d.regFee || 0), desc: `Pendaftaran ${d.mitra ? "Agen" : "Mitra"} · ${d.name}`, name: d.name, email: undefined, phone: d.phone };
   }
   const r = await sql`select data from control_center.records where collection = 'sd_ledger' and id = ${id}`;
   if (!r.length) return null;

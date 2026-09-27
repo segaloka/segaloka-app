@@ -4,7 +4,7 @@
    Mode demo hanya bila URL memuat ?demo (dipakai untuk pengujian).
    ===================================================================== */
 const DEMO = /[?&]demo\b/.test(location.search);
-const ENTITY_ARRAYS = () => [TRAVELS, BRANCHES, VENDORS, AFFILIATES, MITRA, AGEN, PACKAGES, TRAVELERS, BOOKINGS, PAYMENTS, SETTLEMENTS, WITHDRAWALS, REFUNDS, CAMPAIGNS, CONVERSATIONS, APPROVALS, AUDIT, NOTIFS, WEBSITES, VPRODUCTS, REFLINKS, COMMISSIONS, SD_REQ, SD_OFF, CONTACTS, BROADCASTS, ADSETS, ADS, CREATIVES, ADBUDGETS, VOUCHERS, OPSDOCS, DEPOSITS, LEADS, USERS, SECEV, RISKS, INCIDENTS, WEBHOOKS, BANK, DEPS, AICHAT, VORDERS, AGENTS, UPLOADS, REVIEWS, SD_LEDGER, LETTERS];
+const ENTITY_ARRAYS = () => [TRAVELS, BRANCHES, VENDORS, AFFILIATES, MITRA, AGEN, PACKAGES, TRAVELERS, BOOKINGS, PAYMENTS, SETTLEMENTS, WITHDRAWALS, REFUNDS, CAMPAIGNS, CONVERSATIONS, APPROVALS, AUDIT, NOTIFS, WEBSITES, VPRODUCTS, REFLINKS, COMMISSIONS, SD_REQ, SD_OFF, CONTACTS, BROADCASTS, ADSETS, ADS, CREATIVES, ADBUDGETS, VOUCHERS, OPSDOCS, DEPOSITS, LEADS, USERS, SECEV, RISKS, INCIDENTS, WEBHOOKS, BANK, DEPS, AICHAT, VORDERS, AGENTS, UPLOADS, REVIEWS, SD_LEDGER, LETTERS, REG_FEES];
 const VORDERS = [];
 function clearFakeStats() {
   PROVIDERS.forEach(p => { p.status = 'healthy'; p.success = null; p.latency = null; p.share = null; });
@@ -43,7 +43,7 @@ function recompute() {
   if (!DEPSEL && DEPS[0]) DEPSEL = DEPS[0].id; if ((!PKGSEL || !pkgById(PKGSEL)) && PACKAGES[0]) PKGSEL = PACKAGES[0].id;
   /* saldo nyata */
   const feeRate = tr => { const f = FEES.find(x => x.state === 'active' && x.scope === 'Travel · ' + ((tr.sub && tr.sub.plan) || '')); return f ? f.rate / 100 : 0.025; };
-  TRAVELS.forEach(tr => { if (tr.payMode !== 'VIA_SEGALOKA') { tr.balance = 0; return; } const inn = paid.filter(p => p.travel === tr.id).reduce((s, p) => s + p.amount * (1 - feeRate(tr)), 0); const out = WITHDRAWALS.filter(w => w.ref === tr.id && !['rejected', 'cancelled'].includes(w.state)).reduce((s, w) => s + w.amount, 0); tr.balance = Math.max(0, Math.round(inn - out)); });
+  TRAVELS.forEach(tr => { const regNet = (typeof REG_FEES !== 'undefined' ? REG_FEES : []).filter(r => r.travel === tr.id).reduce((s, r) => s + (r.net || 0), 0); const inn = (tr.payMode === 'VIA_SEGALOKA' ? paid.filter(p => p.travel === tr.id).reduce((s, p) => s + p.amount * (1 - feeRate(tr)), 0) : 0) + regNet; const out = WITHDRAWALS.filter(w => w.ref === tr.id && !['rejected', 'cancelled'].includes(w.state)).reduce((s, w) => s + w.amount, 0); tr.balance = Math.max(0, Math.round(inn - out)); });
   VENDORS.forEach(v => { const inn = VORDERS.filter(o => o.vendor === v.id && o.state === 'completed').reduce((s, o) => s + o.value * .95, 0); const out = WITHDRAWALS.filter(w => w.ref === v.id && !['rejected', 'cancelled'].includes(w.state)).reduce((s, w) => s + w.amount, 0); v.balance = Math.max(0, Math.round(inn - out)); });
   /* saldo iklan per tenant yang punya campaign */
   [...new Set(CAMPAIGNS.filter(c => c.owner).map(c => c.owner))].forEach(tid => { if (!ADBUDGETS.some(b => b.travel === tid) && travelById(tid)) ADBUDGETS.push({ id: 'ADB-' + tid.replace(/^TRV-/, ''), name: travelById(tid).name, travel: tid, balance: 0, spend: 0, campaigns: 0, state: 'active' }); });
@@ -90,6 +90,6 @@ if (DEMO && !VORDERS.length) VENDORS.forEach((v, vi) => { const P = VPRODUCTS.fi
 function median(l) { l = (l || []).filter(x => x != null && isFinite(x)).sort((a, b) => a - b); if (!l.length) return null; const m = l.length >> 1; return l.length % 2 ? l[m] : (l[m - 1] + l[m]) / 2; }
 function csatAvg(conv) { const l = conv.map(c => c.csat).filter(x => x != null); return l.length ? l.reduce((s, x) => s + x, 0) / l.length : null; }
 function perPaid() { return PAYMENTS.filter(p => p.status === 'paid' && p.ts >= nowTs() - PERIOD * D); }
-function platRev() { return platformRevenue(perPaid()); }
+function platRev() { const since = nowTs() - PERIOD * D; return platformRevenue(perPaid()) + (typeof REG_FEES !== 'undefined' ? REG_FEES : []).filter(r => r.ts >= since).reduce((s, r) => s + (r.segFee || 0), 0); }
 function perPaid() { return PAYMENTS.filter(p => p.status === 'paid' && p.ts >= nowTs() - PERIOD * D); }
-function platRev() { return platformRevenue(perPaid()); }
+function platRev() { const since = nowTs() - PERIOD * D; return platformRevenue(perPaid()) + (typeof REG_FEES !== 'undefined' ? REG_FEES : []).filter(r => r.ts >= since).reduce((s, r) => s + (r.segFee || 0), 0); }

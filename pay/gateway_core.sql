@@ -14,7 +14,7 @@ create table if not exists control_center.pay_outbox (
   updated_at timestamptz not null default now()
 );
 do $x$ declare c text; begin for c in select conname from pg_constraint where conrelid = 'control_center.pay_outbox'::regclass and contype = 'c' and pg_get_constraintdef(oid) ilike '%target_kind%' loop execute format('alter table control_center.pay_outbox drop constraint %I', c); end loop; end $x$;
-alter table control_center.pay_outbox add constraint pay_outbox_target_kind check (target_kind in ('payment','sd_ledger','subscription'));
+alter table control_center.pay_outbox add constraint pay_outbox_target_kind check (target_kind in ('payment','sd_ledger','subscription','registration'));
 create index if not exists pay_outbox_target on control_center.pay_outbox (target_kind, target_id);
 alter table control_center.pay_outbox enable row level security;
 revoke all on control_center.pay_outbox from anon, authenticated;
@@ -27,7 +27,7 @@ $f$;
 
 create or replace function control_center.sg_gateway_paid(p_kind text, p_id text, p_amount numeric, p_ref text, p_provider text) returns text
 language plpgsql security definer set search_path = '' as $f$
-declare pay jsonb; bk jsonb; led jsonb; total numeric; newpaid numeric; st text; nid text; tid text; bal numeric; r record;
+declare pay jsonb; bk jsonb; led jsonb; pk text; seg numeric; rid text; total numeric; newpaid numeric; st text; nid text; tid text; bal numeric; r record;
   now_ms bigint := (extract(epoch from now()) * 1000)::bigint;
 begin
   if p_kind = 'payment' then
@@ -68,9 +68,25 @@ begin
     update control_center.records set data = data || '{"state":"published","ssl":"active"}'::jsonb, updated_at = now() where collection = 'websites' and data->>'travel' = p_id;
     perform control_center.sg_notify('travel:' || p_id, 'subscription', 'ok', 'Subscription dibayar (otomatis)', (led#>>'{sub,plan}') || ' · aktif s/d ' || to_char(to_timestamp((led#>>'{sub,renew}')::bigint / 1000), 'DD Mon YYYY'), '/p/travel/subscription');
     perform control_center.sg_notify('admin', 'subscription', 'ok', 'Subscription dibayar', led->>'name', '/travel/' || p_id);
+  elsif p_kind = 'registration' then
+    select 'mitra', data into pk, led from control_center.mitra where id = p_id for update;
+    if led is null then select 'agen', data into pk, led from control_center.agen where id = p_id for update; end if;
+    if led is null then return 'not_found'; end if;
+    if led->>'regState' = 'paid' then return 'already'; end if;
+    seg := round(p_amount * coalesce((led->>'regPct')::numeric, 20) / 100);
+    if pk = 'mitra' then
+      update control_center.mitra set data = data || jsonb_build_object('regState', 'paid', 'status', 'active', 'regPaidAt', now_ms, 'regRef', p_ref), updated_at = now() where id = p_id;
+    else
+      update control_center.agen set data = data || jsonb_build_object('regState', 'paid', 'status', 'active', 'regPaidAt', now_ms, 'regRef', p_ref), updated_at = now() where id = p_id;
+    end if;
+    rid := 'REG-' || upper(substr(md5(random()::text || clock_timestamp()::text), 1, 10));
+    insert into control_center.records (collection, id, data) values ('reg_fees', rid, jsonb_build_object('id', rid, 'kind', pk, 'party', p_id, 'name', led->>'name', 'travel', led->>'travel', 'amount', p_amount, 'pct', coalesce((led->>'regPct')::numeric, 20), 'segFee', seg, 'net', p_amount - seg, 'ref', p_ref, 'provider', p_provider, 'ts', now_ms));
+    perform control_center.sg_notify(pk || ':' || p_id, 'payment', 'ok', 'Pendaftaran aktif', 'Biaya pendaftaran Rp ' || to_char(p_amount, 'FM999G999G999G999') || ' diterima', '/p/' || pk);
+    perform control_center.sg_notify('travel:' || (led->>'travel'), 'payment', 'ok', 'Biaya pendaftaran ' || case when pk = 'mitra' then 'Mitra' else 'Agen' end || ' masuk', (led->>'name') || ' · bersih Rp ' || to_char(p_amount - seg, 'FM999G999G999G999'), '/p/travel/mitra');
+    perform control_center.sg_notify('admin', 'payment', 'ok', 'Fee pendaftaran ' || pk, (led->>'name') || ' · Rp ' || to_char(seg, 'FM999G999G999G999'), '/agen');
   else return 'bad_kind'; end if;
   insert into control_center.audit_log (id, ts, actor, action, resource, result, source, after)
-    values ('AUD-' || upper(substr(md5(random()::text || clock_timestamp()::text), 1, 12)), now(), 'System', 'webhook.payment.paid', case p_kind when 'payment' then 'Payment/' when 'subscription' then 'Subscription/' else 'SegaDealsDeposit/' end || p_id, 'success', 'Gateway · ' || coalesce(p_provider, ''), coalesce(p_ref, '') || ' · ' || p_amount::text);
+    values ('AUD-' || upper(substr(md5(random()::text || clock_timestamp()::text), 1, 12)), now(), 'System', 'webhook.payment.paid', case p_kind when 'payment' then 'Payment/' when 'subscription' then 'Subscription/' when 'registration' then 'Registration/' else 'SegaDealsDeposit/' end || p_id, 'success', 'Gateway · ' || coalesce(p_provider, ''), coalesce(p_ref, '') || ' · ' || p_amount::text);
   update control_center.pay_outbox set status = 'paid', updated_at = now() where target_kind = p_kind and target_id = p_id;
   return 'ok';
 end $f$;
