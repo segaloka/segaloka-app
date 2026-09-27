@@ -109,7 +109,8 @@ export const adminModuleGroups: readonly AdminModuleGroup[] = [
         id: 'vendor',
         label: 'Vendor',
         icon: 'vendor',
-        status: 'planned',
+        href: '/vendor',
+        status: 'ready',
         children: [
           {
             id: 'vendor-all',
@@ -137,7 +138,8 @@ export const adminModuleGroups: readonly AdminModuleGroup[] = [
         id: 'affiliate',
         label: 'Affiliate',
         icon: 'affiliate',
-        status: 'planned',
+        href: '/affiliate',
+        status: 'ready',
         children: [
           {
             id: 'affiliate-all',
@@ -165,7 +167,8 @@ export const adminModuleGroups: readonly AdminModuleGroup[] = [
         id: 'agent',
         label: 'Agen',
         icon: 'agent',
-        status: 'planned',
+        href: '/agent',
+        status: 'ready',
         children: [
           {
             id: 'agent-all',
@@ -193,7 +196,8 @@ export const adminModuleGroups: readonly AdminModuleGroup[] = [
         id: 'travel-partner',
         label: 'Mitra Travel',
         icon: 'partner',
-        status: 'planned',
+        href: '/travel-partner',
+        status: 'ready',
         children: [
           {
             id: 'travel-partner-all',
@@ -216,7 +220,8 @@ export const adminModuleGroups: readonly AdminModuleGroup[] = [
         id: 'customer',
         label: 'Pengguna',
         icon: 'customer',
-        status: 'planned'
+        href: '/customer',
+        status: 'ready'
       }
     ]
   },
