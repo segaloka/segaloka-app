@@ -8,6 +8,7 @@ export type AdminModuleIcon =
   | 'affiliate'
   | 'agent'
   | 'partner'
+  | 'customer'
   | 'traveler'
   | 'marketplace'
   | 'omnichannel'
@@ -212,9 +213,9 @@ export const adminModuleGroups: readonly AdminModuleGroup[] = [
         ]
       },
       {
-        id: 'traveler',
-        label: 'Traveler',
-        icon: 'traveler',
+        id: 'customer',
+        label: 'Pengguna',
+        icon: 'customer',
         status: 'planned'
       }
     ]

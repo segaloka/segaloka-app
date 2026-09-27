@@ -41,6 +41,7 @@ const englishLabels: Record<string, string> = {
   'Semua Agen': 'All Agents',
   'Penjualan': 'Sales',
   'Wilayah': 'Regions',
+  'Pengguna': 'Customer',
   'Traveler': 'Traveler',
 
   'Overview Marketplace': 'Marketplace Overview',
@@ -172,6 +173,7 @@ const arabicLabels: Record<string, string> = {
   'Semua Agen': 'جميع الوكلاء',
   'Penjualan': 'المبيعات',
   'Wilayah': 'المناطق',
+  'Pengguna': 'العملاء',
   'Traveler': 'المسافرون',
 
   'Overview Marketplace': 'نظرة عامة على السوق',

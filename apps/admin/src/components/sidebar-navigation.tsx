@@ -51,6 +51,7 @@ const iconMap: Record<AdminModuleIcon, NavigationIcon> = {
   affiliate: LinkIcon,
   agent: UsersIcon,
   partner: UsersIcon,
+  customer: UserRoundIcon,
   traveler: UserRoundIcon,
   marketplace: BagIcon,
   omnichannel: MessageIcon,
