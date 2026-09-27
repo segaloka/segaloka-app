@@ -3,4 +3,5 @@ packages:
   - 'packages/*'
   - 'tooling/*'
 allowBuilds:
+  '@tailwindcss/oxide': true
   esbuild: true
