@@ -6,6 +6,7 @@ export type AdminModuleIcon =
   | 'travel'
   | 'vendor'
   | 'affiliate'
+  | 'agent'
   | 'partner'
   | 'traveler'
   | 'marketplace'
@@ -160,6 +161,34 @@ export const adminModuleGroups: readonly AdminModuleGroup[] = [
         ]
       },
       {
+        id: 'agent',
+        label: 'Agen',
+        icon: 'agent',
+        status: 'planned',
+        children: [
+          {
+            id: 'agent-all',
+            label: 'Semua Agen',
+            status: 'planned'
+          },
+          {
+            id: 'agent-sales',
+            label: 'Penjualan',
+            status: 'planned'
+          },
+          {
+            id: 'agent-commission',
+            label: 'Komisi',
+            status: 'planned'
+          },
+          {
+            id: 'agent-performance',
+            label: 'Performance',
+            status: 'planned'
+          }
+        ]
+      },
+      {
         id: 'travel-partner',
         label: 'Mitra Travel',
         icon: 'partner',
@@ -168,11 +197,6 @@ export const adminModuleGroups: readonly AdminModuleGroup[] = [
           {
             id: 'travel-partner-all',
             label: 'Semua Mitra',
-            status: 'planned'
-          },
-          {
-            id: 'travel-partner-agents',
-            label: 'Agen',
             status: 'planned'
           },
           {

@@ -38,6 +38,8 @@ const englishLabels: Record<string, string> = {
   'Mitra Travel': 'Travel Partner',
   'Semua Mitra': 'All Partners',
   'Agen': 'Agents',
+  'Semua Agen': 'All Agents',
+  'Penjualan': 'Sales',
   'Wilayah': 'Regions',
   'Traveler': 'Traveler',
 
@@ -167,6 +169,8 @@ const arabicLabels: Record<string, string> = {
   'Mitra Travel': 'شركاء السفر',
   'Semua Mitra': 'جميع الشركاء',
   'Agen': 'الوكلاء',
+  'Semua Agen': 'جميع الوكلاء',
+  'Penjualan': 'المبيعات',
   'Wilayah': 'المناطق',
   'Traveler': 'المسافرون',
 
