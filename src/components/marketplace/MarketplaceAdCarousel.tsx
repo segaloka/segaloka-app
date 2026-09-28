@@ -1,4 +1,4 @@
-﻿"use client";
+"use client";
 
 import Link from "next/link";
 import { useEffect, useState } from "react";
@@ -138,7 +138,7 @@ export function MarketplaceAdCarousel() {
 
   return (
     <div
-      className="mx-auto max-w-[1180px] px-4 pb-3 pt-3"
+      className="w-full pb-3 pt-3"
       onMouseEnter={() => setPaused(true)}
       onMouseLeave={() => setPaused(false)}
       onFocusCapture={() => setPaused(true)}
