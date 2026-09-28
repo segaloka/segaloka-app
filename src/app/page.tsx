@@ -1,5 +1,5 @@
 import Link from "next/link";
-import { PublicNav, PublicFooter } from "@/components/layout/PublicNav";
+import { MarketplaceHeader } from "@/components/marketplace/MarketplaceHeader";
 import { createClient } from "@/lib/supabase/server";
 import { formatIDR, formatDate } from "@/lib/utils";
 import { Icon } from "@/components/layout/Icon";
@@ -518,7 +518,7 @@ export default async function HomePage() {
 
   return (
     <div className="min-h-screen bg-[#f7f9fc]">
-      <PublicNav />
+      <MarketplaceHeader />
 
       <main className="pb-16 md:pb-0">
         {/* MARKETPLACE V4 HERO */}
@@ -527,7 +527,7 @@ export default async function HomePage() {
           <div className="absolute -right-16 -top-28 hidden h-[420px] w-[620px] rounded-[50%] border border-white/60 bg-white/25 lg:block" />
           <div className="absolute right-[13%] top-10 hidden h-44 w-44 rounded-full border-[30px] border-white/25 lg:block" />
 
-          <div className="relative mx-auto max-w-[1240px] px-4 pb-28 pt-8 sm:pb-32 md:pt-10">
+          <div className="relative mx-auto max-w-[1180px] px-4 pb-28 pt-8 sm:pb-32 md:pt-10">
             <div className="grid gap-6 lg:grid-cols-[1fr_0.72fr] lg:items-center">
               <div className="max-w-[700px]">
                 <p className="inline-flex items-center gap-2 rounded-full border border-white/80 bg-white/80 px-3 py-1.5 text-[10px] font-extrabold text-primary shadow-sm">
@@ -565,7 +565,7 @@ export default async function HomePage() {
         </section>
 
         {/* MARKETPLACE CATEGORY + SEARCH CENTER */}
-        <section className="relative z-20 mx-auto -mt-20 max-w-[1240px] px-4">
+        <section className="relative z-20 mx-auto -mt-20 max-w-[1180px] px-4">
           <div className="overflow-hidden rounded-2xl border border-[#dce4ee] bg-white shadow-[0_18px_50px_rgba(16,34,63,0.14)]">
             <div className="overflow-x-auto border-b border-[#e8edf3]">
               <div className="flex min-w-max items-stretch px-2 sm:px-4">
@@ -642,7 +642,7 @@ export default async function HomePage() {
         </section>
 
         {/* MARKETPLACE PROMO STRIP */}
-        <section className="mx-auto max-w-[1240px] px-4 pb-4 pt-2">
+        <section className="mx-auto max-w-[1180px] px-4 pb-4 pt-2">
           <div className="grid gap-3 md:grid-cols-3">
             {PREVIEW_PROMOS.map((promo, index) => (
               <div
@@ -669,7 +669,7 @@ export default async function HomePage() {
         </section>
 
         {/* REAL MARKETPLACE INVENTORY */}
-        <section className="mx-auto max-w-[1240px] px-4 pb-8 pt-6">
+        <section className="mx-auto max-w-[1180px] px-4 pb-8 pt-6">
           <div className="flex items-end justify-between gap-4">
             <div>
               <p className="text-[10px] font-extrabold uppercase tracking-[0.14em] text-primary">
@@ -839,7 +839,7 @@ export default async function HomePage() {
         </section>
 
         {/* EXPLORE INDONESIA */}
-        <section className="mx-auto max-w-[1240px] px-4 pb-8">
+        <section className="mx-auto max-w-[1180px] px-4 pb-8">
           <div className="flex items-end justify-between gap-4">
             <div>
               <p className="text-[10px] font-extrabold uppercase tracking-[0.14em] text-primary">Jelajahi Indonesia</p>
@@ -861,7 +861,7 @@ export default async function HomePage() {
         </section>
 
         {/* TRAVEL ADS - TEMPORARY PREVIEW LAYOUT */}
-        <section className="mx-auto max-w-[1240px] px-4 pb-8">
+        <section className="mx-auto max-w-[1180px] px-4 pb-8">
           <div className="flex items-end justify-between gap-4">
             <div>
               <p className="text-[10px] font-extrabold uppercase tracking-[0.14em] text-primary">
@@ -936,7 +936,7 @@ export default async function HomePage() {
 
         {/* UPCOMING DEPARTURES */}
         {upcomingPackages.length > 0 && (
-          <section className="mx-auto max-w-[1240px] px-4 pb-10 pt-2">
+          <section className="mx-auto max-w-[1180px] px-4 pb-10 pt-2">
             <div className="rounded-2xl border border-[#dce5ef] bg-white p-5 sm:p-6">
               <div className="flex flex-col gap-2 sm:flex-row sm:items-end sm:justify-between">
                 <div>
@@ -995,7 +995,7 @@ export default async function HomePage() {
         )}
 
         {/* EXPLORE THE WORLD */}
-        <section className="mx-auto max-w-[1240px] px-4 pb-10">
+        <section className="mx-auto max-w-[1180px] px-4 pb-10">
           <div className="rounded-[22px] bg-[#eef7ff] p-5 sm:p-6">
             <div className="flex items-end justify-between gap-4">
               <div>
@@ -1018,7 +1018,7 @@ export default async function HomePage() {
         </section>
 
         {/* VENDOR PICKS - TEMPORARY PREVIEW LAYOUT */}
-        <section className="mx-auto max-w-[1240px] px-4 pb-10">
+        <section className="mx-auto max-w-[1180px] px-4 pb-10">
           <div className="flex items-end justify-between gap-4">
             <div>
               <p className="text-[10px] font-extrabold uppercase tracking-[0.14em] text-primary">
@@ -1075,7 +1075,7 @@ export default async function HomePage() {
         </section>
 
         {/* SEGADEALS */}
-        <section className="mx-auto max-w-[1240px] px-4 pb-10">
+        <section className="mx-auto max-w-[1180px] px-4 pb-10">
           <div className="overflow-hidden rounded-[22px] bg-[#10294d]">
             <div className="grid gap-6 p-6 sm:p-8 lg:grid-cols-[1.05fr_0.95fr] lg:items-center">
               <div>
@@ -1121,7 +1121,7 @@ export default async function HomePage() {
         </section>
 
         {/* TRAVEL DIRECTORY - TEMPORARY PREVIEW LAYOUT */}
-        <section className="mx-auto max-w-[1240px] px-4 pb-10">
+        <section className="mx-auto max-w-[1180px] px-4 pb-10">
           <div className="flex items-end justify-between gap-4">
             <div>
               <p className="text-[10px] font-extrabold uppercase tracking-[0.14em] text-primary">
@@ -1176,7 +1176,7 @@ export default async function HomePage() {
         </section>
 
         {/* TRAVEL INSPIRATION */}
-        <section className="mx-auto max-w-[1240px] px-4 pb-10">
+        <section className="mx-auto max-w-[1180px] px-4 pb-10">
           <div className="flex items-end justify-between gap-4">
             <div>
               <p className="text-[10px] font-extrabold uppercase tracking-[0.14em] text-primary">Inspirasi Perjalanan</p>
@@ -1202,7 +1202,7 @@ export default async function HomePage() {
         </section>
 
         {/* BUSINESS ECOSYSTEM */}
-        <section className="mx-auto max-w-[1240px] px-4 pb-12">
+        <section className="mx-auto max-w-[1180px] px-4 pb-12">
           <div className="grid gap-4 rounded-2xl border border-[#dce4ee] bg-white p-6 sm:p-7 lg:grid-cols-[1fr_auto] lg:items-center">
             <div>
               <p className="text-[10px] font-extrabold uppercase tracking-[0.14em] text-primary">
@@ -1227,7 +1227,82 @@ export default async function HomePage() {
         </section>
       </main>
 
-      <PublicFooter />
+      <footer className="border-t border-[#d9e3ef] bg-[#082d63] pb-20 text-white md:pb-0">
+        <div className="mx-auto max-w-[1180px] px-4 py-10 sm:py-12">
+          <div className="grid gap-8 sm:grid-cols-2 lg:grid-cols-[1.25fr_0.8fr_0.8fr_0.9fr]">
+            <div>
+              <div className="flex items-center gap-2.5">
+                <span className="flex h-9 w-9 items-center justify-center rounded-full bg-white text-sm font-black text-primary">S</span>
+                <span className="font-display text-xl font-extrabold">Segaloka</span>
+              </div>
+              <p className="mt-4 max-w-[330px] text-[11px] leading-5 text-[#c5d7ed]">
+                Ekosistem perjalanan yang menghubungkan Traveler, Travel, Vendor, Agen, Mitra dan Affiliate dalam satu platform.
+              </p>
+              <div className="mt-5 flex flex-wrap gap-2">
+                {["Instagram", "Facebook", "TikTok"].map((social) => (
+                  <span key={social} className="rounded-full border border-white/20 px-3 py-1.5 text-[9px] font-bold text-[#dce9f8]">{social}</span>
+                ))}
+              </div>
+            </div>
+
+            <div>
+              <h3 className="text-[11px] font-extrabold">Produk</h3>
+              <div className="mt-4 grid gap-2.5 text-[10px] text-[#c5d7ed]">
+                <Link href="/paket/umrah">Umrah</Link>
+                <Link href="/paket/haji">Haji</Link>
+                <Link href="/paket/halal_tour">Halal Tour</Link>
+                <Link href="/paket/tour">Tour Domestik</Link>
+                <Link href="/paket/tour">Tour Internasional</Link>
+                <Link href="/akun/segadeals">SegaDeals</Link>
+              </div>
+            </div>
+
+            <div>
+              <h3 className="text-[11px] font-extrabold">Ekosistem</h3>
+              <div className="mt-4 grid gap-2.5 text-[10px] text-[#c5d7ed]">
+                <span>Traveler</span><span>Travel</span><span>Vendor</span>
+                <span>Agen</span><span>Mitra</span><span>Affiliate</span>
+              </div>
+            </div>
+
+            <div>
+              <h3 className="text-[11px] font-extrabold">Bantuan & Perusahaan</h3>
+              <div className="mt-4 grid gap-2.5 text-[10px] text-[#c5d7ed]">
+                <span>Pusat Bantuan</span><span>Tentang Segaloka</span>
+                <span>Syarat & Ketentuan</span><span>Kebijakan Privasi</span>
+                <span>Keamanan Transaksi</span><span>Hubungi Kami</span>
+              </div>
+              <div className="mt-5">
+                <p className="text-[9px] font-extrabold uppercase tracking-[0.12em] text-[#8fb2da]">Aplikasi Segaloka</p>
+                <div className="mt-2 flex gap-2">
+                  <span className="rounded-lg border border-white/20 px-3 py-2 text-[9px] font-bold">Android</span>
+                  <span className="rounded-lg border border-white/20 px-3 py-2 text-[9px] font-bold">iOS</span>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div className="mt-9 grid gap-5 border-t border-white/15 pt-6 sm:grid-cols-2 lg:grid-cols-3">
+            <div>
+              <p className="text-[9px] font-extrabold uppercase tracking-[0.12em] text-[#8fb2da]">Pembayaran</p>
+              <p className="mt-2 text-[10px] leading-5 text-[#c5d7ed]">Payment gateway dan metode pembayaran akan mengikuti konfigurasi production Segaloka.</p>
+            </div>
+            <div>
+              <p className="text-[9px] font-extrabold uppercase tracking-[0.12em] text-[#8fb2da]">Partner</p>
+              <p className="mt-2 text-[10px] leading-5 text-[#c5d7ed]">Travel dan Vendor terhubung melalui ekosistem Segaloka.</p>
+            </div>
+            <div>
+              <p className="text-[9px] font-extrabold uppercase tracking-[0.12em] text-[#8fb2da]">Keamanan</p>
+              <p className="mt-2 text-[10px] leading-5 text-[#c5d7ed]">Transaksi, status dan audit mengikuti sistem Segaloka.</p>
+            </div>
+          </div>
+
+          <div className="mt-7 flex flex-col gap-2 border-t border-white/15 pt-5 text-[9px] text-[#9eb9d8] sm:flex-row sm:items-center sm:justify-between">
+            <span>© 2026 Segaloka. All rights reserved.</span>
+            <span>Satu ekosistem untuk perjalanan dan bisnis travel.</span>
+          </div>
+        </div>
+      </footer>
 
       <nav className="fixed inset-x-0 bottom-0 z-40 border-t border-[#dfe5ed] bg-white/95 px-2 py-2 backdrop-blur md:hidden">
         <div className="mx-auto grid max-w-md grid-cols-5">
