@@ -62,46 +62,37 @@ export default async function HomePage() {
         {/* HERO */}
         <section className="relative overflow-hidden bg-[#0b2b57] text-white">
           <div className="absolute inset-0 bg-[radial-gradient(circle_at_80%_18%,rgba(65,145,255,0.42),transparent_31%),radial-gradient(circle_at_12%_100%,rgba(10,102,224,0.40),transparent_38%)]" />
-          <div className="absolute -right-24 top-8 h-72 w-72 rounded-full border border-white/10" />
-          <div className="absolute -right-8 top-24 h-52 w-52 rounded-full border border-white/10" />
+          <div className="absolute right-[8%] top-10 hidden h-40 w-40 rounded-full border border-white/10 lg:block" />
+          <div className="absolute right-[3%] top-16 hidden h-56 w-56 rounded-full border border-white/[0.07] lg:block" />
 
-          <div className="relative mx-auto max-w-6xl px-4 pb-24 pt-10 sm:pt-12 md:pb-28 md:pt-14">
-            <div className="max-w-4xl">
+          <div className="relative mx-auto max-w-6xl px-4 pb-20 pt-8 sm:pt-9 md:pb-20 md:pt-10">
+            <div className="max-w-3xl">
               <p className="text-[11px] font-extrabold uppercase tracking-[0.16em] text-[#d6e7ff] sm:text-xs">
                 Ekosistem Travel Umrah, Haji & Halal Tour
               </p>
 
-              <h1 className="mt-3 max-w-3xl font-display text-[32px] font-extrabold leading-[1.1] tracking-[-0.025em] sm:text-4xl md:text-[46px]">
+              <h1 className="mt-2.5 max-w-3xl font-display text-[30px] font-extrabold leading-[1.08] tracking-[-0.025em] sm:text-[34px] md:text-[40px]">
                 Temukan perjalanan yang tepat dari Travel terverifikasi
               </h1>
 
-              <p className="mt-4 max-w-2xl text-sm leading-6 text-[#dce9fb] sm:text-base sm:leading-7">
-                Jelajahi paket Umrah, Haji, Halal Tour dan Tour dalam satu
-                marketplace, lalu bandingkan pilihan yang sesuai dengan
-                kebutuhan perjalanan Anda.
+              <p className="mt-3 max-w-2xl text-sm leading-6 text-[#dce9fb] sm:text-[15px]">
+                Jelajahi Umrah, Haji, Halal Tour dan Tour dari Travel dalam
+                ekosistem Segaloka.
               </p>
             </div>
           </div>
         </section>
 
         {/* MARKETPLACE SEARCH */}
-        <section className="relative z-10 mx-auto -mt-12 max-w-6xl px-4">
-          <div className="overflow-hidden rounded-2xl border border-border bg-white shadow-[0_18px_50px_rgba(15,27,45,0.12)]">
-            <div className="border-b border-border px-4 py-3.5 sm:px-5">
-              <div className="flex items-center justify-between gap-4">
-                <div>
-                  <p className="font-display text-base font-extrabold text-text-primary">
-                    Mau perjalanan ke mana?
-                  </p>
-                  <p className="mt-0.5 text-xs text-text-secondary">
-                    Pilih jenis perjalanan untuk melihat paket yang tersedia.
-                  </p>
-                </div>
-
-                <span className="hidden rounded-full bg-primary/10 px-3 py-1.5 text-[11px] font-extrabold text-primary sm:inline-flex">
-                  Travel Marketplace
-                </span>
-              </div>
+        <section className="relative z-10 mx-auto -mt-10 max-w-6xl px-4">
+          <div className="overflow-hidden rounded-2xl border border-border bg-white shadow-[0_16px_42px_rgba(15,27,45,0.11)]">
+            <div className="flex flex-col gap-1 border-b border-border px-4 py-3 sm:flex-row sm:items-center sm:justify-between sm:px-5">
+              <p className="font-display text-sm font-extrabold text-text-primary sm:text-[15px]">
+                Pilih perjalanan Anda
+              </p>
+              <p className="text-[11px] text-text-secondary">
+                Jelajahi paket berdasarkan jenis perjalanan
+              </p>
             </div>
 
             <div className="grid grid-cols-2 divide-x divide-y divide-border sm:grid-cols-4 sm:divide-y-0">
@@ -109,87 +100,71 @@ export default async function HomePage() {
                 <Link
                   key={category.type}
                   href={`/paket/${category.type}`}
-                  className="group flex min-h-[88px] items-center gap-3 px-4 py-4 transition hover:bg-primary/[0.035]"
+                  className="group flex min-h-[72px] items-center gap-2.5 px-3.5 py-3 transition hover:bg-primary/[0.04] sm:px-4"
                 >
-                  <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl bg-primary/10 text-primary transition group-hover:bg-primary group-hover:text-white">
-                    <Icon name={category.icon} size={19} />
+                  <div className="flex h-9 w-9 shrink-0 items-center justify-center rounded-xl bg-primary/[0.08] text-primary transition group-hover:bg-primary group-hover:text-white">
+                    <Icon name={category.icon} size={18} />
                   </div>
 
                   <div className="min-w-0">
                     <p className="font-display text-sm font-extrabold text-text-primary">
                       {category.label}
                     </p>
-                    <p className="mt-1 hidden truncate text-[11px] leading-4 text-text-secondary lg:block">
+                    <p className="mt-0.5 hidden truncate text-[10px] leading-4 text-text-secondary lg:block">
                       {category.desc}
                     </p>
                   </div>
+
+                  <span className="ml-auto hidden text-primary/40 transition group-hover:translate-x-0.5 group-hover:text-primary lg:block">
+                    →
+                  </span>
                 </Link>
               ))}
-            </div>
-
-            <div className="flex flex-col gap-3 border-t border-border bg-[#fbfcfe] px-4 py-3.5 sm:flex-row sm:items-center sm:justify-between sm:px-5">
-              <div className="flex items-center gap-2 text-xs text-text-secondary">
-                <Icon name="shield" size={15} />
-                <span>
-                  Paket yang tampil berasal dari Travel yang telah bergabung di
-                  ekosistem Segaloka.
-                </span>
-              </div>
-
-              <Link
-                href="/paket/umrah"
-                className="inline-flex h-10 shrink-0 items-center justify-center rounded-xl bg-primary px-5 text-sm font-extrabold text-primary-fg transition hover:bg-primary-hover"
-              >
-                <Icon name="search" size={16} />
-                <span className="ml-2">Cari Paket</span>
-              </Link>
             </div>
           </div>
         </section>
 
         {/* TRUST */}
-        <section className="mx-auto max-w-6xl px-4 py-7 md:py-8">
-          <div className="grid gap-3 md:grid-cols-3">
-            <div className="flex items-start gap-3 rounded-2xl border border-border/70 bg-white p-4">
-              <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl bg-success-tint text-success">
-                <Icon name="shield" size={18} />
+        <section className="mx-auto max-w-6xl px-4 py-5 md:py-6">
+          <div className="grid overflow-hidden rounded-2xl border border-border/70 bg-white md:grid-cols-3 md:divide-x md:divide-border">
+            <div className="flex items-center gap-3 border-b border-border px-4 py-3 md:border-b-0">
+              <div className="flex h-8 w-8 shrink-0 items-center justify-center rounded-full bg-success-tint text-success">
+                <Icon name="shield" size={15} />
               </div>
               <div>
-                <p className="text-sm font-extrabold text-text-primary">
+                <p className="text-xs font-extrabold text-text-primary">
                   Travel Terverifikasi
                 </p>
-                <p className="mt-1 text-xs leading-5 text-text-secondary">
-                  Legalitas dan izin usaha Travel diverifikasi sebelum dapat
-                  berjualan di Segaloka.
+                <p className="mt-0.5 text-[10px] text-text-secondary">
+                  Legalitas Travel diverifikasi
                 </p>
               </div>
             </div>
 
-            <div className="flex items-start gap-3 rounded-2xl border border-border/70 bg-white p-4">
-              <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl bg-info-tint text-info">
-                <Icon name="wallet" size={18} />
+            <div className="flex items-center gap-3 border-b border-border px-4 py-3 md:border-b-0">
+              <div className="flex h-8 w-8 shrink-0 items-center justify-center rounded-full bg-info-tint text-info">
+                <Icon name="wallet" size={15} />
               </div>
               <div>
-                <p className="text-sm font-extrabold text-text-primary">
+                <p className="text-xs font-extrabold text-text-primary">
                   Transaksi Tercatat
                 </p>
-                <p className="mt-1 text-xs leading-5 text-text-secondary">
-                  Aktivitas pembayaran dan booking tercatat dalam ekosistem
-                  Segaloka sesuai alur transaksi.
+                <p className="mt-0.5 text-[10px] text-text-secondary">
+                  Booking dan pembayaran terhubung
                 </p>
               </div>
             </div>
 
-            <div className="flex items-start gap-3 rounded-2xl border border-border/70 bg-white p-4">
-              <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl bg-secondary/10 text-secondary">
-                <Icon name="handshake" size={18} />
+            <div className="flex items-center gap-3 px-4 py-3">
+              <div className="flex h-8 w-8 shrink-0 items-center justify-center rounded-full bg-secondary/10 text-secondary">
+                <Icon name="handshake" size={15} />
               </div>
               <div>
-                <p className="text-sm font-extrabold text-text-primary">
+                <p className="text-xs font-extrabold text-text-primary">
                   SegaDeals
                 </p>
-                <p className="mt-1 text-xs leading-5 text-text-secondary">
-                  Sampaikan kebutuhan sekali dan terima penawaran dari Travel.
+                <p className="mt-0.5 text-[10px] text-text-secondary">
+                  Dapatkan penawaran dari Travel
                 </p>
               </div>
             </div>
@@ -197,7 +172,7 @@ export default async function HomePage() {
         </section>
 
         {/* LATEST PACKAGES — REAL DATA */}
-        <section className="mx-auto max-w-6xl px-4 py-7 md:py-9">
+        <section className="mx-auto max-w-6xl px-4 pb-7 pt-3 md:pb-9 md:pt-4">
           <div className="mb-5 flex items-end justify-between gap-4">
             <div>
               <p className="text-xs font-extrabold uppercase tracking-[0.12em] text-primary">
