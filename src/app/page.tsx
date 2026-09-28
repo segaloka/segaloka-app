@@ -84,6 +84,216 @@ function availableSeats(departure: DepartureRelation | undefined) {
   return Math.max(0, departure.quota - departure.filled);
 }
 
+/**
+ * TEMPORARY UI PREVIEW DATA
+ *
+ * Data ini hanya dipakai ketika Supabase belum mempunyai inventory marketplace
+ * yang dapat ditampilkan. Jangan gunakan data ini sebagai sumber transaksi.
+ * Hapus fallback ini setelah inventory production tersedia.
+ */
+const PREVIEW_PACKAGES: MarketplacePackage[] = [
+  {
+    id: "preview-umrah-01",
+    name: "Umrah Reguler 9 Hari",
+    slug: "preview-umrah-reguler-9-hari",
+    type: "umrah",
+    duration_days: 9,
+    base_price: 28900000,
+    organizations: {
+      name: "Travel Amanah",
+      slug: "travel-amanah",
+      status: "active",
+      logo_light_url: null,
+      logo_dark_url: null,
+    },
+    departures: [
+      {
+        id: "preview-departure-01",
+        departure_date: "2026-10-18",
+        return_date: "2026-10-26",
+        quota: 45,
+        filled: 33,
+        status: "open",
+      },
+    ],
+  },
+  {
+    id: "preview-umrah-02",
+    name: "Umrah Plus Thaif 12 Hari",
+    slug: "preview-umrah-plus-thaif-12-hari",
+    type: "umrah",
+    duration_days: 12,
+    base_price: 34500000,
+    organizations: {
+      name: "Nusantara Haramain",
+      slug: "nusantara-haramain",
+      status: "active",
+      logo_light_url: null,
+      logo_dark_url: null,
+    },
+    departures: [
+      {
+        id: "preview-departure-02",
+        departure_date: "2026-11-03",
+        return_date: "2026-11-14",
+        quota: 45,
+        filled: 17,
+        status: "open",
+      },
+    ],
+  },
+  {
+    id: "preview-haji-01",
+    name: "Program Haji Pilihan",
+    slug: "preview-program-haji-pilihan",
+    type: "haji",
+    duration_days: 25,
+    base_price: 185000000,
+    organizations: {
+      name: "Safar Indonesia",
+      slug: "safar-indonesia",
+      status: "active",
+      logo_light_url: null,
+      logo_dark_url: null,
+    },
+    departures: [
+      {
+        id: "preview-departure-03",
+        departure_date: "2027-05-08",
+        return_date: "2027-06-01",
+        quota: 40,
+        filled: 31,
+        status: "almost_full",
+      },
+    ],
+  },
+  {
+    id: "preview-halal-01",
+    name: "Halal Tour Turki 8 Hari",
+    slug: "preview-halal-tour-turki-8-hari",
+    type: "halal_tour",
+    duration_days: 8,
+    base_price: 23900000,
+    organizations: {
+      name: "Jelajah Muslim",
+      slug: "jelajah-muslim",
+      status: "active",
+      logo_light_url: null,
+      logo_dark_url: null,
+    },
+    departures: [
+      {
+        id: "preview-departure-04",
+        departure_date: "2026-12-12",
+        return_date: "2026-12-19",
+        quota: 30,
+        filled: 12,
+        status: "open",
+      },
+    ],
+  },
+  {
+    id: "preview-tour-01",
+    name: "Explore Jepang 7 Hari",
+    slug: "preview-explore-jepang-7-hari",
+    type: "tour",
+    duration_days: 7,
+    base_price: 21900000,
+    organizations: {
+      name: "Langkah Dunia",
+      slug: "langkah-dunia",
+      status: "active",
+      logo_light_url: null,
+      logo_dark_url: null,
+    },
+    departures: [
+      {
+        id: "preview-departure-05",
+        departure_date: "2027-01-16",
+        return_date: "2027-01-22",
+        quota: 30,
+        filled: 8,
+        status: "open",
+      },
+    ],
+  },
+  {
+    id: "preview-umrah-03",
+    name: "Umrah Awal Tahun 9 Hari",
+    slug: "preview-umrah-awal-tahun-9-hari",
+    type: "umrah",
+    duration_days: 9,
+    base_price: 30500000,
+    organizations: {
+      name: "Berkah Journey",
+      slug: "berkah-journey",
+      status: "active",
+      logo_light_url: null,
+      logo_dark_url: null,
+    },
+    departures: [
+      {
+        id: "preview-departure-06",
+        departure_date: "2027-01-09",
+        return_date: "2027-01-17",
+        quota: 45,
+        filled: 22,
+        status: "open",
+      },
+    ],
+  },
+  {
+    id: "preview-halal-02",
+    name: "Halal Tour Korea 7 Hari",
+    slug: "preview-halal-tour-korea-7-hari",
+    type: "halal_tour",
+    duration_days: 7,
+    base_price: 24900000,
+    organizations: {
+      name: "Jelajah Muslim",
+      slug: "jelajah-muslim",
+      status: "active",
+      logo_light_url: null,
+      logo_dark_url: null,
+    },
+    departures: [
+      {
+        id: "preview-departure-07",
+        departure_date: "2027-02-06",
+        return_date: "2027-02-12",
+        quota: 30,
+        filled: 19,
+        status: "open",
+      },
+    ],
+  },
+  {
+    id: "preview-tour-02",
+    name: "Explore Singapore & Malaysia",
+    slug: "preview-singapore-malaysia",
+    type: "tour",
+    duration_days: 5,
+    base_price: 8900000,
+    organizations: {
+      name: "Langkah Dunia",
+      slug: "langkah-dunia",
+      status: "active",
+      logo_light_url: null,
+      logo_dark_url: null,
+    },
+    departures: [
+      {
+        id: "preview-departure-08",
+        departure_date: "2026-11-21",
+        return_date: "2026-11-25",
+        quota: 35,
+        filled: 29,
+        status: "almost_full",
+      },
+    ],
+  },
+];
+
 export default async function HomePage() {
   const supabase = await createClient();
 
@@ -139,7 +349,12 @@ export default async function HomePage() {
     }))
     .slice(0, 8);
 
-  const upcomingPackages = marketplacePackages
+  const displayPackages =
+    marketplacePackages.length > 0 ? marketplacePackages : PREVIEW_PACKAGES;
+
+  const isPreviewInventory = marketplacePackages.length === 0;
+
+  const upcomingPackages = displayPackages
     .filter((pkg) => pkg.departures.length > 0)
     .sort(
       (a, b) =>
@@ -325,6 +540,12 @@ export default async function HomePage() {
               <p className="mt-1 text-xs text-[#6d7c91]">
                 Paket yang telah dipublikasikan oleh Travel aktif di Segaloka.
               </p>
+
+              {isPreviewInventory && (
+                <p className="mt-2 inline-flex rounded-full bg-[#fff4dd] px-2.5 py-1 text-[9px] font-extrabold text-[#a65f00]">
+                  Preview layout — data contoh sementara
+                </p>
+              )}
             </div>
 
             <Link
@@ -335,7 +556,7 @@ export default async function HomePage() {
             </Link>
           </div>
 
-          {marketplacePackages.length === 0 ? (
+          {displayPackages.length === 0 ? (
             <div className="mt-5 flex flex-col gap-4 rounded-2xl border border-dashed border-[#cfdbea] bg-white px-5 py-5 sm:flex-row sm:items-center sm:justify-between">
               <div className="flex items-center gap-4">
                 <span className="flex h-11 w-11 shrink-0 items-center justify-center rounded-full bg-[#eef5ff] text-primary">
@@ -360,7 +581,7 @@ export default async function HomePage() {
             </div>
           ) : (
             <div className="mt-5 grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
-              {marketplacePackages.map((pkg) => {
+              {displayPackages.map((pkg) => {
                 const org = pkg.organizations;
                 const departure = pkg.departures[0];
                 const seats = availableSeats(departure);
