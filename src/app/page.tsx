@@ -25,8 +25,14 @@ const SERVICES = [
   },
   {
     type: "tour",
-    label: "Tour",
-    description: "Domestik & internasional",
+    label: "Tour Domestik",
+    description: "Jelajahi Indonesia",
+    icon: "route" as const,
+  },
+  {
+    type: "tour",
+    label: "Tour Internasional",
+    description: "Jelajahi dunia",
     icon: "plane" as const,
   },
 ];
@@ -35,6 +41,41 @@ const SEGADEALS_STEPS = [
   "Sampaikan kebutuhan perjalanan",
   "Travel mengirim penawaran",
   "Bandingkan dan pilih penawaran",
+];
+
+/**
+ * HOMEPAGE MARKETPLACE V4 - TEMPORARY VISUAL DATA
+ *
+ * Hanya untuk membentuk layout marketplace selama data CMS/ads/destination
+ * production belum tersedia. Tidak ditulis ke Supabase dan bukan sumber transaksi.
+ */
+const PREVIEW_PROMOS = [
+  { id: "promo-umrah", label: "Umrah", title: "Promo Umrah Pilihan", detail: "Paket perjalanan dari Travel aktif", icon: "building" as const },
+  { id: "promo-domestik", label: "Domestik", title: "Liburan di Indonesia", detail: "Bali, Lombok, Labuan Bajo & lainnya", icon: "route" as const },
+  { id: "promo-halal", label: "Halal Tour", title: "Jelajahi Dunia", detail: "Turki, Jepang, Korea & destinasi lainnya", icon: "globe" as const },
+];
+
+const PREVIEW_DOMESTIC_DESTINATIONS = [
+  { name: "Bali", detail: "Pantai, budaya & keluarga", icon: "route" as const },
+  { name: "Lombok", detail: "Pulau, resort & wisata halal", icon: "globe" as const },
+  { name: "Labuan Bajo", detail: "Komodo & island hopping", icon: "plane" as const },
+  { name: "Yogyakarta", detail: "Budaya, sejarah & kuliner", icon: "building" as const },
+  { name: "Raja Ampat", detail: "Bahari & petualangan", icon: "globe" as const },
+];
+
+const PREVIEW_WORLD_DESTINATIONS = [
+  { name: "Turki", detail: "Istanbul & Cappadocia", icon: "globe" as const },
+  { name: "Jepang", detail: "Tokyo, Osaka & Kyoto", icon: "plane" as const },
+  { name: "Korea Selatan", detail: "Seoul & Busan", icon: "building" as const },
+  { name: "Malaysia", detail: "Kuala Lumpur & sekitarnya", icon: "route" as const },
+  { name: "Singapura", detail: "City break & keluarga", icon: "plane" as const },
+];
+
+const PREVIEW_INSPIRATIONS = [
+  { title: "Panduan memilih paket Umrah sesuai kebutuhan", category: "Umrah" },
+  { title: "Destinasi domestik untuk liburan keluarga", category: "Indonesia" },
+  { title: "Persiapan perjalanan Halal Tour pertama Anda", category: "Halal Tour" },
+  { title: "Tips membandingkan penawaran perjalanan", category: "Panduan" },
 ];
 
 /**
@@ -480,162 +521,150 @@ export default async function HomePage() {
       <PublicNav />
 
       <main className="pb-16 md:pb-0">
-        {/* TRAVEL MARKETPLACE HERO */}
-        <section className="relative overflow-hidden border-b border-[#dfe9f4] bg-[#eaf4ff]">
-          <div className="absolute inset-0 bg-[linear-gradient(105deg,#f8fcff_0%,#eef7ff_48%,#d8ebff_100%)]" />
+        {/* MARKETPLACE V4 HERO */}
+        <section className="relative overflow-hidden border-b border-[#d9e6f4] bg-[#dff1ff]">
+          <div className="absolute inset-0 bg-[linear-gradient(105deg,#edf8ff_0%,#d8efff_50%,#c8e8ff_100%)]" />
+          <div className="absolute -right-16 -top-28 hidden h-[420px] w-[620px] rounded-[50%] border border-white/60 bg-white/25 lg:block" />
+          <div className="absolute right-[13%] top-10 hidden h-44 w-44 rounded-full border-[30px] border-white/25 lg:block" />
 
-          <div className="absolute -right-12 -top-24 hidden h-[360px] w-[520px] rotate-[-8deg] rounded-[50%] border border-white/70 bg-white/30 lg:block" />
-          <div className="absolute right-[8%] top-8 hidden h-36 w-36 rounded-full border-[26px] border-white/35 lg:block" />
-
-          <div className="absolute right-[19%] top-14 hidden lg:block">
-            <div className="relative h-28 w-48">
-              <div className="absolute left-0 top-10 h-16 w-16 rounded-2xl border border-white/80 bg-white/75 shadow-[0_12px_30px_rgba(25,94,166,0.10)]" />
-              <div className="absolute left-5 top-0 flex h-16 w-16 items-center justify-center rounded-2xl bg-primary text-white shadow-[0_14px_34px_rgba(17,104,219,0.24)]">
-                <Icon name="plane" size={25} />
+          <div className="relative mx-auto max-w-[1240px] px-4 pb-28 pt-8 sm:pb-32 md:pt-10">
+            <div className="grid gap-6 lg:grid-cols-[1fr_0.72fr] lg:items-center">
+              <div className="max-w-[700px]">
+                <p className="inline-flex items-center gap-2 rounded-full border border-white/80 bg-white/80 px-3 py-1.5 text-[10px] font-extrabold text-primary shadow-sm">
+                  <Icon name="globe" size={13} />
+                  Domestik · Internasional · Umrah · Haji
+                </p>
+                <h1 className="mt-3 font-display text-[31px] font-extrabold leading-[1.08] tracking-[-0.035em] text-[#10223f] sm:text-[36px] md:text-[42px]">
+                  Dari Indonesia untuk perjalanan ke mana saja.
+                </h1>
+                <p className="mt-3 max-w-[650px] text-sm leading-6 text-[#52647e]">
+                  Temukan paket Umrah, Haji, Halal Tour, Tour Domestik dan Tour Internasional dari Travel dalam ekosistem Segaloka.
+                </p>
               </div>
-              <div className="absolute bottom-0 right-0 flex h-14 w-28 items-center gap-2 rounded-2xl border border-white/80 bg-white/85 px-3 shadow-[0_12px_30px_rgba(25,94,166,0.10)]">
-                <span className="flex h-8 w-8 items-center justify-center rounded-full bg-[#eaf3ff] text-primary">
-                  <Icon name="globe" size={16} />
-                </span>
-                <span className="text-[10px] font-extrabold leading-4 text-[#10223f]">
-                  Jelajahi
-                  <br />
-                  perjalanan
-                </span>
+
+              <div className="hidden justify-end lg:flex">
+                <div className="grid w-[330px] grid-cols-2 gap-3">
+                  <div className="rounded-2xl border border-white/80 bg-white/80 p-4 shadow-[0_12px_30px_rgba(25,94,166,0.10)]">
+                    <span className="flex h-9 w-9 items-center justify-center rounded-xl bg-[#eaf3ff] text-primary">
+                      <Icon name="route" size={17} />
+                    </span>
+                    <p className="mt-3 text-[10px] font-extrabold text-[#10223f]">Jelajahi Indonesia</p>
+                    <p className="mt-1 text-[9px] leading-4 text-[#718096]">Bali hingga Raja Ampat</p>
+                  </div>
+                  <div className="mt-7 rounded-2xl border border-white/80 bg-white/80 p-4 shadow-[0_12px_30px_rgba(25,94,166,0.10)]">
+                    <span className="flex h-9 w-9 items-center justify-center rounded-xl bg-primary text-white">
+                      <Icon name="plane" size={17} />
+                    </span>
+                    <p className="mt-3 text-[10px] font-extrabold text-[#10223f]">Jelajahi Dunia</p>
+                    <p className="mt-1 text-[9px] leading-4 text-[#718096]">Asia, Timur Tengah & lainnya</p>
+                  </div>
+                </div>
               </div>
-            </div>
-          </div>
-
-          <div className="relative mx-auto max-w-[1240px] px-4 pb-28 pt-7 md:pb-32 md:pt-8">
-            <div className="max-w-[640px]">
-              <p className="inline-flex items-center gap-2 rounded-full border border-white/80 bg-white/80 px-3 py-1.5 text-[11px] font-extrabold text-primary shadow-sm">
-                <Icon name="shield" size={13} />
-                Marketplace perjalanan dalam ekosistem Segaloka
-              </p>
-
-              <h1 className="mt-3 font-display text-[30px] font-extrabold leading-[1.08] tracking-[-0.035em] text-[#10223f] sm:text-[34px] md:text-[38px]">
-                Mau perjalanan ke mana?
-              </h1>
-
-              <p className="mt-2.5 max-w-[560px] text-sm leading-6 text-[#52647e]">
-                Temukan paket Umrah, Haji, Halal Tour dan Tour dari Travel
-                dalam satu marketplace.
-              </p>
             </div>
           </div>
         </section>
 
-        {/* TRANSACTION CENTER */}
+        {/* MARKETPLACE CATEGORY + SEARCH CENTER */}
         <section className="relative z-20 mx-auto -mt-20 max-w-[1240px] px-4">
           <div className="overflow-hidden rounded-2xl border border-[#dce4ee] bg-white shadow-[0_18px_50px_rgba(16,34,63,0.14)]">
             <div className="overflow-x-auto border-b border-[#e8edf3]">
               <div className="flex min-w-max items-stretch px-2 sm:px-4">
                 {SERVICES.map((service, index) => (
                   <Link
-                    key={service.type}
+                    key={`${service.label}-${index}`}
                     href={`/paket/${service.type}`}
-                    className={`group relative flex min-w-[118px] items-center justify-center gap-2.5 px-4 py-4 text-center transition hover:bg-[#f7fbff] ${
+                    className={`group relative flex min-w-[126px] items-center justify-center gap-2 px-3 py-3.5 transition hover:bg-[#f7fbff] ${
                       index === 0 ? "text-primary" : "text-[#52647e]"
                     }`}
                   >
-                    <span
-                      className={`flex h-9 w-9 shrink-0 items-center justify-center rounded-full ${
-                        index === 0
-                          ? "bg-primary text-white"
-                          : "bg-[#eef4fb] text-primary"
-                      }`}
-                    >
-                      <Icon name={service.icon} size={17} />
+                    <span className={`flex h-8 w-8 shrink-0 items-center justify-center rounded-full ${
+                      index === 0 ? "bg-primary text-white" : "bg-[#eef4fb] text-primary"
+                    }`}>
+                      <Icon name={service.icon} size={15} />
                     </span>
-
                     <span className="text-left">
-                      <span className="block text-xs font-extrabold text-[#10223f]">
-                        {service.label}
-                      </span>
-                      <span className="mt-0.5 block text-[9px] font-medium text-[#77869a]">
-                        {service.description}
-                      </span>
+                      <span className="block text-[11px] font-extrabold text-[#10223f]">{service.label}</span>
+                      <span className="mt-0.5 block text-[8px] font-medium text-[#77869a]">{service.description}</span>
                     </span>
-
-                    {index === 0 && (
-                      <span className="absolute inset-x-0 bottom-0 h-0.5 bg-primary" />
-                    )}
+                    {index === 0 && <span className="absolute inset-x-0 bottom-0 h-0.5 bg-primary" />}
                   </Link>
                 ))}
-
                 <Link
                   href="/akun/segadeals/baru"
-                  className="group relative flex min-w-[132px] items-center justify-center gap-2.5 px-4 py-4 transition hover:bg-[#fffaf1]"
+                  className="flex min-w-[130px] items-center justify-center gap-2 px-3 py-3.5 transition hover:bg-[#fffaf1]"
                 >
-                  <span className="flex h-9 w-9 items-center justify-center rounded-full bg-[#fff2d9] text-[#d67a00]">
-                    <Icon name="handshake" size={17} />
+                  <span className="flex h-8 w-8 items-center justify-center rounded-full bg-[#fff2d9] text-[#d67a00]">
+                    <Icon name="handshake" size={15} />
                   </span>
                   <span>
-                    <span className="block text-xs font-extrabold text-[#10223f]">
-                      SegaDeals
-                    </span>
-                    <span className="mt-0.5 block text-[9px] font-medium text-[#77869a]">
-                      Minta Travel menawar
-                    </span>
+                    <span className="block text-[11px] font-extrabold text-[#10223f]">SegaDeals</span>
+                    <span className="mt-0.5 block text-[8px] text-[#77869a]">Minta Travel menawar</span>
                   </span>
                 </Link>
               </div>
             </div>
 
-            <div className="flex flex-col gap-3 px-4 py-3.5 sm:flex-row sm:items-center sm:justify-between sm:px-6">
-              <div className="flex items-center gap-3">
-                <span className="flex h-9 w-9 shrink-0 items-center justify-center rounded-full bg-[#eef5ff] text-primary">
-                  <Icon name="building" size={16} />
-                </span>
-                <div>
-                  <p className="text-[9px] font-extrabold uppercase tracking-[0.08em] text-[#7c8a9d]">
-                    Pilihan perjalanan
-                  </p>
-                  <p className="text-xs font-extrabold text-[#10223f]">
-                    Jelajahi paket Umrah dari Travel di Segaloka
-                  </p>
-                </div>
-              </div>
-
-              <div className="flex flex-wrap gap-2">
+            <div className="p-4 sm:p-5">
+              <div className="grid gap-2 md:grid-cols-[1fr_1.1fr_0.9fr_0.72fr_auto]">
+                {[
+                  ["route", "Dari", "Kota keberangkatan"],
+                  ["globe", "Ke / Tujuan", "Pilih destinasi"],
+                  ["booking", "Tanggal", "Pilih tanggal"],
+                  ["user", "Traveler", "2 orang"],
+                ].map(([icon, label, value]) => (
+                  <div key={label} className="flex min-h-[58px] items-center gap-3 rounded-xl border border-[#dfe7f0] bg-[#fbfdff] px-3.5">
+                    <span className="text-primary"><Icon name={icon as any} size={16} /></span>
+                    <div className="min-w-0">
+                      <p className="text-[8px] font-extrabold uppercase tracking-[0.08em] text-[#8b9aae]">{label}</p>
+                      <p className="mt-0.5 truncate text-[11px] font-extrabold text-[#10223f]">{value}</p>
+                    </div>
+                  </div>
+                ))}
                 <Link
-                  href="/akun/segadeals/baru"
-                  className="inline-flex items-center justify-center gap-2 rounded-full border border-[#efd09d] bg-[#fffaf2] px-4 py-2.5 text-[11px] font-extrabold text-[#b96a00] transition hover:bg-[#fff3df]"
+                  href="/paket/tour"
+                  className="inline-flex min-h-[58px] items-center justify-center gap-2 rounded-xl bg-primary px-6 text-[11px] font-extrabold text-white transition hover:opacity-90"
                 >
-                  <Icon name="handshake" size={14} />
-                  Minta penawaran
-                </Link>
-
-                <Link
-                  href="/paket/umrah"
-                  className="inline-flex items-center justify-center gap-2 rounded-full bg-primary px-5 py-2.5 text-[11px] font-extrabold text-white transition hover:opacity-90"
-                >
-                  <Icon name="search" size={14} />
-                  Lihat Paket Umrah
+                  <Icon name="search" size={15} />
+                  Cari
                 </Link>
               </div>
+              <p className="mt-2 text-[8px] font-medium text-[#8b9aae]">
+                Preview UI pencarian. Filter asal, tujuan, tanggal dan traveler akan dihubungkan ke schema pencarian production pada tahap berikutnya.
+              </p>
             </div>
           </div>
 
-          <div className="mx-auto flex max-w-[720px] items-center justify-center divide-x divide-[#dce4ee] py-3 text-[10px] font-bold text-[#243b5a]">
-            <span className="flex items-center gap-2 px-5">
-              <span className="text-[#1b9c55]">
-                <Icon name="shield" size={13} />
-              </span>
-              Travel aktif
-            </span>
-            <span className="flex items-center gap-2 px-5">
-              <span className="text-primary">
-                <Icon name="wallet" size={13} />
-              </span>
-              Transaksi tercatat
-            </span>
-            <span className="flex items-center gap-2 px-5">
-              <span className="text-[#d67a00]">
-                <Icon name="handshake" size={13} />
-              </span>
-              SegaDeals
-            </span>
+          <div className="mx-auto flex max-w-[760px] items-center justify-center divide-x divide-[#dce4ee] py-3 text-[9px] font-bold text-[#243b5a]">
+            <span className="flex items-center gap-1.5 px-4"><span className="text-[#1b9c55]"><Icon name="shield" size={12} /></span>Travel aktif</span>
+            <span className="flex items-center gap-1.5 px-4"><span className="text-primary"><Icon name="wallet" size={12} /></span>Transaksi tercatat</span>
+            <span className="flex items-center gap-1.5 px-4"><span className="text-[#d67a00]"><Icon name="handshake" size={12} /></span>SegaDeals</span>
+          </div>
+        </section>
+
+        {/* MARKETPLACE PROMO STRIP */}
+        <section className="mx-auto max-w-[1240px] px-4 pb-4 pt-2">
+          <div className="grid gap-3 md:grid-cols-3">
+            {PREVIEW_PROMOS.map((promo, index) => (
+              <div
+                key={promo.id}
+                className={`relative overflow-hidden rounded-2xl border p-4 ${
+                  index === 0 ? "border-[#cfe4ff] bg-[#eaf5ff]" :
+                  index === 1 ? "border-[#d8eee5] bg-[#eefaf5]" :
+                  "border-[#eadff8] bg-[#f7f1ff]"
+                }`}
+              >
+                <div className="flex items-center gap-3">
+                  <span className="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl bg-white/85 text-primary shadow-sm">
+                    <Icon name={promo.icon} size={18} />
+                  </span>
+                  <div>
+                    <p className="text-[8px] font-black uppercase tracking-[0.12em] text-primary">{promo.label}</p>
+                    <p className="mt-0.5 text-[12px] font-extrabold text-[#10223f]">{promo.title}</p>
+                    <p className="mt-1 text-[9px] text-[#718096]">{promo.detail}</p>
+                  </div>
+                </div>
+              </div>
+            ))}
           </div>
         </section>
 
@@ -647,10 +676,10 @@ export default async function HomePage() {
                 Rekomendasi perjalanan
               </p>
               <h2 className="mt-1 font-display text-[24px] font-extrabold tracking-[-0.025em] text-[#10223f]">
-                Paket terbaru untuk Anda
+                Paket pilihan untuk Anda
               </h2>
               <p className="mt-1 text-xs text-[#6d7c91]">
-                Paket yang telah dipublikasikan oleh Travel aktif di Segaloka.
+                Umrah, Haji, perjalanan domestik dan internasional dari Travel di Segaloka.
               </p>
 
               {isPreviewInventory && (
@@ -809,6 +838,28 @@ export default async function HomePage() {
           )}
         </section>
 
+        {/* EXPLORE INDONESIA */}
+        <section className="mx-auto max-w-[1240px] px-4 pb-8">
+          <div className="flex items-end justify-between gap-4">
+            <div>
+              <p className="text-[10px] font-extrabold uppercase tracking-[0.14em] text-primary">Jelajahi Indonesia</p>
+              <h2 className="mt-1 font-display text-xl font-extrabold text-[#10223f] sm:text-[22px]">Destinasi domestik pilihan</h2>
+              <p className="mt-1 text-[11px] text-[#748297]">Temukan perjalanan di berbagai destinasi Indonesia.</p>
+            </div>
+            <Link href="/paket/tour" className="hidden text-[11px] font-extrabold text-primary hover:underline sm:inline">Lihat Tour Domestik →</Link>
+          </div>
+          <div className="mt-4 grid grid-cols-2 gap-3 sm:grid-cols-3 lg:grid-cols-5">
+            {PREVIEW_DOMESTIC_DESTINATIONS.map((destination, index) => (
+              <Link key={destination.name} href="/paket/tour" className="group relative min-h-[128px] overflow-hidden rounded-2xl border border-[#dce7f3] bg-gradient-to-br from-[#e9f6ff] to-white p-4">
+                <div className="absolute -bottom-10 -right-8 h-28 w-28 rounded-full bg-[#d8eeff]/70 transition group-hover:scale-110" />
+                <span className="relative flex h-9 w-9 items-center justify-center rounded-xl bg-white text-primary shadow-sm"><Icon name={destination.icon} size={16} /></span>
+                <p className="relative mt-4 text-[13px] font-extrabold text-[#10223f]">{destination.name}</p>
+                <p className="relative mt-1 text-[9px] leading-4 text-[#718096]">{destination.detail}</p>
+              </Link>
+            ))}
+          </div>
+        </section>
+
         {/* TRAVEL ADS - TEMPORARY PREVIEW LAYOUT */}
         <section className="mx-auto max-w-[1240px] px-4 pb-8">
           <div className="flex items-end justify-between gap-4">
@@ -942,6 +993,29 @@ export default async function HomePage() {
             </div>
           </section>
         )}
+
+        {/* EXPLORE THE WORLD */}
+        <section className="mx-auto max-w-[1240px] px-4 pb-10">
+          <div className="rounded-[22px] bg-[#eef7ff] p-5 sm:p-6">
+            <div className="flex items-end justify-between gap-4">
+              <div>
+                <p className="text-[10px] font-extrabold uppercase tracking-[0.14em] text-primary">Jelajahi Dunia</p>
+                <h2 className="mt-1 font-display text-xl font-extrabold text-[#10223f] sm:text-[22px]">Destinasi internasional populer</h2>
+                <p className="mt-1 text-[11px] text-[#748297]">Halal Tour dan Tour Internasional untuk perjalanan berikutnya.</p>
+              </div>
+              <Link href="/paket/halal_tour" className="hidden text-[11px] font-extrabold text-primary hover:underline sm:inline">Lihat Internasional →</Link>
+            </div>
+            <div className="mt-4 grid grid-cols-2 gap-3 sm:grid-cols-3 lg:grid-cols-5">
+              {PREVIEW_WORLD_DESTINATIONS.map((destination) => (
+                <Link key={destination.name} href="/paket/halal_tour" className="rounded-2xl border border-white bg-white p-4 shadow-[0_6px_20px_rgba(15,45,90,0.04)]">
+                  <span className="flex h-9 w-9 items-center justify-center rounded-xl bg-[#edf5ff] text-primary"><Icon name={destination.icon} size={16} /></span>
+                  <p className="mt-3 text-[12px] font-extrabold text-[#10223f]">{destination.name}</p>
+                  <p className="mt-1 text-[9px] leading-4 text-[#748297]">{destination.detail}</p>
+                </Link>
+              ))}
+            </div>
+          </div>
+        </section>
 
         {/* VENDOR PICKS - TEMPORARY PREVIEW LAYOUT */}
         <section className="mx-auto max-w-[1240px] px-4 pb-10">
@@ -1095,6 +1169,32 @@ export default async function HomePage() {
                   <span className="text-[9px] font-bold text-[#63758e]">
                     Profil Travel · Preview
                   </span>
+                </div>
+              </div>
+            ))}
+          </div>
+        </section>
+
+        {/* TRAVEL INSPIRATION */}
+        <section className="mx-auto max-w-[1240px] px-4 pb-10">
+          <div className="flex items-end justify-between gap-4">
+            <div>
+              <p className="text-[10px] font-extrabold uppercase tracking-[0.14em] text-primary">Inspirasi Perjalanan</p>
+              <h2 className="mt-1 font-display text-xl font-extrabold text-[#10223f] sm:text-[22px]">Ide dan panduan sebelum berangkat</h2>
+            </div>
+          </div>
+          <div className="mt-4 grid gap-3 sm:grid-cols-2 lg:grid-cols-4">
+            {PREVIEW_INSPIRATIONS.map((item, index) => (
+              <div key={item.title} className="overflow-hidden rounded-2xl border border-[#dfe7f0] bg-white">
+                <div className={`flex h-20 items-center justify-center ${
+                  index % 2 === 0 ? "bg-[#eaf5ff]" : "bg-[#eefaf5]"
+                }`}>
+                  <Icon name={index % 2 === 0 ? "globe" : "route"} size={22} />
+                </div>
+                <div className="p-3.5">
+                  <p className="text-[8px] font-extrabold uppercase tracking-[0.1em] text-primary">{item.category}</p>
+                  <h3 className="mt-1.5 line-clamp-2 text-[11px] font-extrabold leading-4 text-[#10223f]">{item.title}</h3>
+                  <p className="mt-2 text-[9px] font-bold text-[#748297]">Konten preview</p>
                 </div>
               </div>
             ))}
