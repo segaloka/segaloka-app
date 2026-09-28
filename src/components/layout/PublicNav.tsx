@@ -1,6 +1,5 @@
 import Link from "next/link";
 import { getSessionUser } from "@/lib/auth";
-import { ThemeToggle } from "./ThemeToggle";
 
 const links = [
   { href: "/paket/umrah", label: "Umrah" },
@@ -30,7 +29,6 @@ export async function PublicNav() {
           ))}
         </nav>
         <div className="ml-auto flex items-center gap-2">
-          <ThemeToggle />
           {user ? (
             <Link href="/akun" className="rounded-md bg-primary px-4 py-2 text-sm font-semibold text-primary-fg hover:bg-primary-hover">
               Akun Saya

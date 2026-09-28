@@ -5,7 +5,6 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { cx } from "@/lib/utils";
 import { Icon, type IconName } from "./Icon";
-import { ThemeToggle } from "./ThemeToggle";
 import { LogoutButton } from "./LogoutButton";
 
 export interface NavItem {
@@ -214,7 +213,6 @@ export function DashboardShell({
             <Icon name="menu" size={20} />
           </button>
           <div className="flex-1" />
-          <ThemeToggle />
           <Link href="/akun/notifikasi" className="relative flex h-9 w-9 items-center justify-center rounded-md text-text-secondary hover:bg-bg" aria-label="Notifikasi">
             <Icon name="bell" size={17} />
           </Link>
