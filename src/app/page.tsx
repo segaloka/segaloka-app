@@ -75,76 +75,60 @@ export default async function HomePage() {
         {/* ==================================================
             MARKETPLACE SEARCH / CATEGORY PANEL
         ================================================== */}
-        <section className="relative z-10 mx-auto -mt-20 max-w-6xl px-4">
-          <div className="rounded-2xl border border-border bg-surface p-4 shadow-card sm:p-5 md:rounded-3xl md:p-6">
-            <div className="flex items-center justify-between gap-4">
-              <div>
-                <p className="font-display text-base font-bold text-text-primary md:text-lg">
-                  Cari perjalanan Anda
-                </p>
-                <p className="mt-1 text-xs text-text-secondary md:text-sm">
-                  Pilih jenis perjalanan untuk melihat paket yang tersedia.
-                </p>
-              </div>
-
-              <div className="hidden rounded-full bg-primary/10 px-3 py-1.5 text-xs font-bold text-primary sm:block">
-                Travel Marketplace
-              </div>
-            </div>
-
-            <div className="mt-5 grid grid-cols-2 gap-3 md:grid-cols-4">
-              {CATEGORIES.map((category) => (
-                <Link
-                  key={category.type}
-                  href={`/paket/${category.type}`}
-                  className="group flex min-h-28 flex-col justify-between rounded-2xl border border-border bg-white p-4 transition hover:border-primary/50 hover:shadow-card"
-                >
-                  <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-primary/10 text-primary transition group-hover:bg-primary group-hover:text-white">
-                    <Icon name={category.icon} size={20} />
-                  </div>
-
-                  <div className="mt-4">
-                    <div className="flex items-center justify-between gap-2">
-                      <p className="font-display text-sm font-bold text-text-primary md:text-base">
-                        {category.label}
-                      </p>
-                      <span className="text-primary">→</span>
-                    </div>
-
-                    <p className="mt-1 hidden text-xs leading-5 text-text-secondary sm:block">
-                      {category.desc}
+        <section className="relative z-10 mx-auto -mt-14 max-w-6xl px-4">
+          <div className="rounded-2xl border border-border bg-white p-4 shadow-card md:p-5">
+            <div className="flex flex-col gap-4 lg:flex-row lg:items-end">
+              <div className="min-w-0 flex-1">
+                <div className="flex items-center justify-between gap-4">
+                  <div>
+                    <p className="font-display text-base font-bold text-text-primary">
+                      Cari perjalanan Anda
+                    </p>
+                    <p className="mt-0.5 text-xs text-text-secondary">
+                      Pilih jenis perjalanan yang ingin Anda cari.
                     </p>
                   </div>
-                </Link>
-              ))}
-            </div>
 
-            <div className="mt-4 flex flex-col gap-3 rounded-2xl bg-[#f5f8fd] p-4 sm:flex-row sm:items-center sm:justify-between">
-              <div className="flex items-start gap-3">
-                <div className="flex h-9 w-9 shrink-0 items-center justify-center rounded-xl bg-white text-primary shadow-sm">
-                  <Icon name="search" size={18} />
+                  <span className="hidden text-xs font-bold text-primary md:block">
+                    Travel Marketplace
+                  </span>
                 </div>
-                <div>
-                  <p className="text-sm font-bold text-text-primary">
-                    Belum tahu ingin memilih paket yang mana?
-                  </p>
-                  <p className="mt-0.5 text-xs leading-5 text-text-secondary">
-                    Jelajahi paket Umrah terlebih dahulu atau gunakan SegaDeals
-                    agar Travel dapat memberikan penawaran.
-                  </p>
+
+                <div className="mt-3 grid grid-cols-2 gap-2 md:grid-cols-4">
+                  {CATEGORIES.map((category) => (
+                    <Link
+                      key={category.type}
+                      href={`/paket/${category.type}`}
+                      className="group flex min-h-[68px] items-center gap-3 rounded-xl border border-border bg-white px-3 py-2.5 transition hover:border-primary/50 hover:bg-primary/[0.03]"
+                    >
+                      <div className="flex h-9 w-9 shrink-0 items-center justify-center rounded-lg bg-primary/10 text-primary transition group-hover:bg-primary group-hover:text-white">
+                        <Icon name={category.icon} size={18} />
+                      </div>
+
+                      <div className="min-w-0">
+                        <p className="font-display text-sm font-bold text-text-primary">
+                          {category.label}
+                        </p>
+
+                        <p className="mt-0.5 hidden truncate text-[11px] text-text-secondary xl:block">
+                          {category.desc}
+                        </p>
+                      </div>
+                    </Link>
+                  ))}
                 </div>
               </div>
 
               <Link
                 href="/paket/umrah"
-                className="inline-flex h-11 shrink-0 items-center justify-center rounded-xl bg-primary px-5 text-sm font-bold text-primary-fg transition hover:bg-primary-hover"
+                className="inline-flex h-11 shrink-0 items-center justify-center rounded-xl bg-primary px-6 text-sm font-bold text-primary-fg transition hover:bg-primary-hover lg:mb-0 lg:w-auto"
               >
-                Cari Paket
+                <Icon name="search" size={17} />
+                <span className="ml-2">Cari Paket</span>
               </Link>
             </div>
           </div>
         </section>
-
         {/* ==================================================
             TRUST STRIP
         ================================================== */}
