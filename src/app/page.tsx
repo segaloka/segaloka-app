@@ -530,7 +530,7 @@ export default async function HomePage() {
           <div className="relative mx-auto max-w-[1180px] px-4 pb-28 pt-8 sm:pb-32 md:pt-10">
             <div className="grid gap-6 lg:grid-cols-[1fr_0.72fr] lg:items-center">
               <div className="max-w-[700px]">
-                <p className="inline-flex items-center gap-2 rounded-full border border-white/80 bg-white/80 px-3 py-1.5 text-[10px] font-extrabold text-primary shadow-sm">
+                <p className="inline-flex items-center gap-2 rounded-full border border-white/80 bg-white/80 px-3 py-1.5 text-xs font-extrabold text-primary shadow-sm">
                   <Icon name="globe" size={13} />
                   Domestik · Internasional · Umrah · Haji
                 </p>
@@ -548,15 +548,15 @@ export default async function HomePage() {
                     <span className="flex h-9 w-9 items-center justify-center rounded-xl bg-[#eaf3ff] text-primary">
                       <Icon name="route" size={17} />
                     </span>
-                    <p className="mt-3 text-[10px] font-extrabold text-[#10223f]">Jelajahi Indonesia</p>
-                    <p className="mt-1 text-[9px] leading-4 text-[#718096]">Bali hingga Raja Ampat</p>
+                    <p className="mt-3 text-xs font-extrabold text-[#10223f]">Jelajahi Indonesia</p>
+                    <p className="mt-1 text-xs leading-4 text-[#718096]">Bali hingga Raja Ampat</p>
                   </div>
                   <div className="mt-7 rounded-2xl border border-white/80 bg-white/80 p-4 shadow-[0_12px_30px_rgba(25,94,166,0.10)]">
                     <span className="flex h-9 w-9 items-center justify-center rounded-xl bg-primary text-white">
                       <Icon name="plane" size={17} />
                     </span>
-                    <p className="mt-3 text-[10px] font-extrabold text-[#10223f]">Jelajahi Dunia</p>
-                    <p className="mt-1 text-[9px] leading-4 text-[#718096]">Asia, Timur Tengah & lainnya</p>
+                    <p className="mt-3 text-xs font-extrabold text-[#10223f]">Jelajahi Dunia</p>
+                    <p className="mt-1 text-xs leading-4 text-[#718096]">Asia, Timur Tengah & lainnya</p>
                   </div>
                 </div>
               </div>
@@ -583,8 +583,8 @@ export default async function HomePage() {
                       <Icon name={service.icon} size={15} />
                     </span>
                     <span className="text-left">
-                      <span className="block text-[11px] font-extrabold text-[#10223f]">{service.label}</span>
-                      <span className="mt-0.5 block text-[8px] font-medium text-[#77869a]">{service.description}</span>
+                      <span className="block text-xs font-extrabold text-[#10223f]">{service.label}</span>
+                      <span className="mt-0.5 block text-xs font-medium text-[#77869a]">{service.description}</span>
                     </span>
                     {index === 0 && <span className="absolute inset-x-0 bottom-0 h-0.5 bg-primary" />}
                   </Link>
@@ -597,8 +597,8 @@ export default async function HomePage() {
                     <Icon name="handshake" size={15} />
                   </span>
                   <span>
-                    <span className="block text-[11px] font-extrabold text-[#10223f]">SegaDeals</span>
-                    <span className="mt-0.5 block text-[8px] text-[#77869a]">Minta Travel menawar</span>
+                    <span className="block text-xs font-extrabold text-[#10223f]">SegaDeals</span>
+                    <span className="mt-0.5 block text-xs text-[#77869a]">Minta Travel menawar</span>
                   </span>
                 </Link>
               </div>
@@ -615,26 +615,26 @@ export default async function HomePage() {
                   <div key={label} className="flex min-h-[58px] items-center gap-3 rounded-xl border border-[#dfe7f0] bg-[#fbfdff] px-3.5">
                     <span className="text-primary"><Icon name={icon as any} size={16} /></span>
                     <div className="min-w-0">
-                      <p className="text-[8px] font-extrabold uppercase tracking-[0.08em] text-[#8b9aae]">{label}</p>
-                      <p className="mt-0.5 truncate text-[11px] font-extrabold text-[#10223f]">{value}</p>
+                      <p className="text-xs font-extrabold uppercase tracking-[0.08em] text-[#8b9aae]">{label}</p>
+                      <p className="mt-0.5 truncate text-xs font-extrabold text-[#10223f]">{value}</p>
                     </div>
                   </div>
                 ))}
                 <Link
                   href="/paket/tour"
-                  className="inline-flex min-h-[58px] items-center justify-center gap-2 rounded-xl bg-primary px-6 text-[11px] font-extrabold text-white transition hover:opacity-90"
+                  className="inline-flex min-h-[58px] items-center justify-center gap-2 rounded-xl bg-primary px-6 text-xs font-extrabold text-white transition hover:opacity-90"
                 >
                   <Icon name="search" size={15} />
                   Cari
                 </Link>
               </div>
-              <p className="mt-2 text-[8px] font-medium text-[#8b9aae]">
+              <p className="mt-2 text-xs font-medium text-[#8b9aae]">
                 Preview UI pencarian. Filter asal, tujuan, tanggal dan traveler akan dihubungkan ke schema pencarian production pada tahap berikutnya.
               </p>
             </div>
           </div>
 
-          <div className="mx-auto flex max-w-[760px] items-center justify-center divide-x divide-[#dce4ee] py-3 text-[9px] font-bold text-[#243b5a]">
+          <div className="mx-auto flex max-w-[760px] items-center justify-center divide-x divide-[#dce4ee] py-3 text-xs font-bold text-[#243b5a]">
             <span className="flex items-center gap-1.5 px-4"><span className="text-[#1b9c55]"><Icon name="shield" size={12} /></span>Travel aktif</span>
             <span className="flex items-center gap-1.5 px-4"><span className="text-primary"><Icon name="wallet" size={12} /></span>Transaksi tercatat</span>
             <span className="flex items-center gap-1.5 px-4"><span className="text-[#d67a00]"><Icon name="handshake" size={12} /></span>SegaDeals</span>
@@ -658,9 +658,9 @@ export default async function HomePage() {
                     <Icon name={promo.icon} size={18} />
                   </span>
                   <div>
-                    <p className="text-[8px] font-black uppercase tracking-[0.12em] text-primary">{promo.label}</p>
-                    <p className="mt-0.5 text-[12px] font-extrabold text-[#10223f]">{promo.title}</p>
-                    <p className="mt-1 text-[9px] text-[#718096]">{promo.detail}</p>
+                    <p className="text-xs font-black uppercase tracking-[0.12em] text-primary">{promo.label}</p>
+                    <p className="mt-0.5 text-sm font-extrabold text-[#10223f]">{promo.title}</p>
+                    <p className="mt-1 text-xs text-[#718096]">{promo.detail}</p>
                   </div>
                 </div>
               </div>
@@ -672,7 +672,7 @@ export default async function HomePage() {
         <section className="mx-auto max-w-[1180px] px-4 pb-8 pt-6">
           <div className="flex items-end justify-between gap-4">
             <div>
-              <p className="text-[10px] font-extrabold uppercase tracking-[0.14em] text-primary">
+              <p className="text-xs font-extrabold uppercase tracking-[0.14em] text-primary">
                 Rekomendasi perjalanan
               </p>
               <h2 className="mt-1 font-display text-[24px] font-extrabold tracking-[-0.025em] text-[#10223f]">
@@ -683,7 +683,7 @@ export default async function HomePage() {
               </p>
 
               {isPreviewInventory && (
-                <p className="mt-2 inline-flex rounded-full bg-[#fff4dd] px-2.5 py-1 text-[9px] font-extrabold text-[#a65f00]">
+                <p className="mt-2 inline-flex rounded-full bg-[#fff4dd] px-2.5 py-1 text-xs font-extrabold text-[#a65f00]">
                   Preview layout — data contoh sementara
                 </p>
               )}
@@ -707,7 +707,7 @@ export default async function HomePage() {
                   <p className="text-sm font-extrabold text-[#10223f]">
                     Paket sedang disiapkan
                   </p>
-                  <p className="mt-1 text-[11px] leading-5 text-[#718096]">
+                  <p className="mt-1 text-xs leading-5 text-[#718096]">
                     Paket published dari Travel aktif akan tampil otomatis di area ini.
                   </p>
                 </div>
@@ -715,7 +715,7 @@ export default async function HomePage() {
 
               <Link
                 href="/akun/segadeals/baru"
-                className="inline-flex shrink-0 items-center justify-center rounded-full border border-[#d8e1ec] px-4 py-2 text-[11px] font-extrabold text-primary hover:border-primary/40"
+                className="inline-flex shrink-0 items-center justify-center rounded-full border border-[#d8e1ec] px-4 py-2 text-xs font-extrabold text-primary hover:border-primary/40"
               >
                 Coba SegaDeals
               </Link>
@@ -744,7 +744,7 @@ export default async function HomePage() {
                       <div className="absolute -right-7 -top-8 h-24 w-24 rounded-full bg-white/45" />
 
                       <div className="relative z-10 flex items-start justify-between gap-3">
-                        <span className="inline-flex rounded-full border border-[#dce8f5] bg-white px-2.5 py-1 text-[10px] font-extrabold text-[#183a64] shadow-sm">
+                        <span className="inline-flex rounded-full border border-[#dce8f5] bg-white px-2.5 py-1 text-xs font-extrabold text-[#183a64] shadow-sm">
                           {packageTypeLabel(pkg.type)}
                         </span>
 
@@ -771,31 +771,31 @@ export default async function HomePage() {
 
                     <div className="p-3.5">
                       <div className="flex min-w-0 items-center gap-1.5">
-                        <span className="truncate text-[11px] font-bold text-[#536985]">
+                        <span className="truncate text-xs font-bold text-[#536985]">
                           {orgName}
                         </span>
 
                         <span
-                          className="text-[12px] leading-none text-[#f5a000]"
+                          className="text-sm leading-none text-[#f5a000]"
                           aria-hidden="true"
                         >
                           ★
                         </span>
 
-                        <span className="whitespace-nowrap text-[10px] font-bold text-[#40546f]">
+                        <span className="whitespace-nowrap text-xs font-bold text-[#40546f]">
                           {rating.score}
                         </span>
 
-                        <span className="whitespace-nowrap text-[9px] text-[#8a99ad]">
+                        <span className="whitespace-nowrap text-xs text-[#8a99ad]">
                           ({rating.reviews})
                         </span>
                       </div>
 
-                      <h3 className="mt-2 line-clamp-2 min-h-[36px] text-[14px] font-extrabold leading-[18px] text-[#071f43]">
+                      <h3 className="mt-2 line-clamp-2 min-h-[36px] text-sm font-extrabold leading-[18px] text-[#071f43]">
                         {pkg.name}
                       </h3>
 
-                      <div className="mt-2.5 flex flex-wrap items-center gap-x-2.5 gap-y-1 text-[10px] font-medium text-[#657892]">
+                      <div className="mt-2.5 flex flex-wrap items-center gap-x-2.5 gap-y-1 text-xs font-medium text-[#657892]">
                         {departure && (
                           <span>
                             {formatDate(departure.departure_date)}
@@ -811,7 +811,7 @@ export default async function HomePage() {
                       </div>
 
                       {seats !== null && (
-                        <div className="mt-2 flex items-center gap-1.5 text-[10px] font-semibold text-[#536985]">
+                        <div className="mt-2 flex items-center gap-1.5 text-xs font-semibold text-[#536985]">
                           <span
                             className={`h-1.5 w-1.5 rounded-full ${
                               seats <= 10 ? "bg-[#f5a000]" : "bg-[#16a36a]"
@@ -822,11 +822,11 @@ export default async function HomePage() {
                       )}
 
                       <div className="mt-3 border-t border-[#edf1f6] pt-2.5">
-                        <p className="text-[9px] font-semibold uppercase tracking-[0.08em] text-[#8b9aae]">
+                        <p className="text-xs font-semibold uppercase tracking-[0.08em] text-[#8b9aae]">
                           Harga
                         </p>
 
-                        <p className="mt-0.5 text-[17px] font-black leading-none text-[#0b6ee8]">
+                        <p className="mt-0.5 text-lg font-black leading-none text-[#0b6ee8]">
                           {formatIDR(pkg.base_price)}
                         </p>
                       </div>
@@ -842,19 +842,19 @@ export default async function HomePage() {
         <section className="mx-auto max-w-[1180px] px-4 pb-8">
           <div className="flex items-end justify-between gap-4">
             <div>
-              <p className="text-[10px] font-extrabold uppercase tracking-[0.14em] text-primary">Jelajahi Indonesia</p>
+              <p className="text-xs font-extrabold uppercase tracking-[0.14em] text-primary">Jelajahi Indonesia</p>
               <h2 className="mt-1 font-display text-xl font-extrabold text-[#10223f] sm:text-[22px]">Destinasi domestik pilihan</h2>
-              <p className="mt-1 text-[11px] text-[#748297]">Temukan perjalanan di berbagai destinasi Indonesia.</p>
+              <p className="mt-1 text-xs text-[#748297]">Temukan perjalanan di berbagai destinasi Indonesia.</p>
             </div>
-            <Link href="/paket/tour" className="hidden text-[11px] font-extrabold text-primary hover:underline sm:inline">Lihat Tour Domestik →</Link>
+            <Link href="/paket/tour" className="hidden text-xs font-extrabold text-primary hover:underline sm:inline">Lihat Tour Domestik →</Link>
           </div>
           <div className="mt-4 grid grid-cols-2 gap-3 sm:grid-cols-3 lg:grid-cols-5">
             {PREVIEW_DOMESTIC_DESTINATIONS.map((destination, index) => (
               <Link key={destination.name} href="/paket/tour" className="group relative min-h-[128px] overflow-hidden rounded-2xl border border-[#dce7f3] bg-gradient-to-br from-[#e9f6ff] to-white p-4">
                 <div className="absolute -bottom-10 -right-8 h-28 w-28 rounded-full bg-[#d8eeff]/70 transition group-hover:scale-110" />
                 <span className="relative flex h-9 w-9 items-center justify-center rounded-xl bg-white text-primary shadow-sm"><Icon name={destination.icon} size={16} /></span>
-                <p className="relative mt-4 text-[13px] font-extrabold text-[#10223f]">{destination.name}</p>
-                <p className="relative mt-1 text-[9px] leading-4 text-[#718096]">{destination.detail}</p>
+                <p className="relative mt-4 text-sm font-extrabold text-[#10223f]">{destination.name}</p>
+                <p className="relative mt-1 text-xs leading-4 text-[#718096]">{destination.detail}</p>
               </Link>
             ))}
           </div>
@@ -864,17 +864,17 @@ export default async function HomePage() {
         <section className="mx-auto max-w-[1180px] px-4 pb-8">
           <div className="flex items-end justify-between gap-4">
             <div>
-              <p className="text-[10px] font-extrabold uppercase tracking-[0.14em] text-primary">
+              <p className="text-xs font-extrabold uppercase tracking-[0.14em] text-primary">
                 Promo dari Travel
               </p>
               <h2 className="mt-1 font-display text-xl font-extrabold text-[#10223f] sm:text-[22px]">
                 Penawaran yang sedang ditampilkan
               </h2>
-              <p className="mt-1 text-[11px] text-[#748297]">
+              <p className="mt-1 text-xs text-[#748297]">
                 Area iklan Travel — data contoh sementara untuk preview layout.
               </p>
             </div>
-            <span className="hidden rounded-full border border-[#dbe6f2] bg-white px-3 py-1 text-[9px] font-extrabold text-[#72839a] sm:inline-flex">
+            <span className="hidden rounded-full border border-[#dbe6f2] bg-white px-3 py-1 text-xs font-extrabold text-[#72839a] sm:inline-flex">
               Preview iklan
             </span>
           </div>
@@ -893,36 +893,36 @@ export default async function HomePage() {
 
                   <div className="min-w-0 flex-1">
                     <div className="flex flex-wrap items-center gap-2">
-                      <span className="rounded-full bg-[#fff1d8] px-2 py-1 text-[8px] font-black uppercase tracking-[0.12em] text-[#a65f00]">
+                      <span className="rounded-full bg-[#fff1d8] px-2 py-1 text-xs font-black uppercase tracking-[0.12em] text-[#a65f00]">
                         Iklan
                       </span>
-                      <span className="text-[10px] font-extrabold text-[#52647e]">
+                      <span className="text-xs font-extrabold text-[#52647e]">
                         {ad.travel}
                       </span>
-                      <span className="text-[9px] font-bold text-primary">
+                      <span className="text-xs font-bold text-primary">
                         {ad.eyebrow}
                       </span>
                     </div>
 
-                    <h3 className="mt-2 max-w-[500px] text-[15px] font-extrabold leading-5 text-[#10223f]">
+                    <h3 className="mt-2 max-w-[500px] text-base font-extrabold leading-5 text-[#10223f]">
                       {ad.title}
                     </h3>
-                    <p className="mt-1.5 text-[10px] leading-5 text-[#748297]">
+                    <p className="mt-1.5 text-xs leading-5 text-[#748297]">
                       {ad.detail}
                     </p>
 
                     <div className="mt-3 flex flex-wrap items-end justify-between gap-3 border-t border-[#edf2f7] pt-3">
                       <div>
-                        <p className="text-[8px] font-bold uppercase tracking-[0.1em] text-[#8b9aae]">
+                        <p className="text-xs font-bold uppercase tracking-[0.1em] text-[#8b9aae]">
                           Harga
                         </p>
-                        <p className="mt-0.5 text-[16px] font-black text-[#0b6ee8]">
+                        <p className="mt-0.5 text-base font-black text-[#0b6ee8]">
                           {formatIDR(ad.price)}
                         </p>
                       </div>
                       <Link
                         href="/paket/umrah"
-                        className="inline-flex items-center justify-center rounded-full bg-primary px-4 py-2 text-[10px] font-extrabold text-white transition hover:opacity-90"
+                        className="inline-flex items-center justify-center rounded-full bg-primary px-4 py-2 text-xs font-extrabold text-white transition hover:opacity-90"
                       >
                         Lihat penawaran
                       </Link>
@@ -940,7 +940,7 @@ export default async function HomePage() {
             <div className="rounded-2xl border border-[#dce5ef] bg-white p-5 sm:p-6">
               <div className="flex flex-col gap-2 sm:flex-row sm:items-end sm:justify-between">
                 <div>
-                  <p className="text-[10px] font-extrabold uppercase tracking-[0.14em] text-primary">
+                  <p className="text-xs font-extrabold uppercase tracking-[0.14em] text-primary">
                     Jadwal perjalanan
                   </p>
                   <h2 className="mt-1 font-display text-xl font-extrabold text-[#10223f]">
@@ -948,7 +948,7 @@ export default async function HomePage() {
                   </h2>
                 </div>
 
-                <p className="text-[11px] text-[#748297]">
+                <p className="text-xs text-[#748297]">
                   Jadwal terbuka yang paling dekat dari paket marketplace.
                 </p>
               </div>
@@ -972,17 +972,17 @@ export default async function HomePage() {
                         <p className="truncate text-xs font-extrabold text-[#10223f]">
                           {pkg.name}
                         </p>
-                        <p className="mt-1 truncate text-[10px] text-[#748297]">
+                        <p className="mt-1 truncate text-xs text-[#748297]">
                           {pkg.organizations?.name ?? "Travel Segaloka"} ·{" "}
                           {packageTypeLabel(pkg.type)}
                         </p>
                       </div>
 
                       <div className="shrink-0 text-right">
-                        <p className="text-[11px] font-extrabold text-[#10223f]">
+                        <p className="text-xs font-extrabold text-[#10223f]">
                           {formatDate(departure.departure_date)}
                         </p>
-                        <p className="mt-1 text-[9px] font-semibold text-[#748297]">
+                        <p className="mt-1 text-xs font-semibold text-[#748297]">
                           {seats !== null ? `${seats} kursi` : ""}
                         </p>
                       </div>
@@ -999,18 +999,18 @@ export default async function HomePage() {
           <div className="rounded-[22px] bg-[#eef7ff] p-5 sm:p-6">
             <div className="flex items-end justify-between gap-4">
               <div>
-                <p className="text-[10px] font-extrabold uppercase tracking-[0.14em] text-primary">Jelajahi Dunia</p>
+                <p className="text-xs font-extrabold uppercase tracking-[0.14em] text-primary">Jelajahi Dunia</p>
                 <h2 className="mt-1 font-display text-xl font-extrabold text-[#10223f] sm:text-[22px]">Destinasi internasional populer</h2>
-                <p className="mt-1 text-[11px] text-[#748297]">Halal Tour dan Tour Internasional untuk perjalanan berikutnya.</p>
+                <p className="mt-1 text-xs text-[#748297]">Halal Tour dan Tour Internasional untuk perjalanan berikutnya.</p>
               </div>
-              <Link href="/paket/halal_tour" className="hidden text-[11px] font-extrabold text-primary hover:underline sm:inline">Lihat Internasional →</Link>
+              <Link href="/paket/halal_tour" className="hidden text-xs font-extrabold text-primary hover:underline sm:inline">Lihat Internasional →</Link>
             </div>
             <div className="mt-4 grid grid-cols-2 gap-3 sm:grid-cols-3 lg:grid-cols-5">
               {PREVIEW_WORLD_DESTINATIONS.map((destination) => (
                 <Link key={destination.name} href="/paket/halal_tour" className="rounded-2xl border border-white bg-white p-4 shadow-[0_6px_20px_rgba(15,45,90,0.04)]">
                   <span className="flex h-9 w-9 items-center justify-center rounded-xl bg-[#edf5ff] text-primary"><Icon name={destination.icon} size={16} /></span>
-                  <p className="mt-3 text-[12px] font-extrabold text-[#10223f]">{destination.name}</p>
-                  <p className="mt-1 text-[9px] leading-4 text-[#748297]">{destination.detail}</p>
+                  <p className="mt-3 text-sm font-extrabold text-[#10223f]">{destination.name}</p>
+                  <p className="mt-1 text-xs leading-4 text-[#748297]">{destination.detail}</p>
                 </Link>
               ))}
             </div>
@@ -1021,19 +1021,19 @@ export default async function HomePage() {
         <section className="mx-auto max-w-[1180px] px-4 pb-10">
           <div className="flex items-end justify-between gap-4">
             <div>
-              <p className="text-[10px] font-extrabold uppercase tracking-[0.14em] text-primary">
+              <p className="text-xs font-extrabold uppercase tracking-[0.14em] text-primary">
                 Vendor Pilihan
               </p>
               <h2 className="mt-1 font-display text-xl font-extrabold text-[#10223f] sm:text-[22px]">
                 Layanan pendukung perjalanan
               </h2>
-              <p className="mt-1 text-[11px] text-[#748297]">
+              <p className="mt-1 text-xs text-[#748297]">
                 Preview kategori Vendor dalam ekosistem Segaloka.
               </p>
             </div>
             <Link
               href="/vendor"
-              className="hidden text-[11px] font-extrabold text-primary hover:underline sm:inline"
+              className="hidden text-xs font-extrabold text-primary hover:underline sm:inline"
             >
               Lihat Vendor →
             </Link>
@@ -1049,17 +1049,17 @@ export default async function HomePage() {
                   <span className="flex h-10 w-10 items-center justify-center rounded-xl bg-[#eef5ff] text-primary">
                     <Icon name={vendor.icon} size={18} />
                   </span>
-                  <span className="rounded-full bg-[#f3f6fa] px-2 py-1 text-[8px] font-extrabold text-[#718096]">
+                  <span className="rounded-full bg-[#f3f6fa] px-2 py-1 text-xs font-extrabold text-[#718096]">
                     Preview
                   </span>
                 </div>
-                <p className="mt-3 text-[9px] font-extrabold uppercase tracking-[0.1em] text-primary">
+                <p className="mt-3 text-xs font-extrabold uppercase tracking-[0.1em] text-primary">
                   {vendor.category}
                 </p>
-                <h3 className="mt-1 truncate text-[12px] font-extrabold text-[#10223f]">
+                <h3 className="mt-1 truncate text-sm font-extrabold text-[#10223f]">
                   {vendor.name}
                 </h3>
-                <p className="mt-1.5 line-clamp-2 text-[10px] leading-4 text-[#748297]">
+                <p className="mt-1.5 line-clamp-2 text-xs leading-4 text-[#748297]">
                   {vendor.description}
                 </p>
               </div>
@@ -1068,7 +1068,7 @@ export default async function HomePage() {
 
           <Link
             href="/vendor"
-            className="mt-4 inline-flex text-[11px] font-extrabold text-primary sm:hidden"
+            className="mt-4 inline-flex text-xs font-extrabold text-primary sm:hidden"
           >
             Lihat Vendor →
           </Link>
@@ -1079,7 +1079,7 @@ export default async function HomePage() {
           <div className="overflow-hidden rounded-[22px] bg-[#10294d]">
             <div className="grid gap-6 p-6 sm:p-8 lg:grid-cols-[1.05fr_0.95fr] lg:items-center">
               <div>
-                <span className="inline-flex rounded-full bg-[#ffad27] px-3 py-1 text-[10px] font-extrabold text-[#382000]">
+                <span className="inline-flex rounded-full bg-[#ffad27] px-3 py-1 text-xs font-extrabold text-[#382000]">
                   SegaDeals
                 </span>
 
@@ -1096,7 +1096,7 @@ export default async function HomePage() {
 
                 <Link
                   href="/akun/segadeals/baru"
-                  className="mt-5 inline-flex items-center gap-2 rounded-full bg-white px-5 py-2.5 text-[11px] font-extrabold text-[#10294d] transition hover:bg-[#f3f7fb]"
+                  className="mt-5 inline-flex items-center gap-2 rounded-full bg-white px-5 py-2.5 text-xs font-extrabold text-[#10294d] transition hover:bg-[#f3f7fb]"
                 >
                   Buat permintaan SegaDeals
                   <span>→</span>
@@ -1124,19 +1124,19 @@ export default async function HomePage() {
         <section className="mx-auto max-w-[1180px] px-4 pb-10">
           <div className="flex items-end justify-between gap-4">
             <div>
-              <p className="text-[10px] font-extrabold uppercase tracking-[0.14em] text-primary">
+              <p className="text-xs font-extrabold uppercase tracking-[0.14em] text-primary">
                 Travel Pilihan
               </p>
               <h2 className="mt-1 font-display text-xl font-extrabold text-[#10223f] sm:text-[22px]">
                 Kenali Travel di Segaloka
               </h2>
-              <p className="mt-1 text-[11px] text-[#748297]">
+              <p className="mt-1 text-xs text-[#748297]">
                 Rating di area ini masih data contoh untuk preview komposisi UI.
               </p>
             </div>
             <Link
               href="/paket/umrah"
-              className="hidden text-[11px] font-extrabold text-primary hover:underline sm:inline"
+              className="hidden text-xs font-extrabold text-primary hover:underline sm:inline"
             >
               Jelajahi marketplace →
             </Link>
@@ -1152,21 +1152,21 @@ export default async function HomePage() {
                   <span className="flex h-11 w-11 items-center justify-center rounded-xl border border-[#e1e9f2] bg-[#f8fbff] text-primary">
                     <Icon name={travel.icon} size={19} />
                   </span>
-                  <span className="inline-flex items-center gap-1 text-[10px] font-extrabold text-[#40546f]">
+                  <span className="inline-flex items-center gap-1 text-xs font-extrabold text-[#40546f]">
                     <span className="text-[#f5a000]">★</span>
                     {travel.rating}
                   </span>
                 </div>
-                <h3 className="mt-3 truncate text-[12px] font-extrabold text-[#10223f]">
+                <h3 className="mt-3 truncate text-sm font-extrabold text-[#10223f]">
                   {travel.name}
                 </h3>
-                <div className="mt-1 flex flex-wrap items-center gap-1.5 text-[9px] text-[#748297]">
+                <div className="mt-1 flex flex-wrap items-center gap-1.5 text-xs text-[#748297]">
                   <span>{travel.specialty}</span>
                   <span>·</span>
                   <span>{travel.reviews} ulasan</span>
                 </div>
                 <div className="mt-3 border-t border-[#edf2f7] pt-2.5">
-                  <span className="text-[9px] font-bold text-[#63758e]">
+                  <span className="text-xs font-bold text-[#63758e]">
                     Profil Travel · Preview
                   </span>
                 </div>
@@ -1179,7 +1179,7 @@ export default async function HomePage() {
         <section className="mx-auto max-w-[1180px] px-4 pb-10">
           <div className="flex items-end justify-between gap-4">
             <div>
-              <p className="text-[10px] font-extrabold uppercase tracking-[0.14em] text-primary">Inspirasi Perjalanan</p>
+              <p className="text-xs font-extrabold uppercase tracking-[0.14em] text-primary">Inspirasi Perjalanan</p>
               <h2 className="mt-1 font-display text-xl font-extrabold text-[#10223f] sm:text-[22px]">Ide dan panduan sebelum berangkat</h2>
             </div>
           </div>
@@ -1192,9 +1192,9 @@ export default async function HomePage() {
                   <Icon name={index % 2 === 0 ? "globe" : "route"} size={22} />
                 </div>
                 <div className="p-3.5">
-                  <p className="text-[8px] font-extrabold uppercase tracking-[0.1em] text-primary">{item.category}</p>
-                  <h3 className="mt-1.5 line-clamp-2 text-[11px] font-extrabold leading-4 text-[#10223f]">{item.title}</h3>
-                  <p className="mt-2 text-[9px] font-bold text-[#748297]">Konten preview</p>
+                  <p className="text-xs font-extrabold uppercase tracking-[0.1em] text-primary">{item.category}</p>
+                  <h3 className="mt-1.5 line-clamp-2 text-xs font-extrabold leading-4 text-[#10223f]">{item.title}</h3>
+                  <p className="mt-2 text-xs font-bold text-[#748297]">Konten preview</p>
                 </div>
               </div>
             ))}
@@ -1205,7 +1205,7 @@ export default async function HomePage() {
         <section className="mx-auto max-w-[1180px] px-4 pb-12">
           <div className="grid gap-4 rounded-2xl border border-[#dce4ee] bg-white p-6 sm:p-7 lg:grid-cols-[1fr_auto] lg:items-center">
             <div>
-              <p className="text-[10px] font-extrabold uppercase tracking-[0.14em] text-primary">
+              <p className="text-xs font-extrabold uppercase tracking-[0.14em] text-primary">
                 Ekosistem Segaloka
               </p>
               <h2 className="mt-1.5 font-display text-xl font-extrabold text-[#10223f]">
@@ -1219,7 +1219,7 @@ export default async function HomePage() {
 
             <Link
               href="/daftar"
-              className="inline-flex items-center justify-center rounded-full bg-primary px-5 py-2.5 text-[11px] font-extrabold text-white hover:opacity-90"
+              className="inline-flex items-center justify-center rounded-full bg-primary px-5 py-2.5 text-xs font-extrabold text-white hover:opacity-90"
             >
               Bergabung dengan Segaloka
             </Link>
@@ -1235,19 +1235,19 @@ export default async function HomePage() {
                 <span className="flex h-9 w-9 items-center justify-center rounded-full bg-white text-sm font-black text-primary">S</span>
                 <span className="font-display text-xl font-extrabold">Segaloka</span>
               </div>
-              <p className="mt-4 max-w-[330px] text-[11px] leading-5 text-[#c5d7ed]">
+              <p className="mt-4 max-w-[330px] text-xs leading-5 text-[#c5d7ed]">
                 Ekosistem perjalanan yang menghubungkan Traveler, Travel, Vendor, Agen, Mitra dan Affiliate dalam satu platform.
               </p>
               <div className="mt-5 flex flex-wrap gap-2">
                 {["Instagram", "Facebook", "TikTok"].map((social) => (
-                  <span key={social} className="rounded-full border border-white/20 px-3 py-1.5 text-[9px] font-bold text-[#dce9f8]">{social}</span>
+                  <span key={social} className="rounded-full border border-white/20 px-3 py-1.5 text-xs font-bold text-[#dce9f8]">{social}</span>
                 ))}
               </div>
             </div>
 
             <div>
-              <h3 className="text-[11px] font-extrabold">Produk</h3>
-              <div className="mt-4 grid gap-2.5 text-[10px] text-[#c5d7ed]">
+              <h3 className="text-xs font-extrabold">Produk</h3>
+              <div className="mt-4 grid gap-2.5 text-xs text-[#c5d7ed]">
                 <Link href="/paket/umrah">Umrah</Link>
                 <Link href="/paket/haji">Haji</Link>
                 <Link href="/paket/halal_tour">Halal Tour</Link>
@@ -1258,25 +1258,25 @@ export default async function HomePage() {
             </div>
 
             <div>
-              <h3 className="text-[11px] font-extrabold">Ekosistem</h3>
-              <div className="mt-4 grid gap-2.5 text-[10px] text-[#c5d7ed]">
+              <h3 className="text-xs font-extrabold">Ekosistem</h3>
+              <div className="mt-4 grid gap-2.5 text-xs text-[#c5d7ed]">
                 <span>Traveler</span><span>Travel</span><span>Vendor</span>
                 <span>Agen</span><span>Mitra</span><span>Affiliate</span>
               </div>
             </div>
 
             <div>
-              <h3 className="text-[11px] font-extrabold">Bantuan & Perusahaan</h3>
-              <div className="mt-4 grid gap-2.5 text-[10px] text-[#c5d7ed]">
+              <h3 className="text-xs font-extrabold">Bantuan & Perusahaan</h3>
+              <div className="mt-4 grid gap-2.5 text-xs text-[#c5d7ed]">
                 <span>Pusat Bantuan</span><span>Tentang Segaloka</span>
                 <span>Syarat & Ketentuan</span><span>Kebijakan Privasi</span>
                 <span>Keamanan Transaksi</span><span>Hubungi Kami</span>
               </div>
               <div className="mt-5">
-                <p className="text-[9px] font-extrabold uppercase tracking-[0.12em] text-[#8fb2da]">Aplikasi Segaloka</p>
+                <p className="text-xs font-extrabold uppercase tracking-[0.12em] text-[#8fb2da]">Aplikasi Segaloka</p>
                 <div className="mt-2 flex gap-2">
-                  <span className="rounded-lg border border-white/20 px-3 py-2 text-[9px] font-bold">Android</span>
-                  <span className="rounded-lg border border-white/20 px-3 py-2 text-[9px] font-bold">iOS</span>
+                  <span className="rounded-lg border border-white/20 px-3 py-2 text-xs font-bold">Android</span>
+                  <span className="rounded-lg border border-white/20 px-3 py-2 text-xs font-bold">iOS</span>
                 </div>
               </div>
             </div>
@@ -1284,20 +1284,20 @@ export default async function HomePage() {
 
           <div className="mt-9 grid gap-5 border-t border-white/15 pt-6 sm:grid-cols-2 lg:grid-cols-3">
             <div>
-              <p className="text-[9px] font-extrabold uppercase tracking-[0.12em] text-[#8fb2da]">Pembayaran</p>
-              <p className="mt-2 text-[10px] leading-5 text-[#c5d7ed]">Payment gateway dan metode pembayaran akan mengikuti konfigurasi production Segaloka.</p>
+              <p className="text-xs font-extrabold uppercase tracking-[0.12em] text-[#8fb2da]">Pembayaran</p>
+              <p className="mt-2 text-xs leading-5 text-[#c5d7ed]">Payment gateway dan metode pembayaran akan mengikuti konfigurasi production Segaloka.</p>
             </div>
             <div>
-              <p className="text-[9px] font-extrabold uppercase tracking-[0.12em] text-[#8fb2da]">Partner</p>
-              <p className="mt-2 text-[10px] leading-5 text-[#c5d7ed]">Travel dan Vendor terhubung melalui ekosistem Segaloka.</p>
+              <p className="text-xs font-extrabold uppercase tracking-[0.12em] text-[#8fb2da]">Partner</p>
+              <p className="mt-2 text-xs leading-5 text-[#c5d7ed]">Travel dan Vendor terhubung melalui ekosistem Segaloka.</p>
             </div>
             <div>
-              <p className="text-[9px] font-extrabold uppercase tracking-[0.12em] text-[#8fb2da]">Keamanan</p>
-              <p className="mt-2 text-[10px] leading-5 text-[#c5d7ed]">Transaksi, status dan audit mengikuti sistem Segaloka.</p>
+              <p className="text-xs font-extrabold uppercase tracking-[0.12em] text-[#8fb2da]">Keamanan</p>
+              <p className="mt-2 text-xs leading-5 text-[#c5d7ed]">Transaksi, status dan audit mengikuti sistem Segaloka.</p>
             </div>
           </div>
 
-          <div className="mt-7 flex flex-col gap-2 border-t border-white/15 pt-5 text-[9px] text-[#9eb9d8] sm:flex-row sm:items-center sm:justify-between">
+          <div className="mt-7 flex flex-col gap-2 border-t border-white/15 pt-5 text-xs text-[#9eb9d8] sm:flex-row sm:items-center sm:justify-between">
             <span>© 2026 Segaloka. All rights reserved.</span>
             <span>Satu ekosistem untuk perjalanan dan bisnis travel.</span>
           </div>
@@ -1316,7 +1316,7 @@ export default async function HomePage() {
             <Link
               key={label}
               href={href}
-              className={`flex flex-col items-center gap-1 py-1 text-[9px] font-bold ${
+              className={`flex flex-col items-center gap-1 py-1 text-xs font-bold ${
                 index === 0 ? "text-primary" : "text-[#748297]"
               }`}
             >
