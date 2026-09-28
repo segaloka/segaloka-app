@@ -1,4 +1,3 @@
-import Image from "next/image";
 import Link from "next/link";
 import { PublicNav, PublicFooter } from "@/components/layout/PublicNav";
 import { createClient } from "@/lib/supabase/server";
@@ -36,6 +35,100 @@ const SEGADEALS_STEPS = [
   "Sampaikan kebutuhan perjalanan",
   "Travel mengirim penawaran",
   "Bandingkan dan pilih penawaran",
+];
+
+/**
+ * TEMPORARY HOMEPAGE PREVIEW CONTENT
+ *
+ * Data di bawah hanya untuk memvalidasi layout Ads Travel, Vendor Pilihan,
+ * dan Travel Pilihan. Data ini tidak ditulis ke Supabase dan tidak boleh
+ * dipakai sebagai sumber transaksi production.
+ */
+const PREVIEW_TRAVEL_ADS = [
+  {
+    id: "ad-travel-amanah",
+    travel: "Travel Amanah",
+    eyebrow: "Umrah Oktober",
+    title: "Umrah nyaman dengan jadwal yang sudah terencana.",
+    detail: "9 hari · Jakarta · Keberangkatan 18 Okt 2026",
+    price: 28900000,
+    icon: "building" as const,
+  },
+  {
+    id: "ad-jelajah-muslim",
+    travel: "Jelajah Muslim",
+    eyebrow: "Halal Tour",
+    title: "Jelajahi Turki dalam perjalanan ramah muslim.",
+    detail: "8 hari · Istanbul & Bursa · 12 Des 2026",
+    price: 23900000,
+    icon: "globe" as const,
+  },
+];
+
+const PREVIEW_VENDORS = [
+  {
+    id: "vendor-hotel",
+    name: "Nusa Hotel Partner",
+    category: "Hotel",
+    description: "Akomodasi untuk kebutuhan perjalanan grup dan FIT.",
+    icon: "building" as const,
+  },
+  {
+    id: "vendor-ticket",
+    name: "Aero Ticket Partner",
+    category: "Tiket & Flight",
+    description: "Kebutuhan tiket perjalanan untuk Travel dalam ekosistem.",
+    icon: "plane" as const,
+  },
+  {
+    id: "vendor-handling",
+    name: "Haramain Handling",
+    category: "Visa & Handling",
+    description: "Dukungan dokumen, handling dan kebutuhan operasional.",
+    icon: "shield" as const,
+  },
+  {
+    id: "vendor-land",
+    name: "Nusantara Land Service",
+    category: "Transport & Land",
+    description: "Transportasi, catering dan layanan darat perjalanan.",
+    icon: "route" as const,
+  },
+];
+
+const PREVIEW_TRAVELS = [
+  {
+    id: "travel-amanah",
+    name: "Travel Amanah",
+    specialty: "Umrah",
+    rating: "4.8",
+    reviews: 120,
+    icon: "building" as const,
+  },
+  {
+    id: "nusantara-haramain",
+    name: "Nusantara Haramain",
+    specialty: "Umrah Plus",
+    rating: "4.7",
+    reviews: 98,
+    icon: "building" as const,
+  },
+  {
+    id: "safar-indonesia",
+    name: "Safar Indonesia",
+    specialty: "Haji",
+    rating: "4.9",
+    reviews: 156,
+    icon: "route" as const,
+  },
+  {
+    id: "jelajah-muslim",
+    name: "Jelajah Muslim",
+    specialty: "Halal Tour",
+    rating: "4.6",
+    reviews: 74,
+    icon: "globe" as const,
+  },
 ];
 
 type OrganizationRelation = {
@@ -82,6 +175,25 @@ function packageIcon(type: string) {
 function availableSeats(departure: DepartureRelation | undefined) {
   if (!departure) return null;
   return Math.max(0, departure.quota - departure.filled);
+}
+
+/**
+ * TEMPORARY UI PREVIEW RATING
+ *
+ * Rating ini hanya untuk memperlihatkan komposisi card selama fase UI preview.
+ * Jangan dianggap sebagai rating Travel production.
+ */
+function previewTravelRating(orgName: string) {
+  const ratings: Record<string, { score: string; reviews: number }> = {
+    "Travel Amanah": { score: "4.8", reviews: 120 },
+    "Nusantara Haramain": { score: "4.7", reviews: 98 },
+    "Safar Indonesia": { score: "4.9", reviews: 156 },
+    "Jelajah Muslim": { score: "4.6", reviews: 74 },
+    "Langkah Dunia": { score: "4.7", reviews: 102 },
+    "Berkah Journey": { score: "4.8", reviews: 89 },
+  };
+
+  return ratings[orgName] ?? { score: "4.8", reviews: 0 };
 }
 
 /**
@@ -585,81 +697,107 @@ export default async function HomePage() {
                 const org = pkg.organizations;
                 const departure = pkg.departures[0];
                 const seats = availableSeats(departure);
-                const logo = org?.logo_light_url || org?.logo_dark_url;
+                const orgName = org?.name ?? "Travel Segaloka";
+                const orgLogo =
+                  org?.logo_light_url ??
+                  org?.logo_dark_url ??
+                  null;
+                const rating = previewTravelRating(orgName);
 
                 return (
                   <Link
                     key={pkg.id}
                     href={`/paket/detail/${pkg.slug}`}
-                    className="group overflow-hidden rounded-2xl border border-[#dde5ef] bg-white shadow-[0_8px_24px_rgba(16,34,63,0.06)] transition hover:-translate-y-0.5 hover:border-primary/30 hover:shadow-[0_14px_32px_rgba(16,34,63,0.10)]"
+                    className="group overflow-hidden rounded-2xl border border-[#dfe8f3] bg-white shadow-[0_8px_28px_rgba(15,45,90,0.06)] transition hover:-translate-y-0.5 hover:border-[#bfd5ee] hover:shadow-[0_12px_32px_rgba(15,45,90,0.10)]"
                   >
-                    <div className="relative flex aspect-[16/9] items-center justify-center overflow-hidden bg-[linear-gradient(135deg,#e9f4ff_0%,#f8fbff_55%,#eaf7f5_100%)]">
-                      <div className="absolute -right-8 -top-10 h-32 w-32 rounded-full border-[20px] border-white/45" />
-                      <div className="absolute -bottom-12 -left-8 h-28 w-28 rounded-full bg-white/45" />
+                    <div className="relative flex h-[96px] flex-col justify-between overflow-hidden bg-gradient-to-br from-[#eef7ff] via-[#f7fbff] to-[#eefaf8] p-3">
+                      <div className="absolute -bottom-10 -left-8 h-24 w-24 rounded-full border border-white/70" />
+                      <div className="absolute -right-7 -top-8 h-24 w-24 rounded-full bg-white/45" />
 
-                      <span className="relative flex h-14 w-14 items-center justify-center rounded-2xl bg-white text-primary shadow-[0_10px_28px_rgba(16,34,63,0.10)]">
-                        <Icon name={packageIcon(pkg.type)} size={25} />
-                      </span>
+                      <div className="relative z-10 flex items-start justify-between gap-3">
+                        <span className="inline-flex rounded-full border border-[#dce8f5] bg-white px-2.5 py-1 text-[10px] font-extrabold text-[#183a64] shadow-sm">
+                          {packageTypeLabel(pkg.type)}
+                        </span>
 
-                      <span className="absolute left-3 top-3 rounded-full bg-white/90 px-2.5 py-1 text-[9px] font-extrabold text-[#27405f] shadow-sm">
-                        {packageTypeLabel(pkg.type)}
-                      </span>
-                    </div>
-
-                    <div className="p-4">
-                      <div className="flex min-h-8 items-center gap-2">
-                        {logo ? (
-                          <span className="relative h-7 w-7 shrink-0 overflow-hidden rounded-full border border-[#e2e8f0] bg-white">
-                            <Image
-                              src={logo}
-                              alt={org?.name ?? "Travel"}
-                              fill
-                              sizes="28px"
-                              className="object-contain p-1"
+                        <div className="flex h-9 w-9 shrink-0 items-center justify-center overflow-hidden rounded-xl border border-white/90 bg-white shadow-sm">
+                          {orgLogo ? (
+                            // eslint-disable-next-line @next/next/no-img-element
+                            <img
+                              src={orgLogo}
+                              alt={`Logo ${orgName}`}
+                              className="h-full w-full object-contain p-1"
                             />
-                          </span>
-                        ) : (
-                          <span className="flex h-7 w-7 shrink-0 items-center justify-center rounded-full bg-[#eef5ff] text-primary">
-                            <Icon name="building" size={13} />
-                          </span>
-                        )}
-
-                        <p className="truncate text-[10px] font-bold text-[#63738a]">
-                          {org?.name ?? "Travel Segaloka"}
-                        </p>
+                          ) : (
+                            <Icon name={packageIcon(pkg.type)} size={16} />
+                          )}
+                        </div>
                       </div>
 
-                      <h3 className="mt-2 min-h-10 text-sm font-extrabold leading-5 text-[#10223f] group-hover:text-primary">
+                      <div className="relative z-10 flex justify-center">
+                        <div className="flex h-9 w-9 items-center justify-center rounded-xl bg-white/95 text-[#0b6ee8] shadow-sm">
+                          <Icon name={packageIcon(pkg.type)} size={18} />
+                        </div>
+                      </div>
+                    </div>
+
+                    <div className="p-3.5">
+                      <div className="flex min-w-0 items-center gap-1.5">
+                        <span className="truncate text-[11px] font-bold text-[#536985]">
+                          {orgName}
+                        </span>
+
+                        <span
+                          className="text-[12px] leading-none text-[#f5a000]"
+                          aria-hidden="true"
+                        >
+                          ★
+                        </span>
+
+                        <span className="whitespace-nowrap text-[10px] font-bold text-[#40546f]">
+                          {rating.score}
+                        </span>
+
+                        <span className="whitespace-nowrap text-[9px] text-[#8a99ad]">
+                          ({rating.reviews})
+                        </span>
+                      </div>
+
+                      <h3 className="mt-2 line-clamp-2 min-h-[36px] text-[14px] font-extrabold leading-[18px] text-[#071f43]">
                         {pkg.name}
                       </h3>
 
-                      <div className="mt-3 flex items-center gap-3 text-[10px] font-semibold text-[#687990]">
-                        <span>{pkg.duration_days} hari</span>
+                      <div className="mt-2.5 flex flex-wrap items-center gap-x-2.5 gap-y-1 text-[10px] font-medium text-[#657892]">
                         {departure && (
+                          <span>
+                            {formatDate(departure.departure_date)}
+                          </span>
+                        )}
+
+                        {pkg.duration_days && (
                           <>
-                            <span className="h-1 w-1 rounded-full bg-[#a8b4c4]" />
-                            <span>{formatDate(departure.departure_date)}</span>
+                            <span className="h-1 w-1 rounded-full bg-[#b6c3d3]" />
+                            <span>{pkg.duration_days} hari</span>
                           </>
                         )}
                       </div>
 
-                      {departure && seats !== null && (
-                        <p className="mt-2 text-[10px] font-bold text-[#52647e]">
-                          {seats > 0 ? `${seats} kursi tersedia` : "Kuota penuh"}
-                        </p>
+                      {seats !== null && (
+                        <div className="mt-2 flex items-center gap-1.5 text-[10px] font-semibold text-[#536985]">
+                          <span
+                            className={`h-1.5 w-1.5 rounded-full ${
+                              seats <= 10 ? "bg-[#f5a000]" : "bg-[#16a36a]"
+                            }`}
+                          />
+                          <span>{seats} kursi tersedia</span>
+                        </div>
                       )}
 
-                      {!departure && (
-                        <p className="mt-2 text-[10px] font-medium text-[#8996a8]">
-                          Jadwal keberangkatan belum dibuka
+                      <div className="mt-3 border-t border-[#edf1f6] pt-2.5">
+                        <p className="text-[9px] font-semibold uppercase tracking-[0.08em] text-[#8b9aae]">
+                          Harga
                         </p>
-                      )}
 
-                      <div className="mt-4 border-t border-[#edf1f5] pt-3">
-                        <p className="text-[9px] font-bold uppercase tracking-wide text-[#8a97a8]">
-                          Mulai dari
-                        </p>
-                        <p className="mt-0.5 font-display text-base font-extrabold text-primary">
+                        <p className="mt-0.5 text-[17px] font-black leading-none text-[#0b6ee8]">
                           {formatIDR(pkg.base_price)}
                         </p>
                       </div>
@@ -669,6 +807,80 @@ export default async function HomePage() {
               })}
             </div>
           )}
+        </section>
+
+        {/* TRAVEL ADS - TEMPORARY PREVIEW LAYOUT */}
+        <section className="mx-auto max-w-[1240px] px-4 pb-8">
+          <div className="flex items-end justify-between gap-4">
+            <div>
+              <p className="text-[10px] font-extrabold uppercase tracking-[0.14em] text-primary">
+                Promo dari Travel
+              </p>
+              <h2 className="mt-1 font-display text-xl font-extrabold text-[#10223f] sm:text-[22px]">
+                Penawaran yang sedang ditampilkan
+              </h2>
+              <p className="mt-1 text-[11px] text-[#748297]">
+                Area iklan Travel — data contoh sementara untuk preview layout.
+              </p>
+            </div>
+            <span className="hidden rounded-full border border-[#dbe6f2] bg-white px-3 py-1 text-[9px] font-extrabold text-[#72839a] sm:inline-flex">
+              Preview iklan
+            </span>
+          </div>
+
+          <div className="mt-4 grid gap-3 lg:grid-cols-2">
+            {PREVIEW_TRAVEL_ADS.map((ad) => (
+              <div
+                key={ad.id}
+                className="group relative overflow-hidden rounded-2xl border border-[#dce7f3] bg-white p-4 shadow-[0_8px_24px_rgba(15,45,90,0.05)] sm:p-5"
+              >
+                <div className="absolute -right-10 -top-12 h-36 w-36 rounded-full bg-[#eef6ff]" />
+                <div className="relative flex items-start gap-4">
+                  <span className="flex h-12 w-12 shrink-0 items-center justify-center rounded-2xl bg-[#eaf4ff] text-primary">
+                    <Icon name={ad.icon} size={20} />
+                  </span>
+
+                  <div className="min-w-0 flex-1">
+                    <div className="flex flex-wrap items-center gap-2">
+                      <span className="rounded-full bg-[#fff1d8] px-2 py-1 text-[8px] font-black uppercase tracking-[0.12em] text-[#a65f00]">
+                        Iklan
+                      </span>
+                      <span className="text-[10px] font-extrabold text-[#52647e]">
+                        {ad.travel}
+                      </span>
+                      <span className="text-[9px] font-bold text-primary">
+                        {ad.eyebrow}
+                      </span>
+                    </div>
+
+                    <h3 className="mt-2 max-w-[500px] text-[15px] font-extrabold leading-5 text-[#10223f]">
+                      {ad.title}
+                    </h3>
+                    <p className="mt-1.5 text-[10px] leading-5 text-[#748297]">
+                      {ad.detail}
+                    </p>
+
+                    <div className="mt-3 flex flex-wrap items-end justify-between gap-3 border-t border-[#edf2f7] pt-3">
+                      <div>
+                        <p className="text-[8px] font-bold uppercase tracking-[0.1em] text-[#8b9aae]">
+                          Harga
+                        </p>
+                        <p className="mt-0.5 text-[16px] font-black text-[#0b6ee8]">
+                          {formatIDR(ad.price)}
+                        </p>
+                      </div>
+                      <Link
+                        href="/paket/umrah"
+                        className="inline-flex items-center justify-center rounded-full bg-primary px-4 py-2 text-[10px] font-extrabold text-white transition hover:opacity-90"
+                      >
+                        Lihat penawaran
+                      </Link>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            ))}
+          </div>
         </section>
 
         {/* UPCOMING DEPARTURES */}
@@ -731,6 +943,63 @@ export default async function HomePage() {
           </section>
         )}
 
+        {/* VENDOR PICKS - TEMPORARY PREVIEW LAYOUT */}
+        <section className="mx-auto max-w-[1240px] px-4 pb-10">
+          <div className="flex items-end justify-between gap-4">
+            <div>
+              <p className="text-[10px] font-extrabold uppercase tracking-[0.14em] text-primary">
+                Vendor Pilihan
+              </p>
+              <h2 className="mt-1 font-display text-xl font-extrabold text-[#10223f] sm:text-[22px]">
+                Layanan pendukung perjalanan
+              </h2>
+              <p className="mt-1 text-[11px] text-[#748297]">
+                Preview kategori Vendor dalam ekosistem Segaloka.
+              </p>
+            </div>
+            <Link
+              href="/vendor"
+              className="hidden text-[11px] font-extrabold text-primary hover:underline sm:inline"
+            >
+              Lihat Vendor →
+            </Link>
+          </div>
+
+          <div className="mt-4 grid grid-cols-2 gap-3 lg:grid-cols-4">
+            {PREVIEW_VENDORS.map((vendor) => (
+              <div
+                key={vendor.id}
+                className="rounded-2xl border border-[#dfe7f0] bg-white p-4 transition hover:border-[#bfd5ee] hover:shadow-[0_10px_26px_rgba(15,45,90,0.07)]"
+              >
+                <div className="flex items-start justify-between gap-3">
+                  <span className="flex h-10 w-10 items-center justify-center rounded-xl bg-[#eef5ff] text-primary">
+                    <Icon name={vendor.icon} size={18} />
+                  </span>
+                  <span className="rounded-full bg-[#f3f6fa] px-2 py-1 text-[8px] font-extrabold text-[#718096]">
+                    Preview
+                  </span>
+                </div>
+                <p className="mt-3 text-[9px] font-extrabold uppercase tracking-[0.1em] text-primary">
+                  {vendor.category}
+                </p>
+                <h3 className="mt-1 truncate text-[12px] font-extrabold text-[#10223f]">
+                  {vendor.name}
+                </h3>
+                <p className="mt-1.5 line-clamp-2 text-[10px] leading-4 text-[#748297]">
+                  {vendor.description}
+                </p>
+              </div>
+            ))}
+          </div>
+
+          <Link
+            href="/vendor"
+            className="mt-4 inline-flex text-[11px] font-extrabold text-primary sm:hidden"
+          >
+            Lihat Vendor →
+          </Link>
+        </section>
+
         {/* SEGADEALS */}
         <section className="mx-auto max-w-[1240px] px-4 pb-10">
           <div className="overflow-hidden rounded-[22px] bg-[#10294d]">
@@ -774,6 +1043,61 @@ export default async function HomePage() {
                 ))}
               </div>
             </div>
+          </div>
+        </section>
+
+        {/* TRAVEL DIRECTORY - TEMPORARY PREVIEW LAYOUT */}
+        <section className="mx-auto max-w-[1240px] px-4 pb-10">
+          <div className="flex items-end justify-between gap-4">
+            <div>
+              <p className="text-[10px] font-extrabold uppercase tracking-[0.14em] text-primary">
+                Travel Pilihan
+              </p>
+              <h2 className="mt-1 font-display text-xl font-extrabold text-[#10223f] sm:text-[22px]">
+                Kenali Travel di Segaloka
+              </h2>
+              <p className="mt-1 text-[11px] text-[#748297]">
+                Rating di area ini masih data contoh untuk preview komposisi UI.
+              </p>
+            </div>
+            <Link
+              href="/paket/umrah"
+              className="hidden text-[11px] font-extrabold text-primary hover:underline sm:inline"
+            >
+              Jelajahi marketplace →
+            </Link>
+          </div>
+
+          <div className="mt-4 grid grid-cols-2 gap-3 lg:grid-cols-4">
+            {PREVIEW_TRAVELS.map((travel) => (
+              <div
+                key={travel.id}
+                className="rounded-2xl border border-[#dfe7f0] bg-white p-4"
+              >
+                <div className="flex items-start justify-between gap-3">
+                  <span className="flex h-11 w-11 items-center justify-center rounded-xl border border-[#e1e9f2] bg-[#f8fbff] text-primary">
+                    <Icon name={travel.icon} size={19} />
+                  </span>
+                  <span className="inline-flex items-center gap-1 text-[10px] font-extrabold text-[#40546f]">
+                    <span className="text-[#f5a000]">★</span>
+                    {travel.rating}
+                  </span>
+                </div>
+                <h3 className="mt-3 truncate text-[12px] font-extrabold text-[#10223f]">
+                  {travel.name}
+                </h3>
+                <div className="mt-1 flex flex-wrap items-center gap-1.5 text-[9px] text-[#748297]">
+                  <span>{travel.specialty}</span>
+                  <span>·</span>
+                  <span>{travel.reviews} ulasan</span>
+                </div>
+                <div className="mt-3 border-t border-[#edf2f7] pt-2.5">
+                  <span className="text-[9px] font-bold text-[#63758e]">
+                    Profil Travel · Preview
+                  </span>
+                </div>
+              </div>
+            ))}
           </div>
         </section>
 
