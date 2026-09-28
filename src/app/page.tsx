@@ -635,10 +635,56 @@ export default async function HomePage() {
             </div>
           </div>
 
-          <div className="mx-auto flex max-w-[760px] items-center justify-center divide-x divide-[#dce4ee] py-3 text-xs font-bold text-[#243b5a]">
-            <span className="flex items-center gap-1.5 px-4"><span className="text-[#1b9c55]"><Icon name="shield" size={12} /></span>Travel aktif</span>
-            <span className="flex items-center gap-1.5 px-4"><span className="text-primary"><Icon name="wallet" size={12} /></span>Transaksi tercatat</span>
-            <span className="flex items-center gap-1.5 px-4"><span className="text-[#d67a00]"><Icon name="handshake" size={12} /></span>SegaDeals</span>
+          {/* MINI MARKETPLACE AD — V4.4 PREVIEW */}
+          <div className="mx-auto max-w-[1180px] px-4 pb-3 pt-3">
+            <Link
+              href="/paket/umrah"
+              className="group relative flex min-h-[88px] overflow-hidden rounded-2xl border border-[#cfe1f5] bg-[linear-gradient(100deg,#f7fbff_0%,#eef7ff_52%,#dff0ff_100%)] shadow-[0_8px_24px_rgba(34,87,140,0.08)] transition hover:border-primary/30 hover:shadow-[0_12px_30px_rgba(34,87,140,0.12)]"
+            >
+              <div className="relative z-10 flex min-w-0 flex-1 items-center gap-3 px-4 py-3 sm:px-5">
+                <span className="hidden h-11 w-11 shrink-0 items-center justify-center rounded-xl bg-primary text-white sm:flex">
+                  <Icon name="building" size={18} />
+                </span>
+
+                <div className="min-w-0">
+                  <div className="flex flex-wrap items-center gap-2">
+                    <span className="rounded-full bg-[#ffd94a] px-2 py-1 text-[10px] font-extrabold uppercase tracking-[0.08em] text-[#604800]">
+                      Promo
+                    </span>
+
+                    <span className="text-xs font-bold text-[#60758f]">
+                      Travel Amanah
+                    </span>
+                  </div>
+
+                  <p className="mt-1 truncate text-sm font-extrabold text-[#10223f] sm:text-base">
+                    Umrah nyaman dengan jadwal yang sudah terencana.
+                  </p>
+
+                  <p className="mt-0.5 hidden text-xs font-medium text-[#6f829a] sm:block">
+                    Pilihan perjalanan Umrah untuk keberangkatan berikutnya.
+                  </p>
+                </div>
+              </div>
+
+              <div className="relative z-10 flex shrink-0 items-center gap-3 px-4 sm:px-5">
+                <div className="hidden text-right md:block">
+                  <p className="text-[10px] font-bold uppercase tracking-[0.08em] text-[#73869d]">
+                    Mulai dari
+                  </p>
+                  <p className="mt-0.5 text-sm font-extrabold text-primary">
+                    Rp 28.900.000
+                  </p>
+                </div>
+
+                <span className="inline-flex min-h-9 items-center justify-center rounded-full bg-white px-3 text-xs font-extrabold text-primary shadow-sm ring-1 ring-[#d5e4f4] transition group-hover:bg-primary group-hover:text-white">
+                  Lihat promo →
+                </span>
+              </div>
+
+              <div className="pointer-events-none absolute -right-6 -top-14 h-40 w-40 rounded-full border-[24px] border-white/30" />
+              <div className="pointer-events-none absolute right-32 top-8 hidden h-16 w-16 rounded-full bg-primary/5 lg:block" />
+            </Link>
           </div>
         </section>
 
