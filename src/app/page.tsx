@@ -61,24 +61,43 @@ export default async function HomePage() {
 
       <main className="pb-16 md:pb-0">
         {/* TRAVEL MARKETPLACE HERO */}
-        <section className="relative overflow-hidden bg-[#eaf4ff]">
-          <div className="absolute inset-0 bg-[radial-gradient(circle_at_82%_22%,rgba(39,126,255,0.18),transparent_28%),linear-gradient(120deg,#f7fbff_0%,#edf6ff_48%,#dceeff_100%)]" />
+        <section className="relative overflow-hidden border-b border-[#dfe9f4] bg-[#eaf4ff]">
+          <div className="absolute inset-0 bg-[linear-gradient(105deg,#f8fcff_0%,#eef7ff_48%,#d8ebff_100%)]" />
 
-          <div className="absolute right-[6%] top-7 hidden h-52 w-52 rounded-full bg-white/40 lg:block" />
-          <div className="absolute right-[13%] top-20 hidden h-28 w-28 rounded-full bg-primary/10 lg:block" />
+          <div className="absolute -right-12 -top-24 hidden h-[360px] w-[520px] rotate-[-8deg] rounded-[50%] border border-white/70 bg-white/30 lg:block" />
+          <div className="absolute right-[8%] top-8 hidden h-36 w-36 rounded-full border-[26px] border-white/35 lg:block" />
 
-          <div className="relative mx-auto max-w-6xl px-4 pb-32 pt-8 md:pb-36 md:pt-10">
-            <div className="max-w-2xl">
-              <p className="inline-flex items-center gap-2 rounded-full bg-white/80 px-3 py-1.5 text-[11px] font-extrabold text-primary shadow-sm">
+          <div className="absolute right-[19%] top-14 hidden lg:block">
+            <div className="relative h-28 w-48">
+              <div className="absolute left-0 top-10 h-16 w-16 rounded-2xl border border-white/80 bg-white/75 shadow-[0_12px_30px_rgba(25,94,166,0.10)]" />
+              <div className="absolute left-5 top-0 flex h-16 w-16 items-center justify-center rounded-2xl bg-primary text-white shadow-[0_14px_34px_rgba(17,104,219,0.24)]">
+                <Icon name="plane" size={25} />
+              </div>
+              <div className="absolute bottom-0 right-0 flex h-14 w-28 items-center gap-2 rounded-2xl border border-white/80 bg-white/85 px-3 shadow-[0_12px_30px_rgba(25,94,166,0.10)]">
+                <span className="flex h-8 w-8 items-center justify-center rounded-full bg-[#eaf3ff] text-primary">
+                  <Icon name="globe" size={16} />
+                </span>
+                <span className="text-[10px] font-extrabold leading-4 text-[#10223f]">
+                  Jelajahi
+                  <br />
+                  perjalanan
+                </span>
+              </div>
+            </div>
+          </div>
+
+          <div className="relative mx-auto max-w-[1240px] px-4 pb-28 pt-7 md:pb-32 md:pt-8">
+            <div className="max-w-[640px]">
+              <p className="inline-flex items-center gap-2 rounded-full border border-white/80 bg-white/80 px-3 py-1.5 text-[11px] font-extrabold text-primary shadow-sm">
                 <Icon name="shield" size={13} />
                 Marketplace perjalanan dalam ekosistem Segaloka
               </p>
 
-              <h1 className="mt-4 font-display text-[30px] font-extrabold leading-[1.08] tracking-[-0.03em] text-[#10223f] sm:text-[34px] md:text-[40px]">
+              <h1 className="mt-3 font-display text-[30px] font-extrabold leading-[1.08] tracking-[-0.035em] text-[#10223f] sm:text-[34px] md:text-[38px]">
                 Mau perjalanan ke mana?
               </h1>
 
-              <p className="mt-3 max-w-xl text-sm leading-6 text-[#52647e] md:text-[15px]">
+              <p className="mt-2.5 max-w-[560px] text-sm leading-6 text-[#52647e]">
                 Temukan paket Umrah, Haji, Halal Tour dan Tour dari Travel
                 dalam satu marketplace.
               </p>
@@ -87,7 +106,7 @@ export default async function HomePage() {
         </section>
 
         {/* TRANSACTION CENTER */}
-        <section className="relative z-20 mx-auto -mt-24 max-w-6xl px-4">
+        <section className="relative z-20 mx-auto -mt-20 max-w-[1240px] px-4">
           <div className="overflow-hidden rounded-2xl border border-[#dce4ee] bg-white shadow-[0_18px_50px_rgba(16,34,63,0.14)]">
             <div className="overflow-x-auto border-b border-[#e8edf3]">
               <div className="flex min-w-max items-stretch px-2 sm:px-4">
@@ -143,77 +162,47 @@ export default async function HomePage() {
               </div>
             </div>
 
-            <div className="p-4 sm:p-5">
-              <p className="mb-3 text-xs font-extrabold text-[#10223f]">
-                Cari paket perjalanan
-              </p>
-
-              <div className="grid gap-3 md:grid-cols-[1fr_1fr_1fr_auto]">
-                <Link
-                  href="/paket/umrah"
-                  className="flex min-h-[58px] items-center gap-3 rounded-xl border border-[#dce4ee] bg-white px-4 transition hover:border-primary/50 hover:bg-[#f9fcff]"
-                >
-                  <span className="text-primary">
+            <div className="p-4 sm:px-5 sm:py-4">
+              <div className="flex flex-col gap-3 lg:flex-row lg:items-center lg:justify-between">
+                <div className="flex min-w-0 items-center gap-3">
+                  <span className="flex h-11 w-11 shrink-0 items-center justify-center rounded-xl bg-[#edf5ff] text-primary">
                     <Icon name="building" size={19} />
                   </span>
-                  <span>
-                    <span className="block text-[10px] font-bold text-[#718198]">
-                      Jenis perjalanan
-                    </span>
-                    <span className="mt-0.5 block text-sm font-extrabold text-[#10223f]">
-                      Umrah
-                    </span>
-                  </span>
-                </Link>
 
-                <Link
-                  href="/paket/umrah"
-                  className="flex min-h-[58px] items-center gap-3 rounded-xl border border-[#dce4ee] bg-white px-4 transition hover:border-primary/50 hover:bg-[#f9fcff]"
-                >
-                  <span className="text-primary">
-                    <Icon name="search" size={19} />
-                  </span>
-                  <span>
-                    <span className="block text-[10px] font-bold text-[#718198]">
-                      Jelajahi
-                    </span>
-                    <span className="mt-0.5 block text-sm font-extrabold text-[#10223f]">
-                      Paket tersedia
-                    </span>
-                  </span>
-                </Link>
+                  <div className="min-w-0">
+                    <p className="text-[10px] font-bold uppercase tracking-[0.08em] text-[#718198]">
+                      Pilihan perjalanan
+                    </p>
+                    <p className="mt-0.5 truncate text-sm font-extrabold text-[#10223f]">
+                      Jelajahi paket Umrah dari Travel di Segaloka
+                    </p>
+                  </div>
+                </div>
 
-                <Link
-                  href="/akun/segadeals/baru"
-                  className="flex min-h-[58px] items-center gap-3 rounded-xl border border-[#dce4ee] bg-white px-4 transition hover:border-[#f4a340] hover:bg-[#fffaf3]"
-                >
-                  <span className="text-[#d87900]">
-                    <Icon name="handshake" size={19} />
-                  </span>
-                  <span>
-                    <span className="block text-[10px] font-bold text-[#718198]">
-                      Belum menemukan yang pas?
-                    </span>
-                    <span className="mt-0.5 block text-sm font-extrabold text-[#10223f]">
-                      Minta penawaran
-                    </span>
-                  </span>
-                </Link>
+                <div className="flex flex-col gap-2 sm:flex-row">
+                  <Link
+                    href="/akun/segadeals/baru"
+                    className="inline-flex h-10 items-center justify-center gap-2 rounded-xl border border-[#f0d8b4] bg-[#fffaf2] px-4 text-xs font-extrabold text-[#b96800] transition hover:bg-[#fff4e3]"
+                  >
+                    <Icon name="handshake" size={15} />
+                    Minta penawaran
+                  </Link>
 
-                <Link
-                  href="/paket/umrah"
-                  className="flex min-h-[58px] items-center justify-center gap-2 rounded-xl bg-primary px-6 text-sm font-extrabold text-white transition hover:bg-primary-hover"
-                >
-                  <Icon name="search" size={17} />
-                  Cari
-                </Link>
+                  <Link
+                    href="/paket/umrah"
+                    className="inline-flex h-10 items-center justify-center gap-2 rounded-xl bg-primary px-5 text-xs font-extrabold text-white transition hover:bg-primary-hover"
+                  >
+                    <Icon name="search" size={15} />
+                    Lihat Paket Umrah
+                  </Link>
+                </div>
               </div>
             </div>
           </div>
         </section>
 
         {/* QUICK TRUST */}
-        <section className="mx-auto max-w-6xl px-4 py-5">
+        <section className="mx-auto max-w-[1240px] px-4 py-4">
           <div className="flex flex-wrap items-center justify-center gap-x-8 gap-y-3 text-xs text-[#52647e]">
             <span className="flex items-center gap-2">
               <span className="text-success">
@@ -243,7 +232,7 @@ export default async function HomePage() {
         </section>
 
         {/* LATEST PACKAGES */}
-        <section className="mx-auto max-w-6xl px-4 py-7 md:py-9">
+        <section className="mx-auto max-w-[1240px] px-4 py-6 md:py-7">
           <div className="mb-5 flex items-end justify-between gap-4">
             <div>
               <p className="text-xs font-extrabold uppercase tracking-[0.12em] text-primary">
@@ -343,7 +332,7 @@ export default async function HomePage() {
         </section>
 
         {/* SEGADEALS */}
-        <section className="mx-auto max-w-6xl px-4 py-7 md:py-9">
+        <section className="mx-auto max-w-[1240px] px-4 py-6 md:py-7">
           <div className="overflow-hidden rounded-3xl bg-[#10223f] text-white">
             <div className="grid gap-8 p-6 md:grid-cols-[1.08fr_0.92fr] md:p-9">
               <div>
@@ -387,7 +376,7 @@ export default async function HomePage() {
         </section>
 
         {/* BUSINESS ECOSYSTEM */}
-        <section className="mx-auto max-w-6xl px-4 py-7 md:py-9">
+        <section className="mx-auto max-w-[1240px] px-4 py-6 md:py-7">
           <div className="rounded-3xl border border-[#dce4ee] bg-white p-6 md:flex md:items-center md:justify-between md:gap-8 md:p-8">
             <div>
               <p className="text-xs font-extrabold uppercase tracking-[0.12em] text-primary">
