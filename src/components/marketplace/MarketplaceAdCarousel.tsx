@@ -58,11 +58,12 @@ const ADS: Ad[] = [
   },
 ];
 
-function AdCard({ ad }: { ad: Ad }) {
+function AdCard({ ad, tone }: { ad: Ad; tone: "blue" | "yellow" }) {
+  const isBlue = tone === "blue";
   return (
     <Link
       href={ad.href}
-      className="group relative flex min-h-[104px] min-w-0 overflow-hidden rounded-2xl border border-[#cfe1f5] bg-[linear-gradient(105deg,#f8fbff_0%,#eef7ff_55%,#deefff_100%)] shadow-[0_8px_24px_rgba(34,87,140,0.07)] transition hover:-translate-y-0.5 hover:shadow-[0_12px_30px_rgba(34,87,140,0.12)]"
+      className={`group relative flex min-h-[112px] min-w-0 overflow-hidden rounded-2xl border transition hover:-translate-y-0.5 ${isBlue ? "border-[#b8d8ff] bg-[linear-gradient(105deg,#f7fbff_0%,#eaf4ff_52%,#d8ebff_100%)] shadow-[0_8px_24px_rgba(24,105,205,0.10)] hover:shadow-[0_12px_30px_rgba(24,105,205,0.16)]" : "border-[#f1d78a] bg-[linear-gradient(105deg,#fffdf5_0%,#fff7d9_52%,#ffedaa_100%)] shadow-[0_8px_24px_rgba(180,132,20,0.10)] hover:shadow-[0_12px_30px_rgba(180,132,20,0.16)]"}` }
     >
       <div className="relative z-10 flex min-w-0 flex-1 items-center gap-3 px-4 py-3">
         <span className="hidden h-11 w-11 shrink-0 items-center justify-center rounded-xl bg-primary text-white sm:flex">
@@ -138,19 +139,19 @@ export function MarketplaceAdCarousel() {
 
   return (
     <div
-      className="w-full pb-3 pt-3"
+      className="w-full py-4"
       onMouseEnter={() => setPaused(true)}
       onMouseLeave={() => setPaused(false)}
       onFocusCapture={() => setPaused(true)}
       onBlurCapture={() => setPaused(false)}
     >
       <div className="hidden grid-cols-2 gap-3 md:grid">
-        <AdCard ad={first} />
-        <AdCard ad={second} />
+        <AdCard ad={first} tone="blue" />
+        <AdCard ad={second} tone="yellow" />
       </div>
 
       <div className="md:hidden">
-        <AdCard ad={first} />
+        <AdCard ad={first} tone="blue" />
       </div>
     </div>
   );

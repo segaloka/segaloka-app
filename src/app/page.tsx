@@ -1,6 +1,7 @@
 import Link from "next/link";
 import { MarketplaceHeader } from "@/components/marketplace/MarketplaceHeader";
 import { MarketplaceAdCarousel } from "@/components/marketplace/MarketplaceAdCarousel";
+import { MarketplaceSearch } from "@/components/marketplace/MarketplaceSearch";
 import { createClient } from "@/lib/supabase/server";
 import { formatIDR, formatDate } from "@/lib/utils";
 import { Icon } from "@/components/layout/Icon";
@@ -568,73 +569,7 @@ export default async function HomePage() {
 
         {/* MARKETPLACE CATEGORY + SEARCH CENTER */}
         <section className="relative z-20 mx-auto -mt-20 max-w-[1180px] px-4">
-          <div className="overflow-hidden rounded-2xl border border-[#dce4ee] bg-white shadow-[0_18px_50px_rgba(16,34,63,0.14)]">
-            <div className="overflow-x-auto border-b border-[#e8edf3]">
-              <div className="flex min-w-max items-stretch px-2 sm:px-4">
-                {SERVICES.map((service, index) => (
-                  <Link
-                    key={`${service.label}-${index}`}
-                    href={`/paket/${service.type}`}
-                    className={`group relative flex min-w-[126px] items-center justify-center gap-2 px-3 py-3.5 transition hover:bg-[#f7fbff] ${
-                      index === 0 ? "text-primary" : "text-[#52647e]"
-                    }`}
-                  >
-                    <span className={`flex h-8 w-8 shrink-0 items-center justify-center rounded-full ${
-                      index === 0 ? "bg-primary text-white" : "bg-[#eef4fb] text-primary"
-                    }`}>
-                      <Icon name={service.icon} size={15} />
-                    </span>
-                    <span className="text-left">
-                      <span className="block text-xs font-extrabold text-[#10223f]">{service.label}</span>
-                      <span className="mt-0.5 block text-xs font-medium text-[#77869a]">{service.description}</span>
-                    </span>
-                    {index === 0 && <span className="absolute inset-x-0 bottom-0 h-0.5 bg-primary" />}
-                  </Link>
-                ))}
-                <Link
-                  href="/akun/segadeals/baru"
-                  className="flex min-w-[130px] items-center justify-center gap-2 px-3 py-3.5 transition hover:bg-[#fffaf1]"
-                >
-                  <span className="flex h-8 w-8 items-center justify-center rounded-full bg-[#fff2d9] text-[#d67a00]">
-                    <Icon name="handshake" size={15} />
-                  </span>
-                  <span>
-                    <span className="block text-xs font-extrabold text-[#10223f]">SegaDeals</span>
-                    <span className="mt-0.5 block text-xs text-[#77869a]">Minta Travel menawar</span>
-                  </span>
-                </Link>
-              </div>
-            </div>
-
-            <div className="p-4 sm:p-5">
-              <div className="grid gap-2 md:grid-cols-[1fr_1.1fr_0.9fr_0.72fr_auto]">
-                {[
-                  ["route", "Dari", "Kota keberangkatan"],
-                  ["globe", "Ke / Tujuan", "Pilih destinasi"],
-                  ["booking", "Tanggal", "Pilih tanggal"],
-                  ["user", "Traveler", "2 orang"],
-                ].map(([icon, label, value]) => (
-                  <div key={label} className="flex min-h-[58px] items-center gap-3 rounded-xl border border-[#dfe7f0] bg-[#fbfdff] px-3.5">
-                    <span className="text-primary"><Icon name={icon as any} size={16} /></span>
-                    <div className="min-w-0">
-                      <p className="text-xs font-extrabold uppercase tracking-[0.08em] text-[#8b9aae]">{label}</p>
-                      <p className="mt-0.5 truncate text-xs font-extrabold text-[#10223f]">{value}</p>
-                    </div>
-                  </div>
-                ))}
-                <Link
-                  href="/paket/tour"
-                  className="inline-flex min-h-[58px] items-center justify-center gap-2 rounded-xl bg-primary px-6 text-xs font-extrabold text-white transition hover:opacity-90"
-                >
-                  <Icon name="search" size={15} />
-                  Cari
-                </Link>
-              </div>
-              <p className="mt-2 text-xs font-medium text-[#8b9aae]">
-                Preview UI pencarian. Filter asal, tujuan, tanggal dan traveler akan dihubungkan ke schema pencarian production pada tahap berikutnya.
-              </p>
-            </div>
-          </div>
+          <MarketplaceSearch />
 
           {/* AUTO MARKETPLACE ADS V4.5 */}
           <MarketplaceAdCarousel />
