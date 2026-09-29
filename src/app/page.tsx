@@ -87,27 +87,6 @@ const PREVIEW_INSPIRATIONS = [
  * dan Travel Pilihan. Data ini tidak ditulis ke Supabase dan tidak boleh
  * dipakai sebagai sumber transaksi production.
  */
-const PREVIEW_TRAVEL_ADS = [
-  {
-    id: "ad-travel-amanah",
-    travel: "Travel Amanah",
-    eyebrow: "Umrah Oktober",
-    title: "Umrah nyaman dengan jadwal yang sudah terencana.",
-    detail: "9 hari · Jakarta · Keberangkatan 18 Okt 2026",
-    price: 28900000,
-    icon: "building" as const,
-  },
-  {
-    id: "ad-jelajah-muslim",
-    travel: "Jelajah Muslim",
-    eyebrow: "Halal Tour",
-    title: "Jelajahi Turki dalam perjalanan ramah muslim.",
-    detail: "8 hari · Istanbul & Bursa · 12 Des 2026",
-    price: 23900000,
-    icon: "globe" as const,
-  },
-];
-
 const PREVIEW_VENDORS = [
   {
     id: "vendor-hotel",
@@ -773,56 +752,6 @@ export default async function HomePage() {
                   <span className="mt-2 inline-flex text-xs font-extrabold text-primary">Lihat paket →</span>
                 </div>
               </Link>
-            ))}
-          </div>
-        </section>
-
-        {/* TRAVEL ADS — V4.3 VISUAL CAMPAIGN */}
-        <section className="mx-auto max-w-[1180px] px-4 pb-10">
-          <div className="flex items-end justify-between gap-4">
-            <div>
-              <p className="text-xs font-extrabold uppercase tracking-[0.14em] text-primary">Promo dari Travel</p>
-              <h2 className="mt-1 font-display text-xl font-extrabold text-[#10223f] sm:text-[22px]">Penawaran untuk perjalanan berikutnya</h2>
-              <p className="mt-1 text-sm text-[#748297]">Area promosi Travel. Konten saat ini masih data contoh untuk preview layout.</p>
-            </div>
-          </div>
-
-          <div className="mt-4 grid gap-4 lg:grid-cols-2">
-            {PREVIEW_TRAVEL_ADS.map((ad, index) => (
-              <div
-                key={ad.id}
-                className={`group relative min-h-[226px] overflow-hidden rounded-[24px] p-5 text-white shadow-[0_14px_34px_rgba(15,45,90,0.12)] sm:p-6 ${
-                  index === 0
-                    ? "bg-[linear-gradient(120deg,#0b65cf_0%,#0d7fe8_52%,#62b7ff_100%)]"
-                    : "bg-[linear-gradient(120deg,#103b70_0%,#12699a_52%,#31a9a0_100%)]"
-                }`}
-              >
-                <div className="absolute -right-14 -top-16 h-52 w-52 rounded-full border-[32px] border-white/10 transition duration-300 group-hover:scale-105" />
-                <div className="absolute -bottom-20 right-20 h-44 w-44 rounded-full bg-white/10" />
-
-                <div className="relative z-10 flex h-full flex-col">
-                  <div className="flex flex-wrap items-center gap-2">
-                    <span className="rounded-full bg-[#ffbd3d] px-2.5 py-1 text-xs font-black uppercase tracking-[0.12em] text-[#3d2600]">Iklan</span>
-                    <span className="text-xs font-extrabold text-white/90">{ad.travel}</span>
-                    <span className="rounded-full border border-white/25 bg-white/10 px-2.5 py-1 text-xs font-bold text-white">{ad.eyebrow}</span>
-                  </div>
-
-                  <div className="mt-5 max-w-[470px]">
-                    <h3 className="text-xl font-extrabold leading-6 tracking-[-0.02em] text-white">{ad.title}</h3>
-                    <p className="mt-2 text-sm leading-5 text-white/80">{ad.detail}</p>
-                  </div>
-
-                  <div className="mt-auto flex flex-wrap items-end justify-between gap-4 pt-5">
-                    <div>
-                      <p className="text-xs font-bold uppercase tracking-[0.1em] text-white/65">Mulai dari</p>
-                      <p className="mt-1 text-xl font-black text-white">{formatIDR(ad.price)}</p>
-                    </div>
-                    <Link href="/paket/umrah" className="inline-flex items-center gap-2 rounded-full bg-white px-4 py-2.5 text-xs font-extrabold text-[#0b5fbd] transition hover:bg-[#f2f7fc]">
-                      Lihat penawaran <span>→</span>
-                    </Link>
-                  </div>
-                </div>
-              </div>
             ))}
           </div>
         </section>
