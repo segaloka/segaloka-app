@@ -819,6 +819,66 @@ export type Database = {
           },
         ]
       }
+      marketplace_ads: {
+        Row: {
+          active: boolean
+          category: string
+          created_at: string
+          created_by: string | null
+          detail: string
+          ends_at: string | null
+          href: string
+          icon: string
+          id: string
+          image_url: string | null
+          price_text: string
+          sort_order: number
+          starts_at: string | null
+          title: string
+          tone: string
+          travel_name: string
+          updated_at: string
+        }
+        Insert: {
+          active?: boolean
+          category: string
+          created_at?: string
+          created_by?: string | null
+          detail: string
+          ends_at?: string | null
+          href: string
+          icon?: string
+          id?: string
+          image_url?: string | null
+          price_text: string
+          sort_order?: number
+          starts_at?: string | null
+          title: string
+          tone?: string
+          travel_name: string
+          updated_at?: string
+        }
+        Update: {
+          active?: boolean
+          category?: string
+          created_at?: string
+          created_by?: string | null
+          detail?: string
+          ends_at?: string | null
+          href?: string
+          icon?: string
+          id?: string
+          image_url?: string | null
+          price_text?: string
+          sort_order?: number
+          starts_at?: string | null
+          title?: string
+          tone?: string
+          travel_name?: string
+          updated_at?: string
+        }
+        Relationships: []
+      }
       notifications: {
         Row: {
           body: string | null

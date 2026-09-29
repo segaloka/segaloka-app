@@ -1,73 +1,80 @@
 "use client";
 
 import Link from "next/link";
-import { useEffect, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { Icon } from "@/components/layout/Icon";
+import { createClient } from "@/lib/supabase/client";
+import type { Database } from "@/lib/database.types";
 
-type Ad = {
-  id: string;
-  travel: string;
-  category: string;
-  title: string;
-  detail: string;
-  price: string;
-  href: string;
-  icon: "building" | "route" | "globe";
-};
+type Ad = Database["public"]["Tables"]["marketplace_ads"]["Row"];
 
-const ADS: Ad[] = [
+const PREVIEW_ADS: Ad[] = [
   {
-    id: "umrah-amanah",
-    travel: "Travel Amanah",
+    id: "preview-marketplace-ad-umrah",
+    travel_name: "Travel Amanah",
     category: "Umrah",
     title: "Umrah nyaman dengan jadwal yang sudah terencana.",
-    detail: "9 hari · Jakarta · 18 Okt 2026",
-    price: "Rp 28.900.000",
+    detail: "9 hari · Jakarta · Keberangkatan Oktober 2026",
+    price_text: "Rp28,9 Juta",
     href: "/paket/umrah",
     icon: "building",
+    tone: "blue",
+    image_url: null,
+    active: true,
+    sort_order: 1,
+    starts_at: null,
+    ends_at: null,
+    created_by: null,
+    created_at: "2026-09-29T00:00:00.000Z",
+    updated_at: "2026-09-29T00:00:00.000Z",
   },
   {
-    id: "turki",
-    travel: "Jelajah Muslim",
+    id: "preview-marketplace-ad-halal-tour",
+    travel_name: "Jelajah Muslim",
     category: "Halal Tour",
     title: "Jelajahi Turki dalam perjalanan ramah muslim.",
-    detail: "8 hari · Istanbul & Bursa · 12 Des 2026",
-    price: "Rp 23.900.000",
+    detail: "8 hari · Istanbul & Bursa · Keberangkatan Desember 2026",
+    price_text: "Rp23,9 Juta",
     href: "/paket/halal_tour",
     icon: "globe",
-  },
-  {
-    id: "umrah-plus",
-    travel: "Nusantara Haramain",
-    category: "Umrah Plus",
-    title: "Umrah Plus Thaif untuk perjalanan yang lebih lengkap.",
-    detail: "12 hari · Jakarta · 3 Nov 2026",
-    price: "Rp 34.500.000",
-    href: "/paket/umrah",
-    icon: "building",
-  },
-  {
-    id: "jepang",
-    travel: "Langkah Dunia",
-    category: "Tour Internasional",
-    title: "Jelajahi Jepang untuk liburan awal tahun.",
-    detail: "7 hari · Tokyo & Osaka · 16 Jan 2027",
-    price: "Rp 21.900.000",
-    href: "/paket/tour",
-    icon: "route",
+    tone: "yellow",
+    image_url: null,
+    active: true,
+    sort_order: 2,
+    starts_at: null,
+    ends_at: null,
+    created_by: null,
+    created_at: "2026-09-29T00:00:00.000Z",
+    updated_at: "2026-09-29T00:00:00.000Z",
   },
 ];
 
-function AdCard({ ad, tone }: { ad: Ad; tone: "blue" | "yellow" }) {
-  const isBlue = tone === "blue";
+function AdCard({ ad }: { ad: Ad }) {
+  const isBlue = ad.tone === "blue";
+
   return (
     <Link
       href={ad.href}
-      className={`group relative flex min-h-[112px] min-w-0 overflow-hidden rounded-2xl border transition hover:-translate-y-0.5 ${isBlue ? "border-[#b8d8ff] bg-[linear-gradient(105deg,#f7fbff_0%,#eaf4ff_52%,#d8ebff_100%)] shadow-[0_8px_24px_rgba(24,105,205,0.10)] hover:shadow-[0_12px_30px_rgba(24,105,205,0.16)]" : "border-[#f1d78a] bg-[linear-gradient(105deg,#fffdf5_0%,#fff7d9_52%,#ffedaa_100%)] shadow-[0_8px_24px_rgba(180,132,20,0.10)] hover:shadow-[0_12px_30px_rgba(180,132,20,0.16)]"}` }
+      className={`group relative flex min-h-[112px] min-w-0 overflow-hidden rounded-2xl border transition hover:-translate-y-0.5 ${
+        isBlue
+          ? "border-[#b8d8ff] bg-[linear-gradient(105deg,#f7fbff_0%,#eaf4ff_52%,#d8ebff_100%)] shadow-[0_8px_24px_rgba(24,105,205,0.10)] hover:shadow-[0_12px_30px_rgba(24,105,205,0.16)]"
+          : "border-[#f1d78a] bg-[linear-gradient(105deg,#fffdf5_0%,#fff7d9_52%,#ffedaa_100%)] shadow-[0_8px_24px_rgba(180,132,20,0.10)] hover:shadow-[0_12px_30px_rgba(180,132,20,0.16)]"
+      }`}
     >
+      {ad.image_url && (
+        <div
+          className="absolute inset-y-0 right-0 w-1/3 bg-cover bg-center opacity-15"
+          style={{ backgroundImage: `url(${ad.image_url})` }}
+          aria-hidden="true"
+        />
+      )}
+
       <div className="relative z-10 flex min-w-0 flex-1 items-center gap-3 px-4 py-3">
         <span className="hidden h-11 w-11 shrink-0 items-center justify-center rounded-xl bg-primary text-white sm:flex">
-          <Icon name={ad.icon} size={18} />
+          <Icon
+            name={ad.icon as "building" | "route" | "globe"}
+            size={18}
+          />
         </span>
 
         <div className="min-w-0">
@@ -77,7 +84,7 @@ function AdCard({ ad, tone }: { ad: Ad; tone: "blue" | "yellow" }) {
             </span>
 
             <span className="truncate text-xs font-bold text-[#60758f]">
-              {ad.travel}
+              {ad.travel_name}
             </span>
 
             <span className="hidden text-[10px] font-bold uppercase tracking-[0.08em] text-primary sm:inline">
@@ -102,11 +109,11 @@ function AdCard({ ad, tone }: { ad: Ad; tone: "blue" | "yellow" }) {
           </p>
 
           <p className="text-sm font-extrabold text-primary">
-            {ad.price}
+            {ad.price_text}
           </p>
 
           <span className="text-xs font-extrabold text-primary">
-            Lihat promo →
+            Lihat penawaran →
           </span>
         </div>
 
@@ -121,21 +128,94 @@ function AdCard({ ad, tone }: { ad: Ad; tone: "blue" | "yellow" }) {
 }
 
 export function MarketplaceAdCarousel() {
+  const supabase = useMemo(() => createClient(), []);
+
+  const [ads, setAds] = useState<Ad[]>([]);
+  const [loaded, setLoaded] = useState(false);
   const [index, setIndex] = useState(0);
   const [paused, setPaused] = useState(false);
 
   useEffect(() => {
-    if (paused) return;
+    let mounted = true;
+
+    const load = async () => {
+      const { data, error } = await supabase
+        .from("marketplace_ads")
+        .select("*")
+        .eq("active", true)
+        .order("sort_order", { ascending: true })
+        .order("created_at", { ascending: false });
+
+      if (!mounted) {
+        return;
+      }
+
+      if (error) {
+        console.error("Failed to load marketplace ads:", error);
+        setAds([]);
+        setLoaded(true);
+        setIndex(0);
+        return;
+      }
+
+      setAds(data ?? []);
+      setLoaded(true);
+      setIndex(0);
+    };
+
+    void load();
+
+    const channel = supabase
+      .channel("marketplace-ads-home")
+      .on(
+        "postgres_changes",
+        {
+          event: "*",
+          schema: "public",
+          table: "marketplace_ads",
+        },
+        () => {
+          void load();
+        },
+      )
+      .subscribe();
+
+    return () => {
+      mounted = false;
+      void supabase.removeChannel(channel);
+    };
+  }, [supabase]);
+
+  const displayAds = ads.length > 0 ? ads : PREVIEW_ADS;
+
+  useEffect(() => {
+    if (!loaded || paused || displayAds.length <= 2) {
+      return;
+    }
 
     const timer = window.setInterval(() => {
-      setIndex((current) => (current + 2) % ADS.length);
+      setIndex((current) => (current + 2) % displayAds.length);
     }, 5000);
 
-    return () => window.clearInterval(timer);
-  }, [paused]);
+    return () => {
+      window.clearInterval(timer);
+    };
+  }, [displayAds.length, loaded, paused]);
 
-  const first = ADS[index];
-  const second = ADS[(index + 1) % ADS.length];
+  if (!loaded) {
+    return (
+      <div
+        className="h-[144px] w-full py-4"
+        aria-hidden="true"
+      />
+    );
+  }
+
+  const first = displayAds[index % displayAds.length];
+  const second =
+    displayAds.length > 1
+      ? displayAds[(index + 1) % displayAds.length]
+      : null;
 
   return (
     <div
@@ -146,12 +226,12 @@ export function MarketplaceAdCarousel() {
       onBlurCapture={() => setPaused(false)}
     >
       <div className="hidden grid-cols-2 gap-3 md:grid">
-        <AdCard ad={first} tone="blue" />
-        <AdCard ad={second} tone="yellow" />
+        <AdCard ad={first} />
+        {second ? <AdCard ad={second} /> : <div />}
       </div>
 
       <div className="md:hidden">
-        <AdCard ad={first} tone="blue" />
+        <AdCard ad={first} />
       </div>
     </div>
   );
