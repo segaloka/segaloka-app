@@ -482,7 +482,7 @@ export default async function HomePage() {
             new Date(b.departure_date).getTime(),
         ),
     }))
-    .slice(0, 8);
+    .slice(0, 4);
 
   const displayPackages =
     marketplacePackages.length > 0 ? marketplacePackages : PREVIEW_PACKAGES;
