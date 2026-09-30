@@ -759,8 +759,8 @@ export default async function HomePage() {
         {/* UPCOMING DEPARTURES — V4.3 */}
         {upcomingPackages.length > 0 && (
           <section className="mx-auto max-w-[1180px] px-4 pb-10">
-            <div className="overflow-hidden rounded-[22px] border border-[#dce5ef] bg-white">
-              <div className="flex flex-col gap-2 border-b border-[#edf1f6] px-5 py-5 sm:flex-row sm:items-end sm:justify-between sm:px-6">
+            <div className="overflow-hidden rounded-[22px] border border-[#dce5ef] bg-white shadow-[0_8px_24px_rgba(15,45,90,0.04)]">
+              <div className="flex flex-col gap-2 border-b border-[#edf1f6] px-5 py-4 sm:flex-row sm:items-end sm:justify-between sm:px-6">
                 <div>
                   <p className="text-xs font-extrabold uppercase tracking-[0.14em] text-primary">Jadwal perjalanan</p>
                   <h2 className="mt-1 font-display text-xl font-extrabold text-[#10223f]">Keberangkatan terdekat</h2>
@@ -776,22 +776,23 @@ export default async function HomePage() {
                     <Link
                       key={`${pkg.id}-${departure.id}`}
                       href={`/paket/detail/${pkg.slug}`}
-                      className={`group flex items-center gap-4 px-5 py-4 transition hover:bg-[#f8fbff] sm:px-6 ${
+                      className={`group flex items-center gap-3.5 px-5 py-3.5 transition duration-200 hover:bg-[#f8fbff] sm:px-6 ${
                         index % 2 === 0 ? "md:border-r md:border-[#edf1f6]" : ""
                       } ${index > 1 ? "border-t border-[#edf1f6]" : index === 1 ? "border-t border-[#edf1f6] md:border-t-0" : ""}`}
                     >
-                      <span className="flex h-12 w-12 shrink-0 items-center justify-center rounded-2xl bg-[#eef5ff] text-primary transition group-hover:bg-primary group-hover:text-white">
+                      <span className="flex h-11 w-11 shrink-0 items-center justify-center rounded-[14px] bg-[#eef5ff] text-primary transition duration-200 group-hover:bg-primary group-hover:text-white">
                         <Icon name={packageIcon(pkg.type)} size={19} />
                       </span>
                       <div className="min-w-0 flex-1">
-                        <p className="truncate text-sm font-extrabold text-[#10223f]">{pkg.name}</p>
-                        <p className="mt-1 truncate text-xs text-[#748297]">{pkg.organizations?.name ?? "Travel Segaloka"} · {packageTypeLabel(pkg.type)}</p>
+                        <p className="truncate text-[13px] font-extrabold leading-5 text-[#10223f] sm:text-sm">{pkg.name}</p>
+                        <p className="mt-0.5 truncate text-xs text-[#748297]">{pkg.organizations?.name ?? "Travel Segaloka"} · {packageTypeLabel(pkg.type)}</p>
                       </div>
-                      <div className="shrink-0 text-right">
-                        <p className="text-xs font-extrabold text-[#10223f]">{formatDate(departure.departure_date)}</p>
-                        <p className={`mt-1 text-xs font-semibold ${seats !== null && seats <= 10 ? "text-[#c97700]" : "text-[#1b8f61]"}`}>
+                      <div className="ml-auto flex shrink-0 items-center gap-3">
+                        <div className="text-right"><p className="whitespace-nowrap text-xs font-extrabold text-[#10223f]">{formatDate(departure.departure_date)}</p>
+                        <p className={`mt-1 inline-flex whitespace-nowrap rounded-full px-2 py-0.5 text-[11px] font-bold ${seats !== null && seats <= 10 ? "bg-[#fff4dc] text-[#a96600]" : "bg-[#eaf8f2] text-[#167453]"}`}>
                           {seats !== null ? `${seats} kursi` : ""}
-                        </p>
+                        </p></div>
+                        <span aria-hidden="true" className="hidden text-lg font-bold text-[#a6b4c5] transition group-hover:translate-x-0.5 group-hover:text-primary sm:inline">→</span>
                       </div>
                     </Link>
                   );
