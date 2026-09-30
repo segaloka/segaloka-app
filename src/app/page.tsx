@@ -555,13 +555,13 @@ export default async function HomePage() {
         </section>
 
         {/* MARKETPLACE PROMO STRIP — V4.3 */}
-        <section className="mx-auto max-w-[1180px] px-4 pb-5 pt-2">
+        <section className="mx-auto max-w-[1180px] px-4 pb-4 pt-3">
           <div className="grid gap-3 md:grid-cols-3">
             {PREVIEW_PROMOS.map((promo, index) => (
               <Link
                 key={promo.id}
                 href={index === 0 ? "/paket/umrah" : index === 1 ? "/paket/tour" : "/paket/halal_tour"}
-                className={`group relative min-h-[118px] overflow-hidden rounded-[20px] border p-4 transition hover:-translate-y-0.5 hover:shadow-[0_14px_34px_rgba(15,45,90,0.09)] ${
+                className={`group relative min-h-[110px] overflow-hidden rounded-[18px] border p-4 transition duration-300 hover:-translate-y-0.5 hover:shadow-[0_14px_34px_rgba(15,45,90,0.09)] ${
                   index === 0
                     ? "border-[#cfe4ff] bg-[linear-gradient(135deg,#e9f5ff_0%,#f8fcff_68%,#ddecff_100%)]"
                     : index === 1
@@ -589,7 +589,7 @@ export default async function HomePage() {
         </section>
 
         {/* REAL MARKETPLACE INVENTORY — V4.3 CARD SYSTEM */}
-        <section className="mx-auto max-w-[1180px] px-4 pb-10 pt-6">
+        <section className="mx-auto max-w-[1180px] px-4 pb-10 pt-5">
           <div className="flex items-end justify-between gap-4">
             <div>
               <p className="text-xs font-extrabold uppercase tracking-[0.14em] text-primary">
