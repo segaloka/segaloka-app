@@ -452,8 +452,8 @@ export function MarketplaceSearch() {
         <div
           className={`grid gap-2.5 ${
             service === "segadeals"
-              ? "md:grid-cols-[minmax(0,1.05fr)_minmax(0,1.35fr)_minmax(138px,0.82fr)_minmax(150px,0.9fr)_minmax(170px,1fr)_176px]"
-              : "md:grid-cols-[minmax(0,1.05fr)_minmax(0,1.45fr)_minmax(170px,0.9fr)_minmax(190px,1fr)_112px]"
+              ? "md:grid-cols-[minmax(190px,1.05fr)_minmax(240px,1.35fr)_142px_158px_174px_176px]"
+              : "md:grid-cols-[minmax(220px,1.15fr)_minmax(300px,1.6fr)_180px_200px_112px]"
           }`}
         >
           <div className="relative">
@@ -509,11 +509,11 @@ export function MarketplaceSearch() {
             )}
           </div>
 
-          <div className="relative">
+          <div className="relative min-w-0">
             <button
               type="button"
               onClick={() => setOpenPanel(openPanel === "destination" ? null : "destination")}
-            className="relative flex min-h-[62px] cursor-pointer items-center gap-3 rounded-xl border border-[#dfe7f0] bg-[#fbfdff] px-3.5 text-left transition hover:border-[#c8d8ea] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/20"
+            className="relative flex min-h-[62px] w-full min-w-0 cursor-pointer items-center gap-3 rounded-xl border border-[#dfe7f0] bg-[#fbfdff] px-3.5 text-left transition hover:border-[#c8d8ea] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/20"
             aria-expanded={openPanel === "destination"}
           >
             <span className="shrink-0 text-primary"><Icon name="globe" size={17} /></span>
