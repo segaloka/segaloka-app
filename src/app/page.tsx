@@ -840,25 +840,25 @@ export default async function HomePage() {
           <div className="flex items-end justify-between gap-4">
             <div>
               <p className="text-xs font-extrabold uppercase tracking-[0.14em] text-primary">Vendor Pilihan</p>
-              <h2 className="mt-1 font-display text-xl font-extrabold text-[#10223f] sm:text-[22px]">Layanan pendukung perjalanan</h2>
+              <h2 className="mt-1 font-display text-xl font-extrabold text-[#10223f] sm:text-[22px]">Vendor perjalanan pilihan</h2>
               <p className="mt-1 text-sm text-[#748297]">Kategori Vendor untuk kebutuhan Travel dan perjalanan.</p>
             </div>
-            <Link href="/vendor" className="hidden text-sm font-extrabold text-primary hover:underline sm:inline">Lihat Vendor →</Link>
+            <span className="hidden rounded-full bg-[#f3f7fb] px-3 py-1.5 text-xs font-extrabold text-[#60738d] sm:inline">Mitra pendukung Segaloka</span>
           </div>
 
-          <div className="mt-4 grid grid-cols-2 gap-3 lg:grid-cols-4">
+          <div className="mt-4 grid grid-cols-1 gap-3 sm:grid-cols-2 lg:grid-cols-4">
             {PREVIEW_VENDORS.map((vendor, index) => (
-              <div key={vendor.id} className="group relative min-h-[188px] overflow-hidden rounded-[20px] border border-[#dfe7f0] bg-white p-4 transition hover:-translate-y-0.5 hover:border-[#bfd5ee] hover:shadow-[0_12px_28px_rgba(15,45,90,0.08)]">
+              <div key={vendor.id} className="group relative min-h-[166px] overflow-hidden rounded-[18px] border border-[#dfe7f0] bg-white p-4 transition duration-300 hover:-translate-y-0.5 hover:border-[#bfd5ee] hover:shadow-[0_12px_26px_rgba(15,45,90,0.08)]">
                 <div className={`absolute inset-x-0 top-0 h-1 ${index % 2 === 0 ? "bg-[#0b6ee8]" : "bg-[#20a67a]"}`} />
                 <div className="flex items-start justify-between gap-3">
-                  <span className="flex h-11 w-11 items-center justify-center rounded-2xl bg-[#eef5ff] text-primary">
+                  <span className="flex h-10 w-10 items-center justify-center rounded-[14px] bg-[#eef5ff] text-primary transition group-hover:bg-primary group-hover:text-white">
                     <Icon name={vendor.icon} size={19} />
                   </span>
-                  <span className="rounded-full bg-[#f3f6fa] px-2 py-1 text-xs font-extrabold text-[#718096]">Preview</span>
+                  <span className="rounded-full border border-[#e4eaf1] bg-[#f8fafc] px-2 py-1 text-[10px] font-extrabold uppercase tracking-[0.08em] text-[#718096]">Preview</span>
                 </div>
                 <p className="mt-4 text-xs font-extrabold uppercase tracking-[0.1em] text-primary">{vendor.category}</p>
                 <h3 className="mt-1 truncate text-sm font-extrabold text-[#10223f]">{vendor.name}</h3>
-                <p className="mt-1.5 line-clamp-2 text-xs leading-4 text-[#748297]">{vendor.description}</p>
+                <p className="mt-1.5 line-clamp-2 text-xs leading-[1.45] text-[#748297]">{vendor.description}</p>
                 <span className="mt-3 inline-flex text-xs font-extrabold text-primary">Lihat layanan →</span>
               </div>
             ))}
