@@ -284,7 +284,7 @@ export function MarketplaceSearch() {
     : "Pilih tanggal";
 
   return (
-    <div ref={rootRef} className="relative pt-7">
+    <div ref={rootRef} className="relative pt-6">
       {showSegaDealsInfo && (
         <div
           className="fixed inset-0 z-[100] flex items-center justify-center bg-[#071a33]/45 p-4 backdrop-blur-[2px]"
@@ -448,8 +448,8 @@ export function MarketplaceSearch() {
         </div>
       </div>
 
-      <div className="rounded-[22px] border border-[#dce4ee] bg-white px-3 pb-4 pt-[76px] shadow-[0_18px_50px_rgba(16,34,63,0.14)] sm:px-4">
-        <div className={`grid gap-2.5 ${service === "segadeals" ? "md:grid-cols-[0.9fr_1fr_0.78fr_0.9fr_0.9fr_auto]" : "md:grid-cols-[1fr_1.1fr_0.9fr_0.78fr_auto]"}`}>
+      <div className="rounded-[22px] border border-[#dce4ee] bg-white px-3 pb-4 pt-[72px] shadow-[0_18px_50px_rgba(16,34,63,0.14)] sm:px-4">
+        <div className={`grid gap-2.5 ${service === "segadeals" ? "md:grid-cols-[0.9fr_1.15fr_0.76fr_0.9fr_0.9fr_auto]" : "md:grid-cols-[0.95fr_1.25fr_0.82fr_0.82fr_auto]"}`}>
           <div className="relative">
             <button
               type="button"

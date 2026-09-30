@@ -509,7 +509,7 @@ export default async function HomePage() {
           <div className="absolute -right-16 -top-28 hidden h-[420px] w-[620px] rounded-[50%] border border-white/60 bg-white/25 lg:block" />
           <div className="absolute right-[13%] top-10 hidden h-44 w-44 rounded-full border-[30px] border-white/25 lg:block" />
 
-          <div className="relative mx-auto max-w-[1180px] px-4 pb-28 pt-8 sm:pb-32 md:pt-10">
+          <div className="relative mx-auto max-w-[1180px] px-4 pb-24 pt-8 sm:pb-28 md:pt-10">
             <div className="grid gap-6 lg:grid-cols-[1fr_0.72fr] lg:items-center">
               <div className="max-w-[700px]">
                 <p className="inline-flex items-center gap-2 rounded-full border border-white/80 bg-white/80 px-3 py-1.5 text-xs font-extrabold text-primary shadow-sm">
@@ -547,7 +547,7 @@ export default async function HomePage() {
         </section>
 
         {/* MARKETPLACE CATEGORY + SEARCH CENTER */}
-        <section className="relative z-20 mx-auto -mt-20 max-w-[1180px] px-4">
+        <section className="relative z-20 mx-auto -mt-16 max-w-[1180px] px-4">
           <MarketplaceSearch />
 
           {/* AUTO MARKETPLACE ADS V4.5 */}
