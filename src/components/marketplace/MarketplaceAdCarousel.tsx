@@ -55,22 +55,20 @@ function AdCard({ ad }: { ad: Ad }) {
   return (
     <Link
       href={ad.href}
-      className={`group relative flex min-h-[112px] min-w-0 overflow-hidden rounded-2xl border transition hover:-translate-y-0.5 ${
+      className={`group relative grid min-h-[124px] min-w-0 overflow-hidden rounded-[20px] border transition duration-300 hover:-translate-y-0.5 ${
         isBlue
-          ? "border-[#b8d8ff] bg-[linear-gradient(105deg,#f7fbff_0%,#eaf4ff_52%,#d8ebff_100%)] shadow-[0_8px_24px_rgba(24,105,205,0.10)] hover:shadow-[0_12px_30px_rgba(24,105,205,0.16)]"
-          : "border-[#f1d78a] bg-[linear-gradient(105deg,#fffdf5_0%,#fff7d9_52%,#ffedaa_100%)] shadow-[0_8px_24px_rgba(180,132,20,0.10)] hover:shadow-[0_12px_30px_rgba(180,132,20,0.16)]"
-      }`}
+          ? "border-[#c6def8] bg-[linear-gradient(115deg,#f8fbff_0%,#edf6ff_55%,#e1f0ff_100%)] shadow-[0_8px_24px_rgba(24,105,205,0.09)] hover:shadow-[0_14px_34px_rgba(24,105,205,0.15)]"
+          : "border-[#f0d98f] bg-[linear-gradient(115deg,#fffef9_0%,#fff9e5_55%,#fff0b9_100%)] shadow-[0_8px_24px_rgba(180,132,20,0.09)] hover:shadow-[0_14px_34px_rgba(180,132,20,0.15)]"
+      } sm:grid-cols-[minmax(0,1fr)_168px]`}
     >
-      {ad.image_url && (
-        <div
-          className="absolute inset-y-0 right-0 w-1/3 bg-cover bg-center opacity-15"
-          style={{ backgroundImage: `url(${ad.image_url})` }}
-          aria-hidden="true"
-        />
-      )}
-
-      <div className="relative z-10 flex min-w-0 flex-1 items-center gap-3 px-4 py-3">
-        <span className="hidden h-11 w-11 shrink-0 items-center justify-center rounded-xl bg-primary text-white sm:flex">
+      <div className="relative z-10 flex min-w-0 items-center gap-3.5 px-4 py-3.5">
+        <span
+          className={`hidden h-11 w-11 shrink-0 items-center justify-center rounded-xl shadow-sm sm:flex ${
+            isBlue
+              ? "bg-primary text-white"
+              : "border border-[#f0d274] bg-white/90 text-[#9b7200]"
+          }`}
+        >
           <Icon
             name={ad.icon as "building" | "route" | "globe"}
             size={18}
@@ -78,55 +76,99 @@ function AdCard({ ad }: { ad: Ad }) {
         </span>
 
         <div className="min-w-0">
-          <div className="flex flex-wrap items-center gap-2">
-            <span className="rounded-full bg-[#ffd94a] px-2 py-1 text-[10px] font-extrabold uppercase tracking-[0.08em] text-[#604800]">
+          <div className="flex flex-wrap items-center gap-1.5">
+            <span className="rounded-full bg-[#ffd94a] px-2 py-1 text-[9px] font-black uppercase tracking-[0.1em] text-[#604800]">
               Iklan
             </span>
 
-            <span className="truncate text-xs font-bold text-[#60758f]">
+            <span className="max-w-[150px] truncate text-[11px] font-extrabold text-[#526b88]">
               {ad.travel_name}
             </span>
 
-            <span className="hidden text-[10px] font-bold uppercase tracking-[0.08em] text-primary sm:inline">
+            <span
+              className={`hidden rounded-full px-2 py-1 text-[9px] font-black uppercase tracking-[0.08em] sm:inline ${
+                isBlue
+                  ? "bg-white/75 text-primary"
+                  : "bg-white/75 text-[#8a6800]"
+              }`}
+            >
               {ad.category}
             </span>
           </div>
 
-          <p className="mt-1 line-clamp-2 text-sm font-extrabold leading-5 text-[#10223f]">
+          <p className="mt-1.5 line-clamp-2 max-w-[430px] text-sm font-black leading-[1.35] text-[#10223f]">
             {ad.title}
           </p>
 
-          <p className="mt-0.5 hidden truncate text-xs font-medium text-[#6f829a] xl:block">
+          <p className="mt-1 hidden truncate text-[11px] font-medium text-[#6f829a] lg:block">
             {ad.detail}
           </p>
         </div>
       </div>
 
-      <div className="relative z-10 flex shrink-0 items-center px-3">
-        <div className="hidden text-right lg:block">
-          <p className="text-[10px] font-bold uppercase tracking-[0.08em] text-[#73869d]">
+      <div
+        className={`relative flex min-h-[76px] items-end justify-between overflow-hidden border-t px-4 py-3 sm:min-h-full sm:items-center sm:justify-end sm:border-l sm:border-t-0 ${
+          isBlue
+            ? "border-[#c7ddf5] bg-[#dceeff]"
+            : "border-[#eed58a] bg-[#ffefb5]"
+        }`}
+      >
+        {ad.image_url ? (
+          <>
+            <div
+              className="absolute inset-0 bg-cover bg-center transition duration-500 group-hover:scale-105"
+              style={{ backgroundImage: `url(${ad.image_url})` }}
+              aria-hidden="true"
+            />
+            <div
+              className={`absolute inset-0 ${
+                isBlue
+                  ? "bg-[linear-gradient(90deg,rgba(220,238,255,0.92)_0%,rgba(220,238,255,0.60)_48%,rgba(9,40,78,0.18)_100%)]"
+                  : "bg-[linear-gradient(90deg,rgba(255,239,181,0.94)_0%,rgba(255,239,181,0.62)_48%,rgba(91,65,0,0.16)_100%)]"
+              }`}
+              aria-hidden="true"
+            />
+          </>
+        ) : (
+          <>
+            <div
+              className={`absolute -right-8 -top-10 h-32 w-32 rounded-full border-[22px] ${
+                isBlue ? "border-white/35" : "border-white/40"
+              }`}
+              aria-hidden="true"
+            />
+            <div
+              className={`absolute right-10 top-5 h-14 w-14 rounded-full ${
+                isBlue ? "bg-white/25" : "bg-white/30"
+              }`}
+              aria-hidden="true"
+            />
+          </>
+        )}
+
+        <div className="relative z-10 text-left sm:text-right">
+          <p className="text-[9px] font-black uppercase tracking-[0.1em] text-[#61758d]">
             Mulai dari
           </p>
 
-          <p className="text-sm font-extrabold text-primary">
+          <p className="mt-0.5 text-base font-black tracking-[-0.02em] text-primary">
             {ad.price_text}
           </p>
 
-          <span className="text-xs font-extrabold text-primary">
-            Lihat penawaran →
+          <span className="mt-1 inline-flex items-center gap-1 text-[11px] font-black text-primary">
+            Lihat penawaran
+            <span
+              className="transition-transform duration-200 group-hover:translate-x-0.5"
+              aria-hidden="true"
+            >
+              →
+            </span>
           </span>
         </div>
-
-        <span className="flex h-9 w-9 items-center justify-center rounded-full bg-white text-primary shadow-sm ring-1 ring-[#d5e4f4] lg:hidden">
-          →
-        </span>
       </div>
-
-      <div className="pointer-events-none absolute -right-8 -top-14 h-40 w-40 rounded-full border-[24px] border-white/40" />
     </Link>
   );
 }
-
 export function MarketplaceAdCarousel() {
   const supabase = useMemo(() => createClient(), []);
 
@@ -219,7 +261,7 @@ export function MarketplaceAdCarousel() {
 
   return (
     <div
-      className="w-full py-4"
+      className="w-full pb-6 pt-4"
       onMouseEnter={() => setPaused(true)}
       onMouseLeave={() => setPaused(false)}
       onFocusCapture={() => setPaused(true)}
