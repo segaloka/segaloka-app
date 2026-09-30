@@ -449,7 +449,13 @@ export function MarketplaceSearch() {
       </div>
 
       <div className="rounded-[22px] border border-[#dce4ee] bg-white px-3 pb-4 pt-[72px] shadow-[0_18px_50px_rgba(16,34,63,0.14)] sm:px-4">
-        <div className={`grid gap-2.5 ${service === "segadeals" ? "md:grid-cols-[0.9fr_1.15fr_0.76fr_0.9fr_0.9fr_auto]" : "md:grid-cols-[0.95fr_1.25fr_0.82fr_0.82fr_auto]"}`}>
+        <div
+          className={`grid gap-2.5 ${
+            service === "segadeals"
+              ? "md:grid-cols-[minmax(0,1.05fr)_minmax(0,1.35fr)_minmax(138px,0.82fr)_minmax(150px,0.9fr)_minmax(170px,1fr)_176px]"
+              : "md:grid-cols-[minmax(0,1.05fr)_minmax(0,1.45fr)_minmax(170px,0.9fr)_minmax(190px,1fr)_112px]"
+          }`}
+        >
           <div className="relative">
             <button
               type="button"
@@ -620,7 +626,7 @@ export function MarketplaceSearch() {
           <button
             type="button"
             onClick={handleSearch}
-            className={`inline-flex min-h-[62px] items-center justify-center gap-2 rounded-xl bg-primary px-7 text-xs font-extrabold text-white shadow-sm transition hover:brightness-105 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/30 ${service === "segadeals" ? "order-6" : ""}`}
+            className={`inline-flex min-h-[62px] w-full items-center justify-center gap-2 whitespace-nowrap rounded-xl bg-primary px-4 text-xs font-extrabold text-white shadow-sm transition hover:brightness-105 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/30 ${service === "segadeals" ? "order-6" : ""}`}
           >
             <Icon name="search" size={16} />
             {form.actionLabel}
