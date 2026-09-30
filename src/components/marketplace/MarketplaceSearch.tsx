@@ -448,7 +448,7 @@ export function MarketplaceSearch() {
         </div>
       </div>
 
-      <div className="rounded-[22px] border border-[#dce4ee] bg-white px-3 pb-4 pt-[72px] shadow-[0_18px_50px_rgba(16,34,63,0.14)] sm:px-4">
+      <div className="rounded-[22px] border border-[#dce4ee] bg-white px-3 pb-4 pt-[64px] shadow-[0_18px_50px_rgba(16,34,63,0.14)] sm:px-4">
         <div
           className={`grid gap-2.5 ${
             service === "segadeals"
