@@ -804,7 +804,7 @@ export default async function HomePage() {
 
         {/* EXPLORE THE WORLD — V4.3 */}
         <section className="mx-auto max-w-[1180px] px-4 pb-10">
-          <div className="overflow-hidden rounded-[24px] bg-[linear-gradient(135deg,#eaf5ff_0%,#f4f9ff_50%,#edf8f6_100%)] p-5 sm:p-6">
+          <div className="overflow-hidden rounded-[22px] border border-[#dfe9f3] bg-[linear-gradient(135deg,#f4f9ff_0%,#f8fbff_52%,#f1faf7_100%)] p-5 sm:p-6">
             <div className="flex items-end justify-between gap-4">
               <div>
                 <p className="text-xs font-extrabold uppercase tracking-[0.14em] text-primary">Jelajahi Dunia</p>
@@ -814,20 +814,20 @@ export default async function HomePage() {
               <Link href="/paket/halal_tour" className="hidden text-sm font-extrabold text-primary hover:underline sm:inline">Lihat Internasional →</Link>
             </div>
 
-            <div className="mt-5 grid grid-cols-2 gap-3 sm:grid-cols-3 lg:grid-cols-5">
+            <div className="mt-4 grid grid-cols-2 gap-3 sm:grid-cols-3 lg:grid-cols-5">
               {PREVIEW_WORLD_DESTINATIONS.map((destination, index) => (
                 <Link
                   key={destination.name}
                   href="/paket/halal_tour"
-                  className="group relative min-h-[164px] overflow-hidden rounded-[20px] border border-white bg-white p-4 shadow-[0_8px_22px_rgba(15,45,90,0.05)] transition hover:-translate-y-0.5 hover:shadow-[0_14px_28px_rgba(15,45,90,0.09)]"
+                  className="group relative min-h-[148px] overflow-hidden rounded-[18px] border border-white/90 bg-white p-4 shadow-[0_6px_18px_rgba(15,45,90,0.045)] transition duration-300 hover:-translate-y-0.5 hover:border-[#d7e7f5] hover:shadow-[0_12px_26px_rgba(15,45,90,0.08)]"
                 >
-                  <div className={`absolute -right-8 -top-8 h-24 w-24 rounded-full ${index % 2 === 0 ? "bg-[#e4f1ff]" : "bg-[#e6f7f0]"}`} />
-                  <span className="relative flex h-10 w-10 items-center justify-center rounded-xl bg-[#edf5ff] text-primary">
+                  <div className={`absolute -right-9 -top-9 h-24 w-24 rounded-full ${index % 2 === 0 ? "bg-[#e8f3ff]" : "bg-[#e9f8f2]"}`} />
+                  <span className="relative flex h-9 w-9 items-center justify-center rounded-[11px] bg-[#edf5ff] text-primary transition duration-300 group-hover:bg-primary group-hover:text-white">
                     <Icon name={destination.icon} size={17} />
                   </span>
-                  <div className="absolute inset-x-4 bottom-4">
-                    <p className="text-base font-extrabold text-[#10223f]">{destination.name}</p>
-                    <p className="mt-1 line-clamp-2 text-xs leading-4 text-[#748297]">{destination.detail}</p>
+                  <div className="absolute inset-x-4 bottom-3.5">
+                    <p className="text-[15px] font-extrabold leading-tight text-[#10223f]">{destination.name}</p>
+                    <p className="mt-1 line-clamp-1 text-xs leading-4 text-[#748297]">{destination.detail}</p>
                   </div>
                 </Link>
               ))}
