@@ -734,7 +734,7 @@ export default async function HomePage() {
               <Link
                 key={destination.name}
                 href="/paket/tour"
-                className={`group relative min-h-[176px] overflow-hidden rounded-[20px] border p-4 ${
+                className={`group relative min-h-[148px] overflow-hidden rounded-[18px] border p-4 transition duration-300 hover:-translate-y-0.5 hover:shadow-[0_12px_26px_rgba(15,45,90,0.08)] ${
                   index % 3 === 0
                     ? "border-[#cfe4ff] bg-[linear-gradient(160deg,#dff1ff_0%,#f6fbff_62%,#ffffff_100%)]"
                     : index % 3 === 1
@@ -742,14 +742,14 @@ export default async function HomePage() {
                       : "border-[#e6def4] bg-[linear-gradient(160deg,#f0e9ff_0%,#fbf9ff_62%,#ffffff_100%)]"
                 }`}
               >
-                <div className="absolute -bottom-10 -right-8 h-32 w-32 rounded-full border-[20px] border-white/55 transition duration-300 group-hover:scale-110" />
-                <span className="relative flex h-10 w-10 items-center justify-center rounded-xl border border-white bg-white/90 text-primary shadow-sm">
+                <div className="absolute -bottom-12 -right-10 h-28 w-28 rounded-full border-[16px] border-white/55 transition duration-300 group-hover:scale-110" />
+                <span className="relative flex h-9 w-9 items-center justify-center rounded-xl border border-white bg-white/90 text-primary shadow-sm">
                   <Icon name={destination.icon} size={17} />
                 </span>
-                <div className="absolute inset-x-4 bottom-4">
-                  <p className="text-base font-extrabold text-[#10223f]">{destination.name}</p>
-                  <p className="mt-1 line-clamp-2 text-xs leading-4 text-[#657892]">{destination.detail}</p>
-                  <span className="mt-2 inline-flex text-xs font-extrabold text-primary">Lihat paket →</span>
+                <div className="absolute inset-x-4 bottom-3.5">
+                  <p className="text-[15px] font-extrabold leading-tight text-[#10223f]">{destination.name}</p>
+                  <p className="mt-1 line-clamp-1 text-xs leading-4 text-[#657892]">{destination.detail}</p>
+                  <span className="mt-1.5 inline-flex items-center gap-1 text-xs font-extrabold text-primary">Lihat paket <span aria-hidden="true">→</span></span>
                 </div>
               </Link>
             ))}
