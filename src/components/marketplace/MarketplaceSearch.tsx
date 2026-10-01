@@ -401,7 +401,7 @@ export function MarketplaceSearch() {
               </div>
             </div>
 
-            <div className="mt-6 flex gap-6 overflow-x-auto">
+            <div className="mt-5 grid grid-cols-1 gap-5 sm:mt-6 md:grid-cols-2 md:gap-6">
               <CalendarMonth
                 month={calendarMonth}
                 from={dateFrom}
