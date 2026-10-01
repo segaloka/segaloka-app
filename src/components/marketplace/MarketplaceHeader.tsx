@@ -47,12 +47,12 @@ export function MarketplaceHeader() {
   return (
     <>
       <header className="sticky top-0 z-50 border-b border-[#e4eaf1] bg-white/95 backdrop-blur">
-        <div className="mx-auto flex h-[62px] max-w-[1180px] items-center gap-5 px-4">
+        <div className="mx-auto flex h-[58px] max-w-[1180px] items-center gap-2 px-3 sm:h-[62px] sm:gap-5 sm:px-4">
           <Link href="/" className="flex shrink-0 items-center" aria-label="Segaloka">
             <img
               src="/brand/segaloka-logo.png"
               alt="Segaloka"
-              className="h-11 w-auto object-contain"
+              className="h-9 w-auto max-w-[128px] object-contain sm:h-11 sm:max-w-none"
             />
           </Link>
 
@@ -74,17 +74,17 @@ export function MarketplaceHeader() {
               {language.toUpperCase()} · {currency}
             </button>
             <Link href="/login" className="hidden px-2.5 py-2 text-xs font-extrabold text-[#10223f] sm:inline-flex">Masuk</Link>
-            <Link href="/register" className="rounded-lg bg-primary px-4 py-2 text-xs font-extrabold text-white">Daftar</Link>
+            <Link href="/register" className="rounded-lg bg-primary px-3 py-2 text-[11px] font-extrabold text-white sm:px-4 sm:text-xs">Daftar</Link>
             <button type="button" onClick={() => setOpen(true)} className="inline-flex h-8 w-8 items-center justify-center rounded-lg border border-[#dfe7f0] text-primary sm:hidden" aria-label="Bahasa dan mata uang">
               <Icon name="globe" size={14} />
             </button>
           </div>
         </div>
 
-        <div className="overflow-x-auto border-t border-[#eef2f6] lg:hidden">
-          <nav className="mx-auto flex min-w-max max-w-[1180px] items-center justify-center gap-5 px-4 py-2.5">
+        <div className="border-t border-[#eef2f6] lg:hidden">
+          <nav className="mx-auto grid max-w-[760px] grid-cols-5 items-center gap-0 px-1 py-1.5 sm:px-3 sm:py-2">
             {NAV.map(([label, href]) => (
-              <Link key={label} href={href} className="text-xs font-bold text-[#52647e]">{label}</Link>
+              <Link key={label} href={href} className="min-w-0 truncate rounded-lg px-1 py-1.5 text-center text-[10px] font-bold text-[#52647e] transition hover:bg-[#f4f7fb] hover:text-primary sm:px-2 sm:text-xs">{label}</Link>
             ))}
           </nav>
         </div>
