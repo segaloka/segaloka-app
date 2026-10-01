@@ -740,6 +740,8 @@ export default async function HomePage() {
                 key={destination.name}
                 href="/paket/tour"
                 className={`group relative min-h-[148px] overflow-hidden rounded-[18px] border p-4 transition duration-300 hover:-translate-y-0.5 hover:shadow-[0_12px_26px_rgba(15,45,90,0.08)] lg:min-h-[132px] ${
+                  index === 4 ? "lg:col-span-2 " : ""
+                }${
                   index % 3 === 0
                     ? "border-[#cfe4ff] bg-[linear-gradient(160deg,#dff1ff_0%,#f6fbff_62%,#ffffff_100%)]"
                     : index % 3 === 1
@@ -828,7 +830,9 @@ export default async function HomePage() {
                 <Link
                   key={destination.name}
                   href="/paket/halal_tour"
-                  className="group relative min-h-[148px] overflow-hidden rounded-[18px] border border-white/90 bg-white p-4 shadow-[0_6px_18px_rgba(15,45,90,0.045)] transition duration-300 hover:-translate-y-0.5 hover:border-[#d7e7f5] hover:shadow-[0_12px_26px_rgba(15,45,90,0.08)] lg:min-h-[132px]"
+                  className={`group relative min-h-[148px] overflow-hidden rounded-[18px] border border-white/90 bg-white p-4 shadow-[0_6px_18px_rgba(15,45,90,0.045)] transition duration-300 hover:-translate-y-0.5 hover:border-[#d7e7f5] hover:shadow-[0_12px_26px_rgba(15,45,90,0.08)] lg:min-h-[132px] ${
+                    index === 4 ? "lg:col-span-2" : ""
+                  }`}
                 >
                   <div className={`absolute -right-9 -top-9 h-24 w-24 rounded-full ${index % 2 === 0 ? "bg-[#e8f3ff]" : "bg-[#e9f8f2]"}`} />
                   <span className="relative flex h-9 w-9 items-center justify-center rounded-[11px] bg-[#edf5ff] text-primary transition duration-300 group-hover:bg-primary group-hover:text-white">
