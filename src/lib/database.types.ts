@@ -831,6 +831,7 @@ export type Database = {
           icon: string
           id: string
           image_url: string | null
+          placement: string
           price_text: string
           sort_order: number
           starts_at: string | null
@@ -850,6 +851,7 @@ export type Database = {
           icon?: string
           id?: string
           image_url?: string | null
+          placement?: string
           price_text: string
           sort_order?: number
           starts_at?: string | null
@@ -869,6 +871,7 @@ export type Database = {
           icon?: string
           id?: string
           image_url?: string | null
+          placement?: string
           price_text?: string
           sort_order?: number
           starts_at?: string | null

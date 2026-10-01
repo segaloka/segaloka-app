@@ -48,9 +48,12 @@ export function MarketplaceHeader() {
     <>
       <header className="sticky top-0 z-50 border-b border-[#e4eaf1] bg-white/95 backdrop-blur">
         <div className="mx-auto flex h-[62px] max-w-[1180px] items-center gap-5 px-4">
-          <Link href="/" className="flex shrink-0 items-center gap-2">
-            <span className="flex h-8 w-8 items-center justify-center rounded-full bg-primary text-xs font-black text-white">S</span>
-            <span className="font-display text-base font-extrabold text-[#10223f]">Segaloka</span>
+          <Link href="/" className="flex shrink-0 items-center" aria-label="Segaloka">
+            <img
+              src="/brand/segaloka-logo.png"
+              alt="Segaloka"
+              className="h-8 w-auto object-contain"
+            />
           </Link>
 
           <nav className="hidden flex-1 items-center justify-center gap-6 lg:flex">

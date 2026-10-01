@@ -718,6 +718,10 @@ export default async function HomePage() {
           )}
         </section>
 
+        {/* MARKETPLACE ADS — AFTER PACKAGES */}
+        <div className="mx-auto w-full max-w-[1180px] px-4 pb-10">
+          <MarketplaceAdCarousel placement="after_packages" />
+        </div>
         {/* EXPLORE INDONESIA — V4.3 DESTINATION CARDS */}
         <section className="mx-auto max-w-[1180px] px-4 pb-10">
           <div className="flex items-end justify-between gap-4">
@@ -756,6 +760,10 @@ export default async function HomePage() {
           </div>
         </section>
 
+        {/* MARKETPLACE ADS — AFTER DOMESTIC */}
+        <div className="mx-auto w-full max-w-[1180px] px-4 pb-10">
+          <MarketplaceAdCarousel placement="after_domestic" />
+        </div>
         {/* UPCOMING DEPARTURES — V4.3 */}
         {upcomingPackages.length > 0 && (
           <section className="mx-auto max-w-[1180px] px-4 pb-10">
@@ -835,6 +843,10 @@ export default async function HomePage() {
           </div>
         </section>
 
+        {/* MARKETPLACE ADS — AFTER WORLD */}
+        <div className="mx-auto w-full max-w-[1180px] px-4 pb-10">
+          <MarketplaceAdCarousel placement="after_world" />
+        </div>
         {/* VENDOR PICKS — V4.3 SERVICE CARDS */}
         <section className="mx-auto max-w-[1180px] px-4 pb-10">
           <div className="flex items-end justify-between gap-4">
@@ -897,6 +909,10 @@ export default async function HomePage() {
           </div>
         </section>
 
+        {/* MARKETPLACE ADS — LOWER HOME */}
+        <div className="mx-auto w-full max-w-[1180px] px-4 pb-10">
+          <MarketplaceAdCarousel placement="lower_home" />
+        </div>
         {/* TRAVEL DIRECTORY — V4.3 IDENTITY CARDS */}
         <section className="mx-auto max-w-[1180px] px-4 pb-10">
           <div className="flex items-end justify-between gap-4">
@@ -997,9 +1013,12 @@ export default async function HomePage() {
         <div className="mx-auto max-w-[1180px] px-4 py-10 sm:py-12">
           <div className="grid gap-8 sm:grid-cols-2 lg:grid-cols-[1.25fr_0.8fr_0.8fr_0.9fr]">
             <div>
-              <div className="flex items-center gap-2.5">
-                <span className="flex h-9 w-9 items-center justify-center rounded-full bg-white text-sm font-black text-primary">S</span>
-                <span className="font-display text-xl font-extrabold">Segaloka</span>
+              <div className="flex items-center">
+                <img
+                  src="/brand/segaloka-logo.png"
+                  alt="Segaloka"
+                  className="h-9 w-auto object-contain brightness-0 invert"
+                />
               </div>
               <p className="mt-4 max-w-[330px] text-xs leading-5 text-[#c5d7ed]">
                 Ekosistem perjalanan yang menghubungkan Traveler, Travel, Vendor, Agen, Mitra dan Affiliate dalam satu platform.

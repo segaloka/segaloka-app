@@ -15,11 +15,12 @@ export async function PublicNav() {
   return (
     <header className="sticky top-0 z-30 border-b border-border bg-surface/95 backdrop-blur">
       <div className="mx-auto flex h-16 max-w-6xl items-center gap-6 px-4">
-        <Link href="/" className="flex items-center gap-2">
-          <div className="flex h-8 w-8 items-center justify-center rounded-lg bg-primary font-display text-sm font-bold text-primary-fg">
-            S
-          </div>
-          <span className="font-display text-lg font-bold text-text-primary">Segaloka</span>
+        <Link href="/" className="flex items-center" aria-label="Segaloka">
+          <img
+            src="/brand/segaloka-logo.png"
+            alt="Segaloka"
+            className="h-8 w-auto object-contain"
+          />
         </Link>
         <nav className="hidden flex-1 items-center gap-5 md:flex">
           {links.map((l) => (
@@ -54,11 +55,12 @@ export function PublicFooter() {
     <footer className="border-t border-border bg-surface">
       <div className="mx-auto grid max-w-6xl gap-8 px-4 py-12 md:grid-cols-4">
         <div>
-          <div className="flex items-center gap-2">
-            <div className="flex h-7 w-7 items-center justify-center rounded-lg bg-primary font-display text-xs font-bold text-primary-fg">
-              S
-            </div>
-            <span className="font-display text-base font-bold text-text-primary">Segaloka</span>
+          <div className="flex items-center">
+            <img
+              src="/brand/segaloka-logo.png"
+              alt="Segaloka"
+              className="h-8 w-auto object-contain"
+            />
           </div>
           <p className="mt-3 text-sm text-text-secondary">Ekosistem digital Umrah, Haji, dan Halal Tour Indonesia.</p>
         </div>

@@ -8,6 +8,17 @@ import type { Database } from "@/lib/database.types";
 
 type Ad = Database["public"]["Tables"]["marketplace_ads"]["Row"];
 
+export type MarketplaceAdPlacement =
+  | "hero"
+  | "after_packages"
+  | "after_domestic"
+  | "after_world"
+  | "lower_home";
+
+type MarketplaceAdCarouselProps = {
+  placement?: MarketplaceAdPlacement;
+};
+
 const PREVIEW_ADS: Ad[] = [
   {
     id: "preview-marketplace-ad-umrah",
@@ -27,6 +38,7 @@ const PREVIEW_ADS: Ad[] = [
     created_by: null,
     created_at: "2026-09-29T00:00:00.000Z",
     updated_at: "2026-09-29T00:00:00.000Z",
+    placement: "hero",
   },
   {
     id: "preview-marketplace-ad-halal-tour",
@@ -46,9 +58,93 @@ const PREVIEW_ADS: Ad[] = [
     created_by: null,
     created_at: "2026-09-29T00:00:00.000Z",
     updated_at: "2026-09-29T00:00:00.000Z",
+    placement: "hero",
   },
 ];
 
+const PREVIEW_SLOT_COPY: Record<
+  Exclude<MarketplaceAdPlacement, "hero">,
+  Array<
+    Pick<
+      Ad,
+      "category" | "title" | "detail" | "price_text" | "href" | "icon" | "tone"
+    >
+  >
+> = {
+  after_packages: [
+    {
+      category: "Pilihan Segaloka",
+      title: "Temukan perjalanan yang pas untuk rencana berikutnya",
+      detail: "Bandingkan paket dari Travel aktif dalam satu marketplace.",
+      price_text: "Jelajahi paket",
+      href: "/paket",
+      icon: "route",
+      tone: "blue",
+    },
+  ],
+  after_domestic: [
+    {
+      category: "Wisata Indonesia",
+      title: "Dari destinasi populer sampai perjalanan keluarga",
+      detail: "Jelajahi pilihan perjalanan domestik dari Travel di Segaloka.",
+      price_text: "Lihat destinasi",
+      href: "/paket/tour",
+      icon: "building",
+      tone: "yellow",
+    },
+  ],
+  after_world: [
+    {
+      category: "Halal Tour",
+      title: "Jelajahi dunia dengan pilihan perjalanan lebih luas",
+      detail: "Temukan paket internasional dan Halal Tour sesuai kebutuhan.",
+      price_text: "Jelajahi dunia",
+      href: "/paket/halal_tour",
+      icon: "globe",
+      tone: "blue",
+    },
+  ],
+  lower_home: [
+    {
+      category: "SegaDeals",
+      title: "Punya rencana perjalanan? Travel dapat memberikan penawaran",
+      detail: "Buat kebutuhan perjalanan dan temukan penawaran yang sesuai.",
+      price_text: "Coba SegaDeals",
+      href: "/segadeals",
+      icon: "route",
+      tone: "yellow",
+    },
+  ],
+};
+
+function previewAdsForPlacement(
+  placement: MarketplaceAdPlacement,
+): Ad[] {
+  if (placement === "hero") {
+    return PREVIEW_ADS;
+  }
+
+  return PREVIEW_SLOT_COPY[placement].map((ad, index) => ({
+    id: `preview-${placement}-${index + 1}`,
+    travel_name: "Segaloka",
+    category: ad.category,
+    title: ad.title,
+    detail: ad.detail,
+    price_text: ad.price_text,
+    href: ad.href,
+    icon: ad.icon,
+    tone: ad.tone,
+    image_url: null,
+    active: true,
+    sort_order: index + 1,
+    starts_at: null,
+    ends_at: null,
+    created_by: null,
+    created_at: "2026-10-01T00:00:00.000Z",
+    updated_at: "2026-10-01T00:00:00.000Z",
+    placement,
+  }));
+}
 function AdCard({ ad }: { ad: Ad }) {
   const isBlue = ad.tone === "blue";
 
@@ -169,7 +265,9 @@ function AdCard({ ad }: { ad: Ad }) {
     </Link>
   );
 }
-export function MarketplaceAdCarousel() {
+export function MarketplaceAdCarousel({
+  placement = "hero",
+}: MarketplaceAdCarouselProps) {
   const supabase = useMemo(() => createClient(), []);
 
   const [ads, setAds] = useState<Ad[]>([]);
@@ -185,6 +283,7 @@ export function MarketplaceAdCarousel() {
         .from("marketplace_ads")
         .select("*")
         .eq("active", true)
+        .eq("placement", placement)
         .order("sort_order", { ascending: true })
         .order("created_at", { ascending: false });
 
@@ -208,7 +307,7 @@ export function MarketplaceAdCarousel() {
     void load();
 
     const channel = supabase
-      .channel("marketplace-ads-home")
+      .channel(`marketplace-ads-home-${placement}`)
       .on(
         "postgres_changes",
         {
@@ -226,9 +325,9 @@ export function MarketplaceAdCarousel() {
       mounted = false;
       void supabase.removeChannel(channel);
     };
-  }, [supabase]);
+  }, [placement, supabase]);
 
-  const displayAds = ads.length > 0 ? ads : PREVIEW_ADS;
+  const displayAds = ads.length > 0 ? ads : previewAdsForPlacement(placement);
 
   useEffect(() => {
     if (!loaded || paused || displayAds.length <= 2) {
