@@ -1005,7 +1005,7 @@ export default async function HomePage() {
             </div>
 
             <Link
-              href="/daftar"
+              href="/register"
               className="inline-flex items-center justify-center rounded-full bg-primary px-5 py-2.5 text-xs font-extrabold text-white hover:opacity-90"
             >
               Bergabung dengan Segaloka
