@@ -356,7 +356,7 @@ export function MarketplaceSearch() {
                 <button type="button" onClick={() => setShowSegaDealsInfo(false)} className="min-h-11 rounded-xl border border-[#d8e2ee] px-5 text-xs font-extrabold text-[#52647e] transition hover:bg-[#f7f9fc]">
                   Nanti Saja
                 </button>
-                <button type="button" onClick={() => setShowSegaDealsInfo(false)} className="min-h-11 rounded-xl bg-primary px-5 text-xs font-extrabold text-white transition hover:opacity-90">
+                <button type="button" onClick={() => { setShowSegaDealsInfo(false); handleSearch(); }} className="min-h-11 rounded-xl bg-primary px-5 text-xs font-extrabold text-white transition hover:opacity-90">
                   Mulai Buat Permintaan
                 </button>
               </div>

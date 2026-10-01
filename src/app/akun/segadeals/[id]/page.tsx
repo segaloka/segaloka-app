@@ -60,7 +60,7 @@ export default async function SegaDealsDetailPage({ params }: { params: { id: st
                   <div className="text-right">
                     <p className="font-display text-xl font-bold text-primary">{formatIDR(o.price)}</p>
                     <Badge status={o.status} />
-                    {o.status === "pending" && req.status === "open" && (
+                    {o.status === "pending" && ["open", "offered"].includes(req.status) && (
                       <div className="mt-2"><OfferActions offerId={o.id} requestId={req.id} /></div>
                     )}
                   </div>
