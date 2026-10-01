@@ -367,9 +367,9 @@ export function MarketplaceSearch() {
 
       {openPanel === "date" && (
         <div className="fixed inset-0 z-[90] flex items-center justify-center bg-[#071a33]/10 p-4" role="dialog" aria-modal="true">
-          <div className="w-full max-w-[820px] rounded-[22px] border border-[#dfe5ec] bg-white p-5 shadow-[0_24px_70px_rgba(16,34,63,0.20)] sm:p-7">
+          <div className="max-h-[calc(100dvh-24px)] w-full max-w-[820px] overflow-y-auto rounded-[18px] border border-[#dfe5ec] bg-white p-3.5 shadow-[0_24px_70px_rgba(16,34,63,0.20)] sm:rounded-[22px] sm:p-7">
             <div className="flex items-center justify-between gap-3">
-              <h2 className="font-display text-[22px] font-extrabold tracking-[-0.02em] text-[#343941]">
+              <h2 className="font-display text-lg font-extrabold tracking-[-0.02em] text-[#343941] sm:text-[22px]">
                 Atur Tanggal
               </h2>
               <div className="flex items-center gap-1">
@@ -502,7 +502,7 @@ export function MarketplaceSearch() {
 
             {openPanel === "origin" && (
               <div
-                className="fixed inset-x-3 top-[118px] z-[80] max-h-[calc(100dvh-140px)] overflow-y-auto rounded-2xl border border-[#e0e5eb] bg-white p-4 shadow-[0_24px_60px_rgba(16,34,63,0.18)] sm:absolute sm:inset-x-auto sm:left-0 sm:top-[calc(100%+10px)] sm:max-h-none sm:w-[min(460px,calc(100vw-32px))] sm:overflow-visible sm:p-5"
+                className="fixed inset-x-3 top-[96px] z-[80] max-h-[calc(100dvh-112px)] overflow-y-auto rounded-2xl border border-[#e0e5eb] bg-white p-4 shadow-[0_24px_60px_rgba(16,34,63,0.18)] sm:absolute sm:inset-x-auto sm:left-0 sm:top-[calc(100%+10px)] sm:max-h-none sm:w-[min(460px,calc(100vw-32px))] sm:overflow-visible sm:p-5"
                 onClick={(event) => event.stopPropagation()}
               >
                 <h3 className="font-display text-[21px] font-extrabold text-[#343941]">Pilih Kota atau Bandara</h3>
@@ -516,7 +516,7 @@ export function MarketplaceSearch() {
                     className="w-full bg-transparent text-sm font-medium text-[#5e718c] outline-none placeholder:text-[#8d9ab0]"
                   />
                 </div>
-                <p className="mt-6 font-display text-[21px] font-extrabold text-[#343941]">Destinasi Populer</p>
+                <p className="mt-5 font-display text-lg font-extrabold text-[#343941] sm:mt-6 sm:text-[21px]">Destinasi Populer</p>
                 <div className="mt-4 flex flex-wrap gap-2">
                   {filteredOrigins.map((item) => (
                     <button
@@ -556,7 +556,7 @@ export function MarketplaceSearch() {
 
             {openPanel === "destination" && (
               <div
-                className="absolute left-0 top-[calc(100%+10px)] z-[80] w-[min(460px,calc(100vw-32px))] rounded-2xl border border-[#e0e5eb] bg-white p-5 shadow-[0_24px_60px_rgba(16,34,63,0.18)]"
+                className="fixed inset-x-3 top-[96px] z-[80] max-h-[calc(100dvh-112px)] overflow-y-auto rounded-2xl border border-[#e0e5eb] bg-white p-4 shadow-[0_24px_60px_rgba(16,34,63,0.18)] sm:absolute sm:inset-x-auto sm:left-0 sm:top-[calc(100%+10px)] sm:max-h-none sm:w-[min(460px,calc(100vw-32px))] sm:overflow-visible sm:p-5"
                 onClick={(event) => event.stopPropagation()}
               >
                 <h3 className="font-display text-[21px] font-extrabold text-[#343941]">Pilih Destinasi</h3>
@@ -570,7 +570,7 @@ export function MarketplaceSearch() {
                     className="w-full bg-transparent text-sm font-medium text-[#5e718c] outline-none placeholder:text-[#8d9ab0]"
                   />
                 </div>
-                <p className="mt-6 font-display text-[21px] font-extrabold text-[#343941]">Destinasi Populer</p>
+                <p className="mt-5 font-display text-lg font-extrabold text-[#343941] sm:mt-6 sm:text-[21px]">Destinasi Populer</p>
                 <div className="mt-4 flex max-h-48 flex-wrap gap-2 overflow-y-auto">
                   {filteredDestinations.map((item) => (
                     <button
