@@ -9,7 +9,7 @@ const NAV = [
   ["Haji", "/paket/haji"],
   ["Halal Tour", "/paket/halal_tour"],
   ["Tour", "/paket/tour"],
-  ["SegaDeals", "/akun/segadeals"],
+  ["SegaDeals", "/segadeals"],
 ] as const;
 
 const LANGUAGES = [

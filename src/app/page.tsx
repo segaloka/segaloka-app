@@ -1043,7 +1043,7 @@ export default async function HomePage() {
                 <Link href="/paket/halal_tour">Halal Tour</Link>
                 <Link href="/paket/tour">Tour Domestik</Link>
                 <Link href="/paket/tour">Tour Internasional</Link>
-                <Link href="/akun/segadeals">SegaDeals</Link>
+                <Link href="/segadeals">SegaDeals</Link>
               </div>
             </div>
 
@@ -1099,7 +1099,7 @@ export default async function HomePage() {
           {[
             ["home", "Beranda", "/"],
             ["search", "Jelajah", "/paket/umrah"],
-            ["handshake", "SegaDeals", "/akun/segadeals"],
+            ["handshake", "SegaDeals", "/segadeals"],
             ["booking", "Booking", "/akun/booking"],
             ["user", "Akun", "/akun"],
           ].map(([icon, label, href], index) => (
