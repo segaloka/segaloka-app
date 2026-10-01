@@ -19,7 +19,7 @@ export async function PublicNav() {
           <img
             src="/brand/segaloka-logo.png"
             alt="Segaloka"
-            className="h-8 w-auto object-contain"
+            className="h-10 w-auto object-contain"
           />
         </Link>
         <nav className="hidden flex-1 items-center gap-5 md:flex">
@@ -59,7 +59,7 @@ export function PublicFooter() {
             <img
               src="/brand/segaloka-logo.png"
               alt="Segaloka"
-              className="h-8 w-auto object-contain"
+              className="h-10 w-auto object-contain"
             />
           </div>
           <p className="mt-3 text-sm text-text-secondary">Ekosistem digital Umrah, Haji, dan Halal Tour Indonesia.</p>

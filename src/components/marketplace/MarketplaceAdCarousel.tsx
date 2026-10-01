@@ -358,6 +358,8 @@ export function MarketplaceAdCarousel({
       ? displayAds[(index + 1) % displayAds.length]
       : null;
 
+  const isHeroPlacement = placement === "hero";
+
   return (
     <div
       className="w-full pb-6 pt-4"
@@ -366,14 +368,22 @@ export function MarketplaceAdCarousel({
       onFocusCapture={() => setPaused(true)}
       onBlurCapture={() => setPaused(false)}
     >
-      <div className="hidden grid-cols-2 gap-3 md:grid">
-        <AdCard ad={first} />
-        {second ? <AdCard ad={second} /> : <div />}
-      </div>
+      {isHeroPlacement ? (
+        <>
+          <div className="hidden grid-cols-2 gap-3 md:grid">
+            <AdCard ad={first} />
+            {second ? <AdCard ad={second} /> : <div />}
+          </div>
 
-      <div className="md:hidden">
-        <AdCard ad={first} />
-      </div>
+          <div className="md:hidden">
+            <AdCard ad={first} />
+          </div>
+        </>
+      ) : (
+        <div className="grid grid-cols-1">
+          <AdCard ad={first} />
+        </div>
+      )}
     </div>
   );
 }

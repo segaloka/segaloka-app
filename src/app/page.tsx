@@ -484,8 +484,9 @@ export default async function HomePage() {
     }))
     .slice(0, 4);
 
-  const displayPackages =
-    marketplacePackages.length > 0 ? marketplacePackages : PREVIEW_PACKAGES;
+  const displayPackages = (
+    marketplacePackages.length > 0 ? marketplacePackages : PREVIEW_PACKAGES
+  ).slice(0, 4);
 
   const isPreviewInventory = marketplacePackages.length === 0;
 
@@ -1017,7 +1018,7 @@ export default async function HomePage() {
                 <img
                   src="/brand/segaloka-logo.png"
                   alt="Segaloka"
-                  className="h-9 w-auto object-contain brightness-0 invert"
+                  className="h-11 w-auto object-contain brightness-0 invert"
                 />
               </div>
               <p className="mt-4 max-w-[330px] text-xs leading-5 text-[#c5d7ed]">
