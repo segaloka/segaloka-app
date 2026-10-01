@@ -738,7 +738,7 @@ export default async function HomePage() {
             {PREVIEW_DOMESTIC_DESTINATIONS.map((destination, index) => (
               <Link
                 key={destination.name}
-                href={`/paket/tour?q=${encodeURIComponent(destination.query)}`}
+                href={`/paket/tour?destination=${encodeURIComponent(destination.query)}&scope=domestic`}
                 className={`group relative min-h-[138px] overflow-hidden rounded-[16px] border p-3.5 transition sm:min-h-[148px] sm:rounded-[18px] sm:p-4 duration-300 hover:-translate-y-0.5 hover:shadow-[0_12px_26px_rgba(15,45,90,0.08)] lg:min-h-[132px] ${
                   index < 3 ? "lg:col-span-2 " : "lg:col-span-3 "
                 }${
@@ -829,7 +829,7 @@ export default async function HomePage() {
               {PREVIEW_WORLD_DESTINATIONS.map((destination, index) => (
                 <Link
                   key={destination.name}
-                  href={`/paket/halal_tour?q=${encodeURIComponent(destination.query)}`}
+                  href={`/paket/halal_tour?destination=${encodeURIComponent(destination.query)}&scope=international`}
                   className={`group relative min-h-[138px] overflow-hidden rounded-[16px] border border-white/90 bg-white p-3.5 sm:min-h-[148px] sm:rounded-[18px] sm:p-4 shadow-[0_6px_18px_rgba(15,45,90,0.045)] transition duration-300 hover:-translate-y-0.5 hover:border-[#d7e7f5] hover:shadow-[0_12px_26px_rgba(15,45,90,0.08)] lg:min-h-[132px] ${
                     index < 3 ? "lg:col-span-2" : "lg:col-span-3"
                   }`}
