@@ -85,3 +85,48 @@ export async function requirePlatformAccess() {
   const admin = await isPlatformAdmin();
   if (!admin) redirect("/akun?error=forbidden");
 }
+export async function resolvePostLoginPath(): Promise<string> {
+  const supabase = await createClient();
+
+  const {
+    data: { user },
+  } = await supabase.auth.getUser();
+
+  if (!user) return "/login";
+
+  const { data: platformAdmin } = await supabase.rpc("is_platform_admin");
+
+  if (platformAdmin) {
+    return "/admin";
+  }
+
+  const { data: memberships } = await supabase
+    .from("memberships")
+    .select("vendor_id, role_slug, organizations(slug)")
+    .eq("user_id", user.id)
+    .eq("status", "active");
+
+  const activeMemberships = memberships ?? [];
+
+  const vendorMembership = activeMemberships.find(
+    (membership: any) =>
+      Boolean(membership.vendor_id) ||
+      String(membership.role_slug ?? "").startsWith("vendor.")
+  );
+
+  if (vendorMembership) {
+    return "/vendor";
+  }
+
+  const travelMembership = activeMemberships.find(
+    (membership: any) =>
+      String(membership.role_slug ?? "").startsWith("travel.") &&
+      Boolean(membership.organizations?.slug)
+  );
+
+  if (travelMembership?.organizations?.slug) {
+    return `/dashboard/${travelMembership.organizations.slug}`;
+  }
+
+  return "/akun";
+}
