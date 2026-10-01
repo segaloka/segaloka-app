@@ -720,7 +720,7 @@ export default async function HomePage() {
         </section>
 
         {/* MARKETPLACE ADS — AFTER PACKAGES */}
-        <div className="mx-auto w-full max-w-[1180px] px-4 pb-10">
+        <div className="mx-auto w-full max-w-[1180px] px-4 pb-6">
           <MarketplaceAdCarousel placement="after_packages" />
         </div>
         {/* EXPLORE INDONESIA — V4.3 DESTINATION CARDS */}
@@ -762,7 +762,7 @@ export default async function HomePage() {
         </section>
 
         {/* MARKETPLACE ADS — AFTER DOMESTIC */}
-        <div className="mx-auto w-full max-w-[1180px] px-4 pb-10">
+        <div className="mx-auto w-full max-w-[1180px] px-4 pb-6">
           <MarketplaceAdCarousel placement="after_domestic" />
         </div>
         {/* UPCOMING DEPARTURES — V4.3 */}
@@ -845,7 +845,7 @@ export default async function HomePage() {
         </section>
 
         {/* MARKETPLACE ADS — AFTER WORLD */}
-        <div className="mx-auto w-full max-w-[1180px] px-4 pb-10">
+        <div className="mx-auto w-full max-w-[1180px] px-4 pb-6">
           <MarketplaceAdCarousel placement="after_world" />
         </div>
         {/* VENDOR PICKS — V4.3 SERVICE CARDS */}
@@ -911,7 +911,7 @@ export default async function HomePage() {
         </section>
 
         {/* MARKETPLACE ADS — LOWER HOME */}
-        <div className="mx-auto w-full max-w-[1180px] px-4 pb-10">
+        <div className="mx-auto w-full max-w-[1180px] px-4 pb-6">
           <MarketplaceAdCarousel placement="lower_home" />
         </div>
         {/* TRAVEL DIRECTORY — V4.3 IDENTITY CARDS */}
