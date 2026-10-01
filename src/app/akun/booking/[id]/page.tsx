@@ -30,7 +30,12 @@ export default async function BookingDetailPage({ params }: { params: { id: stri
 
   const pkg = (booking.departures as any)?.packages;
   const org = pkg?.organizations;
-  const invoice = (booking.invoices as any[])?.[0];
+  const invoices = [...(((booking.invoices as any[]) ?? []))].sort(
+    (a, b) =>
+      new Date(b.created_at ?? 0).getTime() -
+      new Date(a.created_at ?? 0).getTime(),
+  );
+  const invoice = invoices[0];
   const bank = org?.bank_info ?? {};
 
   return (
