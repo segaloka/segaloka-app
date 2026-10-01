@@ -12,13 +12,20 @@ export default async function NewBookingPage({ searchParams }: { searchParams: {
   const supabase = await createClient();
   const { data: departure } = await supabase
     .from("departures")
-    .select("*, packages(name, base_price, duration_days, organizations(name))")
+    .select("*, packages(name, base_price, duration_days, status, organizations(name))")
     .eq("id", searchParams.departure)
+    .in("status", ["open", "almost_full"])
     .single();
 
   if (!departure) notFound();
+
   const pkg = departure.packages as any;
-  const remaining = departure.quota - departure.filled;
+
+  if (!pkg || pkg.status !== "published") {
+    notFound();
+  }
+
+  const remaining = Math.max(0, departure.quota - departure.filled);
 
   return (
     <div className="min-h-screen bg-bg">

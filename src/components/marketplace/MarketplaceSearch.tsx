@@ -251,14 +251,42 @@ export function MarketplaceSearch() {
   };
 
   const handleSearch = () => {
-    if (service === "segadeals") return;
+    if (service === "segadeals") {
+      const params = new URLSearchParams();
+
+      params.set("origin", origin);
+      if (destination) params.set("destination", destination);
+      if (dateFrom) params.set("from", dateFrom);
+      if (dateTo) params.set("to", dateTo);
+      params.set("travelers", String(travelers));
+      if (budget) params.set("budget", budget);
+
+      router.push(`/akun/segadeals/baru?${params.toString()}`);
+      return;
+    }
 
     const route =
       service === "tour_domestik" || service === "tour_internasional"
         ? "tour"
         : service;
 
-    router.push(`/paket/${route}`);
+    const params = new URLSearchParams();
+
+    params.set("origin", origin);
+    if (destination) params.set("destination", destination);
+    if (dateFrom) params.set("from", dateFrom);
+    if (dateTo) params.set("to", dateTo);
+    params.set("travelers", String(travelers));
+
+    if (service === "tour_domestik") {
+      params.set("scope", "domestic");
+    }
+
+    if (service === "tour_internasional") {
+      params.set("scope", "international");
+    }
+
+    router.push(`/paket/${route}?${params.toString()}`);
   };
 
   const handleDateSelect = (value: string) => {
