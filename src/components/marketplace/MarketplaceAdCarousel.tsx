@@ -151,11 +151,11 @@ function AdCard({ ad }: { ad: Ad }) {
   return (
     <Link
       href={ad.href}
-      className={`group relative grid min-h-[128px] min-w-0 overflow-hidden rounded-[20px] border transition duration-300 hover:-translate-y-0.5 hover:shadow-[0_14px_32px_rgba(15,45,90,0.10)] ${
+      className={`group relative grid min-h-[136px] min-w-0 overflow-hidden rounded-[20px] border transition duration-300 hover:-translate-y-0.5 hover:shadow-[0_14px_32px_rgba(15,45,90,0.10)] ${
         isBlue
           ? "border-[#c6def8] bg-[linear-gradient(115deg,#f8fbff_0%,#edf6ff_55%,#e1f0ff_100%)] shadow-[0_8px_24px_rgba(24,105,205,0.09)] hover:shadow-[0_14px_34px_rgba(24,105,205,0.15)]"
           : "border-[#f0d98f] bg-[linear-gradient(115deg,#fffef9_0%,#fff9e5_55%,#fff0b9_100%)] shadow-[0_8px_24px_rgba(180,132,20,0.09)] hover:shadow-[0_14px_34px_rgba(180,132,20,0.15)]"
-      } sm:grid-cols-[minmax(0,1fr)_168px]`}
+      } sm:grid-cols-[minmax(0,1fr)_184px]`}
     >
       <div className="relative z-10 flex min-w-0 items-center gap-3.5 px-4 py-3.5">
         <span
@@ -362,7 +362,7 @@ export function MarketplaceAdCarousel({
 
   return (
     <div
-      className="w-full pb-6 pt-4"
+      className={`w-full ${isHeroPlacement ? "pb-6 pt-4" : "pb-2 pt-2"}`}
       onMouseEnter={() => setPaused(true)}
       onMouseLeave={() => setPaused(false)}
       onFocusCapture={() => setPaused(true)}

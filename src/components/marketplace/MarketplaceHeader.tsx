@@ -52,7 +52,7 @@ export function MarketplaceHeader() {
             <img
               src="/brand/segaloka-logo.png"
               alt="Segaloka"
-              className="h-10 w-auto object-contain"
+              className="h-11 w-auto object-contain"
             />
           </Link>
 
