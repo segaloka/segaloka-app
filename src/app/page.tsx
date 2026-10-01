@@ -58,19 +58,19 @@ const PREVIEW_PROMOS = [
 ];
 
 const PREVIEW_DOMESTIC_DESTINATIONS = [
-  { name: "Bali", detail: "Pantai, budaya & keluarga", icon: "route" as const },
-  { name: "Lombok", detail: "Pulau, resort & wisata halal", icon: "globe" as const },
-  { name: "Labuan Bajo", detail: "Komodo & island hopping", icon: "plane" as const },
-  { name: "Yogyakarta", detail: "Budaya, sejarah & kuliner", icon: "building" as const },
-  { name: "Raja Ampat", detail: "Bahari & petualangan", icon: "globe" as const },
+  { name: "Bali", detail: "Pantai, budaya & keluarga", icon: "route" as const, query: "Bali" },
+  { name: "Lombok", detail: "Pulau, resort & wisata halal", icon: "globe" as const, query: "Lombok" },
+  { name: "Labuan Bajo", detail: "Komodo & island hopping", icon: "plane" as const, query: "Labuan Bajo" },
+  { name: "Yogyakarta", detail: "Budaya, sejarah & kuliner", icon: "building" as const, query: "Yogyakarta" },
+  { name: "Raja Ampat", detail: "Bahari & petualangan", icon: "globe" as const, query: "Raja Ampat" },
 ];
 
 const PREVIEW_WORLD_DESTINATIONS = [
-  { name: "Turki", detail: "Istanbul & Cappadocia", icon: "globe" as const },
-  { name: "Jepang", detail: "Tokyo, Osaka & Kyoto", icon: "plane" as const },
-  { name: "Korea Selatan", detail: "Seoul & Busan", icon: "building" as const },
-  { name: "Malaysia", detail: "Kuala Lumpur & sekitarnya", icon: "route" as const },
-  { name: "Singapura", detail: "City break & keluarga", icon: "plane" as const },
+  { name: "Turki", detail: "Istanbul & Cappadocia", icon: "globe" as const, query: "Turki" },
+  { name: "Jepang", detail: "Tokyo, Osaka & Kyoto", icon: "plane" as const, query: "Jepang" },
+  { name: "Korea Selatan", detail: "Seoul & Busan", icon: "building" as const, query: "Korea Selatan" },
+  { name: "Malaysia", detail: "Kuala Lumpur & sekitarnya", icon: "route" as const, query: "Malaysia" },
+  { name: "Singapura", detail: "City break & keluarga", icon: "plane" as const, query: "Singapura" },
 ];
 
 const PREVIEW_INSPIRATIONS = [
@@ -738,7 +738,7 @@ export default async function HomePage() {
             {PREVIEW_DOMESTIC_DESTINATIONS.map((destination, index) => (
               <Link
                 key={destination.name}
-                href="/paket/tour"
+                href={`/paket/tour?q=${encodeURIComponent(destination.query)}`}
                 className={`group relative min-h-[138px] overflow-hidden rounded-[16px] border p-3.5 transition sm:min-h-[148px] sm:rounded-[18px] sm:p-4 duration-300 hover:-translate-y-0.5 hover:shadow-[0_12px_26px_rgba(15,45,90,0.08)] lg:min-h-[132px] ${
                   index < 3 ? "lg:col-span-2 " : "lg:col-span-3 "
                 }${
@@ -829,7 +829,7 @@ export default async function HomePage() {
               {PREVIEW_WORLD_DESTINATIONS.map((destination, index) => (
                 <Link
                   key={destination.name}
-                  href="/paket/halal_tour"
+                  href={`/paket/halal_tour?q=${encodeURIComponent(destination.query)}`}
                   className={`group relative min-h-[138px] overflow-hidden rounded-[16px] border border-white/90 bg-white p-3.5 sm:min-h-[148px] sm:rounded-[18px] sm:p-4 shadow-[0_6px_18px_rgba(15,45,90,0.045)] transition duration-300 hover:-translate-y-0.5 hover:border-[#d7e7f5] hover:shadow-[0_12px_26px_rgba(15,45,90,0.08)] lg:min-h-[132px] ${
                     index < 3 ? "lg:col-span-2" : "lg:col-span-3"
                   }`}
