@@ -151,13 +151,13 @@ function AdCard({ ad }: { ad: Ad }) {
   return (
     <Link
       href={ad.href}
-      className={`group relative grid min-h-[136px] min-w-0 overflow-hidden rounded-[20px] border transition duration-300 hover:-translate-y-0.5 hover:shadow-[0_14px_32px_rgba(15,45,90,0.10)] ${
+      className={`group relative grid min-h-[124px] min-w-0 overflow-hidden rounded-[16px] border transition duration-300 hover:-translate-y-0.5 hover:shadow-[0_14px_32px_rgba(15,45,90,0.10)] sm:min-h-[136px] sm:rounded-[20px] ${
         isBlue
           ? "border-[#c6def8] bg-[linear-gradient(115deg,#f8fbff_0%,#edf6ff_55%,#e1f0ff_100%)] shadow-[0_8px_24px_rgba(24,105,205,0.09)] hover:shadow-[0_14px_34px_rgba(24,105,205,0.15)]"
           : "border-[#f0d98f] bg-[linear-gradient(115deg,#fffef9_0%,#fff9e5_55%,#fff0b9_100%)] shadow-[0_8px_24px_rgba(180,132,20,0.09)] hover:shadow-[0_14px_34px_rgba(180,132,20,0.15)]"
       } sm:grid-cols-[minmax(0,1fr)_184px]`}
     >
-      <div className="relative z-10 flex min-w-0 items-center gap-3.5 px-4 py-3.5">
+      <div className="relative z-10 flex min-w-0 items-center gap-3 px-3.5 py-3 sm:gap-3.5 sm:px-4 sm:py-3.5">
         <span
           className={`hidden h-11 w-11 shrink-0 items-center justify-center rounded-xl shadow-sm sm:flex ${
             isBlue
@@ -192,7 +192,7 @@ function AdCard({ ad }: { ad: Ad }) {
             </span>
           </div>
 
-          <p className="mt-1.5 line-clamp-2 max-w-[430px] text-sm font-black leading-[1.35] text-[#10223f]">
+          <p className="mt-1.5 line-clamp-2 max-w-[430px] text-[13px] font-black leading-[1.35] text-[#10223f] sm:text-sm">
             {ad.title}
           </p>
 
@@ -362,7 +362,7 @@ export function MarketplaceAdCarousel({
 
   return (
     <div
-      className={`w-full ${isHeroPlacement ? "pb-6 pt-4" : "pb-2 pt-2"}`}
+      className={`w-full ${isHeroPlacement ? "pb-4 pt-3 sm:pb-6 sm:pt-4" : "pb-2 pt-2"}`}
       onMouseEnter={() => setPaused(true)}
       onMouseLeave={() => setPaused(false)}
       onFocusCapture={() => setPaused(true)}
