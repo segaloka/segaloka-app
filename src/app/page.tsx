@@ -74,10 +74,10 @@ const PREVIEW_WORLD_DESTINATIONS = [
 ];
 
 const PREVIEW_INSPIRATIONS = [
-  { title: "Panduan memilih paket Umrah sesuai kebutuhan", category: "Umrah" },
-  { title: "Destinasi domestik untuk liburan keluarga", category: "Indonesia" },
-  { title: "Persiapan perjalanan Halal Tour pertama Anda", category: "Halal Tour" },
-  { title: "Tips membandingkan penawaran perjalanan", category: "Panduan" },
+  { title: "Panduan memilih paket Umrah sesuai kebutuhan", category: "Umrah", href: "/paket/umrah" },
+  { title: "Destinasi domestik untuk liburan keluarga", category: "Indonesia", href: "/paket/tour" },
+  { title: "Persiapan perjalanan Halal Tour pertama Anda", category: "Halal Tour", href: "/paket/halal_tour" },
+  { title: "Tips membandingkan penawaran perjalanan", category: "Panduan", href: "/bantuan" },
 ];
 
 /**
@@ -865,7 +865,7 @@ export default async function HomePage() {
 
           <div className="mt-4 grid grid-cols-1 gap-3 sm:grid-cols-2 lg:grid-cols-4">
             {PREVIEW_VENDORS.map((vendor, index) => (
-              <div key={vendor.id} className="group relative min-h-[184px] overflow-hidden rounded-[18px] border border-[#dfe7f0] bg-white p-5 transition duration-300 hover:-translate-y-0.5 hover:border-[#bfd5ee] hover:shadow-[0_12px_26px_rgba(15,45,90,0.08)]">
+              <Link href="/register" key={vendor.id} className="group relative min-h-[184px] overflow-hidden rounded-[18px] border border-[#dfe7f0] bg-white p-5 transition duration-300 hover:-translate-y-0.5 hover:border-[#bfd5ee] hover:shadow-[0_12px_26px_rgba(15,45,90,0.08)]">
                 <div className={`absolute inset-x-0 top-0 h-1 ${index % 2 === 0 ? "bg-[#0b6ee8]" : "bg-[#20a67a]"}`} />
                 <div className="flex items-start justify-between gap-3">
                   <span className="flex h-10 w-10 items-center justify-center rounded-[14px] bg-[#eef5ff] text-primary transition group-hover:bg-primary group-hover:text-white">
@@ -877,7 +877,7 @@ export default async function HomePage() {
                 <h3 className="mt-1 truncate text-sm font-extrabold text-[#10223f]">{vendor.name}</h3>
                 <p className="mt-1.5 line-clamp-2 text-xs leading-[1.45] text-[#748297]">{vendor.description}</p>
                 <span className="mt-3 inline-flex text-xs font-extrabold text-primary">Lihat layanan →</span>
-              </div>
+              </Link>
             ))}
           </div>
         </section>
@@ -931,7 +931,7 @@ export default async function HomePage() {
 
           <div className="mt-4 grid grid-cols-1 gap-3 xs:grid-cols-2 sm:grid-cols-2 lg:grid-cols-4">
             {PREVIEW_TRAVELS.map((travel) => (
-              <div key={travel.id} className="group overflow-hidden rounded-[20px] border border-[#dfe7f0] bg-white transition hover:-translate-y-0.5 hover:border-[#bfd5ee] hover:shadow-[0_12px_28px_rgba(15,45,90,0.08)]">
+              <Link href="/paket/umrah" key={travel.id} className="group overflow-hidden rounded-[20px] border border-[#dfe7f0] bg-white transition hover:-translate-y-0.5 hover:border-[#bfd5ee] hover:shadow-[0_12px_28px_rgba(15,45,90,0.08)]">
                 <div className="h-16 bg-[linear-gradient(135deg,#e5f2ff,#f4f9ff,#e9f8f2)]" />
                 <div className="-mt-7 px-4 pb-4">
                   <div className="flex items-end justify-between gap-3">
@@ -951,7 +951,7 @@ export default async function HomePage() {
                     <span className="text-xs font-extrabold text-primary">Lihat →</span>
                   </div>
                 </div>
-              </div>
+              </Link>
             ))}
           </div>
         </section>
@@ -966,7 +966,7 @@ export default async function HomePage() {
 
           <div className="mt-4 grid gap-3 sm:grid-cols-2 lg:grid-cols-4">
             {PREVIEW_INSPIRATIONS.map((item, index) => (
-              <div key={item.title} className="group overflow-hidden rounded-[20px] border border-[#dfe7f0] bg-white transition hover:-translate-y-0.5 hover:shadow-[0_12px_28px_rgba(15,45,90,0.08)]">
+              <Link href={item.href} key={item.title} className="group overflow-hidden rounded-[20px] border border-[#dfe7f0] bg-white transition hover:-translate-y-0.5 hover:shadow-[0_12px_28px_rgba(15,45,90,0.08)]">
                 <div className={`relative flex h-[116px] items-center justify-center overflow-hidden ${
                   index % 3 === 0 ? "bg-[#e4f2ff]" : index % 3 === 1 ? "bg-[#e8f7ef]" : "bg-[#f2ebff]"
                 }`}>
@@ -983,7 +983,7 @@ export default async function HomePage() {
                     <span className="text-xs font-extrabold text-primary">Baca →</span>
                   </div>
                 </div>
-              </div>
+              </Link>
             ))}
           </div>
         </section>
@@ -1058,9 +1058,9 @@ export default async function HomePage() {
             <div>
               <h3 className="text-xs font-extrabold">Bantuan & Perusahaan</h3>
               <div className="mt-4 grid gap-2.5 text-xs text-[#c5d7ed]">
-                <span>Pusat Bantuan</span><span>Tentang Segaloka</span>
-                <span>Syarat & Ketentuan</span><span>Kebijakan Privasi</span>
-                <span>Keamanan Transaksi</span><span>Hubungi Kami</span>
+                <Link href="/bantuan">Pusat Bantuan</Link><Link href="/tentang">Tentang Segaloka</Link>
+                <Link href="/syarat">Syarat & Ketentuan</Link><Link href="/privasi">Kebijakan Privasi</Link>
+                <Link href="/bantuan">Keamanan Transaksi</Link><Link href="/kontak">Hubungi Kami</Link>
               </div>
               <div className="mt-5">
                 <p className="text-xs font-extrabold uppercase tracking-[0.12em] text-[#8fb2da]">Aplikasi Segaloka</p>
