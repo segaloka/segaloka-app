@@ -510,14 +510,14 @@ export default async function HomePage() {
           <div className="absolute -right-16 -top-28 hidden h-[420px] w-[620px] rounded-[50%] border border-white/60 bg-white/25 lg:block" />
           <div className="absolute right-[13%] top-10 hidden h-44 w-44 rounded-full border-[30px] border-white/25 lg:block" />
 
-          <div className="relative mx-auto max-w-[1180px] px-4 pb-24 pt-8 sm:pb-28 md:pt-10">
+          <div className="relative mx-auto max-w-[1180px] px-3 pb-20 pt-6 sm:px-4 sm:pb-24 sm:pt-8 md:pb-28 md:pt-10">
             <div className="grid gap-6 lg:grid-cols-[1fr_0.72fr] lg:items-center">
               <div className="max-w-[700px]">
                 <p className="inline-flex items-center gap-2 rounded-full border border-white/80 bg-white/80 px-3 py-1.5 text-xs font-extrabold text-primary shadow-sm">
                   <Icon name="globe" size={13} />
                   Domestik · Internasional · Umrah · Haji
                 </p>
-                <h1 className="mt-3 font-display text-[31px] font-extrabold leading-[1.08] tracking-[-0.035em] text-[#10223f] sm:text-[36px] md:text-[42px]">
+                <h1 className="mt-3 font-display text-[28px] font-extrabold leading-[1.08] tracking-[-0.035em] text-[#10223f] sm:text-[36px] md:text-[42px]">
                   Dari Indonesia untuk perjalanan ke mana saja.
                 </h1>
                 <p className="mt-3 max-w-[650px] text-sm leading-6 text-[#52647e]">
@@ -548,7 +548,7 @@ export default async function HomePage() {
         </section>
 
         {/* MARKETPLACE CATEGORY + SEARCH CENTER */}
-        <section className="relative z-20 mx-auto -mt-16 max-w-[1180px] px-4">
+        <section className="relative z-20 mx-auto -mt-14 max-w-[1180px] px-3 sm:-mt-16 sm:px-4">
           <MarketplaceSearch />
 
           {/* AUTO MARKETPLACE ADS V4.5 */}
@@ -556,13 +556,13 @@ export default async function HomePage() {
         </section>
 
         {/* MARKETPLACE PROMO STRIP — V4.3 */}
-        <section className="mx-auto max-w-[1180px] px-4 pb-4 pt-3">
-          <div className="grid gap-3 md:grid-cols-3">
+        <section className="mx-auto max-w-[1180px] px-3 pb-4 pt-2 sm:px-4 sm:pt-3">
+          <div className="grid gap-2.5 sm:grid-cols-2 lg:grid-cols-3">
             {PREVIEW_PROMOS.map((promo, index) => (
               <Link
                 key={promo.id}
                 href={index === 0 ? "/paket/umrah" : index === 1 ? "/paket/tour" : "/paket/halal_tour"}
-                className={`group relative min-h-[110px] overflow-hidden rounded-[18px] border p-4 transition duration-300 hover:-translate-y-0.5 hover:shadow-[0_14px_34px_rgba(15,45,90,0.09)] ${
+                className={`group relative min-h-[104px] overflow-hidden rounded-[16px] border p-3.5 transition duration-300 sm:min-h-[110px] sm:rounded-[18px] sm:p-4 hover:-translate-y-0.5 hover:shadow-[0_14px_34px_rgba(15,45,90,0.09)] ${
                   index === 0
                     ? "border-[#cfe4ff] bg-[linear-gradient(135deg,#e9f5ff_0%,#f8fcff_68%,#ddecff_100%)]"
                     : index === 1
@@ -590,7 +590,7 @@ export default async function HomePage() {
         </section>
 
         {/* REAL MARKETPLACE INVENTORY — V4.3 CARD SYSTEM */}
-        <section className="mx-auto max-w-[1180px] px-4 pb-10 pt-5">
+        <section className="mx-auto max-w-[1180px] px-3 pb-8 pt-4 sm:px-4 sm:pb-10 sm:pt-5">
           <div className="flex items-end justify-between gap-4">
             <div>
               <p className="text-xs font-extrabold uppercase tracking-[0.14em] text-primary">
@@ -631,7 +631,7 @@ export default async function HomePage() {
               </Link>
             </div>
           ) : (
-            <div className="mt-5 grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
+            <div className="mt-4 grid gap-3 sm:mt-5 sm:grid-cols-2 sm:gap-4 lg:grid-cols-4">
               {displayPackages.map((pkg) => {
                 const org = pkg.organizations;
                 const departure = pkg.departures[0];
@@ -644,7 +644,7 @@ export default async function HomePage() {
                   <Link
                     key={pkg.id}
                     href={`/paket/detail/${pkg.slug}`}
-                    className="group flex min-h-[338px] flex-col overflow-hidden rounded-[20px] border border-[#dfe7f0] bg-white shadow-[0_8px_24px_rgba(15,45,90,0.05)] transition duration-200 hover:-translate-y-1 hover:border-[#b9d2ee] hover:shadow-[0_16px_38px_rgba(15,45,90,0.11)]"
+                    className="group flex min-h-[318px] flex-col overflow-hidden rounded-[18px] sm:min-h-[338px] sm:rounded-[20px] border border-[#dfe7f0] bg-white shadow-[0_8px_24px_rgba(15,45,90,0.05)] transition duration-200 hover:-translate-y-1 hover:border-[#b9d2ee] hover:shadow-[0_16px_38px_rgba(15,45,90,0.11)]"
                   >
                     <div className="relative h-[132px] overflow-hidden bg-[linear-gradient(145deg,#dcefff_0%,#eff8ff_48%,#e8f8f2_100%)] p-3.5">
                       <div className="absolute -bottom-14 -left-10 h-36 w-36 rounded-full border-[24px] border-white/40" />
@@ -724,7 +724,7 @@ export default async function HomePage() {
           <MarketplaceAdCarousel placement="after_packages" />
         </div>
         {/* EXPLORE INDONESIA — V4.3 DESTINATION CARDS */}
-        <section className="mx-auto max-w-[1180px] px-4 pb-10 lg:pb-8">
+        <section className="mx-auto max-w-[1180px] px-3 pb-8 sm:px-4 sm:pb-10 lg:pb-8">
           <div className="flex items-end justify-between gap-4">
             <div>
               <p className="text-xs font-extrabold uppercase tracking-[0.14em] text-primary">Jelajahi Indonesia</p>
@@ -734,12 +734,12 @@ export default async function HomePage() {
             <Link href="/paket/tour" className="hidden text-sm font-extrabold text-primary hover:underline sm:inline">Lihat Tour Domestik →</Link>
           </div>
 
-          <div className="mt-4 grid grid-cols-2 gap-3 sm:grid-cols-3 lg:grid-cols-6">
+          <div className="mt-4 grid grid-cols-2 gap-2.5 sm:grid-cols-3 sm:gap-3 lg:grid-cols-6">
             {PREVIEW_DOMESTIC_DESTINATIONS.map((destination, index) => (
               <Link
                 key={destination.name}
                 href="/paket/tour"
-                className={`group relative min-h-[148px] overflow-hidden rounded-[18px] border p-4 transition duration-300 hover:-translate-y-0.5 hover:shadow-[0_12px_26px_rgba(15,45,90,0.08)] lg:min-h-[132px] ${
+                className={`group relative min-h-[138px] overflow-hidden rounded-[16px] border p-3.5 transition sm:min-h-[148px] sm:rounded-[18px] sm:p-4 duration-300 hover:-translate-y-0.5 hover:shadow-[0_12px_26px_rgba(15,45,90,0.08)] lg:min-h-[132px] ${
                   index < 3 ? "lg:col-span-2 " : "lg:col-span-3 "
                 }${
                   index % 3 === 0
@@ -825,12 +825,12 @@ export default async function HomePage() {
               <Link href="/paket/halal_tour" className="hidden text-sm font-extrabold text-primary hover:underline sm:inline">Lihat Internasional →</Link>
             </div>
 
-            <div className="mt-4 grid grid-cols-2 gap-3 sm:grid-cols-3 lg:grid-cols-6">
+            <div className="mt-4 grid grid-cols-2 gap-2.5 sm:grid-cols-3 sm:gap-3 lg:grid-cols-6">
               {PREVIEW_WORLD_DESTINATIONS.map((destination, index) => (
                 <Link
                   key={destination.name}
                   href="/paket/halal_tour"
-                  className={`group relative min-h-[148px] overflow-hidden rounded-[18px] border border-white/90 bg-white p-4 shadow-[0_6px_18px_rgba(15,45,90,0.045)] transition duration-300 hover:-translate-y-0.5 hover:border-[#d7e7f5] hover:shadow-[0_12px_26px_rgba(15,45,90,0.08)] lg:min-h-[132px] ${
+                  className={`group relative min-h-[138px] overflow-hidden rounded-[16px] border border-white/90 bg-white p-3.5 sm:min-h-[148px] sm:rounded-[18px] sm:p-4 shadow-[0_6px_18px_rgba(15,45,90,0.045)] transition duration-300 hover:-translate-y-0.5 hover:border-[#d7e7f5] hover:shadow-[0_12px_26px_rgba(15,45,90,0.08)] lg:min-h-[132px] ${
                     index < 3 ? "lg:col-span-2" : "lg:col-span-3"
                   }`}
                 >
@@ -886,10 +886,10 @@ export default async function HomePage() {
         <section className="mx-auto max-w-[1180px] px-4 pb-10 lg:pb-8">
           <div className="relative overflow-hidden rounded-[26px] bg-[linear-gradient(120deg,#082b58_0%,#0d447f_55%,#126b91_100%)]">
             <div className="absolute -right-24 -top-28 h-80 w-80 rounded-full border-[54px] border-white/[0.06]" />
-            <div className="grid gap-7 p-6 sm:p-8 lg:grid-cols-[1.05fr_0.95fr] lg:items-center">
+            <div className="grid gap-5 p-5 sm:gap-7 sm:p-8 lg:grid-cols-[1.05fr_0.95fr] lg:items-center">
               <div className="relative">
                 <span className="inline-flex rounded-full bg-[#ffbd3d] px-3 py-1 text-xs font-extrabold text-[#382000]">SegaDeals</span>
-                <h2 className="mt-4 max-w-[600px] font-display text-[25px] font-extrabold leading-[1.18] tracking-[-0.025em] text-white sm:text-[30px]">
+                <h2 className="mt-4 max-w-[600px] font-display text-[23px] font-extrabold sm:text-[30px] leading-[1.18] tracking-[-0.025em] text-white sm:text-[30px]">
                   Belum menemukan paket yang pas?
                   <br />
                   Biar Travel yang menawar untuk Anda.
@@ -897,7 +897,7 @@ export default async function HomePage() {
                 <p className="mt-3 max-w-[620px] text-sm leading-6 text-[#c9d6e8]">
                   Sampaikan kebutuhan perjalanan satu kali. Bandingkan penawaran dari Travel sebelum memilih yang sesuai.
                 </p>
-                <Link href="/akun/segadeals/baru" className="mt-5 inline-flex items-center gap-2 rounded-full bg-white px-5 py-2.5 text-sm font-extrabold text-[#10294d] transition hover:bg-[#f3f7fb]">
+                <Link href="/akun/segadeals/baru" className="mt-5 inline-flex w-full items-center justify-center gap-2 rounded-full bg-white px-4 py-2.5 text-center text-sm sm:w-auto sm:px-5 font-extrabold text-[#10294d] transition hover:bg-[#f3f7fb]">
                   Buat permintaan SegaDeals <span>→</span>
                 </Link>
               </div>
@@ -929,7 +929,7 @@ export default async function HomePage() {
             <Link href="/paket/umrah" className="hidden text-sm font-extrabold text-primary hover:underline sm:inline">Jelajahi marketplace →</Link>
           </div>
 
-          <div className="mt-4 grid grid-cols-2 gap-3 lg:grid-cols-4">
+          <div className="mt-4 grid grid-cols-1 gap-3 xs:grid-cols-2 sm:grid-cols-2 lg:grid-cols-4">
             {PREVIEW_TRAVELS.map((travel) => (
               <div key={travel.id} className="group overflow-hidden rounded-[20px] border border-[#dfe7f0] bg-white transition hover:-translate-y-0.5 hover:border-[#bfd5ee] hover:shadow-[0_12px_28px_rgba(15,45,90,0.08)]">
                 <div className="h-16 bg-[linear-gradient(135deg,#e5f2ff,#f4f9ff,#e9f8f2)]" />
@@ -989,8 +989,8 @@ export default async function HomePage() {
         </section>
 
         {/* BUSINESS ECOSYSTEM */}
-        <section className="mx-auto max-w-[1180px] px-4 pb-12">
-          <div className="grid gap-4 rounded-2xl border border-[#dce4ee] bg-white p-6 sm:p-7 lg:grid-cols-[1fr_auto] lg:items-center">
+        <section className="mx-auto max-w-[1180px] px-3 pb-10 sm:px-4 sm:pb-12">
+          <div className="grid gap-4 rounded-2xl border border-[#dce4ee] bg-white p-5 sm:p-7 lg:grid-cols-[1fr_auto] lg:items-center">
             <div>
               <p className="text-xs font-extrabold uppercase tracking-[0.14em] text-primary">
                 Ekosistem Segaloka
@@ -1015,8 +1015,8 @@ export default async function HomePage() {
       </main>
 
       <footer className="border-t border-[#d9e3ef] bg-[#082d63] pb-20 text-white md:pb-0">
-        <div className="mx-auto max-w-[1180px] px-4 py-10 sm:py-12">
-          <div className="grid gap-8 sm:grid-cols-2 lg:grid-cols-[1.25fr_0.8fr_0.8fr_0.9fr]">
+        <div className="mx-auto max-w-[1180px] px-4 py-8 sm:py-12">
+          <div className="grid gap-7 sm:grid-cols-2 sm:gap-8 lg:grid-cols-[1.25fr_0.8fr_0.8fr_0.9fr]">
             <div>
               <div className="flex items-center">
                 <img
