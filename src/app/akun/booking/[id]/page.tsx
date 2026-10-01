@@ -15,6 +15,7 @@ export default async function BookingDetailPage({ params }: { params: { id: stri
     .from("bookings")
     .select("*, departures(departure_date, packages(name, organizations(name, bank_info))), booking_passengers(*), invoices(*)")
     .eq("id", params.id)
+    .eq("traveler_user_id", user.id)
     .single();
 
   if (!booking) notFound();
