@@ -734,7 +734,7 @@ export default async function HomePage() {
             <Link href="/paket/tour" className="hidden text-sm font-extrabold text-primary hover:underline sm:inline">Lihat Tour Domestik →</Link>
           </div>
 
-          <div className="mt-4 grid grid-cols-2 gap-3 sm:grid-cols-3 lg:grid-cols-5">
+          <div className="mt-4 grid grid-cols-2 gap-3 sm:grid-cols-3 lg:grid-cols-4">
             {PREVIEW_DOMESTIC_DESTINATIONS.map((destination, index) => (
               <Link
                 key={destination.name}
@@ -823,7 +823,7 @@ export default async function HomePage() {
               <Link href="/paket/halal_tour" className="hidden text-sm font-extrabold text-primary hover:underline sm:inline">Lihat Internasional →</Link>
             </div>
 
-            <div className="mt-4 grid grid-cols-2 gap-3 sm:grid-cols-3 lg:grid-cols-5">
+            <div className="mt-4 grid grid-cols-2 gap-3 sm:grid-cols-3 lg:grid-cols-4">
               {PREVIEW_WORLD_DESTINATIONS.map((destination, index) => (
                 <Link
                   key={destination.name}
@@ -861,7 +861,7 @@ export default async function HomePage() {
 
           <div className="mt-4 grid grid-cols-1 gap-3 sm:grid-cols-2 lg:grid-cols-4">
             {PREVIEW_VENDORS.map((vendor, index) => (
-              <div key={vendor.id} className="group relative min-h-[166px] overflow-hidden rounded-[18px] border border-[#dfe7f0] bg-white p-4 transition duration-300 hover:-translate-y-0.5 hover:border-[#bfd5ee] hover:shadow-[0_12px_26px_rgba(15,45,90,0.08)]">
+              <div key={vendor.id} className="group relative min-h-[184px] overflow-hidden rounded-[18px] border border-[#dfe7f0] bg-white p-5 transition duration-300 hover:-translate-y-0.5 hover:border-[#bfd5ee] hover:shadow-[0_12px_26px_rgba(15,45,90,0.08)]">
                 <div className={`absolute inset-x-0 top-0 h-1 ${index % 2 === 0 ? "bg-[#0b6ee8]" : "bg-[#20a67a]"}`} />
                 <div className="flex items-start justify-between gap-3">
                   <span className="flex h-10 w-10 items-center justify-center rounded-[14px] bg-[#eef5ff] text-primary transition group-hover:bg-primary group-hover:text-white">
