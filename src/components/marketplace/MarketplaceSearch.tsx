@@ -448,9 +448,9 @@ export function MarketplaceSearch() {
         </div>
       )}
 
-      <div className="absolute left-1/2 top-0 z-20 w-max max-w-[calc(100%-32px)] -translate-x-1/2">
-        <div className="overflow-x-auto rounded-full border border-[#dce4ee] bg-white shadow-[0_8px_22px_rgba(16,34,63,0.14)]">
-          <div className="flex min-w-max items-center gap-1 px-2 py-1.5">
+      <div className="absolute left-1/2 top-0 z-20 w-[calc(100%-24px)] -translate-x-1/2 sm:w-max sm:max-w-[calc(100%-32px)]">
+        <div className="overflow-x-auto rounded-2xl border border-[#dce4ee] bg-white shadow-[0_8px_22px_rgba(16,34,63,0.14)] sm:rounded-full">
+          <div className="flex min-w-max items-center gap-0.5 px-1.5 py-1.5 sm:gap-1 sm:px-2">
             {SERVICES.map((item) => {
               const active = service === item.type;
 
@@ -459,11 +459,11 @@ export function MarketplaceSearch() {
                   key={item.type}
                   type="button"
                   onClick={() => handleServiceClick(item.type)}
-                  className={`group flex h-11 shrink-0 items-center gap-2 rounded-full px-3 transition ${
+                  className={`group flex h-10 shrink-0 items-center gap-1.5 rounded-full px-2 transition sm:h-11 sm:gap-2 sm:px-3 ${
                     active ? "bg-[#eaf3ff] text-primary" : "text-[#52647e] hover:bg-[#f5f8fc]"
                   }`}
                 >
-                  <span className={`flex h-8 w-8 shrink-0 items-center justify-center rounded-full ${active ? "bg-white text-primary" : "bg-[#eef4fb] text-primary"}`}>
+                  <span className={`flex h-7 w-7 shrink-0 items-center justify-center rounded-full sm:h-8 sm:w-8 ${active ? "bg-white text-primary" : "bg-[#eef4fb] text-primary"}`}>
                     <Icon name={item.icon} size={16} />
                   </span>
                   <span className={`whitespace-nowrap text-xs font-extrabold ${active ? "text-primary" : "text-[#52647e]"}`}>
@@ -476,12 +476,12 @@ export function MarketplaceSearch() {
         </div>
       </div>
 
-      <div className="rounded-[22px] border border-[#dce4ee] bg-white px-3 pb-4 pt-[64px] shadow-[0_18px_50px_rgba(16,34,63,0.14)] sm:px-4">
+      <div className="rounded-[18px] border border-[#dce4ee] bg-white px-2.5 pb-3 pt-[58px] shadow-[0_18px_50px_rgba(16,34,63,0.14)] sm:rounded-[22px] sm:px-4 sm:pb-4 sm:pt-[64px]">
         <div
           className={`grid gap-2.5 ${
             service === "segadeals"
-              ? "md:grid-cols-[minmax(190px,1.05fr)_minmax(240px,1.35fr)_142px_158px_174px_176px]"
-              : "md:grid-cols-[minmax(220px,1.15fr)_minmax(300px,1.6fr)_180px_200px_112px]"
+              ? "md:grid-cols-2 xl:grid-cols-[minmax(190px,1.05fr)_minmax(240px,1.35fr)_142px_158px_174px_176px]"
+              : "md:grid-cols-2 lg:grid-cols-[minmax(180px,1fr)_minmax(220px,1.25fr)_150px_170px_112px] xl:grid-cols-[minmax(220px,1.15fr)_minmax(300px,1.6fr)_180px_200px_112px]"
           }`}
         >
           <div className="relative">
@@ -502,7 +502,7 @@ export function MarketplaceSearch() {
 
             {openPanel === "origin" && (
               <div
-                className="absolute left-0 top-[calc(100%+10px)] z-[80] w-[min(460px,calc(100vw-32px))] rounded-2xl border border-[#e0e5eb] bg-white p-5 shadow-[0_24px_60px_rgba(16,34,63,0.18)]"
+                className="fixed inset-x-3 top-[118px] z-[80] max-h-[calc(100dvh-140px)] overflow-y-auto rounded-2xl border border-[#e0e5eb] bg-white p-4 shadow-[0_24px_60px_rgba(16,34,63,0.18)] sm:absolute sm:inset-x-auto sm:left-0 sm:top-[calc(100%+10px)] sm:max-h-none sm:w-[min(460px,calc(100vw-32px))] sm:overflow-visible sm:p-5"
                 onClick={(event) => event.stopPropagation()}
               >
                 <h3 className="font-display text-[21px] font-extrabold text-[#343941]">Pilih Kota atau Bandara</h3>
