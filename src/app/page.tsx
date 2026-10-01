@@ -1030,7 +1030,7 @@ export default async function HomePage() {
               </p>
               <div className="mt-5 flex flex-wrap gap-2">
                 {["Instagram", "Facebook", "TikTok"].map((social) => (
-                  <span key={social} className="rounded-full border border-white/20 px-3 py-1.5 text-xs font-bold text-[#dce9f8]">{social}</span>
+                  <Link key={social} href="/kontak" className="rounded-full border border-white/20 px-3 py-1.5 text-xs font-bold text-[#dce9f8] transition hover:border-white/40 hover:text-white">{social}</Link>
                 ))}
               </div>
             </div>
@@ -1050,8 +1050,8 @@ export default async function HomePage() {
             <div>
               <h3 className="text-xs font-extrabold">Ekosistem</h3>
               <div className="mt-4 grid gap-2.5 text-xs text-[#c5d7ed]">
-                <span>Traveler</span><span>Travel</span><span>Vendor</span>
-                <span>Agen</span><span>Mitra</span><span>Affiliate</span>
+                <Link href="/register">Traveler</Link><Link href="/register">Travel</Link><Link href="/register">Vendor</Link>
+                <Link href="/register">Agen</Link><Link href="/register">Mitra</Link><Link href="/register">Affiliate</Link>
               </div>
             </div>
 
@@ -1064,9 +1064,9 @@ export default async function HomePage() {
               </div>
               <div className="mt-5">
                 <p className="text-xs font-extrabold uppercase tracking-[0.12em] text-[#8fb2da]">Aplikasi Segaloka</p>
-                <div className="mt-2 flex gap-2">
-                  <span className="rounded-lg border border-white/20 px-3 py-2 text-xs font-bold">Android</span>
-                  <span className="rounded-lg border border-white/20 px-3 py-2 text-xs font-bold">iOS</span>
+                <div className="mt-2 flex flex-wrap gap-2">
+                  <Link href="/kontak" className="rounded-lg border border-white/20 px-3 py-2 text-xs font-bold transition hover:border-white/40">Android</Link>
+                  <Link href="/kontak" className="rounded-lg border border-white/20 px-3 py-2 text-xs font-bold transition hover:border-white/40">iOS</Link>
                 </div>
               </div>
             </div>
@@ -1106,7 +1106,7 @@ export default async function HomePage() {
             <Link
               key={label}
               href={href}
-              className={`flex flex-col items-center gap-1 py-1 text-xs font-bold ${
+              className={`flex min-w-0 flex-col items-center gap-1 px-0.5 py-1 text-[10px] font-bold sm:text-xs ${
                 index === 0 ? "text-primary" : "text-[#748297]"
               }`}
             >
