@@ -1084,7 +1084,7 @@ export default async function HomePage() {
 
             <div className="col-span-2 sm:col-span-1">
               <h3 className="text-xs font-extrabold">Bantuan & Perusahaan</h3>
-              <div className="mt-3.5 grid grid-cols-2 gap-x-5 gap-y-2 text-[11px] text-[#c5d7ed] sm:mt-4 sm:grid-cols-1 sm:gap-y-2.5 sm:text-xs"">
+              <div className="mt-3.5 grid grid-cols-2 gap-x-5 gap-y-2 text-[11px] text-[#c5d7ed] sm:mt-4 sm:grid-cols-1 sm:gap-y-2.5 sm:text-xs">
                 <Link href="/bantuan">Pusat Bantuan</Link><Link href="/tentang">Tentang Segaloka</Link>
                 <Link href="/syarat">Syarat & Ketentuan</Link><Link href="/privasi">Kebijakan Privasi</Link>
                 <Link href="/bantuan">Keamanan Transaksi</Link><Link href="/kontak">Hubungi Kami</Link>
