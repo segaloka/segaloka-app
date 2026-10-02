@@ -145,12 +145,15 @@ export default async function PackageDetailPage({ params }: { params: { slug: st
 
         <div className="mt-4 grid gap-4 lg:grid-cols-[minmax(0,1fr)_360px] lg:items-start">
           <div className="space-y-4">
-            <div className="-mx-3 overflow-x-auto px-3 sm:mx-0 sm:px-0">
-              <div className="flex min-w-max gap-2">
+            <div className="sticky top-[68px] z-30 -mx-3 overflow-x-auto border-y border-[#e7edf4] bg-[#f7f9fc]/95 px-3 py-2 backdrop-blur sm:mx-0 sm:rounded-2xl sm:border sm:px-2 lg:top-[76px]">
+              <div className="flex min-w-max gap-1.5">
+                <a href="#overview" className="rounded-full bg-primary px-3 py-2 text-[11px] font-extrabold text-white shadow-sm">{t.overview}</a>
                 <a href="#itinerary" className="rounded-full border border-[#dfe7f0] bg-white px-3 py-2 text-[11px] font-extrabold text-[#40546f] transition hover:border-primary/40 hover:text-primary">{t.itinerary}</a>
                 <a href="#transport-hotel" className="rounded-full border border-[#dfe7f0] bg-white px-3 py-2 text-[11px] font-extrabold text-[#40546f] transition hover:border-primary/40 hover:text-primary">{t.transportHotel}</a>
                 <a href="#facilities" className="rounded-full border border-[#dfe7f0] bg-white px-3 py-2 text-[11px] font-extrabold text-[#40546f] transition hover:border-primary/40 hover:text-primary">{t.facilities}</a>
-                <a href="#travel" className="rounded-full border border-[#dfe7f0] bg-white px-3 py-2 text-[11px] font-extrabold text-[#40546f] transition hover:border-primary/40 hover:text-primary">{u.travel}</a>\n                <a href="#reviews" className="rounded-full border border-[#dfe7f0] bg-white px-3 py-2 text-[11px] font-extrabold text-[#40546f] transition hover:border-primary/40 hover:text-primary">{u.reviewsNav}</a>\n                <a href="#terms" className="rounded-full border border-[#dfe7f0] bg-white px-3 py-2 text-[11px] font-extrabold text-[#40546f] transition hover:border-primary/40 hover:text-primary">{t.terms}</a>
+                {org && <a href="#travel" className="rounded-full border border-[#dfe7f0] bg-white px-3 py-2 text-[11px] font-extrabold text-[#40546f] transition hover:border-primary/40 hover:text-primary">{u.travel}</a>}
+                <a href="#reviews" className="rounded-full border border-[#dfe7f0] bg-white px-3 py-2 text-[11px] font-extrabold text-[#40546f] transition hover:border-primary/40 hover:text-primary">{u.reviewsNav}</a>
+                <a href="#terms" className="rounded-full border border-[#dfe7f0] bg-white px-3 py-2 text-[11px] font-extrabold text-[#40546f] transition hover:border-primary/40 hover:text-primary">{t.terms}</a>
               </div>
             </div>
             {pkg.description && <section id="overview" className="scroll-mt-32 rounded-[18px] border border-[#dfe7f0] bg-white p-4 sm:p-6"><h2 className="font-display text-lg font-extrabold">{t.about}</h2><p className="mt-2 whitespace-pre-line text-[13px] leading-6 text-[#60738d] sm:text-sm">{pkg.description}</p></section>}
