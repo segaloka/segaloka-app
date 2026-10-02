@@ -15,14 +15,15 @@ export default async function BookingDetailPage({ params }: { params: { id: stri
   const currency = storedCurrency === "USD" || storedCurrency === "MYR" || storedCurrency === "SGD" || storedCurrency === "SAR" ? storedCurrency : "IDR";
   const locale = language === "en" ? "en-US" : language === "ar" ? "ar-SA" : "id-ID";
   const copy = {
-    id:{booking:"Booking",trip:"Detail Perjalanan",travel:"Travel",departure:"Tanggal Berangkat",travelers:"Jumlah Jamaah",people:"orang",total:"Total Tagihan",travelerData:"Data Jamaah",payment:"Pembayaran",invoice:"No. Invoice",status:"Status",due:"Jatuh Tempo",manual:"Transfer Manual",account:"a.n.",missingBank:"Travel belum melengkapi rekening pembayaran. Hubungi Travel melalui Segaloka.",baseCurrency:"Harga transaksi · IDR",currencyPending:(code:string)=>`Pilihan ${code} aktif · transaksi tetap ditampilkan dalam IDR sampai kurs tersedia.`},
-    en:{booking:"Booking",trip:"Trip Details",travel:"Travel",departure:"Departure Date",travelers:"Number of Travelers",people:"travelers",total:"Total Amount",travelerData:"Traveler Details",payment:"Payment",invoice:"Invoice No.",status:"Status",due:"Due Date",manual:"Manual Transfer",account:"Account name",missingBank:"The Travel operator has not added a payment account yet. Contact the Travel operator through Segaloka.",baseCurrency:"Transaction currency · IDR",currencyPending:(code:string)=>`${code} is selected · the transaction remains displayed in IDR until an exchange rate is available.`},
-    ar:{booking:"الحجز",trip:"تفاصيل الرحلة",travel:"شركة السفر",departure:"تاريخ المغادرة",travelers:"عدد المسافرين",people:"مسافر",total:"إجمالي المبلغ",travelerData:"بيانات المسافرين",payment:"الدفع",invoice:"رقم الفاتورة",status:"الحالة",due:"تاريخ الاستحقاق",manual:"تحويل بنكي يدوي",account:"اسم الحساب",missingBank:"لم تضف شركة السفر حساب الدفع بعد. تواصل مع شركة السفر عبر Segaloka.",baseCurrency:"عملة المعاملة · IDR",currencyPending:(code:string)=>`تم اختيار ${code} · ستظل المعاملة معروضة بالروبية الإندونيسية حتى يتوفر سعر الصرف.`}
+    id:{booking:"Booking",trip:"Detail Perjalanan",travel:"Travel",departure:"Tanggal Berangkat",travelers:"Jumlah Jamaah",people:"orang",total:"Total Tagihan",travelerData:"Data Jamaah",payment:"Pembayaran",invoice:"No. Invoice",status:"Status",due:"Jatuh Tempo",manual:"Transfer Manual",account:"a.n.",missingBank:"Travel belum melengkapi rekening pembayaran. Hubungi Travel melalui Segaloka.",baseCurrency:"Harga transaksi · IDR",currencyPending:(code:string)=>`Pilihan ${code} aktif · transaksi tetap ditampilkan dalam IDR sampai kurs tersedia.`,statuses:{pending:"Menunggu",pending_verification:"Menunggu verifikasi",confirmed:"Dikonfirmasi",paid:"Lunas",cancelled:"Dibatalkan",failed:"Gagal",expired:"Kedaluwarsa",active:"Aktif"}},
+    en:{booking:"Booking",trip:"Trip Details",travel:"Travel",departure:"Departure Date",travelers:"Number of Travelers",people:"travelers",total:"Total Amount",travelerData:"Traveler Details",payment:"Payment",invoice:"Invoice No.",status:"Status",due:"Due Date",manual:"Manual Transfer",account:"Account name",missingBank:"The Travel operator has not added a payment account yet. Contact the Travel operator through Segaloka.",baseCurrency:"Transaction currency · IDR",currencyPending:(code:string)=>`${code} is selected · the transaction remains displayed in IDR until an exchange rate is available.`,statuses:{pending:"Pending",pending_verification:"Pending verification",confirmed:"Confirmed",paid:"Paid",cancelled:"Cancelled",failed:"Failed",expired:"Expired",active:"Active"}},
+    ar:{booking:"الحجز",trip:"تفاصيل الرحلة",travel:"شركة السفر",departure:"تاريخ المغادرة",travelers:"عدد المسافرين",people:"مسافر",total:"إجمالي المبلغ",travelerData:"بيانات المسافرين",payment:"الدفع",invoice:"رقم الفاتورة",status:"الحالة",due:"تاريخ الاستحقاق",manual:"تحويل بنكي يدوي",account:"اسم الحساب",missingBank:"لم تضف شركة السفر حساب الدفع بعد. تواصل مع شركة السفر عبر Segaloka.",baseCurrency:"عملة المعاملة · IDR",currencyPending:(code:string)=>`تم اختيار ${code} · ستظل المعاملة معروضة بالروبية الإندونيسية حتى يتوفر سعر الصرف.`,statuses:{pending:"قيد الانتظار",pending_verification:"بانتظار التحقق",confirmed:"مؤكد",paid:"مدفوع",cancelled:"ملغي",failed:"فشل",expired:"منتهي الصلاحية",active:"نشط"}}
   } as const;
   const t = copy[language];
   const displayDate = (value:string | null | undefined) => value ? new Intl.DateTimeFormat(locale,{day:"2-digit",month:"short",year:"numeric"}).format(new Date(value)) : "—";
   const displayNumber = (value:number) => new Intl.NumberFormat(locale).format(value);
   const displayPrice = (value:number | null | undefined) => value == null ? "—" : new Intl.NumberFormat(locale,{style:"currency",currency:"IDR",maximumFractionDigits:0}).format(value);
+  const statusLabel = (status:string) => t.statuses[status as keyof typeof t.statuses] ?? status.replaceAll("_", " ");
   const user = await requireUser();
   const supabase = await createClient();
 
@@ -55,7 +56,7 @@ export default async function BookingDetailPage({ params }: { params: { id: stri
 
   return (
     <div lang={language} dir={language === "ar" ? "rtl" : "ltr"}>
-      <PageHeader eyebrow={`${t.booking} ${booking.code}`} title={pkg?.name ?? t.booking} actions={<Badge status={booking.status} />} />
+      <PageHeader eyebrow={`${t.booking} ${booking.code}`} title={pkg?.name ?? t.booking} actions={<Badge status={booking.status} label={statusLabel(booking.status)} />} />
 
       <div className="grid gap-6 lg:grid-cols-3">
         <div className="space-y-6 lg:col-span-2">
@@ -89,7 +90,7 @@ export default async function BookingDetailPage({ params }: { params: { id: stri
               {invoice && (
                 <div className="rounded-md bg-bg px-3 py-2.5 text-sm">
                   <div className="flex justify-between"><span className="text-text-secondary">{t.invoice}</span><span className="font-mono text-xs">{invoice.number}</span></div>
-                  <div className="mt-1 flex justify-between"><span className="text-text-secondary">{t.status}</span><Badge status={invoice.status} /></div>
+                  <div className="mt-1 flex justify-between"><span className="text-text-secondary">{t.status}</span><Badge status={invoice.status} label={statusLabel(invoice.status)} /></div>
                   <div className="mt-1 flex justify-between"><span className="text-text-secondary">{t.due}</span><span>{displayDate(invoice.due_date)}</span></div>
                 </div>
               )}
