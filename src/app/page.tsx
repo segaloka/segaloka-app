@@ -532,7 +532,7 @@ export default async function HomePage() {
                       <Icon name="route" size={17} />
                     </span>
                     <p className="mt-3 text-xs font-extrabold text-[#10223f]">Jelajahi Indonesia</p>
-                    <p className="mt-1 text-xs leading-4 text-[#718096]">Bali hingga Raja Ampat</p>
+                    <p className="mt-1 line-clamp-2 text-[11px] leading-4 text-[#718096] sm:text-xs">Bali hingga Raja Ampat</p>
                   </div>
                   <div className="mt-7 rounded-2xl border border-white/80 bg-white/80 p-4 shadow-[0_12px_30px_rgba(25,94,166,0.10)]">
                     <span className="flex h-9 w-9 items-center justify-center rounded-xl bg-primary text-white">
@@ -556,8 +556,8 @@ export default async function HomePage() {
         </section>
 
         {/* MOBILE MARKETPLACE SHORTCUTS */}
-        <section className="mx-auto max-w-[1180px] px-3 pb-2 pt-3 sm:hidden">
-          <div className="rounded-[18px] border border-[#dfe7f0] bg-white px-2 py-3 shadow-[0_8px_22px_rgba(16,34,63,0.06)]">
+        <section className="mx-auto max-w-[1180px] px-3 pb-1 pt-2 sm:hidden">
+          <div className="rounded-[16px] border border-[#dfe7f0] bg-white px-1.5 py-2 shadow-[0_8px_22px_rgba(16,34,63,0.05)]">
             <div className="grid grid-cols-5 gap-1">
               {[
                 ["building", "Umrah", "/paket/umrah"],
@@ -566,8 +566,8 @@ export default async function HomePage() {
                 ["route", "Tour", "/paket/tour"],
                 ["handshake", "SegaDeals", "/segadeals"],
               ].map(([icon, label, href]) => (
-                <Link key={label} href={href} className="group flex min-w-0 flex-col items-center gap-1.5 rounded-xl px-1 py-2 text-center transition active:bg-[#f2f7fd]">
-                  <span className="flex h-10 w-10 items-center justify-center rounded-2xl bg-[#edf6ff] text-primary transition group-active:bg-primary group-active:text-white">
+                <Link key={label} href={href} className="group flex min-w-0 flex-col items-center gap-1 rounded-xl px-0.5 py-1.5 text-center transition active:bg-[#f2f7fd]">
+                  <span className="flex h-9 w-9 items-center justify-center rounded-xl bg-[#edf6ff] text-primary transition group-active:bg-primary group-active:text-white">
                     <Icon name={icon as any} size={18} />
                   </span>
                   <span className="w-full truncate text-[10px] font-extrabold text-[#40546f]">{label}</span>
@@ -578,13 +578,13 @@ export default async function HomePage() {
         </section>
 
         {/* MARKETPLACE PROMO STRIP — V4.3 */}
-        <section className="mx-auto max-w-[1180px] px-3 pb-4 pt-2 sm:px-4 sm:pt-3">
+        <section className="mx-auto max-w-[1180px] px-3 pb-3 pt-1.5 sm:px-4 sm:pb-4 sm:pt-3">
           <div className="flex snap-x gap-2.5 overflow-x-auto pb-1 [scrollbar-width:none] [&::-webkit-scrollbar]:hidden sm:grid sm:grid-cols-2 sm:overflow-visible sm:pb-0 lg:grid-cols-3">
             {PREVIEW_PROMOS.map((promo, index) => (
               <Link
                 key={promo.id}
                 href={index === 0 ? "/paket/umrah" : index === 1 ? "/paket/tour" : "/paket/halal_tour"}
-                className={`group relative min-h-[104px] min-w-[82%] snap-start overflow-hidden rounded-[16px] border p-3.5 transition duration-300 sm:min-h-[110px] sm:min-w-0 sm:rounded-[18px] sm:p-4 hover:-translate-y-0.5 hover:shadow-[0_14px_34px_rgba(15,45,90,0.09)] ${
+                className={`group relative min-h-[96px] min-w-[80%] snap-start overflow-hidden rounded-[16px] border p-3 transition duration-300 sm:min-h-[110px] sm:min-w-0 sm:rounded-[18px] sm:p-4 hover:-translate-y-0.5 hover:shadow-[0_14px_34px_rgba(15,45,90,0.09)] ${
                   index === 0
                     ? "border-[#cfe4ff] bg-[linear-gradient(135deg,#e9f5ff_0%,#f8fcff_68%,#ddecff_100%)]"
                     : index === 1
@@ -593,15 +593,15 @@ export default async function HomePage() {
                 }`}
               >
                 <div className="absolute -right-7 -top-10 h-28 w-28 rounded-full border-[18px] border-white/45 transition duration-300 group-hover:scale-110" />
-                <div className="relative flex h-full items-start gap-3.5">
-                  <span className="flex h-11 w-11 shrink-0 items-center justify-center rounded-2xl border border-white/80 bg-white/90 text-primary shadow-sm">
+                <div className="relative flex h-full items-start gap-3 sm:gap-3.5">
+                  <span className="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl border border-white/80 bg-white/90 text-primary shadow-sm sm:h-11 sm:w-11 sm:rounded-2xl">
                     <Icon name={promo.icon} size={19} />
                   </span>
                   <div className="min-w-0">
                     <p className="text-xs font-black uppercase tracking-[0.12em] text-primary">{promo.label}</p>
-                    <p className="mt-1 text-sm font-extrabold leading-5 text-[#10223f]">{promo.title}</p>
+                    <p className="mt-1 text-[13px] font-extrabold leading-[18px] text-[#10223f] sm:text-sm sm:leading-5">{promo.title}</p>
                     <p className="mt-1 text-xs leading-4 text-[#718096]">{promo.detail}</p>
-                    <span className="mt-2.5 inline-flex items-center gap-1 text-xs font-extrabold text-primary">
+                    <span className="mt-2 inline-flex items-center gap-1 text-[11px] font-extrabold text-primary sm:mt-2.5 sm:text-xs">
                       Jelajahi <span aria-hidden="true">→</span>
                     </span>
                   </div>
@@ -612,7 +612,7 @@ export default async function HomePage() {
         </section>
 
         {/* REAL MARKETPLACE INVENTORY — V4.3 CARD SYSTEM */}
-        <section className="mx-auto max-w-[1180px] px-3 pb-8 pt-4 sm:px-4 sm:pb-10 sm:pt-5">
+        <section className="mx-auto max-w-[1180px] px-3 pb-8 pt-3 sm:px-4 sm:pb-10 sm:pt-5">
           <div className="flex items-end justify-between gap-4">
             <div>
               <p className="text-xs font-extrabold uppercase tracking-[0.14em] text-primary">
@@ -621,7 +621,7 @@ export default async function HomePage() {
               <h2 className="mt-1 font-display text-xl font-extrabold tracking-[-0.02em] sm:text-[24px] sm:tracking-[-0.025em] text-[#10223f]">
                 Paket pilihan untuk Anda
               </h2>
-              <p className="mt-1 text-sm text-[#6d7c91]">
+              <p className="mt-1 text-[12px] leading-[18px] text-[#6d7c91] sm:text-sm sm:leading-normal">
                 Umrah, Haji, perjalanan domestik dan internasional dari Travel di Segaloka.
               </p>
               {isPreviewInventory && (
@@ -653,7 +653,7 @@ export default async function HomePage() {
               </Link>
             </div>
           ) : (
-            <div className="mt-4 flex snap-x gap-3 overflow-x-auto pb-2 [scrollbar-width:none] [&::-webkit-scrollbar]:hidden sm:mt-5 sm:grid sm:grid-cols-2 sm:gap-4 sm:overflow-visible sm:pb-0 lg:grid-cols-4">
+            <div className="mt-3 flex snap-x gap-3 overflow-x-auto pb-2 sm:mt-5 [scrollbar-width:none] [&::-webkit-scrollbar]:hidden sm:mt-5 sm:grid sm:grid-cols-2 sm:gap-4 sm:overflow-visible sm:pb-0 lg:grid-cols-4">
               {displayPackages.map((pkg) => {
                 const org = pkg.organizations;
                 const departure = pkg.departures[0];
