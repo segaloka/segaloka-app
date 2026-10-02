@@ -12,21 +12,29 @@ export function RealtimeRefresh() {
 
   useEffect(() => {
     const supabase = createClient();
-    const channel = supabase
-      .channel("segaloka-domain-events")
-      .on(
-        "postgres_changes",
-        { event: "INSERT", schema: "public", table: "domain_events" },
-        () => {
-          if (timerRef.current) clearTimeout(timerRef.current);
-          timerRef.current = setTimeout(() => router.refresh(), REFRESH_DEBOUNCE_MS);
-        },
-      )
-      .subscribe();
+    let channel: ReturnType<typeof supabase.channel> | null = null;
+    let cancelled = false;
+
+    void supabase.auth.getUser().then(({ data }) => {
+      if (cancelled || !data.user) return;
+
+      channel = supabase
+        .channel("segaloka-domain-events")
+        .on(
+          "postgres_changes",
+          { event: "INSERT", schema: "public", table: "domain_events" },
+          () => {
+            if (timerRef.current) clearTimeout(timerRef.current);
+            timerRef.current = setTimeout(() => router.refresh(), REFRESH_DEBOUNCE_MS);
+          },
+        )
+        .subscribe();
+    });
 
     return () => {
+      cancelled = true;
       if (timerRef.current) clearTimeout(timerRef.current);
-      void supabase.removeChannel(channel);
+      if (channel) void supabase.removeChannel(channel);
     };
   }, [router]);
 
