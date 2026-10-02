@@ -2,6 +2,7 @@
 
 import { useFormState, useFormStatus } from "react-dom";
 import Link from "next/link";
+import { useSearchParams } from "next/navigation";
 import { registerAction } from "./actions";
 import { Input } from "@/components/ui/Field";
 
@@ -20,6 +21,17 @@ function SubmitButton() {
 
 export default function RegisterPage() {
   const [state, formAction] = useFormState(registerAction, null);
+  const searchParams = useSearchParams();
+  const role = searchParams.get("role");
+  const roleLabels: Record<string, string> = {
+    traveler: "Traveler",
+    travel: "Travel",
+    vendor: "Vendor",
+    agent: "Agen",
+    mitra: "Mitra",
+    affiliate: "Affiliate",
+  };
+  const selectedRole = role ? roleLabels[role] : null;
 
   if (state?.needsConfirmation) {
     return (
@@ -46,9 +58,10 @@ export default function RegisterPage() {
           <span className="font-display text-lg font-bold text-text-primary">Segaloka</span>
         </Link>
         <h1 className="font-display text-xl font-bold text-text-primary">Buat akun Segaloka</h1>
-        <p className="mt-1 text-sm text-text-secondary">Satu akun untuk booking, SegaDeals, dan seluruh perjalanan Anda.</p>
+        <p className="mt-1 text-sm text-text-secondary">{selectedRole ? `Daftar sebagai ${selectedRole} di ekosistem Segaloka.` : "Satu akun untuk booking, SegaDeals, dan seluruh perjalanan Anda."}</p>
 
         <form action={formAction} className="mt-6 space-y-4">
+          {role && roleLabels[role] && <input type="hidden" name="requested_role" value={role} />}
           <div>
             <label className="mb-1.5 block text-xs font-semibold uppercase tracking-wide text-text-secondary">Nama Lengkap</label>
             <Input name="full_name" required placeholder="Sesuai identitas" autoComplete="name" />
