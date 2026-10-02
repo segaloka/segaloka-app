@@ -240,7 +240,7 @@ export default async function PackageDetailPage({ params }: { params: { slug: st
                   {departures.map((d) => {
                     const seats = Math.max(0, d.quota - d.filled);
                     return (
-                      <div key={d.id} className="group rounded-2xl border border-[#dfe7f0] bg-[#fbfcfe] p-4 transition hover:-translate-y-0.5 hover:border-primary/50 hover:bg-white hover:shadow-[0_8px_24px_rgba(15,45,90,0.08)]">
+                      <div key={d.id} className={`group rounded-2xl border border-[#dfe7f0] bg-[#fbfcfe] p-4 ${isPreview ? "" : "transition hover:-translate-y-0.5 hover:border-primary/50 hover:bg-white hover:shadow-[0_8px_24px_rgba(15,45,90,0.08)]"}`}>
                         <div className="flex items-start justify-between gap-3">
                           <div className="min-w-0">
                             <p className="text-[9px] font-extrabold uppercase tracking-[0.1em] text-[#8a98aa]">{u.depart}</p>
@@ -473,7 +473,7 @@ export default async function PackageDetailPage({ params }: { params: { slug: st
                     <div className="flex items-start justify-between gap-3"><div className="min-w-0"><p className="text-[10px] font-bold uppercase tracking-[0.08em] text-[#8a98aa]">{u.depart}</p><p className="mt-1 text-sm font-extrabold text-[#10223f]">{displayDate(departures[0].departure_date)}</p><p className="mt-1 text-[10px] text-[#748297]">{u.return} · {departures[0].return_date ? displayDate(departures[0].return_date) : t.unavailable}</p></div><span className={`shrink-0 rounded-full px-2 py-1 text-[9px] font-extrabold ${Math.max(0, departures[0].quota - departures[0].filled) <= 10 ? "bg-[#fff7e8] text-[#b16b00]" : "bg-[#eef8f3] text-[#167453]"}`}>{departures[0].status === "almost_full" ? u.almostFull : u.available}</span></div>
                     <div className="mt-3 flex items-center justify-between border-t border-[#edf1f6] pt-2.5"><span className="text-[10px] font-bold text-[#8a98aa]">{u.remainingSeats}</span><span className="text-xs font-extrabold text-[#40546f]">{displayNumber(Math.max(0, departures[0].quota - departures[0].filled))} {u.seats}</span></div>
                   </div>
-                  <a href="#departures" className="mt-3 flex w-full items-center justify-center gap-2 rounded-xl bg-primary px-4 py-3 text-xs font-extrabold text-white shadow-[0_6px_16px_rgba(15,95,175,0.16)]">{u.viewAllSchedules} <span aria-hidden="true">{arrow}</span></a>
+                  {isPreview ? <div className="mt-3 flex w-full items-center justify-center rounded-xl bg-[#f2f4f7] px-4 py-3 text-xs font-extrabold text-[#8a98aa]">{u.previewAction}</div> : <a href="#departures" className="mt-3 flex w-full items-center justify-center gap-2 rounded-xl bg-primary px-4 py-3 text-xs font-extrabold text-white shadow-[0_6px_16px_rgba(15,95,175,0.16)]">{u.viewAllSchedules} <span aria-hidden="true">{arrow}</span></a>}
                 </>}
               </div>
               <div className="mt-4 grid grid-cols-3 gap-2 border-t border-[#edf1f6] pt-4">
@@ -495,7 +495,7 @@ export default async function PackageDetailPage({ params }: { params: { slug: st
             <p className="text-[10px] font-bold text-[#748297]">{departures?.[0] ? `${u.depart} ${displayDate(departures[0].departure_date)}` : t.startFrom}</p>
             <div><div className="flex items-baseline gap-1.5"><p className="font-display text-base font-extrabold text-primary">{displayPrice(pkg.base_price)}</p><span className="text-[9px] font-bold text-[#8a98aa]">{t.perTraveler}</span></div>{currency !== "IDR" && <p className="mt-0.5 max-w-[210px] text-[8px] font-bold leading-3 text-[#b16b00]">{lt.currencyPending(currency)}</p>}</div>
           </div>
-          {departures?.[0] ? <a href="#departures" className="max-w-[48%] shrink-0 rounded-xl bg-primary px-4 py-3 text-center text-xs font-extrabold leading-4 text-white shadow-[0_6px_16px_rgba(15,95,175,0.22)]">{u.selectScheduleFirst}</a> : <span className="max-w-[48%] shrink-0 rounded-xl bg-[#e9eef4] px-4 py-3 text-center text-xs font-extrabold leading-4 text-[#8a98aa]">{t.noSchedule}</span>}
+          {departures?.[0] ? (isPreview ? <span className="max-w-[48%] shrink-0 rounded-xl bg-[#e9eef4] px-4 py-3 text-center text-xs font-extrabold leading-4 text-[#8a98aa]">{u.previewAction}</span> : <a href="#departures" className="max-w-[48%] shrink-0 rounded-xl bg-primary px-4 py-3 text-center text-xs font-extrabold leading-4 text-white shadow-[0_6px_16px_rgba(15,95,175,0.22)]">{u.selectScheduleFirst}</a>) : <span className="max-w-[48%] shrink-0 rounded-xl bg-[#e9eef4] px-4 py-3 text-center text-xs font-extrabold leading-4 text-[#8a98aa]">{t.noSchedule}</span>}
         </div>
       </div>
     </div>
