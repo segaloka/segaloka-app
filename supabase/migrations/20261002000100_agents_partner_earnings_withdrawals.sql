@@ -148,6 +148,39 @@ create table if not exists public.partner_withdrawal_items (
   primary key (withdrawal_id, earning_id)
 );
 
+create or replace function public.enforce_partner_withdrawal_item()
+returns trigger
+language plpgsql
+set search_path = public
+as $
+declare
+  w public.partner_withdrawals%rowtype;
+  e public.partner_earnings%rowtype;
+begin
+  select * into w from public.partner_withdrawals where id = new.withdrawal_id;
+  select * into e from public.partner_earnings where id = new.earning_id;
+
+  if w.id is null or e.id is null then
+    raise exception 'Withdrawal atau earning tidak ditemukan';
+  end if;
+  if e.org_id <> w.org_id or e.partner_type <> w.partner_type or e.partner_id <> w.partner_id then
+    raise exception 'Earning wajib berasal dari partner dan Travel yang sama';
+  end if;
+  if e.status <> 'AVAILABLE' then
+    raise exception 'Hanya earning AVAILABLE yang dapat ditarik';
+  end if;
+  if new.amount > e.amount then
+    raise exception 'Nilai withdrawal item melebihi earning';
+  end if;
+  return new;
+end;
+$;
+
+drop trigger if exists partner_withdrawal_item_guard on public.partner_withdrawal_items;
+create trigger partner_withdrawal_item_guard
+before insert or update on public.partner_withdrawal_items
+for each row execute function public.enforce_partner_withdrawal_item();
+
 alter table public.agen enable row level security;
 alter table public.partner_release_policies enable row level security;
 alter table public.partner_earnings enable row level security;
