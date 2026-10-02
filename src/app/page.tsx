@@ -1038,8 +1038,8 @@ export default async function HomePage() {
 
       <footer className="border-t border-[#d9e3ef] bg-[#082d63] pb-20 text-white md:pb-0">
         <div className="mx-auto max-w-[1180px] px-3 py-7 sm:px-4 sm:py-12">
-          <div className="grid gap-7 sm:grid-cols-2 sm:gap-8 lg:grid-cols-[1.25fr_0.8fr_0.8fr_0.9fr]">
-            <div>
+          <div className="grid grid-cols-2 gap-x-5 gap-y-7 sm:grid-cols-2 sm:gap-8 lg:grid-cols-[1.25fr_0.8fr_0.8fr_0.9fr]">
+            <div className="col-span-2 sm:col-span-1">
               <div className="flex items-center">
                 <img
                   src="/brand/segaloka-logo.png"
@@ -1083,9 +1083,9 @@ export default async function HomePage() {
               </div>
             </div>
 
-            <div>
+            <div className="col-span-2 sm:col-span-1">
               <h3 className="text-xs font-extrabold">Bantuan & Perusahaan</h3>
-              <div className="mt-4 grid gap-2.5 text-xs text-[#c5d7ed]">
+              <div className="mt-4 grid grid-cols-2 gap-x-5 gap-y-2.5 text-xs text-[#c5d7ed] sm:grid-cols-1">
                 <Link href="/bantuan">Pusat Bantuan</Link><Link href="/tentang">Tentang Segaloka</Link>
                 <Link href="/syarat">Syarat & Ketentuan</Link><Link href="/privasi">Kebijakan Privasi</Link>
                 <Link href="/bantuan">Keamanan Transaksi</Link><Link href="/kontak">Hubungi Kami</Link>
@@ -1121,7 +1121,7 @@ export default async function HomePage() {
         </div>
       </footer>
 
-      <nav className="fixed inset-x-0 bottom-0 z-40 border-t border-[#dfe5ed] bg-white/95 px-1 pb-[max(0.5rem,env(safe-area-inset-bottom))] pt-2 backdrop-blur md:hidden">
+      <nav className="fixed inset-x-0 bottom-0 z-40 border-t border-[#dfe5ed] bg-white/95 px-1 pb-[max(0.35rem,env(safe-area-inset-bottom))] pt-1.5 shadow-[0_-6px_20px_rgba(15,45,90,0.06)] backdrop-blur md:hidden">
         <div className="mx-auto grid max-w-md grid-cols-5">
           {[
             ["home", "Beranda", "/"],
@@ -1133,7 +1133,7 @@ export default async function HomePage() {
             <Link
               key={label}
               href={href}
-              className={`flex min-h-[52px] min-w-0 flex-col items-center justify-center gap-1 rounded-xl px-0.5 py-1 text-[9px] font-bold transition hover:bg-[#f4f7fb] sm:text-xs ${
+              className={`flex min-h-[50px] min-w-0 flex-col items-center justify-center gap-0.5 rounded-xl px-0.5 py-1 text-[9px] font-bold transition hover:bg-[#f4f7fb] sm:text-xs ${
                 index === 0 ? "text-primary" : "text-[#748297]"
               }`}
             >
