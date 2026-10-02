@@ -1012,7 +1012,7 @@ export default async function HomePage() {
 
         {/* BUSINESS ECOSYSTEM */}
         <section className="mx-auto max-w-[1180px] px-3 pb-10 sm:px-4 sm:pb-12">
-          <div className="grid gap-3 rounded-2xl border border-[#dce4ee] bg-white p-4 sm:gap-4 sm:p-5 sm:p-7 lg:grid-cols-[1fr_auto] lg:items-center">
+          <div className="grid gap-3 rounded-2xl border border-[#dce4ee] bg-white p-4 sm:gap-4 sm:p-7 lg:grid-cols-[1fr_auto] lg:items-center">
             <div>
               <p className="text-xs font-extrabold uppercase tracking-[0.14em] text-primary">
                 Ekosistem Segaloka
