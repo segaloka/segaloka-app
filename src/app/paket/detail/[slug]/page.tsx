@@ -253,7 +253,7 @@ export default async function PackageDetailPage({ params }: { params: { slug: st
                     <h2 className="mt-1 truncate font-display text-lg font-extrabold">{org.name}</h2>
                     <div className="mt-1.5 flex flex-wrap items-center gap-x-3 gap-y-1">
                       <span className="text-[11px] font-bold text-[#167453]">{u.onSegaloka}</span>
-                      <span className="text-[11px] text-[#748297]">{rating && rating.review_count > 0 ? `★ ${Number(rating.average_rating).toFixed(1)} · ${rating.review_count} ulasan` : "Belum ada ulasan"}</span>
+                      <span className="text-[11px] text-[#748297]">{rating && rating.review_count > 0 ? `★ ${Number(rating.average_rating).toFixed(1)} · ${rating.review_count} ${u.reviews}` : u.noReviews}</span>
                     </div>
                   </div>
                   <Link href={`/travel/${org.slug}`} className="hidden rounded-xl border border-[#cfe0f2] bg-white px-3 py-2 text-[11px] font-extrabold text-primary sm:inline-flex">{u.viewTravel} {arrow}</Link>
