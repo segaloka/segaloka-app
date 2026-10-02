@@ -246,8 +246,11 @@ export default async function PackageDetailPage({ params }: { params: { slug: st
       </main>
       <div className="fixed inset-x-0 bottom-0 z-40 border-t border-[#dfe7f0] bg-white/95 px-3 py-2.5 backdrop-blur lg:hidden">
         <div className="mx-auto flex max-w-[1180px] items-center justify-between gap-3">
-          <div><p className="text-[10px] font-bold text-[#748297]">Mulai dari</p><p className="font-display text-base font-extrabold text-primary">{formatIDR(pkg.base_price)}</p></div>
-          {departures?.[0] ? <Link href={`/booking/baru?departure=${departures[0].id}`} className="rounded-xl bg-primary px-5 py-3 text-xs font-extrabold text-white">Pilih Jadwal</Link> : <span className="rounded-xl bg-[#e9eef4] px-5 py-3 text-xs font-extrabold text-[#8a98aa]">Belum ada jadwal</span>}
+          <div className="min-w-0">
+            <p className="text-[10px] font-bold text-[#748297]">{departures?.[0] ? `Berangkat ${formatDate(departures[0].departure_date)}` : "Mulai dari"}</p>
+            <div className="flex items-baseline gap-1.5"><p className="font-display text-base font-extrabold text-primary">{formatIDR(pkg.base_price)}</p><span className="text-[9px] font-bold text-[#8a98aa]">/jamaah</span></div>
+          </div>
+          {departures?.[0] ? <Link href={`/booking/baru?departure=${departures[0].id}`} className="shrink-0 rounded-xl bg-primary px-5 py-3 text-xs font-extrabold text-white shadow-[0_6px_16px_rgba(15,95,175,0.22)]">Pilih Jadwal</Link> : <span className="shrink-0 rounded-xl bg-[#e9eef4] px-4 py-3 text-xs font-extrabold text-[#8a98aa]">Belum ada jadwal</span>}
         </div>
       </div>
     </div>
