@@ -1106,11 +1106,11 @@ export default async function HomePage() {
             <Link
               key={label}
               href={href}
-              className={`flex min-h-11 min-w-0 flex-col items-center justify-center gap-0.5 rounded-lg px-0.5 py-1 text-[9px] font-bold transition hover:bg-[#f4f7fb] sm:gap-1 sm:text-xs ${
+              className={`flex min-h-[52px] min-w-0 flex-col items-center justify-center gap-1 rounded-xl px-0.5 py-1 text-[9px] font-bold transition hover:bg-[#f4f7fb] sm:text-xs ${
                 index === 0 ? "text-primary" : "text-[#748297]"
               }`}
             >
-              <Icon name={icon as any} size={17} />
+              <span className={`flex h-7 w-7 items-center justify-center rounded-full ${index === 0 ? "bg-[#eaf3ff]" : ""}`}><Icon name={icon as any} size={19} /></span>
               {label}
             </Link>
           ))}
