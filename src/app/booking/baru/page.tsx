@@ -6,8 +6,8 @@ import { BookingForm } from "./BookingForm";
 import { PublicNav } from "@/components/layout/PublicNav";
 
 export default async function NewBookingPage({ searchParams }: { searchParams: { departure?: string } }) {
-  await requireUser();
   if (!searchParams.departure) notFound();
+  await requireUser(`/booking/baru?departure=${encodeURIComponent(searchParams.departure)}`);
 
   const supabase = await createClient();
   const { data: departure } = await supabase
