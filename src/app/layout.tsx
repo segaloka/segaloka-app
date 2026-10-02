@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import { cookies } from "next/headers";
 import "./globals.css";
 import { ToastProvider } from "@/components/ui/Toast";
 
@@ -12,8 +13,12 @@ export const metadata: Metadata = {
 };
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
+  const cookieStore = cookies();
+  const storedLanguage = cookieStore.get("segaloka-language")?.value;
+  const language = storedLanguage === "en" || storedLanguage === "ar" ? storedLanguage : "id";
+
   return (
-    <html lang="id" suppressHydrationWarning>
+    <html lang={language} dir={language === "ar" ? "rtl" : "ltr"} suppressHydrationWarning>
       <head>
         <link rel="preconnect" href="https://fonts.googleapis.com" />
         <link
