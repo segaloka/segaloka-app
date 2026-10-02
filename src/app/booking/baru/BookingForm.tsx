@@ -4,18 +4,26 @@ import { useState } from "react";
 import { useFormState, useFormStatus } from "react-dom";
 import { createBookingAction } from "./actions";
 import { Input, Textarea } from "@/components/ui/Field";
-import { formatIDR } from "@/lib/utils";
 
-function SubmitButton() {
+function SubmitButton({ processing, submit }: { processing: string; submit: string }) {
   const { pending } = useFormStatus();
   return (
     <button type="submit" disabled={pending} className="h-11 w-full rounded-md bg-primary font-semibold text-primary-fg hover:bg-primary-hover disabled:opacity-60">
-      {pending ? "Memproses…" : "Buat Booking"}
+      {pending ? processing : submit}
     </button>
   );
 }
 
-export function BookingForm({ departureId, basePrice, maxPax }: { departureId: string; basePrice: number; maxPax: number }) {
+export function BookingForm({ departureId, basePrice, maxPax, language, currency }: { departureId: string; basePrice: number; maxPax: number; language: "id" | "en" | "ar"; currency: string }) {
+  const locale = language === "en" ? "en-US" : language === "ar" ? "ar-SA" : "id-ID";
+  const copy = {
+    id:{ pax:"Jumlah Jamaah", max:(n:string)=>`Maksimal ${n} kursi tersedia pada jadwal ini.`, travelers:"Data Jamaah", name:(n:string)=>`Nama lengkap jamaah ${n} (sesuai paspor)`, notes:"Catatan (opsional)", notesPlaceholder:"Permintaan khusus, kondisi kesehatan, dsb.", total:"Total Tagihan", processing:"Memproses…", submit:"Buat Booking", baseCurrency:"Harga dasar · IDR", currencyPending:(code:string)=>`Pilihan ${code} belum dikonversi.` },
+    en:{ pax:"Number of Travelers", max:(n:string)=>`Up to ${n} seats are available for this departure.`, travelers:"Traveler Details", name:(n:string)=>`Full name of traveler ${n} (as in passport)`, notes:"Notes (optional)", notesPlaceholder:"Special requests, health conditions, etc.", total:"Total Amount", processing:"Processing…", submit:"Create Booking", baseCurrency:"Base price · IDR", currencyPending:(code:string)=>`${code} conversion is not available yet.` },
+    ar:{ pax:"عدد المسافرين", max:(n:string)=>`يتوفر حتى ${n} مقعداً لهذا الموعد.`, travelers:"بيانات المسافرين", name:(n:string)=>`الاسم الكامل للمسافر ${n} (كما في جواز السفر)`, notes:"ملاحظات (اختياري)", notesPlaceholder:"طلبات خاصة أو حالات صحية أو غير ذلك.", total:"إجمالي المبلغ", processing:"جارٍ المعالجة…", submit:"إنشاء الحجز", baseCurrency:"السعر الأساسي · IDR", currencyPending:(code:string)=>`تحويل ${code} غير متاح بعد.` }
+  } as const;
+  const t = copy[language];
+  const displayNumber = (value:number) => new Intl.NumberFormat(locale).format(value);
+  const displayPrice = (value:number) => new Intl.NumberFormat(locale, { style:"currency", currency:"IDR", maximumFractionDigits:0 }).format(value);
   const [state, formAction] = useFormState(createBookingAction, null);
   const [paxCount, setPaxCount] = useState(1);
 
@@ -24,7 +32,7 @@ export function BookingForm({ departureId, basePrice, maxPax }: { departureId: s
       <input type="hidden" name="departure_id" value={departureId} />
 
       <div>
-        <label className="mb-1.5 block text-xs font-semibold uppercase tracking-wide text-text-secondary">Jumlah Jamaah</label>
+        <label className="mb-1.5 block text-xs font-semibold uppercase tracking-wide text-text-secondary">{t.pax}</label>
         <Input
           type="number"
           name="pax_count"
@@ -33,30 +41,30 @@ export function BookingForm({ departureId, basePrice, maxPax }: { departureId: s
           value={paxCount}
           onChange={(e) => setPaxCount(Math.max(1, Math.min(maxPax, Number(e.target.value) || 1)))}
         />
-        <p className="mt-1 text-xs text-muted">Maksimal {maxPax} kursi tersedia pada jadwal ini.</p>
+        <p className="mt-1 text-xs text-muted">{t.max(displayNumber(maxPax))}</p>
       </div>
 
       <div className="space-y-3">
-        <p className="text-xs font-semibold uppercase tracking-wide text-text-secondary">Data Jamaah</p>
+        <p className="text-xs font-semibold uppercase tracking-wide text-text-secondary">{t.travelers}</p>
         {Array.from({ length: paxCount }).map((_, idx) => (
-          <Input key={idx} name="passenger_name" required placeholder={`Nama lengkap jamaah ${idx + 1} (sesuai paspor)`} />
+          <Input key={idx} name="passenger_name" required placeholder={t.name(displayNumber(idx + 1))} />
         ))}
       </div>
 
       <div>
-        <label className="mb-1.5 block text-xs font-semibold uppercase tracking-wide text-text-secondary">Catatan (opsional)</label>
-        <Textarea name="notes" placeholder="Permintaan khusus, kondisi kesehatan, dsb." />
+        <label className="mb-1.5 block text-xs font-semibold uppercase tracking-wide text-text-secondary">{t.notes}</label>
+        <Textarea name="notes" placeholder={t.notesPlaceholder} />
       </div>
 
       <div className="rounded-md bg-bg px-4 py-3">
         <div className="flex items-center justify-between text-sm">
-          <span className="text-text-secondary">Total Tagihan</span>
-          <span className="font-display text-lg font-bold text-text-primary">{formatIDR(basePrice * paxCount)}</span>
-        </div>
+          <span className="text-text-secondary">{t.total}</span>
+          <span className="font-display text-lg font-bold text-text-primary">{displayPrice(basePrice * paxCount)}</span>
+        </div><div className="mt-1 flex flex-wrap items-center justify-between gap-2 text-[10px] font-semibold text-muted"><span>{t.baseCurrency}</span>{currency !== "IDR" && <span>{t.currencyPending(currency)}</span>}</div>
       </div>
 
       {state?.error && <p role="alert" className="rounded-md bg-danger-tint px-3 py-2 text-sm text-danger">{state.error}</p>}
-      <SubmitButton />
+      <SubmitButton processing={t.processing} submit={t.submit} />
     </form>
   );
 }
