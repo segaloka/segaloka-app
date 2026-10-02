@@ -58,9 +58,9 @@ export default async function PackageDetailPage({ params }: { params: { slug: st
         </nav>
 
         <section className="overflow-hidden rounded-[20px] border border-[#dfe7f0] bg-white sm:rounded-[26px]">
-          <div className="relative min-h-[180px] bg-[linear-gradient(135deg,#e5f2ff_0%,#f5faff_52%,#e9f8f2_100%)] sm:min-h-[280px]">
+          <div className="relative min-h-[220px] bg-[linear-gradient(135deg,#e5f2ff_0%,#f5faff_52%,#e9f8f2_100%)] sm:min-h-[320px]">
             <div className="absolute -right-16 -top-20 h-64 w-64 rounded-full border-[42px] border-white/60" />
-            <div className="absolute bottom-4 left-4 flex h-12 w-12 items-center justify-center rounded-2xl bg-white text-primary shadow-sm sm:bottom-6 sm:left-6 sm:h-14 sm:w-14">
+            <div className="absolute bottom-4 right-4 flex gap-1.5 sm:bottom-6 sm:right-6"><span className="h-1.5 w-6 rounded-full bg-primary" /><span className="h-1.5 w-1.5 rounded-full bg-white/90" /><span className="h-1.5 w-1.5 rounded-full bg-white/90" /></div>\n            <div className="absolute bottom-4 left-4 flex h-12 w-12 items-center justify-center rounded-2xl bg-white text-primary shadow-sm sm:bottom-6 sm:left-6 sm:h-14 sm:w-14">
               <Icon name={pkg.type === "umrah" ? "building" : pkg.type === "haji" ? "route" : pkg.type === "halal_tour" ? "globe" : "plane"} size={24} />
             </div>
           </div>
@@ -104,7 +104,7 @@ export default async function PackageDetailPage({ params }: { params: { slug: st
                 <a href="#itinerary" className="rounded-full border border-[#dfe7f0] bg-white px-3 py-2 text-[11px] font-extrabold text-[#40546f]">Itinerary</a>
                 <a href="#transport-hotel" className="rounded-full border border-[#dfe7f0] bg-white px-3 py-2 text-[11px] font-extrabold text-[#40546f]">Pesawat & Hotel</a>
                 <a href="#facilities" className="rounded-full border border-[#dfe7f0] bg-white px-3 py-2 text-[11px] font-extrabold text-[#40546f]">Fasilitas</a>
-                <a href="#travel" className="rounded-full border border-[#dfe7f0] bg-white px-3 py-2 text-[11px] font-extrabold text-[#40546f]">Travel</a>
+                <a href="#travel" className="rounded-full border border-[#dfe7f0] bg-white px-3 py-2 text-[11px] font-extrabold text-[#40546f]">Travel</a>\n                <a href="#reviews" className="rounded-full border border-[#dfe7f0] bg-white px-3 py-2 text-[11px] font-extrabold text-[#40546f]">Ulasan</a>
               </div>
             </div>
             {pkg.description && <section className="rounded-[18px] border border-[#dfe7f0] bg-white p-4 sm:p-6"><h2 className="font-display text-lg font-extrabold">Tentang paket</h2><p className="mt-2 whitespace-pre-line text-[13px] leading-6 text-[#60738d] sm:text-sm">{pkg.description}</p></section>}
@@ -168,6 +168,14 @@ export default async function PackageDetailPage({ params }: { params: { slug: st
                 <h2 className="flex items-center gap-2 font-display text-base font-extrabold"><span className="text-[#b16b00]">×</span> Tidak termasuk</h2>
                 {exclusions.length ? <ul className="mt-3 space-y-2">{exclusions.map((item, i) => <li key={i} className="flex gap-2 text-[13px] leading-5 text-[#60738d]"><span className="text-[#b16b00]">×</span><span>{item}</span></li>)}</ul> : <p className="mt-3 text-xs text-[#748297]">Tidak ada informasi tambahan.</p>}
               </div>
+            </section>
+
+            <section id="reviews" className="rounded-[18px] border border-[#dfe7f0] bg-white p-4 sm:p-6">
+              <div className="flex items-start justify-between gap-4">
+                <div><p className="text-[11px] font-extrabold uppercase tracking-[0.12em] text-primary">Pengalaman jamaah</p><h2 className="mt-1 font-display text-lg font-extrabold">Rating & ulasan Travel</h2></div>
+                {rating && rating.review_count > 0 ? <div className="shrink-0 text-right"><p className="text-2xl font-extrabold text-[#f5a000]">★ {Number(rating.average_rating).toFixed(1)}</p><p className="text-[11px] font-bold text-[#748297]">{rating.review_count} ulasan</p></div> : null}
+              </div>
+              {rating && rating.review_count > 0 ? <p className="mt-4 rounded-xl bg-[#f7f9fc] p-4 text-xs leading-5 text-[#60738d]">Ringkasan rating berasal dari ulasan booking terverifikasi. Isi ulasan jamaah akan ditampilkan setelah fitur publikasi ulasan tersedia.</p> : <div className="mt-4 rounded-xl border border-dashed border-[#d7e1ec] bg-[#fbfcfe] p-5 text-center"><p className="text-sm font-extrabold">Belum ada ulasan</p><p className="mt-1 text-xs text-[#748297]">Ulasan akan berasal dari jamaah yang melakukan booking melalui Segaloka.</p></div>}
             </section>
 
             {org && <section id="travel" className="rounded-[18px] border border-[#dfe7f0] bg-white p-4 sm:p-6">
