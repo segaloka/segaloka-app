@@ -40,8 +40,8 @@ export function MarketplaceHeader() {
   useEffect(() => {
     const storedLanguage = localStorage.getItem("segaloka-language");
     const storedCurrency = localStorage.getItem("segaloka-currency");
-    if (storedLanguage) setLanguage(storedLanguage);
-    if (storedCurrency) setCurrency(storedCurrency);
+    if (storedLanguage && LANGUAGES.some(([code]) => code === storedLanguage)) setLanguage(storedLanguage);
+    if (storedCurrency && CURRENCIES.some(([code]) => code === storedCurrency)) setCurrency(storedCurrency);
   }, []);
 
   const t = COPY[language === "en" || language === "ar" ? language : "id"];
