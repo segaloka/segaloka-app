@@ -459,7 +459,7 @@ export function MarketplaceSearch() {
                   key={item.type}
                   type="button"
                   onClick={() => handleServiceClick(item.type)}
-                  className={`group flex h-8.5 shrink-0 items-center gap-1 rounded-full px-1.5 transition sm:h-11 sm:gap-2 sm:px-3 ${
+                  className={`group flex h-9 shrink-0 items-center gap-1 rounded-full px-1.5 transition sm:h-11 sm:gap-2 sm:px-3 ${
                     active ? "bg-[#eaf3ff] text-primary" : "text-[#52647e] hover:bg-[#f5f8fc]"
                   }`}
                 >
