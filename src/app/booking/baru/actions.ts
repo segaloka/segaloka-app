@@ -36,7 +36,7 @@ export async function createBookingAction(_prev: FormState, formData: FormData):
     p_departure_id: departureId,
     p_passenger_names: names,
     p_notes: notes,
-  });
+  } as never);
 
   if (error || !bookingId) {
     const knownError = Object.entries(BOOKING_ERRORS).find(([code]) =>
