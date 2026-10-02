@@ -32,10 +32,12 @@ const COPY = {
   ar:{login:"تسجيل الدخول",register:"إنشاء حساب",aria:"اللغة والعملة",title:"اللغة والعملة",subtitle:"اضبط تفضيلات عرض Segaloka.",language:"اللغة",languageHint:"يتم حفظ اختيارك على هذا الجهاز وتطبيقه على صفحات Segaloka التي تدعم تعدد اللغات.",currency:"العملة",currencyHint:"تظل الأسعار مستندة إلى بيانات المعاملات الأصلية. تحويل العملات غير مفعّل حتى يتم إعداد مصدر أسعار صرف للإنتاج.",save:"حفظ"}
 } as const;
 
-export function MarketplaceHeader() {
+export function MarketplaceHeader({ initialLanguage = "id", initialCurrency = "IDR" }: { initialLanguage?: string; initialCurrency?: string }) {
+  const safeInitialLanguage = LANGUAGES.some(([code]) => code === initialLanguage) ? initialLanguage : "id";
+  const safeInitialCurrency = CURRENCIES.some(([code]) => code === initialCurrency) ? initialCurrency : "IDR";
   const [open, setOpen] = useState(false);
-  const [language, setLanguage] = useState("id");
-  const [currency, setCurrency] = useState("IDR");
+  const [language, setLanguage] = useState(safeInitialLanguage);
+  const [currency, setCurrency] = useState(safeInitialCurrency);
 
   useEffect(() => {
     const storedLanguage = localStorage.getItem("segaloka-language");
