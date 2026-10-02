@@ -322,16 +322,16 @@ export function MarketplaceSearch() {
           onClick={() => setShowSegaDealsInfo(false)}
         >
           <div
-            className="w-full max-w-[520px] overflow-hidden rounded-[24px] border border-[#dce6f1] bg-white shadow-[0_28px_80px_rgba(7,26,51,0.24)]"
+            className="max-h-[calc(100dvh-24px)] w-full max-w-[520px] overflow-y-auto rounded-[18px] border border-[#dce6f1] bg-white shadow-[0_28px_80px_rgba(7,26,51,0.24)] sm:rounded-[24px]"
             onClick={(event) => event.stopPropagation()}
           >
-            <div className="p-6 sm:p-7">
+            <div className="p-4 sm:p-7">
               <div className="flex items-start justify-between gap-5">
                 <div>
                   <span className="inline-flex rounded-full bg-[#eaf3ff] px-3 py-1 text-[10px] font-extrabold tracking-[0.08em] text-primary">
                     APA ITU SEGADEALS
                   </span>
-                  <h2 id="segadeals-info-title" className="mt-3 font-display text-[22px] font-extrabold leading-tight tracking-[-0.025em] text-[#10223f]">
+                  <h2 id="segadeals-info-title" className="mt-3 font-display text-lg font-extrabold leading-tight tracking-[-0.025em] text-[#10223f] sm:text-[22px]">
                     Sampaikan kebutuhan perjalanan Anda, biarkan Travel memberikan penawaran.
                   </h2>
                 </div>
@@ -344,7 +344,7 @@ export function MarketplaceSearch() {
                   ×
                 </button>
               </div>
-              <p className="mt-4 text-sm leading-6 text-[#617188]">
+              <p className="mt-3 text-[13px] leading-5 text-[#617188] sm:mt-4 sm:text-sm sm:leading-6">
                 SegaDeals membantu Anda menyampaikan kota keberangkatan, destinasi, jumlah traveler, budget dan rencana tanggal perjalanan. Travel dalam ekosistem Segaloka kemudian dapat memberikan penawaran yang sesuai dengan kebutuhan Anda.
               </p>
               <div className="mt-5 rounded-2xl bg-[#f5f9ff] p-4">
@@ -352,7 +352,7 @@ export function MarketplaceSearch() {
                   Anda dapat membandingkan penawaran yang masuk sebelum menentukan Travel dan paket yang paling sesuai.
                 </p>
               </div>
-              <div className="mt-6 flex flex-col-reverse gap-2 sm:flex-row sm:justify-end">
+              <div className="mt-5 flex flex-col-reverse gap-2 sm:mt-6 sm:flex-row sm:justify-end">
                 <button type="button" onClick={() => setShowSegaDealsInfo(false)} className="min-h-11 rounded-xl border border-[#d8e2ee] px-5 text-xs font-extrabold text-[#52647e] transition hover:bg-[#f7f9fc]">
                   Nanti Saja
                 </button>
@@ -611,9 +611,9 @@ export function MarketplaceSearch() {
             <div className="min-w-0 flex-1">
               <span className="block text-[10px] font-semibold text-[#8b9aae]">Traveler</span>
               <div className="mt-1 flex items-center justify-between gap-2">
-                <button type="button" aria-label="Kurangi traveler" onClick={() => setTravelers((value) => Math.max(1, value - 1))} className="flex h-6 w-6 items-center justify-center rounded-full border border-[#d8e2ee] bg-white text-sm font-bold text-primary transition hover:border-primary">-</button>
+                <button type="button" aria-label="Kurangi traveler" onClick={() => setTravelers((value) => Math.max(1, value - 1))} className="flex h-8 w-8 shrink-0 items-center justify-center rounded-full border border-[#d8e2ee] bg-white text-base font-bold text-primary transition hover:border-primary focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/20">-</button>
                 <span className="whitespace-nowrap text-[13px] font-extrabold text-[#10223f]">{travelers} orang</span>
-                <button type="button" aria-label="Tambah traveler" onClick={() => setTravelers((value) => Math.min(20, value + 1))} className="flex h-6 w-6 items-center justify-center rounded-full border border-[#d8e2ee] bg-white text-sm font-bold text-primary transition hover:border-primary">+</button>
+                <button type="button" aria-label="Tambah traveler" onClick={() => setTravelers((value) => Math.min(20, value + 1))} className="flex h-8 w-8 shrink-0 items-center justify-center rounded-full border border-[#d8e2ee] bg-white text-base font-bold text-primary transition hover:border-primary focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/20">+</button>
               </div>
             </div>
           </div>
