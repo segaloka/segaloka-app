@@ -41,7 +41,10 @@ export function MarketplaceHeader() {
   const savePreferences = () => {
     localStorage.setItem("segaloka-language", language);
     localStorage.setItem("segaloka-currency", currency);
+    document.cookie = `segaloka-language=${language}; path=/; max-age=31536000; samesite=lax`;
+    document.cookie = `segaloka-currency=${currency}; path=/; max-age=31536000; samesite=lax`;
     setOpen(false);
+    window.location.reload();
   };
 
   return (
