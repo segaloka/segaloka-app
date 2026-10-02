@@ -68,26 +68,20 @@ export function MarketplaceHeader() {
             <button
               type="button"
               onClick={() => setOpen(true)}
-              className="hidden items-center gap-1.5 rounded-lg px-2.5 py-2 text-xs font-extrabold text-[#40546f] hover:bg-[#f2f6fb] sm:flex"
+              className="hidden items-center gap-1.5 rounded-lg px-2.5 py-2 text-xs font-extrabold text-[#40546f] hover:bg-[#f2f6fb] md:flex"
             >
               <Icon name="globe" size={14} />
               {language.toUpperCase()} · {currency}
             </button>
-            <Link href="/login" className="hidden px-2.5 py-2 text-xs font-extrabold text-[#10223f] sm:inline-flex">Masuk</Link>
-            <Link href="/register" className="rounded-lg bg-primary px-3 py-2 text-[11px] font-extrabold text-white sm:px-4 sm:text-xs">Daftar</Link>
-            <button type="button" onClick={() => setOpen(true)} className="inline-flex h-8 w-8 items-center justify-center rounded-lg border border-[#dfe7f0] text-primary sm:hidden" aria-label="Bahasa dan mata uang">
+            <Link href="/login" className="hidden px-2.5 py-2 text-xs font-extrabold text-[#10223f] md:inline-flex">Masuk</Link>
+            <Link href="/register" className="hidden rounded-lg bg-primary px-4 py-2 text-xs font-extrabold text-white md:inline-flex">Daftar</Link>
+            <button type="button" onClick={() => setOpen(true)} className="inline-flex h-9 w-9 items-center justify-center rounded-full border border-[#dfe7f0] bg-white text-primary md:hidden" aria-label="Bahasa dan mata uang">
               <Icon name="globe" size={14} />
             </button>
           </div>
         </div>
 
-        <div className="border-t border-[#eef2f6] lg:hidden">
-          <nav className="mx-auto grid max-w-[760px] grid-cols-5 items-center gap-0 px-1 py-1.5 sm:px-3 sm:py-2">
-            {NAV.map(([label, href]) => (
-              <Link key={label} href={href} className="min-w-0 truncate rounded-lg px-1 py-1.5 text-center text-[10px] font-bold text-[#52647e] transition hover:bg-[#f4f7fb] hover:text-primary sm:px-2 sm:text-xs">{label}</Link>
-            ))}
-          </nav>
-        </div>
+
       </header>
 
       {open && (
