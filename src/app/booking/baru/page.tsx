@@ -13,7 +13,7 @@ export default async function NewBookingPage({ searchParams }: { searchParams: {
   const currency = storedCurrency === "USD" || storedCurrency === "MYR" || storedCurrency === "SGD" || storedCurrency === "SAR" ? storedCurrency : "IDR";
   const locale = language === "en" ? "en-US" : language === "ar" ? "ar-SA" : "id-ID";
   const copy = {
-    id: { booking:"Booking", depart:"Berangkat", days:"hari", perPax:"/jamaah", full:"{t.full}", currencyPending:(code:string)=>`Pilihan ${code} aktif · harga sementara tetap ditampilkan dalam IDR sampai kurs tersedia.` },
+    id: { booking:"Booking", depart:"Berangkat", days:"hari", perPax:"/jamaah", full:"Mohon maaf, jadwal ini sudah penuh.", currencyPending:(code:string)=>`Pilihan ${code} aktif · harga sementara tetap ditampilkan dalam IDR sampai kurs tersedia.` },
     en: { booking:"Booking", depart:"Departure", days:"days", perPax:"/traveler", full:"Sorry, this departure is fully booked.", currencyPending:(code:string)=>`${code} is selected · prices remain displayed in IDR until an exchange rate is available.` },
     ar: { booking:"الحجز", depart:"المغادرة", days:"أيام", perPax:"/مسافر", full:"عذراً، هذا الموعد مكتمل.", currencyPending:(code:string)=>`تم اختيار ${code} · ستظل الأسعار معروضة بالروبية الإندونيسية حتى يتوفر سعر الصرف.` }
   } as const;
@@ -56,7 +56,7 @@ export default async function NewBookingPage({ searchParams }: { searchParams: {
 
         <div className="mt-6 rounded-xl border border-border bg-surface p-6 shadow-card">
           {remaining <= 0 ? (
-            <p className="text-sm text-danger">Mohon maaf, jadwal ini sudah penuh.</p>
+            <p className="text-sm text-danger">{t.full}</p>
           ) : (
             <BookingForm departureId={departure.id} basePrice={pkg.base_price} maxPax={remaining} language={language} currency={currency} />
           )}
