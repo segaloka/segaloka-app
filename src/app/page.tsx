@@ -75,7 +75,7 @@ const PREVIEW_WORLD_DESTINATIONS = [
 
 const PREVIEW_INSPIRATIONS = [
   { title: "Panduan memilih paket Umrah sesuai kebutuhan", category: "Umrah", href: "/paket/umrah" },
-  { title: "Destinasi domestik untuk liburan keluarga", category: "Indonesia", href: "/paket/tour" },
+  { title: "Destinasi domestik untuk liburan keluarga", category: "Indonesia", href: "/paket/tour?scope=domestic" },
   { title: "Persiapan perjalanan Halal Tour pertama Anda", category: "Halal Tour", href: "/paket/halal_tour" },
   { title: "Tips membandingkan penawaran perjalanan", category: "Panduan", href: "/bantuan" },
 ];
@@ -746,7 +746,7 @@ export default async function HomePage() {
               <h2 className="mt-1 font-display text-xl font-extrabold text-[#10223f] sm:text-[22px]">Destinasi domestik pilihan</h2>
               <p className="mt-1 text-[12px] leading-[18px] text-[#748297] sm:text-sm sm:leading-normal">Dari wisata kota hingga bahari dalam satu marketplace.</p>
             </div>
-            <Link href="/paket/tour" className="hidden text-sm font-extrabold text-primary hover:underline sm:inline">Lihat Tour Domestik →</Link>
+            <Link href="/paket/tour?scope=domestic" className="hidden text-sm font-extrabold text-primary hover:underline sm:inline">Lihat Tour Domestik →</Link>
           </div>
 
           <div className="mt-3 flex snap-x gap-2.5 overflow-x-auto pb-2 [scrollbar-width:none] [&::-webkit-scrollbar]:hidden sm:mt-4 sm:grid sm:grid-cols-3 sm:gap-3 sm:overflow-visible sm:pb-0 lg:grid-cols-6">
@@ -837,7 +837,7 @@ export default async function HomePage() {
                 <h2 className="mt-1 font-display text-xl font-extrabold text-[#10223f] sm:text-[22px]">Destinasi internasional populer</h2>
                 <p className="mt-1 text-[12px] leading-[18px] text-[#748297] sm:text-sm sm:leading-normal">Halal Tour dan Tour Internasional untuk perjalanan berikutnya.</p>
               </div>
-              <Link href="/paket/halal_tour" className="hidden text-sm font-extrabold text-primary hover:underline sm:inline">Lihat Internasional →</Link>
+              <Link href="/paket/halal_tour?scope=international" className="hidden text-sm font-extrabold text-primary hover:underline sm:inline">Lihat Internasional →</Link>
             </div>
 
             <div className="mt-4 flex snap-x gap-2.5 overflow-x-auto pb-2 [scrollbar-width:none] [&::-webkit-scrollbar]:hidden sm:grid sm:grid-cols-3 sm:gap-3 sm:overflow-visible sm:pb-0 lg:grid-cols-6">
