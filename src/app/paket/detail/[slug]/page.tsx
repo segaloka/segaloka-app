@@ -92,7 +92,7 @@ export default async function PackageDetailPage({ params }: { params: { slug: st
 
   return (
     <div dir={language === "ar" ? "rtl" : "ltr"} lang={language} className="min-h-screen bg-[#f7f9fc] text-[#10223f]">
-      <MarketplaceHeader />
+      <MarketplaceHeader initialLanguage={language} initialCurrency={currency} />
       <main className="mx-auto max-w-[1180px] px-3 pb-24 pt-4 sm:px-4 sm:pb-12 sm:pt-6">
         <nav className="mb-3 flex items-center gap-1.5 overflow-hidden text-[11px] font-bold text-[#748297] sm:text-xs">
           <Link href="/" className="shrink-0 hover:text-primary">{t.home}</Link><span>/</span>
