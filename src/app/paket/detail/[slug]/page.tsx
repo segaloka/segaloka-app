@@ -104,7 +104,7 @@ export default async function PackageDetailPage({ params }: { params: { slug: st
                 <a href="#itinerary" className="rounded-full border border-[#dfe7f0] bg-white px-3 py-2 text-[11px] font-extrabold text-[#40546f]">Itinerary</a>
                 <a href="#transport-hotel" className="rounded-full border border-[#dfe7f0] bg-white px-3 py-2 text-[11px] font-extrabold text-[#40546f]">Pesawat & Hotel</a>
                 <a href="#facilities" className="rounded-full border border-[#dfe7f0] bg-white px-3 py-2 text-[11px] font-extrabold text-[#40546f]">Fasilitas</a>
-                <a href="#travel" className="rounded-full border border-[#dfe7f0] bg-white px-3 py-2 text-[11px] font-extrabold text-[#40546f]">Travel</a>\n                <a href="#reviews" className="rounded-full border border-[#dfe7f0] bg-white px-3 py-2 text-[11px] font-extrabold text-[#40546f]">Ulasan</a>
+                <a href="#travel" className="rounded-full border border-[#dfe7f0] bg-white px-3 py-2 text-[11px] font-extrabold text-[#40546f]">Travel</a>\n                <a href="#reviews" className="rounded-full border border-[#dfe7f0] bg-white px-3 py-2 text-[11px] font-extrabold text-[#40546f]">Ulasan</a>\n                <a href="#terms" className="rounded-full border border-[#dfe7f0] bg-white px-3 py-2 text-[11px] font-extrabold text-[#40546f]">Ketentuan</a>
               </div>
             </div>
             {pkg.description && <section className="rounded-[18px] border border-[#dfe7f0] bg-white p-4 sm:p-6"><h2 className="font-display text-lg font-extrabold">Tentang paket</h2><p className="mt-2 whitespace-pre-line text-[13px] leading-6 text-[#60738d] sm:text-sm">{pkg.description}</p></section>}
@@ -151,7 +151,7 @@ export default async function PackageDetailPage({ params }: { params: { slug: st
               </div>
             </section>
 
-            <section className="grid gap-3 sm:grid-cols-3">
+            <section id="terms" className="grid gap-3 sm:grid-cols-3">
               {[["doc", "Dokumen & persyaratan", "Persyaratan paspor, visa, dan dokumen perjalanan akan ditampilkan di bagian ini."], ["wallet", "Pembayaran", "Pilihan DP, cicilan, atau pelunasan akan mengikuti ketentuan paket."], ["shield", "Kebijakan perjalanan", "Ketentuan pembatalan, refund, dan reschedule akan tampil sebelum booking."]].map(([icon, title, body]) => (
                 <div key={title} className="rounded-[18px] border border-[#dfe7f0] bg-white p-4">
                   <span className="text-primary"><Icon name={icon as "doc"} size={18} /></span><h2 className="mt-3 text-sm font-extrabold">{title}</h2><p className="mt-2 text-xs leading-5 text-[#748297]">{body}</p>
