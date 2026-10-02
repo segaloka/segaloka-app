@@ -112,7 +112,7 @@ export default async function PackageDetailPage({ params }: { params: { slug: st
             <div className="flex items-start justify-between gap-3">
               <div className="min-w-0">
                 <div className="flex flex-wrap items-center gap-2 text-[11px] font-extrabold sm:text-xs">
-                  <span className="rounded-full bg-[#eaf3ff] px-2.5 py-1 text-primary">{pkg.duration_days} hari</span>
+                  <span className="rounded-full bg-[#eaf3ff] px-2.5 py-1 text-primary">{pkg.duration_days} {t.days}</span>
                   <span className="rounded-full bg-[#eef8f3] px-2.5 py-1 text-[#167453]">{t.available}</span>
                 </div>
                 <h1 className="mt-2.5 font-display text-[22px] font-extrabold leading-[1.18] tracking-[-0.025em] sm:text-[30px]">{pkg.name}</h1>
