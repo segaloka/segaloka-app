@@ -658,7 +658,7 @@ export default async function HomePage() {
                 return (
                   <Link
                     key={pkg.id}
-                    href={pkg.id.startsWith("preview-") ? `/paket/${pkg.type}` : `/paket/detail/${pkg.slug}`}
+                    href={`/paket/detail/${pkg.slug}`}
                     className="group flex min-h-[282px] min-w-[74%] snap-start flex-col overflow-hidden rounded-[18px] border border-[#dfe7f0] bg-white shadow-[0_8px_24px_rgba(15,45,90,0.05)] transition duration-200 hover:-translate-y-1 hover:border-[#b9d2ee] hover:shadow-[0_16px_38px_rgba(15,45,90,0.11)] sm:min-h-[338px] sm:min-w-0 sm:rounded-[20px]"
                   >
                     <div className="relative h-[120px] overflow-hidden bg-[linear-gradient(145deg,#dcefff_0%,#eff8ff_48%,#e8f8f2_100%)] p-3 sm:h-[132px] sm:p-3.5">
