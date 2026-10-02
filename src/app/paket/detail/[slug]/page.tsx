@@ -128,13 +128,14 @@ export default async function PackageDetailPage({ params }: { params: { slug: st
             <section id="itinerary" className="rounded-[18px] border border-[#dfe7f0] bg-white p-4 sm:p-6">
               <p className="text-[11px] font-extrabold uppercase tracking-[0.12em] text-primary">Program perjalanan</p>
               <h2 className="mt-1 font-display text-lg font-extrabold">Itinerary</h2>
-              <div className="mt-4 space-y-3">
-                {["Hari 1", "Hari 2", "Hari berikutnya"].map((day, index) => (
-                  <div key={day} className="flex gap-3">
-                    <div className="flex flex-col items-center"><span className="flex h-8 w-8 items-center justify-center rounded-full bg-[#eaf3ff] text-xs font-extrabold text-primary">{index + 1}</span>{index < 2 && <span className="mt-1 h-full w-px bg-[#dfe7f0]" />}</div>
-                    <div className="min-w-0 pb-4"><p className="text-sm font-extrabold">{day}</p><p className="mt-1 text-xs leading-5 text-[#748297]">Rangkaian kegiatan akan ditampilkan di sini setelah detail itinerary diisi oleh Travel.</p></div>
+              <div className="mt-4 rounded-xl border border-dashed border-[#d7e1ec] bg-[#fbfcfe] p-5">
+                <div className="flex items-start gap-3">
+                  <span className="flex h-9 w-9 shrink-0 items-center justify-center rounded-xl bg-[#eaf3ff] text-primary"><Icon name="route" size={17} /></span>
+                  <div>
+                    <p className="text-sm font-extrabold text-[#40546f]">Itinerary belum ditampilkan</p>
+                    <p className="mt-1 text-xs leading-5 text-[#748297]">Urutan hari, aktivitas, lokasi, dan agenda perjalanan akan tampil setelah Travel melengkapi program perjalanan paket ini.</p>
                   </div>
-                ))}
+                </div>
               </div>
             </section>
 
