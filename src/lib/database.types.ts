@@ -1805,6 +1805,14 @@ export type Database = {
       [_ in never]: never
     }
     Functions: {
+      create_marketplace_booking: {
+        Args: {
+          p_departure_id: string
+          p_notes?: string
+          p_passenger_names: string[]
+        }
+        Returns: string
+      }
       create_organization: {
         Args: { p_legal_name: string; p_license_type: string; p_name: string }
         Returns: string
