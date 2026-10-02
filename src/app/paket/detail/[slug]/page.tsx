@@ -10,8 +10,10 @@ import { Icon } from "@/components/layout/Icon";
 export default async function PackageDetailPage({ params }: { params: { slug: string } }) {
   const supabase = await createClient();
   const cookieStore = cookies();
-  const language = cookieStore.get("segaloka-language")?.value ?? "id";
-  const currency = cookieStore.get("segaloka-currency")?.value ?? "IDR";
+  const storedLanguage = cookieStore.get("segaloka-language")?.value;
+  const storedCurrency = cookieStore.get("segaloka-currency")?.value;
+  const language = storedLanguage === "en" || storedLanguage === "ar" ? storedLanguage : "id";
+  const currency = storedCurrency === "USD" || storedCurrency === "MYR" || storedCurrency === "SGD" || storedCurrency === "SAR" ? storedCurrency : "IDR";
   const locale = language === "en" ? "en-US" : language === "ar" ? "ar-SA" : "id-ID";
   const displayDate = (value: string | null | undefined) => value ? new Intl.DateTimeFormat(locale, { day: "2-digit", month: "short", year: "numeric" }).format(new Date(value)) : "—";
   const displayPrice = (amount: number | null | undefined) => amount == null ? "—" : new Intl.NumberFormat(locale, { style: "currency", currency: "IDR", maximumFractionDigits: 0 }).format(amount);
