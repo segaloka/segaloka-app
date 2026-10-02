@@ -860,8 +860,8 @@ export default async function HomePage() {
                   <span className="relative flex h-8 w-8 items-center justify-center rounded-[11px] bg-[#edf5ff] text-primary transition sm:h-9 sm:w-9 duration-300 group-hover:bg-primary group-hover:text-white">
                     <Icon name={destination.icon} size={17} />
                   </span>
-                  <div className="absolute inset-x-4 bottom-3.5">
-                    <p className="text-[15px] font-extrabold leading-tight text-[#10223f]">{destination.name}</p>
+                  <div className="absolute inset-x-3 bottom-3 sm:inset-x-4 sm:bottom-3.5">
+                    <p className="text-[14px] font-extrabold leading-tight text-[#10223f] sm:text-[15px]">{destination.name}</p>
                     <p className="mt-1 line-clamp-1 text-[11px] leading-4 text-[#748297] sm:text-xs">{destination.detail}</p>
                   </div>
                 </Link>
