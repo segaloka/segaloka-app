@@ -987,12 +987,12 @@ export default async function HomePage() {
 
           <div className="mt-4 flex snap-x gap-3 overflow-x-auto pb-2 [scrollbar-width:none] [&::-webkit-scrollbar]:hidden sm:grid sm:grid-cols-2 sm:overflow-visible sm:pb-0 lg:grid-cols-4">
             {PREVIEW_INSPIRATIONS.map((item, index) => (
-              <Link href={item.href} key={item.title} className="group min-w-[70%] snap-start overflow-hidden rounded-[18px] border border-[#dfe7f0] sm:min-w-0 sm:rounded-[20px] bg-white transition hover:-translate-y-0.5 hover:shadow-[0_12px_28px_rgba(15,45,90,0.08)]">
+              <Link href={item.href} key={item.title} className="group min-w-[70%] snap-start overflow-hidden rounded-[18px] border border-[#dfe7f0] bg-white sm:min-w-0 sm:rounded-[20px] transition hover:-translate-y-0.5 hover:shadow-[0_12px_28px_rgba(15,45,90,0.08)]">
                 <div className={`relative flex h-[92px] items-center justify-center overflow-hidden sm:h-[116px] ${
                   index % 3 === 0 ? "bg-[#e4f2ff]" : index % 3 === 1 ? "bg-[#e8f7ef]" : "bg-[#f2ebff]"
                 }`}>
                   <div className="absolute -right-8 -top-10 h-28 w-28 rounded-full border-[18px] border-white/50" />
-                  <span className="flex h-10 w-10 items-center justify-center rounded-xl bg-white/85 sm:h-11 sm:w-11 sm:rounded-2xl text-primary shadow-sm">
+                  <span className="flex h-10 w-10 items-center justify-center rounded-xl bg-white/85 text-primary shadow-sm sm:h-11 sm:w-11 sm:rounded-2xl">
                     <Icon name={index % 2 === 0 ? "globe" : "route"} size={20} />
                   </span>
                 </div>
@@ -1011,7 +1011,7 @@ export default async function HomePage() {
 
         {/* BUSINESS ECOSYSTEM */}
         <section className="mx-auto max-w-[1180px] px-3 pb-8 sm:px-4 sm:pb-12">
-          <div className="grid gap-2.5 rounded-2xl border border-[#dce4ee] bg-white p-3.5 sm:gap-4 sm:p-7 sm:gap-4 sm:p-7 lg:grid-cols-[1fr_auto] lg:items-center">
+          <div className="grid gap-2.5 rounded-2xl border border-[#dce4ee] bg-white p-3.5 sm:gap-4 sm:p-7 lg:grid-cols-[1fr_auto] lg:items-center">
             <div>
               <p className="text-xs font-extrabold uppercase tracking-[0.14em] text-primary">
                 Ekosistem Segaloka
@@ -1027,7 +1027,7 @@ export default async function HomePage() {
 
             <Link
               href="/register"
-              className="inline-flex w-full items-center justify-center rounded-full bg-primary px-5 py-2.5 text-[11px] sm:w-auto sm:text-xs sm:w-auto font-extrabold text-white hover:opacity-90"
+              className="inline-flex w-full items-center justify-center rounded-full bg-primary px-5 py-2.5 text-[11px] font-extrabold text-white hover:opacity-90 sm:w-auto sm:text-xs"
             >
               Bergabung dengan Segaloka
             </Link>
@@ -1037,7 +1037,7 @@ export default async function HomePage() {
 
       <footer className="border-t border-[#d9e3ef] bg-[#082d63] pb-20 text-white md:pb-0">
         <div className="mx-auto max-w-[1180px] px-3 py-6 sm:px-4 sm:py-12">
-          <div className="grid grid-cols-2 gap-x-5 gap-y-6 sm:grid-cols-2 sm:gap-8 sm:gap-8 lg:grid-cols-[1.25fr_0.8fr_0.8fr_0.9fr]">
+          <div className="grid grid-cols-2 gap-x-5 gap-y-6 sm:grid-cols-2 sm:gap-8 lg:grid-cols-[1.25fr_0.8fr_0.8fr_0.9fr]">
             <div className="col-span-2 sm:col-span-1">
               <div className="flex items-center">
                 <img
@@ -1084,7 +1084,7 @@ export default async function HomePage() {
 
             <div className="col-span-2 sm:col-span-1">
               <h3 className="text-xs font-extrabold">Bantuan & Perusahaan</h3>
-              <div className="mt-3.5 grid grid-cols-2 gap-x-5 gap-y-2 text-[11px] text-[#c5d7ed] sm:mt-4 sm:grid-cols-1 sm:gap-y-2.5 sm:text-xs" sm:grid-cols-1">
+              <div className="mt-3.5 grid grid-cols-2 gap-x-5 gap-y-2 text-[11px] text-[#c5d7ed] sm:mt-4 sm:grid-cols-1 sm:gap-y-2.5 sm:text-xs"">
                 <Link href="/bantuan">Pusat Bantuan</Link><Link href="/tentang">Tentang Segaloka</Link>
                 <Link href="/syarat">Syarat & Ketentuan</Link><Link href="/privasi">Kebijakan Privasi</Link>
                 <Link href="/bantuan">Keamanan Transaksi</Link><Link href="/kontak">Hubungi Kami</Link>
@@ -1099,7 +1099,7 @@ export default async function HomePage() {
             </div>
           </div>
 
-          <div className="mt-5 grid grid-cols-3 gap-2 border-t sm:mt-9 border-white/15 pt-5 sm:mt-9 sm:gap-5 sm:pt-6">
+          <div className="mt-5 grid grid-cols-3 gap-2 border-t border-white/15 pt-5 sm:mt-9 sm:gap-5 sm:pt-6">
             {[
               ["wallet", "Pembayaran", "Gateway terintegrasi"],
               ["handshake", "Partner", "Travel & Vendor"],
