@@ -885,9 +885,9 @@ export default async function HomePage() {
             <span className="hidden rounded-full bg-[#f3f7fb] px-3 py-1.5 text-xs font-extrabold text-[#60738d] sm:inline">Mitra pendukung Segaloka</span>
           </div>
 
-          <div className="mt-4 grid grid-cols-1 gap-3 sm:grid-cols-2 lg:grid-cols-4">
+          <div className="mt-4 flex snap-x gap-3 overflow-x-auto pb-2 [scrollbar-width:none] [&::-webkit-scrollbar]:hidden sm:grid sm:grid-cols-2 sm:overflow-visible sm:pb-0 lg:grid-cols-4">
             {PREVIEW_VENDORS.map((vendor, index) => (
-              <Link href="/register" key={vendor.id} className="group relative min-h-[184px] overflow-hidden rounded-[18px] border border-[#dfe7f0] bg-white p-5 transition duration-300 hover:-translate-y-0.5 hover:border-[#bfd5ee] hover:shadow-[0_12px_26px_rgba(15,45,90,0.08)]">
+              <Link href="/register" key={vendor.id} className="group relative min-h-[174px] min-w-[76%] snap-start overflow-hidden sm:min-h-[184px] sm:min-w-0 rounded-[18px] border border-[#dfe7f0] bg-white p-5 transition duration-300 hover:-translate-y-0.5 hover:border-[#bfd5ee] hover:shadow-[0_12px_26px_rgba(15,45,90,0.08)]">
                 <div className={`absolute inset-x-0 top-0 h-1 ${index % 2 === 0 ? "bg-[#0b6ee8]" : "bg-[#20a67a]"}`} />
                 <div className="flex items-start justify-between gap-3">
                   <span className="flex h-10 w-10 items-center justify-center rounded-[14px] bg-[#eef5ff] text-primary transition group-hover:bg-primary group-hover:text-white">
@@ -951,9 +951,9 @@ export default async function HomePage() {
             <Link href="/paket/umrah" className="hidden text-sm font-extrabold text-primary hover:underline sm:inline">Jelajahi marketplace →</Link>
           </div>
 
-          <div className="mt-4 grid grid-cols-1 gap-3 xs:grid-cols-2 sm:grid-cols-2 lg:grid-cols-4">
+          <div className="mt-4 flex snap-x gap-3 overflow-x-auto pb-2 [scrollbar-width:none] [&::-webkit-scrollbar]:hidden sm:grid sm:grid-cols-2 sm:overflow-visible sm:pb-0 lg:grid-cols-4">
             {PREVIEW_TRAVELS.map((travel) => (
-              <Link href="/paket/umrah" key={travel.id} className="group overflow-hidden rounded-[20px] border border-[#dfe7f0] bg-white transition hover:-translate-y-0.5 hover:border-[#bfd5ee] hover:shadow-[0_12px_28px_rgba(15,45,90,0.08)]">
+              <Link href="/paket/umrah" key={travel.id} className="group min-w-[76%] snap-start overflow-hidden rounded-[20px] sm:min-w-0 border border-[#dfe7f0] bg-white transition hover:-translate-y-0.5 hover:border-[#bfd5ee] hover:shadow-[0_12px_28px_rgba(15,45,90,0.08)]">
                 <div className="h-16 bg-[linear-gradient(135deg,#e5f2ff,#f4f9ff,#e9f8f2)]" />
                 <div className="-mt-7 px-4 pb-4">
                   <div className="flex items-end justify-between gap-3">
@@ -986,9 +986,9 @@ export default async function HomePage() {
             <p className="mt-1 text-sm text-[#748297]">Konten panduan untuk membantu menyiapkan perjalanan Anda.</p>
           </div>
 
-          <div className="mt-4 grid gap-3 sm:grid-cols-2 lg:grid-cols-4">
+          <div className="mt-4 flex snap-x gap-3 overflow-x-auto pb-2 [scrollbar-width:none] [&::-webkit-scrollbar]:hidden sm:grid sm:grid-cols-2 sm:overflow-visible sm:pb-0 lg:grid-cols-4">
             {PREVIEW_INSPIRATIONS.map((item, index) => (
-              <Link href={item.href} key={item.title} className="group overflow-hidden rounded-[20px] border border-[#dfe7f0] bg-white transition hover:-translate-y-0.5 hover:shadow-[0_12px_28px_rgba(15,45,90,0.08)]">
+              <Link href={item.href} key={item.title} className="group min-w-[76%] snap-start overflow-hidden rounded-[20px] sm:min-w-0 border border-[#dfe7f0] bg-white transition hover:-translate-y-0.5 hover:shadow-[0_12px_28px_rgba(15,45,90,0.08)]">
                 <div className={`relative flex h-[116px] items-center justify-center overflow-hidden ${
                   index % 3 === 0 ? "bg-[#e4f2ff]" : index % 3 === 1 ? "bg-[#e8f7ef]" : "bg-[#f2ebff]"
                 }`}>
