@@ -66,9 +66,12 @@ export async function hasPlatformPermission(key: string) {
   return Boolean(data);
 }
 
-export async function requireUser() {
+export async function requireUser(nextPath?: string) {
   const user = await getSessionUser();
-  if (!user) redirect("/login");
+  if (!user) {
+    const next = nextPath && nextPath.startsWith("/") && !nextPath.startsWith("//") ? nextPath : "";
+    redirect(next ? `/login?next=${encodeURIComponent(next)}` : "/login");
+  }
   return user;
 }
 
