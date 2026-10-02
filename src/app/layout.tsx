@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { cookies } from "next/headers";
 import "./globals.css";
 import { ToastProvider } from "@/components/ui/Toast";
+import { RealtimeRefresh } from "@/components/realtime/RealtimeRefresh";
 
 export const metadata: Metadata = {
   title: {
@@ -27,7 +28,10 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         />
       </head>
       <body>
-        <ToastProvider>{children}</ToastProvider>
+        <ToastProvider>
+          <RealtimeRefresh />
+          {children}
+        </ToastProvider>
       </body>
     </html>
   );
