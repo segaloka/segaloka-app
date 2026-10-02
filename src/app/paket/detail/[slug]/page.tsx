@@ -11,7 +11,7 @@ export default async function PackageDetailPage({ params }: { params: Promise<{ 
   const supabase = await createClient();
   const { data: pkg } = await supabase
     .from("packages")
-    .select("*, organizations(id, name, slug, status, support_phone, support_email, address, license_type, license_number, logo_light_url)")
+    .select("*, organizations(id, name, slug, status, support_phone, support_email, address, license_type, license_number)")
     .eq("slug", slug)
     .eq("status", "published")
     .single();
@@ -29,7 +29,7 @@ export default async function PackageDetailPage({ params }: { params: Promise<{ 
   const org = pkg.organizations as {
     id: string; name: string; slug: string; status: string; support_phone: string | null;
     support_email: string | null; address: string | null; license_type: string | null;
-    license_number: string | null; logo_light_url: string | null;
+    license_number: string | null;
   } | null;
 
   let rating: { average_rating: number | null; review_count: number } | null = null;
@@ -82,7 +82,7 @@ export default async function PackageDetailPage({ params }: { params: Promise<{ 
               <div className="mt-4 flex flex-wrap items-center gap-3 border-t border-[#edf1f6] pt-4">
                 <Link href={`/travel/${org.slug}`} className="flex min-w-0 items-center gap-2.5">
                   <span className="flex h-10 w-10 shrink-0 items-center justify-center overflow-hidden rounded-xl border border-[#dfe7f0] bg-[#f8fbff] text-primary">
-                    {org.logo_light_url ? <img src={org.logo_light_url} alt="" className="h-full w-full object-contain p-1" /> : <Icon name="building" size={18} />}
+                    <Icon name="building" size={18} />
                   </span>
                   <span className="min-w-0"><span className="block truncate text-[13px] font-extrabold sm:text-sm">{org.name}</span><span className="block text-[11px] text-[#748297]">Travel di Segaloka</span></span>
                 </Link>
