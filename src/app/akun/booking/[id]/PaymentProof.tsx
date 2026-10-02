@@ -25,11 +25,12 @@ export function PaymentProof({
   }[];
 }) {
   const copy = {
-    id:{saveFail:"Gagal menyimpan bukti",sent:"Bukti transfer terkirim",waiting:"Menunggu verifikasi tim keuangan Travel.",genericError:"Terjadi gangguan saat memproses bukti pembayaran. Silakan coba lagi.",proof:"Bukti transfer",saving:"{t.saving}",upload:"Unggah bukti transfer"},
-    en:{saveFail:"Failed to save proof",sent:"Transfer proof submitted",waiting:"Waiting for verification by the Travel finance team.",genericError:"There was a problem processing the payment proof. Please try again.",proof:"Transfer proof",saving:"Saving payment proof...",upload:"Upload transfer proof"},
-    ar:{saveFail:"تعذر حفظ الإثبات",sent:"تم إرسال إثبات التحويل",waiting:"بانتظار التحقق من فريق المالية لدى شركة السفر.",genericError:"حدثت مشكلة أثناء معالجة إثبات الدفع. يرجى المحاولة مرة أخرى.",proof:"إثبات التحويل",saving:"جارٍ حفظ إثبات الدفع...",upload:"رفع إثبات التحويل"}
+    id:{saveFail:"Gagal menyimpan bukti",sent:"Bukti transfer terkirim",waiting:"Menunggu verifikasi tim keuangan Travel.",genericError:"Terjadi gangguan saat memproses bukti pembayaran. Silakan coba lagi.",proof:"Bukti transfer",saving:"Menyimpan bukti pembayaran...",upload:"Unggah bukti transfer",statuses:{pending:"Menunggu",pending_review:"Menunggu verifikasi",verified:"Terverifikasi",approved:"Disetujui",rejected:"Ditolak"}},
+    en:{saveFail:"Failed to save proof",sent:"Transfer proof submitted",waiting:"Waiting for verification by the Travel finance team.",genericError:"There was a problem processing the payment proof. Please try again.",proof:"Transfer proof",saving:"Saving payment proof...",upload:"Upload transfer proof",statuses:{pending:"Pending",pending_review:"Pending verification",verified:"Verified",approved:"Approved",rejected:"Rejected"}},
+    ar:{saveFail:"تعذر حفظ الإثبات",sent:"تم إرسال إثبات التحويل",waiting:"بانتظار التحقق من فريق المالية لدى شركة السفر.",genericError:"حدثت مشكلة أثناء معالجة إثبات الدفع. يرجى المحاولة مرة أخرى.",proof:"إثبات التحويل",saving:"جارٍ حفظ إثبات الدفع...",upload:"رفع إثبات التحويل",statuses:{pending:"قيد الانتظار",pending_review:"بانتظار التحقق",verified:"تم التحقق",approved:"تمت الموافقة",rejected:"مرفوض"}}
   } as const;
   const t = copy[language];
+  const statusLabel = (status: string) => t.statuses[status as keyof typeof t.statuses] ?? status.replaceAll("_", " ");
   const router = useRouter();
   const toast = useToast();
   const [saving, setSaving] = useState(false);
@@ -62,7 +63,7 @@ export function PaymentProof({
       router.refresh();
     } catch {
       toast.push({
-        title: "Gagal menyimpan bukti",
+        title: t.saveFail,
         description: t.genericError,
         tone: "error",
       });
@@ -85,7 +86,7 @@ export function PaymentProof({
                 name={document.file_name ?? t.proof}
               />
               <span className="shrink-0 text-xs capitalize text-muted">
-                {document.status.replaceAll("_", " ")}
+                {statusLabel(document.status)}
               </span>
             </div>
           ))}
@@ -93,7 +94,7 @@ export function PaymentProof({
       )}
 
       {saving && (
-        <p className="text-xs text-muted">Menyimpan bukti pembayaran...</p>
+        <p className="text-xs text-muted">{t.saving}</p>
       )}
 
       <FileUpload
