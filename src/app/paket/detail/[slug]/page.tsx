@@ -165,18 +165,15 @@ export default async function PackageDetailPage({ params }: { params: { slug: st
           <div className="p-4 sm:p-6">
             <div className="flex items-start justify-between gap-3">
               <div className="min-w-0">
-                <div className="flex flex-wrap items-center gap-2 text-[11px] font-extrabold sm:text-xs">
-                  <span className="rounded-full bg-[#eaf3ff] px-2.5 py-1 text-primary">{displayNumber(pkg.duration_days)} {t.days}</span>
-                  <span className="rounded-full bg-[#eef8f3] px-2.5 py-1 text-[#167453]">{t.available}</span>
-                </div>
-                <h1 className="mt-2.5 font-display text-[22px] font-extrabold leading-[1.18] tracking-[-0.025em] sm:text-[30px]">{pkg.name}</h1>
+                <p className="text-[10px] font-extrabold uppercase tracking-[0.12em] text-primary">{packageTypeLabel(pkg.type)}</p>
+                <h1 className="mt-1.5 break-words font-display text-[22px] font-extrabold leading-[1.18] tracking-[-0.025em] sm:text-[30px]">{pkg.name}</h1>
               </div>
               {!isPreview && <WishlistButton packageId={pkg.id} initialSaved={saved} />}
             </div>
 
             {org && (
-              <div className="mt-4 flex flex-wrap items-center gap-3 border-t border-[#edf1f6] pt-4">
-                <Link href={`/travel/${org.slug}`} className="flex min-w-0 items-center gap-2.5">
+              <div className="mt-4 flex flex-wrap items-center gap-x-3 gap-y-2 border-t border-[#edf1f6] pt-4">
+                <Link href={`/travel/${org.slug}`} className="flex min-w-0 max-w-full items-center gap-2.5">
                   <span className="flex h-10 w-10 shrink-0 items-center justify-center overflow-hidden rounded-xl border border-[#dfe7f0] bg-[#f8fbff] text-primary">
                     <Icon name="building" size={18} />
                   </span>
@@ -198,7 +195,7 @@ export default async function PackageDetailPage({ params }: { params: { slug: st
           <div className="space-y-4">
             <nav aria-label={u.sectionNav} className="sticky top-[68px] z-30 -mx-3 overflow-x-auto border-y border-[#e7edf4] bg-[#f7f9fc]/95 px-3 py-2 backdrop-blur sm:mx-0 sm:rounded-2xl sm:border sm:px-2 lg:top-[76px]">
               <div className="flex min-w-max gap-1.5">
-                <a href="#overview" className="rounded-full bg-primary px-3 py-2 text-[11px] font-extrabold text-white shadow-sm">{t.overview}</a>
+                <a href="#overview" className="rounded-full border border-[#dfe7f0] bg-white px-3 py-2 text-[11px] font-extrabold text-[#40546f] transition hover:border-primary/40 hover:text-primary focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/30">{t.overview}</a>
                 <a href="#departures" className="rounded-full border border-[#dfe7f0] bg-white px-3 py-2 text-[11px] font-extrabold text-[#40546f] transition hover:border-primary/40 hover:text-primary focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/30">{t.departures}</a>
                 <a href="#itinerary" className="rounded-full border border-[#dfe7f0] bg-white px-3 py-2 text-[11px] font-extrabold text-[#40546f] transition hover:border-primary/40 hover:text-primary focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/30">{t.itinerary}</a>
                 <a href="#transport-hotel" className="rounded-full border border-[#dfe7f0] bg-white px-3 py-2 text-[11px] font-extrabold text-[#40546f] transition hover:border-primary/40 hover:text-primary focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/30">{t.transportHotel}</a>
