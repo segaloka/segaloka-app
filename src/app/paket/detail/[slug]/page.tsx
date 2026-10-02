@@ -51,7 +51,7 @@ export default async function PackageDetailPage({ params }: { params: { slug: st
   } as const;
   const u = ui[language === "en" || language === "ar" ? language : "id"];
   const arrow = language === "ar" ? "←" : "→";
-  const packageTypeLabel = pkgTypeLabel => pkgTypeLabel === "halal_tour" ? "Halal Tour" : pkgTypeLabel === "umrah" ? "Umrah" : pkgTypeLabel === "haji" ? "Haji" : pkgTypeLabel === "tour" ? "Tour" : pkgTypeLabel.charAt(0).toUpperCase() + pkgTypeLabel.slice(1);
+  const packageTypeLabel = (pkgTypeLabel: string) => pkgTypeLabel === "halal_tour" ? "Halal Tour" : pkgTypeLabel === "umrah" ? "Umrah" : pkgTypeLabel === "haji" ? "Haji" : pkgTypeLabel === "tour" ? "Tour" : pkgTypeLabel.charAt(0).toUpperCase() + pkgTypeLabel.slice(1);
   const { data: pkg } = await supabase
     .from("packages")
     .select("*, organizations(id, name, slug, status, support_phone, support_email, address, license_type, license_number)")
