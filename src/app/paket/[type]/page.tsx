@@ -18,6 +18,7 @@ type SearchParams = {
   to?: string;
   travelers?: string;
   scope?: string;
+  travel?: string;
 };
 
 export default async function PackageTypePage({
@@ -32,10 +33,48 @@ export default async function PackageTypePage({
 
   const { data: packages } = await supabase
     .from("packages")
-    .select("id, name, slug, duration_days, base_price, organizations(name, slug)")
+    .select("id, name, slug, duration_days, base_price, organizations(name, slug), departures(departure_date, return_date, status)")
     .eq("status", "published")
     .eq("type", params.type)
     .order("created_at", { ascending: false });
+
+  const normalizedDestination = searchParams.destination?.trim().toLowerCase();
+  const normalizedTravel = searchParams.travel?.trim().toLowerCase();
+
+  const filteredPackages = (packages ?? []).filter((pkg) => {
+    const organizationName = (pkg.organizations as { name?: string | null } | null)?.name?.toLowerCase() ?? "";
+    const searchableText = [pkg.name, pkg.description, organizationName]
+      .filter(Boolean)
+      .join(" ")
+      .toLowerCase();
+
+    if (normalizedDestination && !searchableText.includes(normalizedDestination)) {
+      return false;
+    }
+
+    if (normalizedTravel && !organizationName.includes(normalizedTravel)) {
+      return false;
+    }
+
+    if (searchParams.from || searchParams.to) {
+      const departures = (pkg.departures ?? []) as Array<{
+        departure_date: string;
+        return_date: string | null;
+        status: string;
+      }>;
+
+      const matchesDate = departures.some((departure) => {
+        if (!["open", "almost_full"].includes(departure.status)) return false;
+        if (searchParams.from && departure.departure_date < searchParams.from) return false;
+        if (searchParams.to && departure.departure_date > searchParams.to) return false;
+        return true;
+      });
+
+      if (!matchesDate) return false;
+    }
+
+    return true;
+  });
 
   const context = [
     searchParams.origin ? `Dari ${searchParams.origin}` : null,
@@ -43,6 +82,7 @@ export default async function PackageTypePage({
     searchParams.from ? `Mulai ${searchParams.from}` : null,
     searchParams.to ? `Sampai ${searchParams.to}` : null,
     searchParams.travelers ? `${searchParams.travelers} traveler` : null,
+    searchParams.travel ? `Travel ${searchParams.travel}` : null,
   ].filter((item): item is string => Boolean(item));
 
   return (
@@ -59,7 +99,7 @@ export default async function PackageTypePage({
         </h1>
 
         <p className="mt-1 text-sm text-text-secondary">
-          {packages?.length ?? 0} paket tersedia dari Travel terverifikasi.
+          {filteredPackages.length} paket sesuai pencarian dari Travel terverifikasi.
         </p>
 
         {context.length > 0 && (
@@ -76,14 +116,14 @@ export default async function PackageTypePage({
         )}
 
         <div className="mt-6">
-          {!packages || packages.length === 0 ? (
+          {filteredPackages.length === 0 ? (
             <EmptyState
               title={`Belum ada paket ${label} yang dipublikasikan`}
               description="Coba ubah pencarian Anda atau ajukan kebutuhan perjalanan melalui SegaDeals."
             />
           ) : (
             <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
-              {packages.map((pkg) => (
+              {filteredPackages.map((pkg) => (
                 <Link
                   key={pkg.id}
                   href={`/paket/detail/${pkg.slug}`}
