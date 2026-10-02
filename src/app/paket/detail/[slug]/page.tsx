@@ -31,8 +31,6 @@ export default async function PackageDetailPage({ params }: { params: { slug: st
     license_number: string | null;
   } | null;
 
-  const rating = null as { average_rating: number | null; review_count: number } | null;
-
   const inclusions = Array.isArray(pkg.inclusions) ? (pkg.inclusions as string[]) : [];
   const exclusions = Array.isArray(pkg.exclusions) ? (pkg.exclusions as string[]) : [];
 
@@ -84,9 +82,7 @@ export default async function PackageDetailPage({ params }: { params: { slug: st
                 <span className="h-8 w-px bg-[#e4eaf1]" />
                 <div className="flex items-center gap-1.5">
                   <span className="text-[#f5a000]">★</span>
-                  {rating && rating.review_count > 0 ? (
-                    <><span className="text-sm font-extrabold">{Number(rating.average_rating).toFixed(1)}</span><span className="text-xs text-[#748297]">({rating.review_count} ulasan)</span></>
-                  ) : <span className="text-xs font-bold text-[#748297]">Belum ada ulasan</span>}
+                  <span className="text-xs font-bold text-[#748297]">Belum ada ulasan</span>
                 </div>
               </div>
             )}
