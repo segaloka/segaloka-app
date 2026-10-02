@@ -666,9 +666,9 @@ export default async function HomePage() {
                   <Link
                     key={pkg.id}
                     href={`/paket/detail/${pkg.slug}`}
-                    className="group flex min-h-[294px] min-w-[76%] snap-start flex-col overflow-hidden rounded-[18px] border border-[#dfe7f0] bg-white shadow-[0_8px_24px_rgba(15,45,90,0.05)] transition duration-200 hover:-translate-y-1 hover:border-[#b9d2ee] hover:shadow-[0_16px_38px_rgba(15,45,90,0.11)] sm:min-h-[338px] sm:min-w-0 sm:rounded-[20px]"
+                    className="group flex min-h-[282px] min-w-[74%] snap-start flex-col overflow-hidden rounded-[18px] border border-[#dfe7f0] bg-white shadow-[0_8px_24px_rgba(15,45,90,0.05)] transition duration-200 hover:-translate-y-1 hover:border-[#b9d2ee] hover:shadow-[0_16px_38px_rgba(15,45,90,0.11)] sm:min-h-[338px] sm:min-w-0 sm:rounded-[20px]"
                   >
-                    <div className="relative h-[132px] overflow-hidden bg-[linear-gradient(145deg,#dcefff_0%,#eff8ff_48%,#e8f8f2_100%)] p-3.5">
+                    <div className="relative h-[120px] overflow-hidden bg-[linear-gradient(145deg,#dcefff_0%,#eff8ff_48%,#e8f8f2_100%)] p-3 sm:h-[132px] sm:p-3.5">
                       <div className="absolute -bottom-14 -left-10 h-36 w-36 rounded-full border-[24px] border-white/40" />
                       <div className="absolute -right-10 -top-12 h-36 w-36 rounded-full bg-white/40" />
                       <div className="absolute bottom-3 right-3 text-primary/10 transition duration-300 group-hover:scale-110 group-hover:text-primary/15">
@@ -679,7 +679,7 @@ export default async function HomePage() {
                         <span className="inline-flex rounded-full border border-white/90 bg-white/95 px-2.5 py-1 text-xs font-extrabold text-[#183a64] shadow-sm">
                           {packageTypeLabel(pkg.type)}
                         </span>
-                        <div className="flex h-10 w-10 shrink-0 items-center justify-center overflow-hidden rounded-xl border border-white bg-white shadow-sm">
+                        <div className="flex h-9 w-9 shrink-0 items-center justify-center overflow-hidden rounded-xl border border-white bg-white shadow-sm sm:h-10 sm:w-10">
                           {orgLogo ? (
                             // eslint-disable-next-line @next/next/no-img-element
                             <img src={orgLogo} alt={`Logo ${orgName}`} className="h-full w-full object-contain p-1" />
@@ -689,20 +689,20 @@ export default async function HomePage() {
                         </div>
                       </div>
 
-                      <div className="absolute bottom-3 left-3.5 z-10 inline-flex items-center gap-1.5 rounded-full bg-[#10294d]/90 px-2.5 py-1 text-xs font-bold text-white backdrop-blur">
+                      <div className="absolute bottom-2.5 left-3 z-10 inline-flex items-center gap-1 rounded-full bg-[#10294d]/90 px-2 py-1 text-[11px] font-bold text-white backdrop-blur sm:bottom-3 sm:left-3.5 sm:gap-1.5 sm:px-2.5 sm:text-xs">
                         <span className="text-[#ffbd3d]">★</span>
                         <span>{rating.score}</span>
                         <span className="text-white/70">({rating.reviews})</span>
                       </div>
                     </div>
 
-                    <div className="flex flex-1 flex-col p-3.5">
-                      <p className="truncate text-xs font-bold text-[#60748f]">{orgName}</p>
-                      <h3 className="mt-1.5 line-clamp-2 min-h-[40px] text-sm font-extrabold leading-5 text-[#071f43]">
+                    <div className="flex flex-1 flex-col p-3 sm:p-3.5">
+                      <p className="truncate text-[11px] font-bold text-[#60748f] sm:text-xs">{orgName}</p>
+                      <h3 className="mt-1 line-clamp-2 min-h-[36px] text-[13px] font-extrabold leading-[18px] text-[#071f43] sm:mt-1.5 sm:min-h-[40px] sm:text-sm sm:leading-5">
                         {pkg.name}
                       </h3>
 
-                      <div className="mt-3 flex flex-wrap items-center gap-x-2 gap-y-1.5 text-xs font-medium text-[#657892]">
+                      <div className="mt-2.5 flex flex-wrap items-center gap-x-2 gap-y-1 text-[11px] font-medium text-[#657892] sm:mt-3 sm:gap-y-1.5 sm:text-xs">
                         {departure && (
                           <span className="inline-flex items-center gap-1">
                             <Icon name="booking" size={12} />
@@ -718,18 +718,18 @@ export default async function HomePage() {
                       </div>
 
                       {seats !== null && (
-                        <div className="mt-2 flex items-center gap-1.5 text-xs font-semibold text-[#536985]">
+                        <div className="mt-1.5 flex items-center gap-1.5 text-[11px] font-semibold text-[#536985] sm:mt-2 sm:text-xs">
                           <span className={`h-1.5 w-1.5 rounded-full ${seats <= 10 ? "bg-[#f5a000]" : "bg-[#16a36a]"}`} />
                           <span>{seats} kursi tersedia</span>
                         </div>
                       )}
 
-                      <div className="mt-auto flex items-end justify-between gap-3 border-t border-[#edf1f6] pt-3">
+                      <div className="mt-auto flex items-end justify-between gap-2 border-t border-[#edf1f6] pt-2.5 sm:gap-3 sm:pt-3">
                         <div>
-                          <p className="text-xs font-semibold uppercase tracking-[0.08em] text-[#8b9aae]">Harga</p>
-                          <p className="mt-0.5 text-lg font-black leading-none text-[#0b6ee8]">{formatIDR(pkg.base_price)}</p>
+                          <p className="text-[10px] font-semibold uppercase tracking-[0.08em] text-[#8b9aae] sm:text-xs">Harga</p>
+                          <p className="mt-0.5 text-[17px] font-black leading-none text-[#0b6ee8] sm:text-lg">{formatIDR(pkg.base_price)}</p>
                         </div>
-                        <span className="flex h-8 w-8 items-center justify-center rounded-full bg-[#eef5ff] text-primary transition group-hover:bg-primary group-hover:text-white">
+                        <span className="flex h-8 w-8 shrink-0 items-center justify-center rounded-full bg-[#eef5ff] text-primary transition group-hover:bg-primary group-hover:text-white">
                           →
                         </span>
                       </div>
