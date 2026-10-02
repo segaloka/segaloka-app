@@ -746,22 +746,22 @@ export default async function HomePage() {
           <MarketplaceAdCarousel placement="after_packages" />
         </div>
         {/* EXPLORE INDONESIA — V4.3 DESTINATION CARDS */}
-        <section className="mx-auto max-w-[1180px] px-3 pb-8 sm:px-4 sm:pb-10 lg:pb-8">
+        <section className="mx-auto max-w-[1180px] px-3 pb-7 sm:px-4 sm:pb-10 lg:pb-8">
           <div className="flex items-end justify-between gap-4">
             <div>
               <p className="text-xs font-extrabold uppercase tracking-[0.14em] text-primary">Jelajahi Indonesia</p>
               <h2 className="mt-1 font-display text-xl font-extrabold text-[#10223f] sm:text-[22px]">Destinasi domestik pilihan</h2>
-              <p className="mt-1 text-sm text-[#748297]">Dari wisata kota hingga bahari dalam satu marketplace.</p>
+              <p className="mt-1 text-[12px] leading-[18px] text-[#748297] sm:text-sm sm:leading-normal">Dari wisata kota hingga bahari dalam satu marketplace.</p>
             </div>
             <Link href="/paket/tour" className="hidden text-sm font-extrabold text-primary hover:underline sm:inline">Lihat Tour Domestik →</Link>
           </div>
 
-          <div className="mt-4 flex snap-x gap-2.5 overflow-x-auto pb-2 [scrollbar-width:none] [&::-webkit-scrollbar]:hidden sm:grid sm:grid-cols-3 sm:gap-3 sm:overflow-visible sm:pb-0 lg:grid-cols-6">
+          <div className="mt-3 flex snap-x gap-2.5 overflow-x-auto pb-2 [scrollbar-width:none] [&::-webkit-scrollbar]:hidden sm:mt-4 sm:grid sm:grid-cols-3 sm:gap-3 sm:overflow-visible sm:pb-0 lg:grid-cols-6">
             {PREVIEW_DOMESTIC_DESTINATIONS.map((destination, index) => (
               <Link
                 key={destination.name}
                 href={`/paket/tour?destination=${encodeURIComponent(destination.query)}&scope=domestic`}
-                className={`group relative min-h-[132px] min-w-[44%] snap-start overflow-hidden rounded-[16px] border p-3.5 transition sm:min-h-[148px] sm:min-w-0 sm:rounded-[18px] sm:p-4 duration-300 hover:-translate-y-0.5 hover:shadow-[0_12px_26px_rgba(15,45,90,0.08)] lg:min-h-[132px] ${
+                className={`group relative min-h-[120px] min-w-[42%] snap-start overflow-hidden rounded-[16px] border p-3 transition sm:min-h-[148px] sm:min-w-0 sm:rounded-[18px] sm:p-4 duration-300 hover:-translate-y-0.5 hover:shadow-[0_12px_26px_rgba(15,45,90,0.08)] lg:min-h-[132px] ${
                   index < 3 ? "lg:col-span-2 " : "lg:col-span-3 "
                 }${
                   index % 3 === 0
@@ -772,13 +772,13 @@ export default async function HomePage() {
                 }`}
               >
                 <div className="absolute -bottom-12 -right-10 h-28 w-28 rounded-full border-[16px] border-white/55 transition duration-300 group-hover:scale-110" />
-                <span className="relative flex h-9 w-9 items-center justify-center rounded-xl border border-white bg-white/90 text-primary shadow-sm">
+                <span className="relative flex h-8 w-8 items-center justify-center rounded-xl border border-white bg-white/90 text-primary shadow-sm sm:h-9 sm:w-9">
                   <Icon name={destination.icon} size={17} />
                 </span>
-                <div className="absolute inset-x-4 bottom-3.5">
-                  <p className="text-[15px] font-extrabold leading-tight text-[#10223f]">{destination.name}</p>
-                  <p className="mt-1 line-clamp-1 text-xs leading-4 text-[#657892]">{destination.detail}</p>
-                  <span className="mt-1.5 inline-flex items-center gap-1 text-xs font-extrabold text-primary">Lihat paket <span aria-hidden="true">→</span></span>
+                <div className="absolute inset-x-3 bottom-3 sm:inset-x-4 sm:bottom-3.5">
+                  <p className="text-[14px] font-extrabold leading-tight text-[#10223f] sm:text-[15px]">{destination.name}</p>
+                  <p className="mt-1 line-clamp-1 text-[11px] leading-4 text-[#657892] sm:text-xs">{destination.detail}</p>
+                  <span className="mt-1 inline-flex items-center gap-1 text-[11px] font-extrabold text-primary sm:mt-1.5 sm:text-xs">Lihat paket <span aria-hidden="true">→</span></span>
                 </div>
               </Link>
             ))}
@@ -837,12 +837,12 @@ export default async function HomePage() {
 
         {/* EXPLORE THE WORLD — V4.3 */}
         <section className="mx-auto max-w-[1180px] px-3 pb-8 sm:px-4 sm:pb-10 lg:pb-8">
-          <div className="overflow-hidden rounded-[22px] border border-[#dfe9f3] bg-[linear-gradient(135deg,#f4f9ff_0%,#f8fbff_52%,#f1faf7_100%)] p-5 sm:p-6">
+          <div className="overflow-hidden rounded-[18px] border border-[#dfe9f3] bg-[linear-gradient(135deg,#f4f9ff_0%,#f8fbff_52%,#f1faf7_100%)] p-3.5 sm:rounded-[22px] sm:p-6">
             <div className="flex items-end justify-between gap-4">
               <div>
                 <p className="text-xs font-extrabold uppercase tracking-[0.14em] text-primary">Jelajahi Dunia</p>
                 <h2 className="mt-1 font-display text-xl font-extrabold text-[#10223f] sm:text-[22px]">Destinasi internasional populer</h2>
-                <p className="mt-1 text-sm text-[#748297]">Halal Tour dan Tour Internasional untuk perjalanan berikutnya.</p>
+                <p className="mt-1 text-[12px] leading-[18px] text-[#748297] sm:text-sm sm:leading-normal">Halal Tour dan Tour Internasional untuk perjalanan berikutnya.</p>
               </div>
               <Link href="/paket/halal_tour" className="hidden text-sm font-extrabold text-primary hover:underline sm:inline">Lihat Internasional →</Link>
             </div>
@@ -852,17 +852,17 @@ export default async function HomePage() {
                 <Link
                   key={destination.name}
                   href={`/paket/halal_tour?destination=${encodeURIComponent(destination.query)}&scope=international`}
-                  className={`group relative min-h-[132px] min-w-[44%] snap-start overflow-hidden rounded-[16px] border border-white/90 bg-white p-3.5 sm:min-h-[148px] sm:min-w-0 sm:rounded-[18px] sm:p-4 shadow-[0_6px_18px_rgba(15,45,90,0.045)] transition duration-300 hover:-translate-y-0.5 hover:border-[#d7e7f5] hover:shadow-[0_12px_26px_rgba(15,45,90,0.08)] lg:min-h-[132px] ${
+                  className={`group relative min-h-[120px] min-w-[42%] snap-start overflow-hidden rounded-[16px] border border-white/90 bg-white p-3 sm:min-h-[148px] sm:min-w-0 sm:rounded-[18px] sm:p-4 shadow-[0_6px_18px_rgba(15,45,90,0.045)] transition duration-300 hover:-translate-y-0.5 hover:border-[#d7e7f5] hover:shadow-[0_12px_26px_rgba(15,45,90,0.08)] lg:min-h-[132px] ${
                     index < 3 ? "lg:col-span-2" : "lg:col-span-3"
                   }`}
                 >
                   <div className={`absolute -right-9 -top-9 h-24 w-24 rounded-full ${index % 2 === 0 ? "bg-[#e8f3ff]" : "bg-[#e9f8f2]"}`} />
-                  <span className="relative flex h-9 w-9 items-center justify-center rounded-[11px] bg-[#edf5ff] text-primary transition duration-300 group-hover:bg-primary group-hover:text-white">
+                  <span className="relative flex h-8 w-8 items-center justify-center rounded-[11px] bg-[#edf5ff] text-primary transition sm:h-9 sm:w-9 duration-300 group-hover:bg-primary group-hover:text-white">
                     <Icon name={destination.icon} size={17} />
                   </span>
                   <div className="absolute inset-x-4 bottom-3.5">
                     <p className="text-[15px] font-extrabold leading-tight text-[#10223f]">{destination.name}</p>
-                    <p className="mt-1 line-clamp-1 text-xs leading-4 text-[#748297]">{destination.detail}</p>
+                    <p className="mt-1 line-clamp-1 text-[11px] leading-4 text-[#748297] sm:text-xs">{destination.detail}</p>
                   </div>
                 </Link>
               ))}
