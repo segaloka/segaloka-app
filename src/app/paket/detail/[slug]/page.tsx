@@ -315,7 +315,7 @@ export default async function PackageDetailPage({ params }: { params: { slug: st
         <div className="mx-auto flex max-w-[1180px] items-center justify-between gap-3">
           <div className="min-w-0">
             <p className="text-[10px] font-bold text-[#748297]">{departures?.[0] ? `Berangkat ${displayDate(departures[0].departure_date)}` : "Mulai dari"}</p>
-            <div className="flex items-baseline gap-1.5"><p className="font-display text-base font-extrabold text-primary">{displayPrice(pkg.base_price)}</p><span className="text-[9px] font-bold text-[#8a98aa]">/{t.perTraveler}</span></div>
+            <div><div className="flex items-baseline gap-1.5"><p className="font-display text-base font-extrabold text-primary">{displayPrice(pkg.base_price)}</p><span className="text-[9px] font-bold text-[#8a98aa]">/{t.perTraveler}</span></div>{currency !== "IDR" && <p className="mt-0.5 max-w-[210px] text-[8px] font-bold leading-3 text-[#b16b00]">{lt.currencyPending(currency)}</p>}</div>
           </div>
           {departures?.[0] ? <Link href={`/booking/baru?departure=${departures[0].id}`} className="shrink-0 rounded-xl bg-primary px-5 py-3 text-xs font-extrabold text-white shadow-[0_6px_16px_rgba(15,95,175,0.22)]">{t.chooseSchedule}</Link> : <span className="shrink-0 rounded-xl bg-[#e9eef4] px-4 py-3 text-xs font-extrabold text-[#8a98aa]">{t.noSchedule}</span>}
         </div>
