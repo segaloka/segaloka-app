@@ -926,7 +926,7 @@ export default async function HomePage() {
               <div className="relative space-y-2 sm:space-y-2.5">
                 {SEGADEALS_STEPS.map((step, index) => (
                   <div key={step} className="flex items-center gap-2.5 rounded-xl border border-white/10 bg-white/[0.08] px-3 py-2.5 backdrop-blur-sm sm:rounded-2xl sm:px-4 sm:py-3.5">
-                    <span className="flex h-8 w-8 shrink-0 items-center justify-center rounded-full bg-[#63b6ff] sm:h-9 sm:w-9 text-xs font-extrabold text-[#09213f]">{index + 1}</span>
+                    <span className="flex h-8 w-8 shrink-0 items-center justify-center rounded-full bg-[#63b6ff] text-xs font-extrabold sm:h-9 sm:w-9 text-[#09213f]">{index + 1}</span>
                     <p className="text-[13px] font-bold text-white sm:text-sm">{step}</p>
                   </div>
                 ))}
@@ -956,7 +956,7 @@ export default async function HomePage() {
                 <div className="h-14 bg-[linear-gradient(135deg,#e5f2ff,#f4f9ff,#e9f8f2)] sm:h-16" />
                 <div className="-mt-6 px-3.5 pb-3.5 sm:-mt-7 sm:px-4 sm:pb-4">
                   <div className="flex items-end justify-between gap-3">
-                    <span className="flex h-12 w-12 items-center justify-center rounded-2xl border-4 sm:h-14 sm:w-14 border-white bg-[#f8fbff] text-primary shadow-sm">
+                    <span className="flex h-12 w-12 items-center justify-center rounded-2xl border-4 border-white bg-[#f8fbff] sm:h-14 sm:w-14 text-primary shadow-sm">
                       <Icon name={travel.icon} size={20} />
                     </span>
                     <span className="mb-1 inline-flex items-center gap-1 rounded-full bg-[#fff7e5] px-2 py-1 text-xs font-extrabold text-[#40546f]">
