@@ -153,6 +153,50 @@ create table if not exists public.settlement_items (
   unique (settlement_id, ref_type, ref_id)
 );
 
+create or replace function public.enforce_settlement_item_org()
+returns trigger
+language plpgsql
+set search_path = public
+as $
+declare
+  v_org uuid;
+  v_item_org uuid;
+begin
+  select s.org_id into v_org from public.settlements s where s.id = new.settlement_id;
+  if v_org is null then
+    raise exception 'Settlement tidak ditemukan';
+  end if;
+
+  if new.ref_type = 'payment' then
+    select b.org_id into v_item_org
+    from public.payments p
+    join public.bookings b on b.id = p.booking_id
+    where p.id = new.ref_id;
+  elsif new.ref_type = 'refund' then
+    select r.org_id into v_item_org from public.refunds r where r.id = new.ref_id;
+  elsif new.ref_type = 'partner_withdrawal' then
+    select w.org_id into v_item_org from public.partner_withdrawals w where w.id = new.ref_id;
+  elsif new.ref_type = 'vendor_order' then
+    select vo.org_id into v_item_org from public.vendor_orders vo where vo.id = new.ref_id;
+  elsif new.ref_type = 'ledger' then
+    select le.org_id into v_item_org from public.ledger_entries le where le.id = new.ref_id;
+  end if;
+
+  if v_item_org is null then
+    raise exception 'Referensi settlement tidak ditemukan';
+  end if;
+  if v_item_org <> v_org then
+    raise exception 'Item settlement wajib berasal dari Travel yang sama';
+  end if;
+  return new;
+end;
+$;
+
+drop trigger if exists settlement_item_org_guard on public.settlement_items;
+create trigger settlement_item_org_guard
+before insert or update of settlement_id, ref_type, ref_id on public.settlement_items
+for each row execute function public.enforce_settlement_item_org();
+
 create table if not exists public.approvals (
   id uuid primary key default gen_random_uuid(),
   org_id uuid references public.organizations(id) on delete cascade,
