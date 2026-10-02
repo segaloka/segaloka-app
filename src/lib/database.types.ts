@@ -1805,6 +1805,13 @@ export type Database = {
       [_ in never]: never
     }
     Functions: {
+      get_travel_rating: {
+        Args: { p_org_id: string }
+        Returns: {
+          average_rating: number | null
+          review_count: number
+        }[]
+      }
       create_marketplace_booking: {
         Args: {
           p_departure_id: string
