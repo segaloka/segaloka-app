@@ -488,8 +488,6 @@ export default async function HomePage() {
     marketplacePackages.length > 0 ? marketplacePackages : PREVIEW_PACKAGES
   ).slice(0, 4);
 
-  const isPreviewInventory = marketplacePackages.length === 0;
-
   const upcomingPackages = displayPackages
     .filter((pkg) => pkg.departures.length > 0)
     .sort(
@@ -882,7 +880,7 @@ export default async function HomePage() {
 
           <div className="mt-3 flex snap-x gap-3 overflow-x-auto pb-2 sm:mt-4 [scrollbar-width:none] [&::-webkit-scrollbar]:hidden sm:grid sm:grid-cols-2 sm:overflow-visible sm:pb-0 lg:grid-cols-4">
             {PREVIEW_VENDORS.map((vendor, index) => (
-              <Link href="/register" key={vendor.id} className="group relative min-h-[150px] min-w-[70%] snap-start overflow-hidden rounded-[18px] border border-[#dfe7f0] bg-white p-4 sm:min-h-[184px] sm:min-w-0 sm:p-5 transition duration-300 hover:-translate-y-0.5 hover:border-[#bfd5ee] hover:shadow-[0_12px_26px_rgba(15,45,90,0.08)]">
+              <Link href="/register?role=vendor" key={vendor.id} className="group relative min-h-[150px] min-w-[70%] snap-start overflow-hidden rounded-[18px] border border-[#dfe7f0] bg-white p-4 sm:min-h-[184px] sm:min-w-0 sm:p-5 transition duration-300 hover:-translate-y-0.5 hover:border-[#bfd5ee] hover:shadow-[0_12px_26px_rgba(15,45,90,0.08)]">
                 <div className={`absolute inset-x-0 top-0 h-1 ${index % 2 === 0 ? "bg-[#0b6ee8]" : "bg-[#20a67a]"}`} />
                 <div className="flex items-start justify-between gap-3">
                   <span className="flex h-9 w-9 items-center justify-center rounded-[12px] bg-[#eef5ff] sm:h-10 sm:w-10 sm:rounded-[14px] text-primary transition group-hover:bg-primary group-hover:text-white">
@@ -947,7 +945,7 @@ export default async function HomePage() {
 
           <div className="mt-3 flex snap-x gap-3 overflow-x-auto pb-2 [scrollbar-width:none] [&::-webkit-scrollbar]:hidden sm:mt-4 sm:grid sm:grid-cols-2 sm:overflow-visible sm:pb-0 lg:grid-cols-4">
             {PREVIEW_TRAVELS.map((travel) => (
-              <Link href="/paket/umrah" key={travel.id} className="group min-w-[70%] snap-start overflow-hidden rounded-[18px] sm:min-w-0 sm:rounded-[20px] border border-[#dfe7f0] bg-white transition hover:-translate-y-0.5 hover:border-[#bfd5ee] hover:shadow-[0_12px_28px_rgba(15,45,90,0.08)]">
+              <Link href={`/paket/umrah?travel=${encodeURIComponent(travel.name)}`} key={travel.id} className="group min-w-[70%] snap-start overflow-hidden rounded-[18px] sm:min-w-0 sm:rounded-[20px] border border-[#dfe7f0] bg-white transition hover:-translate-y-0.5 hover:border-[#bfd5ee] hover:shadow-[0_12px_28px_rgba(15,45,90,0.08)]">
                 <div className="h-14 bg-[linear-gradient(135deg,#e5f2ff,#f4f9ff,#e9f8f2)] sm:h-16" />
                 <div className="-mt-6 px-3.5 pb-3.5 sm:-mt-7 sm:px-4 sm:pb-4">
                   <div className="flex items-end justify-between gap-3">
@@ -1072,8 +1070,8 @@ export default async function HomePage() {
             <div>
               <h3 className="text-xs font-extrabold">Ekosistem</h3>
               <div className="mt-4 grid gap-2.5 text-xs text-[#c5d7ed]">
-                <Link href="/register">Traveler</Link><Link href="/register">Travel</Link><Link href="/register">Vendor</Link>
-                <Link href="/register">Agen</Link><Link href="/register">Mitra</Link><Link href="/register">Affiliate</Link>
+                <Link href="/register?role=traveler">Traveler</Link><Link href="/register?role=travel">Travel</Link><Link href="/register?role=vendor">Vendor</Link>
+                <Link href="/register?role=agent">Agen</Link><Link href="/register?role=mitra">Mitra</Link><Link href="/register?role=affiliate">Affiliate</Link>
               </div>
             </div>
 
