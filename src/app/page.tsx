@@ -950,7 +950,7 @@ export default async function HomePage() {
             <Link href="/paket/umrah" className="hidden text-sm font-extrabold text-primary hover:underline sm:inline">Jelajahi marketplace →</Link>
           </div>
 
-          <div className="mt-4 flex snap-x gap-3 overflow-x-auto pb-2 [scrollbar-width:none] [&::-webkit-scrollbar]:hidden sm:grid sm:grid-cols-2 sm:overflow-visible sm:pb-0 lg:grid-cols-4">
+          <div className="mt-3 flex snap-x gap-3 overflow-x-auto pb-2 [scrollbar-width:none] [&::-webkit-scrollbar]:hidden sm:mt-4 sm:grid sm:grid-cols-2 sm:overflow-visible sm:pb-0 lg:grid-cols-4">
             {PREVIEW_TRAVELS.map((travel) => (
               <Link href="/paket/umrah" key={travel.id} className="group min-w-[70%] snap-start overflow-hidden rounded-[18px] sm:min-w-0 sm:rounded-[20px] border border-[#dfe7f0] bg-white transition hover:-translate-y-0.5 hover:border-[#bfd5ee] hover:shadow-[0_12px_28px_rgba(15,45,90,0.08)]">
                 <div className="h-14 bg-[linear-gradient(135deg,#e5f2ff,#f4f9ff,#e9f8f2)] sm:h-16" />
@@ -982,26 +982,26 @@ export default async function HomePage() {
           <div>
             <p className="text-xs font-extrabold uppercase tracking-[0.14em] text-primary">Inspirasi Perjalanan</p>
             <h2 className="mt-1 font-display text-xl font-extrabold text-[#10223f] sm:text-[22px]">Ide dan panduan sebelum berangkat</h2>
-            <p className="mt-1 text-sm text-[#748297]">Konten panduan untuk membantu menyiapkan perjalanan Anda.</p>
+            <p className="mt-1 text-[12px] leading-[18px] text-[#748297] sm:text-sm sm:leading-normal">Konten panduan untuk membantu menyiapkan perjalanan Anda.</p>
           </div>
 
           <div className="mt-4 flex snap-x gap-3 overflow-x-auto pb-2 [scrollbar-width:none] [&::-webkit-scrollbar]:hidden sm:grid sm:grid-cols-2 sm:overflow-visible sm:pb-0 lg:grid-cols-4">
             {PREVIEW_INSPIRATIONS.map((item, index) => (
-              <Link href={item.href} key={item.title} className="group min-w-[74%] snap-start overflow-hidden rounded-[18px] sm:rounded-[20px] sm:min-w-0 border border-[#dfe7f0] bg-white transition hover:-translate-y-0.5 hover:shadow-[0_12px_28px_rgba(15,45,90,0.08)]">
-                <div className={`relative flex h-[104px] items-center sm:h-[116px] justify-center overflow-hidden ${
+              <Link href={item.href} key={item.title} className="group min-w-[70%] snap-start overflow-hidden rounded-[18px] border border-[#dfe7f0] sm:min-w-0 sm:rounded-[20px] bg-white transition hover:-translate-y-0.5 hover:shadow-[0_12px_28px_rgba(15,45,90,0.08)]">
+                <div className={`relative flex h-[92px] items-center justify-center overflow-hidden sm:h-[116px] ${
                   index % 3 === 0 ? "bg-[#e4f2ff]" : index % 3 === 1 ? "bg-[#e8f7ef]" : "bg-[#f2ebff]"
                 }`}>
                   <div className="absolute -right-8 -top-10 h-28 w-28 rounded-full border-[18px] border-white/50" />
-                  <span className="flex h-11 w-11 items-center justify-center rounded-2xl bg-white/85 text-primary shadow-sm">
+                  <span className="flex h-10 w-10 items-center justify-center rounded-xl bg-white/85 sm:h-11 sm:w-11 sm:rounded-2xl text-primary shadow-sm">
                     <Icon name={index % 2 === 0 ? "globe" : "route"} size={20} />
                   </span>
                 </div>
-                <div className="p-4">
-                  <p className="text-xs font-extrabold uppercase tracking-[0.1em] text-primary">{item.category}</p>
-                  <h3 className="mt-1.5 line-clamp-2 min-h-[40px] text-sm font-extrabold leading-5 text-[#10223f]">{item.title}</h3>
+                <div className="p-3.5 sm:p-4">
+                  <p className="text-[11px] font-extrabold uppercase tracking-[0.1em] text-primary sm:text-xs">{item.category}</p>
+                  <h3 className="mt-1.5 line-clamp-2 min-h-[36px] text-[13px] font-extrabold leading-[18px] text-[#10223f] sm:min-h-[40px] sm:text-sm sm:leading-5">{item.title}</h3>
                   <div className="mt-3 flex items-center justify-between border-t border-[#edf2f7] pt-3">
-                    <span className="text-xs font-bold text-[#748297]">Konten preview</span>
-                    <span className="text-xs font-extrabold text-primary">Baca →</span>
+                    <span className="text-[11px] font-bold text-[#748297] sm:text-xs">Panduan perjalanan</span>
+                    <span className="text-[11px] font-extrabold text-primary sm:text-xs">Baca →</span>
                   </div>
                 </div>
               </Link>
@@ -1010,16 +1010,16 @@ export default async function HomePage() {
         </section>
 
         {/* BUSINESS ECOSYSTEM */}
-        <section className="mx-auto max-w-[1180px] px-3 pb-10 sm:px-4 sm:pb-12">
-          <div className="grid gap-3 rounded-2xl border border-[#dce4ee] bg-white p-4 sm:gap-4 sm:p-7 lg:grid-cols-[1fr_auto] lg:items-center">
+        <section className="mx-auto max-w-[1180px] px-3 pb-8 sm:px-4 sm:pb-12">
+          <div className="grid gap-2.5 rounded-2xl border border-[#dce4ee] bg-white p-3.5 sm:gap-4 sm:p-7 sm:gap-4 sm:p-7 lg:grid-cols-[1fr_auto] lg:items-center">
             <div>
               <p className="text-xs font-extrabold uppercase tracking-[0.14em] text-primary">
                 Ekosistem Segaloka
               </p>
-              <h2 className="mt-1.5 font-display text-xl font-extrabold text-[#10223f]">
+              <h2 className="mt-1.5 font-display text-[19px] font-extrabold leading-6 text-[#10223f] sm:text-xl sm:leading-normal">
                 Kelola bisnis perjalanan dalam satu ekosistem.
               </h2>
-              <p className="mt-2 max-w-[720px] text-xs leading-5 text-[#6d7c91]">
+              <p className="mt-1.5 max-w-[720px] text-[11px] leading-[18px] text-[#6d7c91] sm:mt-2 sm:text-xs sm:leading-5">
                 Travel, Vendor, Agen, Mitra dan Affiliate terhubung dengan
                 marketplace dan proses transaksi Segaloka.
               </p>
@@ -1027,7 +1027,7 @@ export default async function HomePage() {
 
             <Link
               href="/register"
-              className="inline-flex w-full items-center justify-center rounded-full bg-primary px-5 py-2.5 text-xs sm:w-auto font-extrabold text-white hover:opacity-90"
+              className="inline-flex w-full items-center justify-center rounded-full bg-primary px-5 py-2.5 text-[11px] sm:w-auto sm:text-xs sm:w-auto font-extrabold text-white hover:opacity-90"
             >
               Bergabung dengan Segaloka
             </Link>
@@ -1036,8 +1036,8 @@ export default async function HomePage() {
       </main>
 
       <footer className="border-t border-[#d9e3ef] bg-[#082d63] pb-20 text-white md:pb-0">
-        <div className="mx-auto max-w-[1180px] px-3 py-7 sm:px-4 sm:py-12">
-          <div className="grid grid-cols-2 gap-x-5 gap-y-7 sm:grid-cols-2 sm:gap-8 lg:grid-cols-[1.25fr_0.8fr_0.8fr_0.9fr]">
+        <div className="mx-auto max-w-[1180px] px-3 py-6 sm:px-4 sm:py-12">
+          <div className="grid grid-cols-2 gap-x-5 gap-y-6 sm:grid-cols-2 sm:gap-8 sm:gap-8 lg:grid-cols-[1.25fr_0.8fr_0.8fr_0.9fr]">
             <div className="col-span-2 sm:col-span-1">
               <div className="flex items-center">
                 <img
@@ -1064,7 +1064,7 @@ export default async function HomePage() {
 
             <div>
               <h3 className="text-xs font-extrabold">Produk</h3>
-              <div className="mt-4 grid gap-2.5 text-xs text-[#c5d7ed]">
+              <div className="mt-3.5 grid gap-2 text-[11px] text-[#c5d7ed] sm:mt-4 sm:gap-2.5 sm:text-xs">
                 <Link href="/paket/umrah">Umrah</Link>
                 <Link href="/paket/haji">Haji</Link>
                 <Link href="/paket/halal_tour">Halal Tour</Link>
@@ -1084,13 +1084,13 @@ export default async function HomePage() {
 
             <div className="col-span-2 sm:col-span-1">
               <h3 className="text-xs font-extrabold">Bantuan & Perusahaan</h3>
-              <div className="mt-4 grid grid-cols-2 gap-x-5 gap-y-2.5 text-xs text-[#c5d7ed] sm:grid-cols-1">
+              <div className="mt-3.5 grid grid-cols-2 gap-x-5 gap-y-2 text-[11px] text-[#c5d7ed] sm:mt-4 sm:grid-cols-1 sm:gap-y-2.5 sm:text-xs" sm:grid-cols-1">
                 <Link href="/bantuan">Pusat Bantuan</Link><Link href="/tentang">Tentang Segaloka</Link>
                 <Link href="/syarat">Syarat & Ketentuan</Link><Link href="/privasi">Kebijakan Privasi</Link>
                 <Link href="/bantuan">Keamanan Transaksi</Link><Link href="/kontak">Hubungi Kami</Link>
               </div>
-              <div className="mt-5">
-                <p className="text-xs font-extrabold uppercase tracking-[0.12em] text-[#8fb2da]">Aplikasi Segaloka</p>
+              <div className="mt-4 sm:mt-5">
+                <p className="text-[11px] font-extrabold uppercase sm:text-xs tracking-[0.12em] text-[#8fb2da]">Aplikasi Segaloka</p>
                 <div className="mt-2 flex flex-wrap gap-2">
                   <Link href="/kontak" className="rounded-lg border border-white/20 px-3 py-2 text-xs font-bold transition hover:border-white/40">Android</Link>
                   <Link href="/kontak" className="rounded-lg border border-white/20 px-3 py-2 text-xs font-bold transition hover:border-white/40">iOS</Link>
@@ -1099,7 +1099,7 @@ export default async function HomePage() {
             </div>
           </div>
 
-          <div className="mt-6 grid grid-cols-3 gap-2 border-t border-white/15 pt-5 sm:mt-9 sm:gap-5 sm:pt-6">
+          <div className="mt-5 grid grid-cols-3 gap-2 border-t sm:mt-9 border-white/15 pt-5 sm:mt-9 sm:gap-5 sm:pt-6">
             {[
               ["wallet", "Pembayaran", "Gateway terintegrasi"],
               ["handshake", "Partner", "Travel & Vendor"],
