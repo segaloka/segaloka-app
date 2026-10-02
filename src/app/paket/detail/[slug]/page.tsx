@@ -51,6 +51,7 @@ export default async function PackageDetailPage({ params }: { params: { slug: st
   } as const;
   const u = ui[language === "en" || language === "ar" ? language : "id"];
   const arrow = language === "ar" ? "←" : "→";
+  const packageTypeLabel = pkgTypeLabel => pkgTypeLabel === "halal_tour" ? "Halal Tour" : pkgTypeLabel === "umrah" ? "Umrah" : pkgTypeLabel === "haji" ? "Haji" : pkgTypeLabel === "tour" ? "Tour" : pkgTypeLabel.charAt(0).toUpperCase() + pkgTypeLabel.slice(1);
   const { data: pkg } = await supabase
     .from("packages")
     .select("*, organizations(id, name, slug, status, support_phone, support_email, address, license_type, license_number)")
@@ -96,7 +97,7 @@ export default async function PackageDetailPage({ params }: { params: { slug: st
       <main className="mx-auto max-w-[1180px] px-3 pb-24 pt-4 sm:px-4 sm:pb-12 sm:pt-6">
         <nav className="mb-3 flex items-center gap-1.5 overflow-hidden text-[11px] font-bold text-[#748297] sm:text-xs">
           <Link href="/" className="shrink-0 hover:text-primary">{t.home}</Link><span>/</span>
-          <Link href={`/paket/${pkg.type}`} className="shrink-0 hover:text-primary">{pkg.type === "halal_tour" ? "Halal Tour" : pkg.type.charAt(0).toUpperCase() + pkg.type.slice(1)}</Link>
+          <Link href={`/paket/${pkg.type}`} className="shrink-0 hover:text-primary">{packageTypeLabel(pkg.type)}</Link>
           <span>/</span><span className="truncate text-[#40546f]">{pkg.name}</span>
         </nav>
 
@@ -158,7 +159,7 @@ export default async function PackageDetailPage({ params }: { params: { slug: st
                 <span className="hidden rounded-full bg-[#f2f6fb] px-3 py-1 text-[10px] font-extrabold text-[#748297] sm:inline-flex">{u.journeyDetail}</span>
               </div>
               <div className="mt-4 grid grid-cols-2 gap-2 sm:grid-cols-4 sm:gap-3">
-                {[["route", u.typeLabel, pkg.type === "halal_tour" ? "Halal Tour" : pkg.type.charAt(0).toUpperCase() + pkg.type.slice(1)], ["globe", u.duration, `${pkg.duration_days} ${t.days}`], ["plane", u.departureLabel, departures?.[0] ? displayDate(departures[0].departure_date) : t.unavailable], ["users", u.availabilityLabel, departures?.length ? `${departures.length} ${u.schedule} · ${Math.max(0, departures[0].quota - departures[0].filled)} ${u.seatNearest}` : t.unavailable]].map(([icon, label, value]) => (
+                {[["route", u.typeLabel, packageTypeLabel(pkg.type)], ["globe", u.duration, `${pkg.duration_days} ${t.days}`], ["plane", u.departureLabel, departures?.[0] ? displayDate(departures[0].departure_date) : t.unavailable], ["users", u.availabilityLabel, departures?.length ? `${departures.length} ${u.schedule} · ${Math.max(0, departures[0].quota - departures[0].filled)} ${u.seatNearest}` : t.unavailable]].map(([icon, label, value]) => (
                   <div key={label} className="rounded-xl border border-[#e5ebf2] bg-[#fbfcfe] p-3">
                     <span className="text-primary"><Icon name={icon as "route"} size={17} /></span>
                     <p className="mt-2 text-[10px] font-bold uppercase tracking-[0.08em] text-[#8a98aa]">{label}</p>
