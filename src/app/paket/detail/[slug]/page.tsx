@@ -54,22 +54,47 @@ export default async function PackageDetailPage({ params }: { params: { slug: st
   const u = ui[language === "en" || language === "ar" ? language : "id"];
   const arrow = language === "ar" ? "←" : "→";
   const packageTypeLabel = (pkgTypeLabel: string) => pkgTypeLabel === "halal_tour" ? "Halal Tour" : pkgTypeLabel === "umrah" ? "Umrah" : pkgTypeLabel === "haji" ? "Haji" : pkgTypeLabel === "tour" ? "Tour" : pkgTypeLabel.charAt(0).toUpperCase() + pkgTypeLabel.slice(1);
-  const { data: pkg } = await supabase
-    .from("packages")
-    .select("*, organizations(id, name, slug, status, support_phone, support_email, address, license_type, license_number)")
-    .eq("slug", params.slug)
-    .eq("status", "published")
-    .single();
+  const previewPackages = [
+    ["preview-umrah-reguler-9-hari","preview-umrah-01","Umrah Reguler 9 Hari","umrah",9,28900000,"Travel Amanah","travel-amanah","2026-10-18","2026-10-26",45,33,"open"],
+    ["preview-umrah-plus-thaif-12-hari","preview-umrah-02","Umrah Plus Thaif 12 Hari","umrah",12,34500000,"Nusantara Haramain","nusantara-haramain","2026-11-03","2026-11-14",45,17,"open"],
+    ["preview-program-haji-pilihan","preview-haji-01","Program Haji Pilihan","haji",25,185000000,"Safar Indonesia","safar-indonesia","2027-05-08","2027-06-01",40,31,"almost_full"],
+    ["preview-halal-tour-turki-8-hari","preview-halal-01","Halal Tour Turki 8 Hari","halal_tour",8,23900000,"Jelajah Muslim","jelajah-muslim","2026-12-12","2026-12-19",30,12,"open"],
+    ["preview-explore-jepang-7-hari","preview-tour-01","Explore Jepang 7 Hari","tour",7,21900000,"Langkah Dunia","langkah-dunia","2027-01-16","2027-01-22",30,8,"open"],
+    ["preview-umrah-awal-tahun-9-hari","preview-umrah-03","Umrah Awal Tahun 9 Hari","umrah",9,30500000,"Berkah Journey","berkah-journey","2027-01-09","2027-01-17",45,22,"open"],
+    ["preview-halal-tour-korea-7-hari","preview-halal-02","Halal Tour Korea 7 Hari","halal_tour",7,24900000,"Jelajah Muslim","jelajah-muslim","2027-02-06","2027-02-12",30,19,"open"],
+    ["preview-singapore-malaysia","preview-tour-02","Explore Singapore & Malaysia","tour",5,8900000,"Langkah Dunia","langkah-dunia","2026-11-21","2026-11-25",35,29,"almost_full"],
+  ] as const;
+  const preview = previewPackages.find(([slug]) => slug === params.slug);
+  const isPreview = Boolean(preview);
+
+  let pkg: any = null;
+  let departures: any[] | null = null;
+
+  if (preview) {
+    const [slug,id,name,type,duration,price,orgName,orgSlug,depart,ret,quota,filled,status] = preview;
+    pkg = { id, slug, name, type, duration_days:duration, base_price:price, description:null, inclusions:[], exclusions:[], organizations:{ id:"", name:orgName, slug:orgSlug, status:"active", support_phone:null, support_email:null, address:null, license_type:null, license_number:null } };
+    departures = [{ id:`preview-departure-${id.split("-").at(-1)}`, package_id:id, departure_date:depart, return_date:ret, quota, filled, status }];
+  } else {
+    const { data } = await supabase
+      .from("packages")
+      .select("*, organizations(id, name, slug, status, support_phone, support_email, address, license_type, license_number)")
+      .eq("slug", params.slug)
+      .eq("status", "published")
+      .single();
+    pkg = data;
+    if (pkg) {
+      const departureResult = await supabase
+        .from("departures")
+        .select("*")
+        .eq("package_id", pkg.id)
+        .in("status", ["open", "almost_full"])
+        .gte("departure_date", new Date().toISOString().slice(0, 10))
+        .order("departure_date", { ascending: true });
+      departures = departureResult.data;
+    }
+  }
 
   if (!pkg) notFound();
-
-  const { data: departures } = await supabase
-    .from("departures")
-    .select("*")
-    .eq("package_id", pkg.id)
-    .in("status", ["open", "almost_full"])
-    .gte("departure_date", new Date().toISOString().slice(0, 10))
-    .order("departure_date", { ascending: true });
 
   const org = pkg.organizations as {
     id: string; name: string; slug: string; status: string; support_phone: string | null;
@@ -144,7 +169,7 @@ export default async function PackageDetailPage({ params }: { params: { slug: st
                 </div>
                 <h1 className="mt-2.5 font-display text-[22px] font-extrabold leading-[1.18] tracking-[-0.025em] sm:text-[30px]">{pkg.name}</h1>
               </div>
-              <WishlistButton packageId={pkg.id} initialSaved={saved} />
+              {!isPreview && <WishlistButton packageId={pkg.id} initialSaved={saved} />}
             </div>
 
             {org && (
@@ -213,7 +238,7 @@ export default async function PackageDetailPage({ params }: { params: { slug: st
                   {departures.map((d) => {
                     const seats = Math.max(0, d.quota - d.filled);
                     return (
-                      <Link key={d.id} href={`/booking/baru?departure=${d.id}`} className="group rounded-2xl border border-[#dfe7f0] bg-[#fbfcfe] p-4 transition hover:-translate-y-0.5 hover:border-primary/50 hover:bg-white hover:shadow-[0_8px_24px_rgba(15,45,90,0.08)]">
+                      <Link key={d.id} href={isPreview ? "#terms" : `/booking/baru?departure=${d.id}`} className="group rounded-2xl border border-[#dfe7f0] bg-[#fbfcfe] p-4 transition hover:-translate-y-0.5 hover:border-primary/50 hover:bg-white hover:shadow-[0_8px_24px_rgba(15,45,90,0.08)]">
                         <div className="flex items-start justify-between gap-3">
                           <div className="min-w-0">
                             <p className="text-[9px] font-extrabold uppercase tracking-[0.1em] text-[#8a98aa]">{u.depart}</p>
