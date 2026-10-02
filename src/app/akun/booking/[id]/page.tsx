@@ -15,7 +15,7 @@ export default async function BookingDetailPage({ params }: { params: { id: stri
   const currency = storedCurrency === "USD" || storedCurrency === "MYR" || storedCurrency === "SGD" || storedCurrency === "SAR" ? storedCurrency : "IDR";
   const locale = language === "en" ? "en-US" : language === "ar" ? "ar-SA" : "id-ID";
   const copy = {
-    id:{booking:"Booking",trip:"{t.trip}",travel:"Travel",departure:"Tanggal Berangkat",travelers:"Jumlah Jamaah",people:"orang",total:"Total Tagihan",travelerData:"{t.travelerData}",payment:"{t.payment}",invoice:"No. Invoice",status:"Status",due:"Jatuh Tempo",manual:"{t.manual}",account:"a.n.",missingBank:"Travel belum melengkapi rekening pembayaran. Hubungi Travel melalui Segaloka.",baseCurrency:"Harga transaksi · IDR",currencyPending:(code:string)=>`Pilihan ${code} aktif · transaksi tetap ditampilkan dalam IDR sampai kurs tersedia.`},
+    id:{booking:"Booking",trip:"Detail Perjalanan",travel:"Travel",departure:"Tanggal Berangkat",travelers:"Jumlah Jamaah",people:"orang",total:"Total Tagihan",travelerData:"Data Jamaah",payment:"Pembayaran",invoice:"No. Invoice",status:"Status",due:"Jatuh Tempo",manual:"Transfer Manual",account:"a.n.",missingBank:"Travel belum melengkapi rekening pembayaran. Hubungi Travel melalui Segaloka.",baseCurrency:"Harga transaksi · IDR",currencyPending:(code:string)=>`Pilihan ${code} aktif · transaksi tetap ditampilkan dalam IDR sampai kurs tersedia.`},
     en:{booking:"Booking",trip:"Trip Details",travel:"Travel",departure:"Departure Date",travelers:"Number of Travelers",people:"travelers",total:"Total Amount",travelerData:"Traveler Details",payment:"Payment",invoice:"Invoice No.",status:"Status",due:"Due Date",manual:"Manual Transfer",account:"Account name",missingBank:"The Travel operator has not added a payment account yet. Contact the Travel operator through Segaloka.",baseCurrency:"Transaction currency · IDR",currencyPending:(code:string)=>`${code} is selected · the transaction remains displayed in IDR until an exchange rate is available.`},
     ar:{booking:"الحجز",trip:"تفاصيل الرحلة",travel:"شركة السفر",departure:"تاريخ المغادرة",travelers:"عدد المسافرين",people:"مسافر",total:"إجمالي المبلغ",travelerData:"بيانات المسافرين",payment:"الدفع",invoice:"رقم الفاتورة",status:"الحالة",due:"تاريخ الاستحقاق",manual:"تحويل بنكي يدوي",account:"اسم الحساب",missingBank:"لم تضف شركة السفر حساب الدفع بعد. تواصل مع شركة السفر عبر Segaloka.",baseCurrency:"عملة المعاملة · IDR",currencyPending:(code:string)=>`تم اختيار ${code} · ستظل المعاملة معروضة بالروبية الإندونيسية حتى يتوفر سعر الصرف.`}
   } as const;
@@ -60,7 +60,7 @@ export default async function BookingDetailPage({ params }: { params: { id: stri
       <div className="grid gap-6 lg:grid-cols-3">
         <div className="space-y-6 lg:col-span-2">
           <Card>
-            <CardHeader><p className="font-display font-bold text-text-primary">Detail Perjalanan</p></CardHeader>
+            <CardHeader><p className="font-display font-bold text-text-primary">{t.trip}</p></CardHeader>
             <CardBody className="grid gap-3 sm:grid-cols-2 text-sm">
               <div><p className="text-xs text-muted">{t.travel}</p><p className="font-semibold text-text-primary">{org?.name}</p></div>
               <div><p className="text-xs text-muted">{t.departure}</p><p className="font-semibold text-text-primary">{displayDate((booking.departures as any)?.departure_date)}</p></div>
@@ -70,11 +70,11 @@ export default async function BookingDetailPage({ params }: { params: { id: stri
           </Card>
 
           <Card>
-            <CardHeader><p className="font-display font-bold text-text-primary">Data Jamaah</p></CardHeader>
+            <CardHeader><p className="font-display font-bold text-text-primary">{t.travelerData}</p></CardHeader>
             <CardBody className="space-y-2">
               {(booking.booking_passengers as any[]).map((p, i) => (
                 <div key={p.id} className="flex items-center justify-between rounded-md border border-border px-3 py-2 text-sm">
-                  <span className="text-text-primary">{i + 1}. {p.full_name}</span>
+                  <span className="text-text-primary">{displayNumber(i + 1)}. {p.full_name}</span>
                   {p.passport_number && <span className="text-xs text-muted">{p.passport_number}</span>}
                 </div>
               ))}
@@ -84,7 +84,7 @@ export default async function BookingDetailPage({ params }: { params: { id: stri
 
         <div className="space-y-6">
           <Card>
-            <CardHeader><p className="font-display font-bold text-text-primary">Pembayaran</p></CardHeader>
+            <CardHeader><p className="font-display font-bold text-text-primary">{t.payment}</p></CardHeader>
             <CardBody className="space-y-4">
               {invoice && (
                 <div className="rounded-md bg-bg px-3 py-2.5 text-sm">
@@ -97,7 +97,7 @@ export default async function BookingDetailPage({ params }: { params: { id: stri
               {invoice?.status !== "paid" && (
                 <>
                   <div className="rounded-md border border-border px-3 py-2.5 text-xs text-text-secondary">
-                    <p className="font-semibold text-text-primary">Transfer Manual</p>
+                    <p className="font-semibold text-text-primary">{t.manual}</p>
                     {bank?.bank_name ? (
                       <>
                         <p className="mt-1">{bank.bank_name} — {bank.account_number}</p>
