@@ -20,9 +20,9 @@ export default async function PackageDetailPage({ params }: { params: { slug: st
   const displayNumber = (value: number) => new Intl.NumberFormat(locale).format(value);
   const displayRating = (value: number | null) => value == null ? "—" : new Intl.NumberFormat(locale, { minimumFractionDigits: 1, maximumFractionDigits: 1 }).format(value);
   const copy = {
-    id: { home:"Beranda", available:"Paket tersedia", days:"hari", itinerary:"Itinerary", transportHotel:"Pesawat & Hotel", facilities:"Fasilitas", terms:"Ketentuan", about:"Tentang paket", summary:"Ringkasan perjalanan", detail:"Detail paket", program:"Program perjalanan", route:"Rute perjalanan", from:"Dari", to:"Ke", nearest:"Jadwal terdekat", flight:"Penerbangan", hotel:"Hotel & akomodasi", startFrom:"Mulai dari", perTraveler:"per jamaah", chooseDeparture:"Pilih keberangkatan", choose:"Pilih", chooseSchedule:"Pilih Jadwal", noSchedule:"Belum ada jadwal", unavailable:"Belum tersedia", baseCurrency:"Harga dasar · IDR" },
-    en: { home:"Home", available:"Package available", days:"days", itinerary:"Itinerary", transportHotel:"Flight & Hotel", facilities:"Facilities", terms:"Terms", about:"About this package", summary:"Trip summary", detail:"Package details", program:"Travel program", route:"Travel route", from:"From", to:"To", nearest:"Nearest schedule", flight:"Flight", hotel:"Hotel & accommodation", startFrom:"Starts from", perTraveler:"per traveler", chooseDeparture:"Choose departure", choose:"Choose", chooseSchedule:"Choose Schedule", noSchedule:"No schedule yet", unavailable:"Not available", baseCurrency:"Base price · IDR" },
-    ar: { home:"الرئيسية", available:"الباقة متاحة", days:"أيام", itinerary:"برنامج الرحلة", transportHotel:"الطيران والفندق", facilities:"الخدمات", terms:"الشروط", about:"عن الباقة", summary:"ملخص الرحلة", detail:"تفاصيل الباقة", program:"برنامج السفر", route:"مسار الرحلة", from:"من", to:"إلى", nearest:"أقرب موعد", flight:"الطيران", hotel:"الفندق والإقامة", startFrom:"يبدأ من", perTraveler:"لكل مسافر", chooseDeparture:"اختر موعد المغادرة", choose:"اختر", chooseSchedule:"اختر الموعد", noSchedule:"لا يوجد موعد", unavailable:"غير متاح", baseCurrency:"السعر الأساسي · IDR" }
+    id: { home:"Beranda", available:"Paket tersedia", days:"hari", overview:"Ringkasan", itinerary:"Itinerary", transportHotel:"Pesawat & Hotel", facilities:"Fasilitas", terms:"Ketentuan", about:"Tentang paket", summary:"Ringkasan perjalanan", detail:"Detail paket", program:"Program perjalanan", route:"Rute perjalanan", from:"Dari", to:"Ke", nearest:"Jadwal terdekat", flight:"Penerbangan", hotel:"Hotel & akomodasi", startFrom:"Mulai dari", perTraveler:"per jamaah", chooseDeparture:"Pilih keberangkatan", choose:"Pilih", chooseSchedule:"Pilih Jadwal", noSchedule:"Belum ada jadwal", unavailable:"Belum tersedia", baseCurrency:"Harga dasar · IDR" },
+    en: { home:"Home", available:"Package available", days:"days", overview:"Overview", itinerary:"Itinerary", transportHotel:"Flight & Hotel", facilities:"Facilities", terms:"Terms", about:"About this package", summary:"Trip summary", detail:"Package details", program:"Travel program", route:"Travel route", from:"From", to:"To", nearest:"Nearest schedule", flight:"Flight", hotel:"Hotel & accommodation", startFrom:"Starts from", perTraveler:"per traveler", chooseDeparture:"Choose departure", choose:"Choose", chooseSchedule:"Choose Schedule", noSchedule:"No schedule yet", unavailable:"Not available", baseCurrency:"Base price · IDR" },
+    ar: { home:"الرئيسية", available:"الباقة متاحة", days:"أيام", overview:"الملخص", itinerary:"برنامج الرحلة", transportHotel:"الطيران والفندق", facilities:"الخدمات", terms:"الشروط", about:"عن الباقة", summary:"ملخص الرحلة", detail:"تفاصيل الباقة", program:"برنامج السفر", route:"مسار الرحلة", from:"من", to:"إلى", nearest:"أقرب موعد", flight:"الطيران", hotel:"الفندق والإقامة", startFrom:"يبدأ من", perTraveler:"لكل مسافر", chooseDeparture:"اختر موعد المغادرة", choose:"اختر", chooseSchedule:"اختر الموعد", noSchedule:"لا يوجد موعد", unavailable:"غير متاح", baseCurrency:"السعر الأساسي · IDR" }
   } as const;
   const t = copy[language === "en" || language === "ar" ? language : "id"];
   const longCopy = {
@@ -147,13 +147,13 @@ export default async function PackageDetailPage({ params }: { params: { slug: st
           <div className="space-y-4">
             <div className="-mx-3 overflow-x-auto px-3 sm:mx-0 sm:px-0">
               <div className="flex min-w-max gap-2">
-                <a href="#itinerary" className="rounded-full border border-[#dfe7f0] bg-white px-3 py-2 text-[11px] font-extrabold text-[#40546f]">{t.itinerary}</a>
-                <a href="#transport-hotel" className="rounded-full border border-[#dfe7f0] bg-white px-3 py-2 text-[11px] font-extrabold text-[#40546f]">{t.transportHotel}</a>
-                <a href="#facilities" className="rounded-full border border-[#dfe7f0] bg-white px-3 py-2 text-[11px] font-extrabold text-[#40546f]">{t.facilities}</a>
-                <a href="#travel" className="rounded-full border border-[#dfe7f0] bg-white px-3 py-2 text-[11px] font-extrabold text-[#40546f]">{u.travel}</a>\n                <a href="#reviews" className="rounded-full border border-[#dfe7f0] bg-white px-3 py-2 text-[11px] font-extrabold text-[#40546f]">{u.reviewsNav}</a>\n                <a href="#terms" className="rounded-full border border-[#dfe7f0] bg-white px-3 py-2 text-[11px] font-extrabold text-[#40546f]">{t.terms}</a>
+                <a href="#itinerary" className="rounded-full border border-[#dfe7f0] bg-white px-3 py-2 text-[11px] font-extrabold text-[#40546f] transition hover:border-primary/40 hover:text-primary">{t.itinerary}</a>
+                <a href="#transport-hotel" className="rounded-full border border-[#dfe7f0] bg-white px-3 py-2 text-[11px] font-extrabold text-[#40546f] transition hover:border-primary/40 hover:text-primary">{t.transportHotel}</a>
+                <a href="#facilities" className="rounded-full border border-[#dfe7f0] bg-white px-3 py-2 text-[11px] font-extrabold text-[#40546f] transition hover:border-primary/40 hover:text-primary">{t.facilities}</a>
+                <a href="#travel" className="rounded-full border border-[#dfe7f0] bg-white px-3 py-2 text-[11px] font-extrabold text-[#40546f] transition hover:border-primary/40 hover:text-primary">{u.travel}</a>\n                <a href="#reviews" className="rounded-full border border-[#dfe7f0] bg-white px-3 py-2 text-[11px] font-extrabold text-[#40546f] transition hover:border-primary/40 hover:text-primary">{u.reviewsNav}</a>\n                <a href="#terms" className="rounded-full border border-[#dfe7f0] bg-white px-3 py-2 text-[11px] font-extrabold text-[#40546f] transition hover:border-primary/40 hover:text-primary">{t.terms}</a>
               </div>
             </div>
-            {pkg.description && <section className="rounded-[18px] border border-[#dfe7f0] bg-white p-4 sm:p-6"><h2 className="font-display text-lg font-extrabold">{t.about}</h2><p className="mt-2 whitespace-pre-line text-[13px] leading-6 text-[#60738d] sm:text-sm">{pkg.description}</p></section>}
+            {pkg.description && <section id="overview" className="scroll-mt-32 rounded-[18px] border border-[#dfe7f0] bg-white p-4 sm:p-6"><h2 className="font-display text-lg font-extrabold">{t.about}</h2><p className="mt-2 whitespace-pre-line text-[13px] leading-6 text-[#60738d] sm:text-sm">{pkg.description}</p></section>}
 
             <section className="rounded-[18px] border border-[#dfe7f0] bg-white p-4 sm:p-6">
               <div className="flex items-center justify-between gap-3">
@@ -171,7 +171,7 @@ export default async function PackageDetailPage({ params }: { params: { slug: st
               </div>
             </section>
 
-            <section id="itinerary" className="rounded-[18px] border border-[#dfe7f0] bg-white p-4 sm:p-6">
+            <section id="itinerary" className="scroll-mt-32 rounded-[18px] border border-[#dfe7f0] bg-white p-4 sm:p-6">
               <p className="text-[11px] font-extrabold uppercase tracking-[0.12em] text-primary">{t.program}</p>
               <h2 className="mt-1 font-display text-lg font-extrabold">{t.itinerary}</h2>
               <div className="mt-4 grid gap-3 sm:grid-cols-3">
@@ -209,7 +209,7 @@ export default async function PackageDetailPage({ params }: { params: { slug: st
               </div>
             </section>
 
-            <section id="transport-hotel" className="grid gap-3 sm:grid-cols-2">
+            <section id="transport-hotel" className="scroll-mt-32 grid gap-3 sm:grid-cols-2">
               <div className="rounded-[18px] border border-[#dfe7f0] bg-white p-4 sm:p-5">
                 <div className="flex h-9 w-9 items-center justify-center rounded-xl bg-[#eaf3ff] text-primary"><Icon name="plane" size={18} /></div>
                 <h2 className="mt-3 font-display text-base font-extrabold">{t.flight}</h2>
@@ -222,7 +222,7 @@ export default async function PackageDetailPage({ params }: { params: { slug: st
               </div>
             </section>
 
-            <section id="terms" className="grid gap-3 sm:grid-cols-3">
+            <section id="terms" className="scroll-mt-32 grid gap-3 sm:grid-cols-3">
               {[["doc", u.documents, u.documentsBody], ["wallet", u.payment, u.paymentBody], ["shield", u.policy, u.policyBody]].map(([icon, title, body]) => (
                 <div key={title} className="rounded-[18px] border border-[#dfe7f0] bg-white p-4">
                   <span className="text-primary"><Icon name={icon as "doc"} size={18} /></span><h2 className="mt-3 text-sm font-extrabold">{title}</h2><p className="mt-2 text-xs leading-5 text-[#748297]">{body}</p>
@@ -230,7 +230,7 @@ export default async function PackageDetailPage({ params }: { params: { slug: st
               ))}
             </section>
 
-            <section id="facilities" className="grid gap-3 sm:grid-cols-2">
+            <section id="facilities" className="scroll-mt-32 grid gap-3 sm:grid-cols-2">
               <div className="rounded-[18px] border border-[#dfe7f0] bg-white p-4 sm:p-5">
                 <div className="flex flex-wrap items-center justify-between gap-3"><h2 className="flex min-w-0 items-center gap-2 font-display text-base font-extrabold"><span className="flex h-7 w-7 items-center justify-center rounded-full bg-[#eef8f3] text-[#20a67a]">✓</span> {u.included}</h2>{inclusions.length > 0 && <span className="shrink-0 rounded-full bg-[#f4f7fb] px-2 py-1 text-[10px] font-extrabold text-[#748297]">{displayNumber(inclusions.length)} {u.item}</span>}</div>
                 {inclusions.length ? <ul className="mt-3 space-y-2">{inclusions.map((item, i) => <li key={i} className="flex gap-2 text-[13px] leading-5 text-[#60738d]"><span className="text-[#20a67a]">✓</span><span>{item}</span></li>)}</ul> : <p className="mt-3 text-xs text-[#748297]">{lt.includedEmpty}</p>}
@@ -241,7 +241,7 @@ export default async function PackageDetailPage({ params }: { params: { slug: st
               </div>
             </section>
 
-            <section id="reviews" className="rounded-[18px] border border-[#dfe7f0] bg-white p-4 sm:p-6">
+            <section id="reviews" className="scroll-mt-32 rounded-[18px] border border-[#dfe7f0] bg-white p-4 sm:p-6">
               <div className="flex items-start justify-between gap-4">
                 <div><p className="text-[11px] font-extrabold uppercase tracking-[0.12em] text-primary">{u.experience}</p><h2 className="mt-1 font-display text-lg font-extrabold">{u.ratingTitle}</h2></div>
                 {rating && rating.review_count > 0 ? <div className="shrink-0 text-end"><p className="text-2xl font-extrabold text-[#f5a000]">★ {displayRating(rating.average_rating)}</p><p className="text-[11px] font-bold text-[#748297]">{displayNumber(rating.review_count)} {u.reviews}</p></div> : null}
@@ -249,7 +249,7 @@ export default async function PackageDetailPage({ params }: { params: { slug: st
               {rating && rating.review_count > 0 ? <div className="mt-4 rounded-xl bg-[#f7f9fc] p-4"><div className="flex items-center gap-2 text-[11px] font-extrabold text-[#167453]"><Icon name="check" size={14} /> {u.verified}</div><p className="mt-2 text-xs leading-5 text-[#60738d]">{u.reviewBody}</p></div> : <div className="mt-4 rounded-xl border border-dashed border-[#d7e1ec] bg-[#fbfcfe] p-5 text-center"><span className="mx-auto flex h-10 w-10 items-center justify-center rounded-full bg-[#fff7e8] text-[#f5a000]">★</span><p className="mt-2 text-sm font-extrabold">{u.noReviews}</p><p className="mx-auto mt-1 max-w-md text-xs leading-5 text-[#748297]">{u.noReviewBody}</p></div>}
             </section>
 
-            {org && <section id="travel" className="overflow-hidden rounded-[18px] border border-[#dfe7f0] bg-white">
+            {org && <section id="travel" className="scroll-mt-32 overflow-hidden rounded-[18px] border border-[#dfe7f0] bg-white">
               <div className="bg-[linear-gradient(135deg,#f7fbff,#f5fbf8)] p-4 sm:p-6">
                 <div className="flex items-start gap-3">
                   <span className="flex h-12 w-12 shrink-0 items-center justify-center rounded-2xl border border-[#dfe7f0] bg-white text-primary shadow-sm"><Icon name="building" size={20} /></span>
@@ -316,7 +316,7 @@ export default async function PackageDetailPage({ params }: { params: { slug: st
           </aside>
         </div>
       </main>
-      <div className="fixed inset-x-0 bottom-0 z-40 border-t border-[#dfe7f0] bg-white/95 px-3 py-2.5 backdrop-blur lg:hidden">
+      <div className="fixed inset-x-0 bottom-0 z-40 border-t border-[#dfe7f0] bg-white/95 px-3 pb-[max(0.625rem,env(safe-area-inset-bottom))] pt-2.5 shadow-[0_-8px_24px_rgba(15,45,90,0.08)] backdrop-blur lg:hidden">
         <div className="mx-auto flex max-w-[1180px] items-center justify-between gap-3">
           <div className="min-w-0">
             <p className="text-[10px] font-bold text-[#748297]">{departures?.[0] ? `${u.depart} ${displayDate(departures[0].departure_date)}` : t.startFrom}</p>
