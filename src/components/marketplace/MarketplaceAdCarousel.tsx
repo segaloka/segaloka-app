@@ -77,7 +77,7 @@ const PREVIEW_SLOT_COPY: Record<
       title: "Temukan perjalanan yang pas untuk rencana berikutnya",
       detail: "Bandingkan paket dari Travel aktif dalam satu marketplace.",
       price_text: "Jelajahi paket",
-      href: "/paket",
+      href: "/paket/umrah",
       icon: "route",
       tone: "blue",
     },
