@@ -21,6 +21,27 @@ export default async function PackageDetailPage({ params }: { params: { slug: st
     ar: { home:"الرئيسية", available:"الباقة متاحة", days:"أيام", itinerary:"برنامج الرحلة", transportHotel:"الطيران والفندق", facilities:"الخدمات", terms:"الشروط", about:"عن الباقة", summary:"ملخص الرحلة", detail:"تفاصيل الباقة", program:"برنامج السفر", route:"مسار الرحلة", from:"من", to:"إلى", nearest:"أقرب موعد", flight:"الطيران", hotel:"الفندق والإقامة", startFrom:"يبدأ من", perTraveler:"لكل مسافر", chooseDeparture:"اختر موعد المغادرة", choose:"اختر", chooseSchedule:"اختر الموعد", noSchedule:"لا يوجد موعد" }
   } as const;
   const t = copy[language === "en" || language === "ar" ? language : "id"];
+  const longCopy = {
+    id: {
+      routeHint:"{lt.routeHint}", dailyHint:"{lt.dailyHint}", returnHint:"{lt.returnHint}", dailyTitle:"{lt.dailyTitle}", dailyBody:`Travel akan mengisi Hari 1 sampai Hari ${pkg?.duration_days ?? ""}: lokasi awal dan tujuan, aktivitas, waktu kegiatan, transportasi, hotel atau akomodasi, serta catatan perjalanan.`,
+      flightBody:"{lt.flightBody}", hotelBody:"{lt.hotelBody}",
+      includedEmpty:"{lt.includedEmpty}", excludedEmpty:"{lt.excludedEmpty}",
+      currencyPending:(code:string)=>`Pilihan ${code} aktif · harga sementara ditampilkan dalam IDR sampai kurs tersedia.`, noDeparture:"{lt.noDeparture}", beforeBooking:"{lt.beforeBooking}", beforeBookingBody:"{lt.beforeBookingBody}"
+    },
+    en: {
+      routeHint:"Origin and destination cities are provided by the Travel operator.", dailyHint:"The daily program follows the package duration.", returnHint:"The return date follows the Travel schedule.", dailyTitle:"Daily travel plan", dailyBody:`Travel will provide Day 1 through Day ${pkg?.duration_days ?? ""}: origin and destination, activities, times, transportation, hotel or accommodation, and travel notes.`,
+      flightBody:"Airline, flight number, route, time, and baggage details will appear after the Travel operator completes the departure information.", hotelBody:"Hotel name, location, class, and room configuration will be displayed according to the Travel package data.",
+      includedEmpty:"Facilities included in the price will appear after the Travel operator completes the details.", excludedEmpty:"Costs or services not included will appear after the Travel operator completes the details.",
+      currencyPending:(code:string)=>`${code} is selected · prices remain displayed in IDR until an exchange rate is available.`, noDeparture:"No open departure schedule yet. Please check again later or contact the Travel operator.", beforeBooking:"Before continuing to booking", beforeBookingBody:"Review the schedule, price, facilities, payment terms, and travel policies. Final details are shown before booking confirmation."
+    },
+    ar: {
+      routeHint:"تحدد شركة السفر مدينة الانطلاق والوجهة.", dailyHint:"يتبع البرنامج اليومي مدة الباقة.", returnHint:"يتم تحديد تاريخ العودة حسب جدول شركة السفر.", dailyTitle:"البرنامج اليومي للرحلة", dailyBody:`ستضيف شركة السفر تفاصيل اليوم الأول حتى اليوم ${pkg?.duration_days ?? ""}: نقطة الانطلاق والوجهة والأنشطة والأوقات ووسائل النقل والفندق أو الإقامة وملاحظات الرحلة.`,
+      flightBody:"ستظهر شركة الطيران ورقم الرحلة والمسار والوقت والأمتعة بعد استكمال شركة السفر بيانات المغادرة.", hotelBody:"سيتم عرض اسم الفندق والموقع والتصنيف ونوع الغرفة وفق بيانات الباقة من شركة السفر.",
+      includedEmpty:"ستظهر الخدمات المشمولة في السعر بعد استكمال شركة السفر التفاصيل.", excludedEmpty:"ستظهر التكاليف أو الخدمات غير المشمولة بعد استكمال شركة السفر التفاصيل.",
+      currencyPending:(code:string)=>`تم اختيار ${code} · ستظل الأسعار معروضة بالروبية الإندونيسية حتى يتوفر سعر الصرف.`, noDeparture:"لا يوجد موعد مغادرة متاح حالياً. يرجى المحاولة لاحقاً أو التواصل مع شركة السفر.", beforeBooking:"قبل متابعة الحجز", beforeBookingBody:"راجع الموعد والسعر والخدمات وشروط الدفع وسياسات السفر. ستظهر التفاصيل النهائية قبل تأكيد الحجز."
+    }
+  } as const;
+  const lt = longCopy[language === "en" || language === "ar" ? language : "id"];
   const { data: pkg } = await supabase
     .from("packages")
     .select("*, organizations(id, name, slug, status, support_phone, support_email, address, license_type, license_number)")
@@ -145,25 +166,25 @@ export default async function PackageDetailPage({ params }: { params: { slug: st
                 <div className="rounded-xl border border-[#e5ebf2] bg-[#fbfcfe] p-3">
                   <p className="text-[10px] font-bold uppercase tracking-[0.08em] text-[#8a98aa]">{t.route}</p>
                   <div className="mt-2 flex items-center gap-2 text-xs font-extrabold text-[#40546f]"><span className="rounded-lg bg-white px-2 py-1 ring-1 ring-[#e5ebf2]">{t.from}</span><span className="text-primary">→</span><span className="rounded-lg bg-white px-2 py-1 ring-1 ring-[#e5ebf2]">{t.to}</span></div>
-                  <p className="mt-2 text-[10px] leading-4 text-[#8a98aa]">Kota asal dan tujuan diisi Travel.</p>
+                  <p className="mt-2 text-[10px] leading-4 text-[#8a98aa]">{lt.routeHint}</p>
                 </div>
                 <div className="rounded-xl border border-[#e5ebf2] bg-[#fbfcfe] p-3">
                   <p className="text-[10px] font-bold uppercase tracking-[0.08em] text-[#8a98aa]">Durasi</p>
                   <p className="mt-2 text-sm font-extrabold text-[#40546f]">{pkg.duration_days} hari</p>
-                  <p className="mt-2 text-[10px] leading-4 text-[#8a98aa]">Program harian mengikuti durasi paket.</p>
+                  <p className="mt-2 text-[10px] leading-4 text-[#8a98aa]">{lt.dailyHint}</p>
                 </div>
                 <div className="rounded-xl border border-[#e5ebf2] bg-[#fbfcfe] p-3">
                   <p className="text-[10px] font-bold uppercase tracking-[0.08em] text-[#8a98aa]">{t.nearest}</p>
                   <p className="mt-2 text-sm font-extrabold text-[#40546f]">{departures?.[0] ? displayDate(departures[0].departure_date) : "Belum tersedia"}</p>
-                  <p className="mt-2 text-[10px] leading-4 text-[#8a98aa]">{departures?.[0]?.return_date ? `Kembali ${displayDate(departures[0].return_date)}` : "Tanggal kembali mengikuti jadwal Travel."}</p>
+                  <p className="mt-2 text-[10px] leading-4 text-[#8a98aa]">{departures?.[0]?.return_date ? `Kembali ${displayDate(departures[0].return_date)}` : "{lt.returnHint}"}</p>
                 </div>
               </div>
               <div className="mt-3 rounded-xl border border-dashed border-[#d7e1ec] bg-[#fbfcfe] p-4 sm:p-5">
                 <div className="flex items-start gap-3">
                   <span className="flex h-9 w-9 shrink-0 items-center justify-center rounded-xl bg-[#eaf3ff] text-primary"><Icon name="route" size={17} /></span>
                   <div className="min-w-0 flex-1">
-                    <p className="text-sm font-extrabold text-[#40546f]">Agenda perjalanan per hari</p>
-                    <p className="mt-1 text-xs leading-5 text-[#748297]">Travel akan mengisi Hari 1 sampai Hari {pkg.duration_days}: lokasi awal dan tujuan, aktivitas, waktu kegiatan, transportasi, hotel atau akomodasi, serta catatan perjalanan.</p>
+                    <p className="text-sm font-extrabold text-[#40546f]">{lt.dailyTitle}</p>
+                    <p className="mt-1 text-xs leading-5 text-[#748297]">{lt.dailyBody}</p>
                     <div className="mt-3 flex flex-wrap gap-2">
                       {["Dari → Ke", "Aktivitas", "Waktu", "Transportasi", "Hotel", "Catatan"].map((item) => <span key={item} className="rounded-full bg-white px-2.5 py-1 text-[10px] font-bold text-[#60738d] ring-1 ring-[#e5ebf2]">{item}</span>)}
                     </div>
@@ -180,12 +201,12 @@ export default async function PackageDetailPage({ params }: { params: { slug: st
               <div className="rounded-[18px] border border-[#dfe7f0] bg-white p-4 sm:p-5">
                 <div className="flex h-9 w-9 items-center justify-center rounded-xl bg-[#eaf3ff] text-primary"><Icon name="plane" size={18} /></div>
                 <h2 className="mt-3 font-display text-base font-extrabold">{t.flight}</h2>
-                <p className="mt-2 text-xs leading-5 text-[#748297]">Maskapai, nomor penerbangan, rute, waktu, dan bagasi akan tampil setelah Travel melengkapi data keberangkatan.</p><div className="mt-4 flex flex-wrap gap-2"><span className="rounded-full bg-[#f4f7fb] px-2.5 py-1 text-[10px] font-bold text-[#748297]">Maskapai</span><span className="rounded-full bg-[#f4f7fb] px-2.5 py-1 text-[10px] font-bold text-[#748297]">Rute</span><span className="rounded-full bg-[#f4f7fb] px-2.5 py-1 text-[10px] font-bold text-[#748297]">Bagasi</span></div>
+                <p className="mt-2 text-xs leading-5 text-[#748297]">{lt.flightBody}</p><div className="mt-4 flex flex-wrap gap-2"><span className="rounded-full bg-[#f4f7fb] px-2.5 py-1 text-[10px] font-bold text-[#748297]">Maskapai</span><span className="rounded-full bg-[#f4f7fb] px-2.5 py-1 text-[10px] font-bold text-[#748297]">Rute</span><span className="rounded-full bg-[#f4f7fb] px-2.5 py-1 text-[10px] font-bold text-[#748297]">Bagasi</span></div>
               </div>
               <div className="rounded-[18px] border border-[#dfe7f0] bg-white p-4 sm:p-5">
                 <div className="flex h-9 w-9 items-center justify-center rounded-xl bg-[#eef8f3] text-[#167453]"><Icon name="bed" size={18} /></div>
                 <h2 className="mt-3 font-display text-base font-extrabold">{t.hotel}</h2>
-                <p className="mt-2 text-xs leading-5 text-[#748297]">Nama hotel, lokasi, kelas, dan konfigurasi kamar akan ditampilkan sesuai data paket dari Travel.</p><div className="mt-4 flex flex-wrap gap-2"><span className="rounded-full bg-[#f4f7fb] px-2.5 py-1 text-[10px] font-bold text-[#748297]">Nama hotel</span><span className="rounded-full bg-[#f4f7fb] px-2.5 py-1 text-[10px] font-bold text-[#748297]">Lokasi</span><span className="rounded-full bg-[#f4f7fb] px-2.5 py-1 text-[10px] font-bold text-[#748297]">Tipe kamar</span></div>
+                <p className="mt-2 text-xs leading-5 text-[#748297]">{lt.hotelBody}</p><div className="mt-4 flex flex-wrap gap-2"><span className="rounded-full bg-[#f4f7fb] px-2.5 py-1 text-[10px] font-bold text-[#748297]">Nama hotel</span><span className="rounded-full bg-[#f4f7fb] px-2.5 py-1 text-[10px] font-bold text-[#748297]">Lokasi</span><span className="rounded-full bg-[#f4f7fb] px-2.5 py-1 text-[10px] font-bold text-[#748297]">Tipe kamar</span></div>
               </div>
             </section>
 
@@ -200,11 +221,11 @@ export default async function PackageDetailPage({ params }: { params: { slug: st
             <section id="facilities" className="grid gap-3 sm:grid-cols-2">
               <div className="rounded-[18px] border border-[#dfe7f0] bg-white p-4 sm:p-5">
                 <div className="flex items-center justify-between gap-3"><h2 className="flex items-center gap-2 font-display text-base font-extrabold"><span className="flex h-7 w-7 items-center justify-center rounded-full bg-[#eef8f3] text-[#20a67a]">✓</span> Termasuk</h2>{inclusions.length > 0 && <span className="rounded-full bg-[#f4f7fb] px-2 py-1 text-[10px] font-extrabold text-[#748297]">{inclusions.length} item</span>}</div>
-                {inclusions.length ? <ul className="mt-3 space-y-2">{inclusions.map((item, i) => <li key={i} className="flex gap-2 text-[13px] leading-5 text-[#60738d]"><span className="text-[#20a67a]">✓</span><span>{item}</span></li>)}</ul> : <p className="mt-3 text-xs text-[#748297]">Detail fasilitas yang termasuk dalam harga akan ditampilkan setelah dilengkapi Travel.</p>}
+                {inclusions.length ? <ul className="mt-3 space-y-2">{inclusions.map((item, i) => <li key={i} className="flex gap-2 text-[13px] leading-5 text-[#60738d]"><span className="text-[#20a67a]">✓</span><span>{item}</span></li>)}</ul> : <p className="mt-3 text-xs text-[#748297]">{lt.includedEmpty}</p>}
               </div>
               <div className="rounded-[18px] border border-[#dfe7f0] bg-white p-4 sm:p-5">
                 <div className="flex items-center justify-between gap-3"><h2 className="flex items-center gap-2 font-display text-base font-extrabold"><span className="flex h-7 w-7 items-center justify-center rounded-full bg-[#fff7e8] text-[#b16b00]">×</span> Tidak termasuk</h2>{exclusions.length > 0 && <span className="rounded-full bg-[#f4f7fb] px-2 py-1 text-[10px] font-extrabold text-[#748297]">{exclusions.length} item</span>}</div>
-                {exclusions.length ? <ul className="mt-3 space-y-2">{exclusions.map((item, i) => <li key={i} className="flex gap-2 text-[13px] leading-5 text-[#60738d]"><span className="text-[#b16b00]">×</span><span>{item}</span></li>)}</ul> : <p className="mt-3 text-xs text-[#748297]">Detail biaya atau layanan yang tidak termasuk akan ditampilkan setelah dilengkapi Travel.</p>}
+                {exclusions.length ? <ul className="mt-3 space-y-2">{exclusions.map((item, i) => <li key={i} className="flex gap-2 text-[13px] leading-5 text-[#60738d]"><span className="text-[#b16b00]">×</span><span>{item}</span></li>)}</ul> : <p className="mt-3 text-xs text-[#748297]">{lt.excludedEmpty}</p>}
               </div>
             </section>
 
@@ -244,11 +265,11 @@ export default async function PackageDetailPage({ params }: { params: { slug: st
             <div className="rounded-[18px] border border-[#d7e3ef] bg-white p-4 shadow-[0_10px_30px_rgba(15,45,90,0.07)] sm:p-5">
               <p className="text-[11px] font-extrabold uppercase tracking-[0.12em] text-[#748297]">{t.startFrom}</p>
               <p className="mt-1 font-display text-[26px] font-extrabold text-primary">{displayPrice(pkg.base_price)}</p>
-              <p className="text-xs text-[#748297]">{t.perTraveler}</p>{currency !== "IDR" && <p className="mt-1 text-[10px] font-bold text-[#b16b00]">Pilihan {currency} aktif · harga sementara ditampilkan dalam IDR sampai kurs tersedia.</p>}
+              <p className="text-xs text-[#748297]">{t.perTraveler}</p>{currency !== "IDR" && <p className="mt-1 text-[10px] font-bold text-[#b16b00]">{lt.currencyPending(currency)}</p>}
               <div className="mt-4 grid grid-cols-2 gap-2 rounded-xl bg-[#f7f9fc] p-3"><div><p className="text-[9px] font-bold uppercase tracking-[0.08em] text-[#8a98aa]">Durasi</p><p className="mt-1 text-xs font-extrabold text-[#40546f]">{pkg.duration_days} hari</p></div><div><p className="text-[9px] font-bold uppercase tracking-[0.08em] text-[#8a98aa]">Jadwal</p><p className="mt-1 text-xs font-extrabold text-[#40546f]">{departures?.length ? `${departures.length} pilihan` : "Belum tersedia"}</p></div></div>
               <div className="mt-4 border-t border-[#edf1f6] pt-4">
                 <h2 className="text-xs font-extrabold uppercase tracking-[0.1em]">{t.chooseDeparture}</h2>
-                {!departures?.length ? <div className="mt-3 rounded-xl bg-[#f7f9fc] p-3 text-xs leading-5 text-[#60738d]">Belum ada jadwal terbuka. Silakan lihat kembali nanti atau hubungi Travel.</div> : (
+                {!departures?.length ? <div className="mt-3 rounded-xl bg-[#f7f9fc] p-3 text-xs leading-5 text-[#60738d]">{lt.noDeparture}</div> : (
                   <div className="mt-3 space-y-2">
                     {departures.map((d) => {
                       const seats = Math.max(0, d.quota - d.filled);
@@ -276,8 +297,8 @@ export default async function PackageDetailPage({ params }: { params: { slug: st
                 <div className="text-center"><span className="mx-auto flex h-8 w-8 items-center justify-center rounded-full bg-[#fff7e8] text-[#b16b00]"><Icon name="doc" size={15} /></span><p className="mt-1.5 text-[10px] font-bold text-[#60738d]">Detail sebelum bayar</p></div>
               </div>
               <div className="mt-4 rounded-xl bg-[#f7f9fc] p-3">
-                <p className="text-[11px] font-extrabold text-[#40546f]">Sebelum melanjutkan booking</p>
-                <p className="mt-1 text-[10px] leading-4 text-[#748297]">Periksa jadwal, harga, fasilitas, ketentuan pembayaran, serta kebijakan perjalanan. Detail final ditampilkan sebelum konfirmasi booking.</p>
+                <p className="text-[11px] font-extrabold text-[#40546f]">{lt.beforeBooking}</p>
+                <p className="mt-1 text-[10px] leading-4 text-[#748297]">{lt.beforeBookingBody}</p>
               </div>
             </div>
           </aside>
