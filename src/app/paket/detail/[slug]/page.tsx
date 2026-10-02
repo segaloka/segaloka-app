@@ -195,7 +195,7 @@ export default async function PackageDetailPage({ params }: { params: { slug: st
               </div>
               <div className="grid gap-px bg-[#e8edf3] sm:grid-cols-2">
                 <div className="bg-white p-4"><p className="text-[10px] font-bold uppercase tracking-[0.08em] text-[#8a98aa]">Perizinan</p><p className="mt-1 text-xs font-extrabold text-[#40546f]">{org.license_type ? `${org.license_type}${org.license_number ? ` · ${org.license_number}` : ""}` : "Informasi izin belum ditampilkan"}</p></div>
-                <div className="bg-white p-4"><p className="text-[10px] font-bold uppercase tracking-[0.08em] text-[#8a98aa]">Kontak</p><p className="mt-1 break-words text-xs font-extrabold text-[#40546f]">{org.support_phone || org.support_email || "Kontak belum ditampilkan"}</p></div>
+                <div className="bg-white p-4"><p className="text-[10px] font-bold uppercase tracking-[0.08em] text-[#8a98aa]">Komunikasi</p><p className="mt-1 text-xs font-extrabold text-[#40546f]">Melalui Segaloka</p><p className="mt-1 text-[10px] leading-4 text-[#8a98aa]">Kontak dengan Travel dilakukan melalui fitur Pesan setelah masuk.</p></div>
                 <div className="bg-white p-4 sm:col-span-2"><p className="text-[10px] font-bold uppercase tracking-[0.08em] text-[#8a98aa]">Alamat</p><p className="mt-1 text-xs leading-5 text-[#60738d]">{org.address || "Alamat Travel belum ditampilkan."}</p></div>
               </div>
               <div className="p-4 sm:hidden"><Link href={`/travel/${org.slug}`} className="flex w-full items-center justify-center rounded-xl bg-[#eaf3ff] px-4 py-3 text-xs font-extrabold text-primary">Lihat Profil Travel →</Link></div>
