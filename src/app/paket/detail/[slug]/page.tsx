@@ -142,12 +142,12 @@ export default async function PackageDetailPage({ params }: { params: { slug: st
               <div className="rounded-[18px] border border-[#dfe7f0] bg-white p-4 sm:p-5">
                 <div className="flex h-9 w-9 items-center justify-center rounded-xl bg-[#eaf3ff] text-primary"><Icon name="plane" size={18} /></div>
                 <h2 className="mt-3 font-display text-base font-extrabold">Penerbangan</h2>
-                <p className="mt-2 text-xs leading-5 text-[#748297]">Maskapai, nomor penerbangan, rute, waktu, dan bagasi akan tampil setelah Travel melengkapi data keberangkatan.</p>
+                <p className="mt-2 text-xs leading-5 text-[#748297]">Maskapai, nomor penerbangan, rute, waktu, dan bagasi akan tampil setelah Travel melengkapi data keberangkatan.</p><div className="mt-4 flex flex-wrap gap-2"><span className="rounded-full bg-[#f4f7fb] px-2.5 py-1 text-[10px] font-bold text-[#748297]">Maskapai</span><span className="rounded-full bg-[#f4f7fb] px-2.5 py-1 text-[10px] font-bold text-[#748297]">Rute</span><span className="rounded-full bg-[#f4f7fb] px-2.5 py-1 text-[10px] font-bold text-[#748297]">Bagasi</span></div>
               </div>
               <div className="rounded-[18px] border border-[#dfe7f0] bg-white p-4 sm:p-5">
                 <div className="flex h-9 w-9 items-center justify-center rounded-xl bg-[#eef8f3] text-[#167453]"><Icon name="bed" size={18} /></div>
                 <h2 className="mt-3 font-display text-base font-extrabold">Hotel & akomodasi</h2>
-                <p className="mt-2 text-xs leading-5 text-[#748297]">Nama hotel, lokasi, kelas, dan konfigurasi kamar akan ditampilkan sesuai data paket dari Travel.</p>
+                <p className="mt-2 text-xs leading-5 text-[#748297]">Nama hotel, lokasi, kelas, dan konfigurasi kamar akan ditampilkan sesuai data paket dari Travel.</p><div className="mt-4 flex flex-wrap gap-2"><span className="rounded-full bg-[#f4f7fb] px-2.5 py-1 text-[10px] font-bold text-[#748297]">Nama hotel</span><span className="rounded-full bg-[#f4f7fb] px-2.5 py-1 text-[10px] font-bold text-[#748297]">Lokasi</span><span className="rounded-full bg-[#f4f7fb] px-2.5 py-1 text-[10px] font-bold text-[#748297]">Tipe kamar</span></div>
               </div>
             </section>
 
