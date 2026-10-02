@@ -809,7 +809,7 @@ export default async function HomePage() {
                     <Link
                       key={`${pkg.id}-${departure.id}`}
                       href={`/paket/detail/${pkg.slug}`}
-                      className={`group flex items-center gap-3.5 px-5 py-3.5 transition duration-200 hover:bg-[#f8fbff] sm:px-6 ${
+                      className={`group flex items-start gap-3 px-4 py-3.5 transition duration-200 hover:bg-[#f8fbff] sm:items-center sm:gap-3.5 sm:px-6 ${
                         index % 2 === 0 ? "md:border-r md:border-[#edf1f6]" : ""
                       } ${index > 1 ? "border-t border-[#edf1f6]" : index === 1 ? "border-t border-[#edf1f6] md:border-t-0" : ""}`}
                     >
@@ -820,8 +820,8 @@ export default async function HomePage() {
                         <p className="truncate text-[13px] font-extrabold leading-5 text-[#10223f] sm:text-sm">{pkg.name}</p>
                         <p className="mt-0.5 truncate text-xs text-[#748297]">{pkg.organizations?.name ?? "Travel Segaloka"} · {packageTypeLabel(pkg.type)}</p>
                       </div>
-                      <div className="ml-auto flex shrink-0 items-center gap-3">
-                        <div className="text-right"><p className="whitespace-nowrap text-xs font-extrabold text-[#10223f]">{formatDate(departure.departure_date)}</p>
+                      <div className="ml-auto flex max-w-[96px] shrink-0 items-center gap-2 sm:max-w-none sm:gap-3">
+                        <div className="text-right"><p className="text-[11px] font-extrabold leading-4 text-[#10223f] sm:whitespace-nowrap sm:text-xs">{formatDate(departure.departure_date)}</p>
                         <p className={`mt-1 inline-flex whitespace-nowrap rounded-full px-2 py-0.5 text-[11px] font-bold ${seats !== null && seats <= 10 ? "bg-[#fff4dc] text-[#a96600]" : "bg-[#eaf8f2] text-[#167453]"}`}>
                           {seats !== null ? `${seats} kursi` : ""}
                         </p></div>
@@ -906,27 +906,27 @@ export default async function HomePage() {
 
         {/* SEGADEALS — V4.3 FEATURE */}
         <section className="mx-auto max-w-[1180px] px-4 pb-10 lg:pb-8">
-          <div className="relative overflow-hidden rounded-[26px] bg-[linear-gradient(120deg,#082b58_0%,#0d447f_55%,#126b91_100%)]">
+          <div className="relative overflow-hidden rounded-[20px] bg-[linear-gradient(120deg,#082b58_0%,#0d447f_55%,#126b91_100%)] sm:rounded-[26px]">
             <div className="absolute -right-24 -top-28 h-80 w-80 rounded-full border-[54px] border-white/[0.06]" />
-            <div className="grid gap-5 p-5 sm:gap-7 sm:p-8 lg:grid-cols-[1.05fr_0.95fr] lg:items-center">
+            <div className="grid gap-4 p-4 sm:gap-7 sm:p-8 lg:grid-cols-[1.05fr_0.95fr] lg:items-center">
               <div className="relative">
                 <span className="inline-flex rounded-full bg-[#ffbd3d] px-3 py-1 text-xs font-extrabold text-[#382000]">SegaDeals</span>
-                <h2 className="mt-4 max-w-[600px] font-display text-[23px] font-extrabold sm:text-[30px] leading-[1.18] tracking-[-0.025em] text-white sm:text-[30px]">
+                <h2 className="mt-3 max-w-[600px] font-display text-[21px] font-extrabold leading-[1.18] tracking-[-0.025em] text-white sm:mt-4 sm:text-[30px]">
                   Belum menemukan paket yang pas?
                   <br />
                   Biar Travel yang menawar untuk Anda.
                 </h2>
-                <p className="mt-3 max-w-[620px] text-sm leading-6 text-[#c9d6e8]">
+                <p className="mt-2.5 max-w-[620px] text-[13px] leading-5 text-[#c9d6e8] sm:mt-3 sm:text-sm sm:leading-6">
                   Sampaikan kebutuhan perjalanan satu kali. Bandingkan penawaran dari Travel sebelum memilih yang sesuai.
                 </p>
-                <Link href="/akun/segadeals/baru" className="mt-5 inline-flex w-full items-center justify-center gap-2 rounded-full bg-white px-4 py-2.5 text-center text-sm sm:w-auto sm:px-5 font-extrabold text-[#10294d] transition hover:bg-[#f3f7fb]">
+                <Link href="/akun/segadeals/baru" className="mt-4 inline-flex w-full items-center justify-center gap-2 rounded-full bg-white px-4 py-2.5 text-center text-[13px] sm:mt-5 sm:w-auto sm:px-5 sm:text-sm font-extrabold text-[#10294d] transition hover:bg-[#f3f7fb]">
                   Buat permintaan SegaDeals <span>→</span>
                 </Link>
               </div>
 
               <div className="relative space-y-2.5">
                 {SEGADEALS_STEPS.map((step, index) => (
-                  <div key={step} className="flex items-center gap-3 rounded-2xl border border-white/10 bg-white/[0.08] px-4 py-3.5 backdrop-blur-sm">
+                  <div key={step} className="flex items-center gap-3 rounded-xl border border-white/10 bg-white/[0.08] px-3 py-3 backdrop-blur-sm sm:rounded-2xl sm:px-4 sm:py-3.5">
                     <span className="flex h-9 w-9 shrink-0 items-center justify-center rounded-full bg-[#63b6ff] text-xs font-extrabold text-[#09213f]">{index + 1}</span>
                     <p className="text-sm font-bold text-white">{step}</p>
                   </div>
