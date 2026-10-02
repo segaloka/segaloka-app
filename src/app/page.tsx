@@ -555,14 +555,36 @@ export default async function HomePage() {
           <MarketplaceAdCarousel />
         </section>
 
+        {/* MOBILE MARKETPLACE SHORTCUTS */}
+        <section className="mx-auto max-w-[1180px] px-3 pb-2 pt-3 sm:hidden">
+          <div className="rounded-[18px] border border-[#dfe7f0] bg-white px-2 py-3 shadow-[0_8px_22px_rgba(16,34,63,0.06)]">
+            <div className="grid grid-cols-5 gap-1">
+              {[
+                ["building", "Umrah", "/paket/umrah"],
+                ["booking", "Haji", "/paket/haji"],
+                ["globe", "Halal Tour", "/paket/halal_tour"],
+                ["route", "Tour", "/paket/tour"],
+                ["handshake", "SegaDeals", "/segadeals"],
+              ].map(([icon, label, href]) => (
+                <Link key={label} href={href} className="group flex min-w-0 flex-col items-center gap-1.5 rounded-xl px-1 py-2 text-center transition active:bg-[#f2f7fd]">
+                  <span className="flex h-10 w-10 items-center justify-center rounded-2xl bg-[#edf6ff] text-primary transition group-active:bg-primary group-active:text-white">
+                    <Icon name={icon as any} size={18} />
+                  </span>
+                  <span className="w-full truncate text-[10px] font-extrabold text-[#40546f]">{label}</span>
+                </Link>
+              ))}
+            </div>
+          </div>
+        </section>
+
         {/* MARKETPLACE PROMO STRIP — V4.3 */}
         <section className="mx-auto max-w-[1180px] px-3 pb-4 pt-2 sm:px-4 sm:pt-3">
-          <div className="grid gap-2.5 sm:grid-cols-2 lg:grid-cols-3">
+          <div className="flex snap-x gap-2.5 overflow-x-auto pb-1 [scrollbar-width:none] [&::-webkit-scrollbar]:hidden sm:grid sm:grid-cols-2 sm:overflow-visible sm:pb-0 lg:grid-cols-3">
             {PREVIEW_PROMOS.map((promo, index) => (
               <Link
                 key={promo.id}
                 href={index === 0 ? "/paket/umrah" : index === 1 ? "/paket/tour" : "/paket/halal_tour"}
-                className={`group relative min-h-[104px] overflow-hidden rounded-[16px] border p-3.5 transition duration-300 sm:min-h-[110px] sm:rounded-[18px] sm:p-4 hover:-translate-y-0.5 hover:shadow-[0_14px_34px_rgba(15,45,90,0.09)] ${
+                className={`group relative min-h-[104px] min-w-[84%] snap-start overflow-hidden rounded-[16px] border p-3.5 transition duration-300 sm:min-h-[110px] sm:min-w-0 sm:rounded-[18px] sm:p-4 hover:-translate-y-0.5 hover:shadow-[0_14px_34px_rgba(15,45,90,0.09)] ${
                   index === 0
                     ? "border-[#cfe4ff] bg-[linear-gradient(135deg,#e9f5ff_0%,#f8fcff_68%,#ddecff_100%)]"
                     : index === 1
