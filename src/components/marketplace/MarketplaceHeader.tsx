@@ -75,7 +75,7 @@ export function MarketplaceHeader({ initialLanguage = "id", initialCurrency = "I
             ))}
           </nav>
 
-          <div className="ml-auto flex items-center gap-2">
+          <div className="ms-auto flex items-center gap-2">
             <button
               type="button"
               onClick={() => setOpen(true)}
@@ -109,7 +109,7 @@ export function MarketplaceHeader({ initialLanguage = "id", initialCurrency = "I
             </div>
 
             <div className="grid md:grid-cols-2">
-              <div className="border-b border-[#e5ebf2] p-5 md:border-b-0 md:border-r">
+              <div className="border-b border-[#e5ebf2] p-5 md:border-b-0 md:border-e">
                 <p className="text-sm font-extrabold text-[#10223f]">{t.language}</p>
                 <div className="mt-3 grid gap-2">
                   {LANGUAGES.map(([code, label]) => (
@@ -129,7 +129,7 @@ export function MarketplaceHeader({ initialLanguage = "id", initialCurrency = "I
                     <label key={code} className="flex cursor-pointer items-center justify-between rounded-xl border border-[#e1e8f0] px-3.5 py-3">
                       <span>
                         <span className="text-sm font-extrabold text-primary">{code}</span>
-                        <span className="ml-2 text-xs text-[#52647e]">{label}</span>
+                        <span className="ms-2 text-xs text-[#52647e]">{label}</span>
                       </span>
                       <input type="radio" name="currency" value={code} checked={currency === code} onChange={() => setCurrency(code)} />
                     </label>
