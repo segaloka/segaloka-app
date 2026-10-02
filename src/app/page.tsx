@@ -532,7 +532,7 @@ export default async function HomePage() {
                       <Icon name="route" size={17} />
                     </span>
                     <p className="mt-3 text-xs font-extrabold text-[#10223f]">Jelajahi Indonesia</p>
-                    <p className="mt-1 line-clamp-2 text-[11px] leading-4 text-[#718096] sm:text-xs">Bali hingga Raja Ampat</p>
+                    <p className="mt-1 text-xs leading-4 text-[#718096]">Bali hingga Raja Ampat</p>
                   </div>
                   <div className="mt-7 rounded-2xl border border-white/80 bg-white/80 p-4 shadow-[0_12px_30px_rgba(25,94,166,0.10)]">
                     <span className="flex h-9 w-9 items-center justify-center rounded-xl bg-primary text-white">
@@ -600,7 +600,7 @@ export default async function HomePage() {
                   <div className="min-w-0">
                     <p className="text-xs font-black uppercase tracking-[0.12em] text-primary">{promo.label}</p>
                     <p className="mt-1 text-[13px] font-extrabold leading-[18px] text-[#10223f] sm:text-sm sm:leading-5">{promo.title}</p>
-                    <p className="mt-1 text-xs leading-4 text-[#718096]">{promo.detail}</p>
+                    <p className="mt-1 line-clamp-2 text-[11px] leading-4 text-[#718096] sm:text-xs">{promo.detail}</p>
                     <span className="mt-2 inline-flex items-center gap-1 text-[11px] font-extrabold text-primary sm:mt-2.5 sm:text-xs">
                       Jelajahi <span aria-hidden="true">→</span>
                     </span>
@@ -653,7 +653,7 @@ export default async function HomePage() {
               </Link>
             </div>
           ) : (
-            <div className="mt-3 flex snap-x gap-3 overflow-x-auto pb-2 sm:mt-5 [scrollbar-width:none] [&::-webkit-scrollbar]:hidden sm:mt-5 sm:grid sm:grid-cols-2 sm:gap-4 sm:overflow-visible sm:pb-0 lg:grid-cols-4">
+            <div className="mt-3 flex snap-x gap-3 overflow-x-auto pb-2 [scrollbar-width:none] [&::-webkit-scrollbar]:hidden sm:mt-5 sm:grid sm:grid-cols-2 sm:gap-4 sm:overflow-visible sm:pb-0 lg:grid-cols-4">
               {displayPackages.map((pkg) => {
                 const org = pkg.organizations;
                 const departure = pkg.departures[0];
