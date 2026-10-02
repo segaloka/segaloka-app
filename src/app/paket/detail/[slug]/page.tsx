@@ -178,14 +178,27 @@ export default async function PackageDetailPage({ params }: { params: { slug: st
               {rating && rating.review_count > 0 ? <p className="mt-4 rounded-xl bg-[#f7f9fc] p-4 text-xs leading-5 text-[#60738d]">Ringkasan rating berasal dari ulasan booking terverifikasi. Isi ulasan jamaah akan ditampilkan setelah fitur publikasi ulasan tersedia.</p> : <div className="mt-4 rounded-xl border border-dashed border-[#d7e1ec] bg-[#fbfcfe] p-5 text-center"><p className="text-sm font-extrabold">Belum ada ulasan</p><p className="mt-1 text-xs text-[#748297]">Ulasan akan berasal dari jamaah yang melakukan booking melalui Segaloka.</p></div>}
             </section>
 
-            {org && <section id="travel" className="rounded-[18px] border border-[#dfe7f0] bg-white p-4 sm:p-6">
-              <div className="flex items-start justify-between gap-3"><div><p className="text-[11px] font-extrabold uppercase tracking-[0.12em] text-primary">Penyelenggara perjalanan</p><h2 className="mt-1 font-display text-lg font-extrabold">{org.name}</h2></div><Link href={`/travel/${org.slug}`} className="text-xs font-extrabold text-primary">Lihat Travel →</Link></div>
-              <div className="mt-4 grid gap-2 text-xs text-[#60738d] sm:grid-cols-2">
-                {org.license_type && <p><span className="font-extrabold text-[#40546f]">Izin:</span> {org.license_type}{org.license_number ? ` · ${org.license_number}` : ""}</p>}
-                {org.address && <p><span className="font-extrabold text-[#40546f]">Alamat:</span> {org.address}</p>}
-                {org.support_phone && <p><span className="font-extrabold text-[#40546f]">Kontak:</span> {org.support_phone}</p>}
-                {org.support_email && <p><span className="font-extrabold text-[#40546f]">Email:</span> {org.support_email}</p>}
+            {org && <section id="travel" className="overflow-hidden rounded-[18px] border border-[#dfe7f0] bg-white">
+              <div className="bg-[linear-gradient(135deg,#f7fbff,#f5fbf8)] p-4 sm:p-6">
+                <div className="flex items-start gap-3">
+                  <span className="flex h-12 w-12 shrink-0 items-center justify-center rounded-2xl border border-[#dfe7f0] bg-white text-primary shadow-sm"><Icon name="building" size={20} /></span>
+                  <div className="min-w-0 flex-1">
+                    <p className="text-[10px] font-extrabold uppercase tracking-[0.12em] text-primary">Penyelenggara perjalanan</p>
+                    <h2 className="mt-1 truncate font-display text-lg font-extrabold">{org.name}</h2>
+                    <div className="mt-1.5 flex flex-wrap items-center gap-x-3 gap-y-1">
+                      <span className="text-[11px] font-bold text-[#167453]">Travel di Segaloka</span>
+                      <span className="text-[11px] text-[#748297]">{rating && rating.review_count > 0 ? `★ ${Number(rating.average_rating).toFixed(1)} · ${rating.review_count} ulasan` : "Belum ada ulasan"}</span>
+                    </div>
+                  </div>
+                  <Link href={`/travel/${org.slug}`} className="hidden rounded-xl border border-[#cfe0f2] bg-white px-3 py-2 text-[11px] font-extrabold text-primary sm:inline-flex">Lihat Travel →</Link>
+                </div>
               </div>
+              <div className="grid gap-px bg-[#e8edf3] sm:grid-cols-2">
+                <div className="bg-white p-4"><p className="text-[10px] font-bold uppercase tracking-[0.08em] text-[#8a98aa]">Perizinan</p><p className="mt-1 text-xs font-extrabold text-[#40546f]">{org.license_type ? `${org.license_type}${org.license_number ? ` · ${org.license_number}` : ""}` : "Informasi izin belum ditampilkan"}</p></div>
+                <div className="bg-white p-4"><p className="text-[10px] font-bold uppercase tracking-[0.08em] text-[#8a98aa]">Kontak</p><p className="mt-1 break-words text-xs font-extrabold text-[#40546f]">{org.support_phone || org.support_email || "Kontak belum ditampilkan"}</p></div>
+                <div className="bg-white p-4 sm:col-span-2"><p className="text-[10px] font-bold uppercase tracking-[0.08em] text-[#8a98aa]">Alamat</p><p className="mt-1 text-xs leading-5 text-[#60738d]">{org.address || "Alamat Travel belum ditampilkan."}</p></div>
+              </div>
+              <div className="p-4 sm:hidden"><Link href={`/travel/${org.slug}`} className="flex w-full items-center justify-center rounded-xl bg-[#eaf3ff] px-4 py-3 text-xs font-extrabold text-primary">Lihat Profil Travel →</Link></div>
             </section>}
           </div>
 
