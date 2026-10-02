@@ -503,24 +503,24 @@ export default async function HomePage() {
     <div className="min-h-screen bg-[#f7f9fc]">
       <MarketplaceHeader />
 
-      <main className="pb-16 md:pb-0">
+      <main className="pb-20 md:pb-0">
         {/* MARKETPLACE V4 HERO */}
         <section className="relative overflow-hidden border-b border-[#d9e6f4] bg-[#dff1ff]">
           <div className="absolute inset-0 bg-[linear-gradient(105deg,#edf8ff_0%,#d8efff_50%,#c8e8ff_100%)]" />
           <div className="absolute -right-16 -top-28 hidden h-[420px] w-[620px] rounded-[50%] border border-white/60 bg-white/25 lg:block" />
           <div className="absolute right-[13%] top-10 hidden h-44 w-44 rounded-full border-[30px] border-white/25 lg:block" />
 
-          <div className="relative mx-auto max-w-[1180px] px-3 pb-20 pt-6 sm:px-4 sm:pb-24 sm:pt-8 md:pb-28 md:pt-10">
+          <div className="relative mx-auto max-w-[1180px] px-4 pb-16 pt-5 sm:px-4 sm:pb-24 sm:pt-8 md:pb-28 md:pt-10">
             <div className="grid gap-6 lg:grid-cols-[1fr_0.72fr] lg:items-center">
               <div className="max-w-[700px]">
-                <p className="inline-flex items-center gap-2 rounded-full border border-white/80 bg-white/80 px-3 py-1.5 text-xs font-extrabold text-primary shadow-sm">
+                <p className="hidden items-center gap-2 rounded-full border border-white/80 bg-white/80 px-3 py-1.5 text-xs font-extrabold text-primary shadow-sm sm:inline-flex">
                   <Icon name="globe" size={13} />
                   Domestik · Internasional · Umrah · Haji
                 </p>
-                <h1 className="mt-3 font-display text-[28px] font-extrabold leading-[1.08] tracking-[-0.035em] text-[#10223f] sm:text-[36px] md:text-[42px]">
+                <h1 className="font-display text-[27px] font-extrabold leading-[1.08] tracking-[-0.035em] text-[#10223f] sm:mt-3 sm:text-[36px] md:text-[42px]">
                   Dari Indonesia untuk perjalanan ke mana saja.
                 </h1>
-                <p className="mt-3 max-w-[650px] text-sm leading-6 text-[#52647e]">
+                <p className="mt-2.5 max-w-[650px] text-[13px] leading-5 text-[#52647e] sm:mt-3 sm:text-sm sm:leading-6">
                   Temukan paket Umrah, Haji, Halal Tour, Tour Domestik dan Tour Internasional dari Travel dalam ekosistem Segaloka.
                 </p>
               </div>
@@ -548,7 +548,7 @@ export default async function HomePage() {
         </section>
 
         {/* MARKETPLACE CATEGORY + SEARCH CENTER */}
-        <section className="relative z-20 mx-auto -mt-14 max-w-[1180px] px-3 sm:-mt-16 sm:px-4">
+        <section className="relative z-20 mx-auto -mt-10 max-w-[1180px] px-3 sm:-mt-16 sm:px-4">
           <MarketplaceSearch />
 
           {/* AUTO MARKETPLACE ADS V4.5 */}
