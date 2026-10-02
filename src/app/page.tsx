@@ -791,7 +791,7 @@ export default async function HomePage() {
         </div>
         {/* UPCOMING DEPARTURES — V4.3 */}
         {upcomingPackages.length > 0 && (
-          <section className="mx-auto max-w-[1180px] px-4 pb-10 lg:pb-8">
+          <section className="mx-auto max-w-[1180px] px-3 pb-8 sm:px-4 sm:pb-10 lg:pb-8">
             <div className="overflow-hidden rounded-[22px] border border-[#dce5ef] bg-white shadow-[0_8px_24px_rgba(15,45,90,0.04)]">
               <div className="flex flex-col gap-2 border-b border-[#edf1f6] px-5 py-4 sm:flex-row sm:items-end sm:justify-between sm:px-6">
                 <div>
@@ -836,7 +836,7 @@ export default async function HomePage() {
         )}
 
         {/* EXPLORE THE WORLD — V4.3 */}
-        <section className="mx-auto max-w-[1180px] px-4 pb-10 lg:pb-8">
+        <section className="mx-auto max-w-[1180px] px-3 pb-8 sm:px-4 sm:pb-10 lg:pb-8">
           <div className="overflow-hidden rounded-[22px] border border-[#dfe9f3] bg-[linear-gradient(135deg,#f4f9ff_0%,#f8fbff_52%,#f1faf7_100%)] p-5 sm:p-6">
             <div className="flex items-end justify-between gap-4">
               <div>
@@ -875,7 +875,7 @@ export default async function HomePage() {
           <MarketplaceAdCarousel placement="after_world" />
         </div>
         {/* VENDOR PICKS — V4.3 SERVICE CARDS */}
-        <section className="mx-auto max-w-[1180px] px-4 pb-10 lg:pb-8">
+        <section className="mx-auto max-w-[1180px] px-3 pb-8 sm:px-4 sm:pb-10 lg:pb-8">
           <div className="flex items-end justify-between gap-4">
             <div>
               <p className="text-xs font-extrabold uppercase tracking-[0.14em] text-primary">Vendor Pilihan</p>
@@ -905,7 +905,7 @@ export default async function HomePage() {
         </section>
 
         {/* SEGADEALS — V4.3 FEATURE */}
-        <section className="mx-auto max-w-[1180px] px-4 pb-10 lg:pb-8">
+        <section className="mx-auto max-w-[1180px] px-3 pb-8 sm:px-4 sm:pb-10 lg:pb-8">
           <div className="relative overflow-hidden rounded-[20px] bg-[linear-gradient(120deg,#082b58_0%,#0d447f_55%,#126b91_100%)] sm:rounded-[26px]">
             <div className="absolute -right-24 -top-28 h-80 w-80 rounded-full border-[54px] border-white/[0.06]" />
             <div className="grid gap-4 p-4 sm:gap-7 sm:p-8 lg:grid-cols-[1.05fr_0.95fr] lg:items-center">
@@ -941,7 +941,7 @@ export default async function HomePage() {
           <MarketplaceAdCarousel placement="lower_home" />
         </div>
         {/* TRAVEL DIRECTORY — V4.3 IDENTITY CARDS */}
-        <section className="mx-auto max-w-[1180px] px-4 pb-10 lg:pb-8">
+        <section className="mx-auto max-w-[1180px] px-3 pb-8 sm:px-4 sm:pb-10 lg:pb-8">
           <div className="flex items-end justify-between gap-4">
             <div>
               <p className="text-xs font-extrabold uppercase tracking-[0.14em] text-primary">Travel Pilihan</p>
@@ -979,7 +979,7 @@ export default async function HomePage() {
         </section>
 
         {/* TRAVEL INSPIRATION — V4.3 EDITORIAL CARDS */}
-        <section className="mx-auto max-w-[1180px] px-4 pb-10 lg:pb-8">
+        <section className="mx-auto max-w-[1180px] px-3 pb-8 sm:px-4 sm:pb-10 lg:pb-8">
           <div>
             <p className="text-xs font-extrabold uppercase tracking-[0.14em] text-primary">Inspirasi Perjalanan</p>
             <h2 className="mt-1 font-display text-xl font-extrabold text-[#10223f] sm:text-[22px]">Ide dan panduan sebelum berangkat</h2>
