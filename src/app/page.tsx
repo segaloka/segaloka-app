@@ -1094,7 +1094,7 @@ export default async function HomePage() {
         </div>
       </footer>
 
-      <nav className="fixed inset-x-0 bottom-0 z-40 border-t border-[#dfe5ed] bg-white/95 px-2 py-2 backdrop-blur md:hidden">
+      <nav className="fixed inset-x-0 bottom-0 z-40 border-t border-[#dfe5ed] bg-white/95 px-1 pb-[max(0.5rem,env(safe-area-inset-bottom))] pt-2 backdrop-blur md:hidden">
         <div className="mx-auto grid max-w-md grid-cols-5">
           {[
             ["home", "Beranda", "/"],
@@ -1106,7 +1106,7 @@ export default async function HomePage() {
             <Link
               key={label}
               href={href}
-              className={`flex min-w-0 flex-col items-center gap-1 px-0.5 py-1 text-[10px] font-bold sm:text-xs ${
+              className={`flex min-h-11 min-w-0 flex-col items-center justify-center gap-0.5 rounded-lg px-0.5 py-1 text-[9px] font-bold transition hover:bg-[#f4f7fb] sm:gap-1 sm:text-xs ${
                 index === 0 ? "text-primary" : "text-[#748297]"
               }`}
             >
