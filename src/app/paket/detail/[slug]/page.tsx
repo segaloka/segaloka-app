@@ -105,8 +105,8 @@ export default async function PackageDetailPage({ params }: { params: { slug: st
 
         <section className="overflow-hidden rounded-[20px] border border-[#dfe7f0] bg-white sm:rounded-[26px]">
           <div className="relative min-h-[220px] bg-[linear-gradient(135deg,#e5f2ff_0%,#f5faff_52%,#e9f8f2_100%)] sm:min-h-[320px]">
-            <div className="absolute -right-16 -top-20 h-64 w-64 rounded-full border-[42px] border-white/60" />
-            <div className="absolute bottom-4 left-4 flex h-12 w-12 items-center justify-center rounded-2xl bg-white text-primary shadow-sm sm:bottom-6 sm:left-6 sm:h-14 sm:w-14">
+            <div className="absolute -end-16 -top-20 h-64 w-64 rounded-full border-[42px] border-white/60" />
+            <div className="absolute bottom-4 start-4 flex h-12 w-12 items-center justify-center rounded-2xl bg-white text-primary shadow-sm sm:bottom-6 sm:start-6 sm:h-14 sm:w-14">
               <Icon name={pkg.type === "umrah" ? "building" : pkg.type === "haji" ? "route" : pkg.type === "halal_tour" ? "globe" : "plane"} size={24} />
             </div>
           </div>
