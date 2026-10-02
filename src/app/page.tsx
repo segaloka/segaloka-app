@@ -653,7 +653,7 @@ export default async function HomePage() {
               </Link>
             </div>
           ) : (
-            <div className="mt-4 grid gap-3 sm:mt-5 sm:grid-cols-2 sm:gap-4 lg:grid-cols-4">
+            <div className="mt-4 flex snap-x gap-3 overflow-x-auto pb-2 [scrollbar-width:none] [&::-webkit-scrollbar]:hidden sm:mt-5 sm:grid sm:grid-cols-2 sm:gap-4 sm:overflow-visible sm:pb-0 lg:grid-cols-4">
               {displayPackages.map((pkg) => {
                 const org = pkg.organizations;
                 const departure = pkg.departures[0];
@@ -666,7 +666,7 @@ export default async function HomePage() {
                   <Link
                     key={pkg.id}
                     href={`/paket/detail/${pkg.slug}`}
-                    className="group flex min-h-[318px] flex-col overflow-hidden rounded-[18px] sm:min-h-[338px] sm:rounded-[20px] border border-[#dfe7f0] bg-white shadow-[0_8px_24px_rgba(15,45,90,0.05)] transition duration-200 hover:-translate-y-1 hover:border-[#b9d2ee] hover:shadow-[0_16px_38px_rgba(15,45,90,0.11)]"
+                    className="group flex min-h-[300px] min-w-[78%] snap-start flex-col overflow-hidden rounded-[18px] border border-[#dfe7f0] bg-white shadow-[0_8px_24px_rgba(15,45,90,0.05)] transition duration-200 hover:-translate-y-1 hover:border-[#b9d2ee] hover:shadow-[0_16px_38px_rgba(15,45,90,0.11)] sm:min-h-[338px] sm:min-w-0 sm:rounded-[20px]"
                   >
                     <div className="relative h-[132px] overflow-hidden bg-[linear-gradient(145deg,#dcefff_0%,#eff8ff_48%,#e8f8f2_100%)] p-3.5">
                       <div className="absolute -bottom-14 -left-10 h-36 w-36 rounded-full border-[24px] border-white/40" />
@@ -756,12 +756,12 @@ export default async function HomePage() {
             <Link href="/paket/tour" className="hidden text-sm font-extrabold text-primary hover:underline sm:inline">Lihat Tour Domestik →</Link>
           </div>
 
-          <div className="mt-4 grid grid-cols-2 gap-2.5 sm:grid-cols-3 sm:gap-3 lg:grid-cols-6">
+          <div className="mt-4 flex snap-x gap-2.5 overflow-x-auto pb-2 [scrollbar-width:none] [&::-webkit-scrollbar]:hidden sm:grid sm:grid-cols-3 sm:gap-3 sm:overflow-visible sm:pb-0 lg:grid-cols-6">
             {PREVIEW_DOMESTIC_DESTINATIONS.map((destination, index) => (
               <Link
                 key={destination.name}
                 href={`/paket/tour?destination=${encodeURIComponent(destination.query)}&scope=domestic`}
-                className={`group relative min-h-[138px] overflow-hidden rounded-[16px] border p-3.5 transition sm:min-h-[148px] sm:rounded-[18px] sm:p-4 duration-300 hover:-translate-y-0.5 hover:shadow-[0_12px_26px_rgba(15,45,90,0.08)] lg:min-h-[132px] ${
+                className={`group relative min-h-[132px] min-w-[44%] snap-start overflow-hidden rounded-[16px] border p-3.5 transition sm:min-h-[148px] sm:min-w-0 sm:rounded-[18px] sm:p-4 duration-300 hover:-translate-y-0.5 hover:shadow-[0_12px_26px_rgba(15,45,90,0.08)] lg:min-h-[132px] ${
                   index < 3 ? "lg:col-span-2 " : "lg:col-span-3 "
                 }${
                   index % 3 === 0
@@ -847,12 +847,12 @@ export default async function HomePage() {
               <Link href="/paket/halal_tour" className="hidden text-sm font-extrabold text-primary hover:underline sm:inline">Lihat Internasional →</Link>
             </div>
 
-            <div className="mt-4 grid grid-cols-2 gap-2.5 sm:grid-cols-3 sm:gap-3 lg:grid-cols-6">
+            <div className="mt-4 flex snap-x gap-2.5 overflow-x-auto pb-2 [scrollbar-width:none] [&::-webkit-scrollbar]:hidden sm:grid sm:grid-cols-3 sm:gap-3 sm:overflow-visible sm:pb-0 lg:grid-cols-6">
               {PREVIEW_WORLD_DESTINATIONS.map((destination, index) => (
                 <Link
                   key={destination.name}
                   href={`/paket/halal_tour?destination=${encodeURIComponent(destination.query)}&scope=international`}
-                  className={`group relative min-h-[138px] overflow-hidden rounded-[16px] border border-white/90 bg-white p-3.5 sm:min-h-[148px] sm:rounded-[18px] sm:p-4 shadow-[0_6px_18px_rgba(15,45,90,0.045)] transition duration-300 hover:-translate-y-0.5 hover:border-[#d7e7f5] hover:shadow-[0_12px_26px_rgba(15,45,90,0.08)] lg:min-h-[132px] ${
+                  className={`group relative min-h-[132px] min-w-[44%] snap-start overflow-hidden rounded-[16px] border border-white/90 bg-white p-3.5 sm:min-h-[148px] sm:min-w-0 sm:rounded-[18px] sm:p-4 shadow-[0_6px_18px_rgba(15,45,90,0.045)] transition duration-300 hover:-translate-y-0.5 hover:border-[#d7e7f5] hover:shadow-[0_12px_26px_rgba(15,45,90,0.08)] lg:min-h-[132px] ${
                     index < 3 ? "lg:col-span-2" : "lg:col-span-3"
                   }`}
                 >
