@@ -115,7 +115,7 @@ export default async function PackageDetailPage({ params }: { params: { slug: st
                 <span className="hidden rounded-full bg-[#f2f6fb] px-3 py-1 text-[10px] font-extrabold text-[#748297] sm:inline-flex">Detail perjalanan</span>
               </div>
               <div className="mt-4 grid grid-cols-2 gap-2 sm:grid-cols-4 sm:gap-3">
-                {[["route", "Jenis", pkg.type === "halal_tour" ? "Halal Tour" : pkg.type.charAt(0).toUpperCase() + pkg.type.slice(1)], ["globe", "Durasi", `${pkg.duration_days} hari`], ["plane", "Keberangkatan", departures?.[0] ? formatDate(departures[0].departure_date) : "Belum tersedia"], ["users", "Ketersediaan", departures?.length ? `${departures.length} jadwal` : "Belum tersedia"]].map(([icon, label, value]) => (
+                {[["route", "Jenis", pkg.type === "halal_tour" ? "Halal Tour" : pkg.type.charAt(0).toUpperCase() + pkg.type.slice(1)], ["globe", "Durasi", `${pkg.duration_days} hari`], ["plane", "Keberangkatan", departures?.[0] ? formatDate(departures[0].departure_date) : "Belum tersedia"], ["users", "Ketersediaan", departures?.length ? `${departures.length} jadwal · ${Math.max(0, departures[0].quota - departures[0].filled)} kursi terdekat` : "Belum tersedia"]].map(([icon, label, value]) => (
                   <div key={label} className="rounded-xl border border-[#e5ebf2] bg-[#fbfcfe] p-3">
                     <span className="text-primary"><Icon name={icon as "route"} size={17} /></span>
                     <p className="mt-2 text-[10px] font-bold uppercase tracking-[0.08em] text-[#8a98aa]">{label}</p>
