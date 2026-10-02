@@ -218,7 +218,15 @@ export default async function PackageDetailPage({ params }: { params: { slug: st
                   </div>
                 )}
               </div>
-              <p className="mt-4 text-[11px] leading-4 text-[#748297]">Harga dan ketersediaan mengikuti jadwal yang dipilih. Detail final ditampilkan sebelum konfirmasi booking.</p>
+              <div className="mt-4 grid grid-cols-3 gap-2 border-t border-[#edf1f6] pt-4">
+                <div className="text-center"><span className="mx-auto flex h-8 w-8 items-center justify-center rounded-full bg-[#eef8f3] text-[#167453]"><Icon name="check" size={15} /></span><p className="mt-1.5 text-[10px] font-bold text-[#60738d]">Harga transparan</p></div>
+                <div className="text-center"><span className="mx-auto flex h-8 w-8 items-center justify-center rounded-full bg-[#eaf3ff] text-primary"><Icon name="shield" size={15} /></span><p className="mt-1.5 text-[10px] font-bold text-[#60738d]">Travel terdaftar</p></div>
+                <div className="text-center"><span className="mx-auto flex h-8 w-8 items-center justify-center rounded-full bg-[#fff7e8] text-[#b16b00]"><Icon name="doc" size={15} /></span><p className="mt-1.5 text-[10px] font-bold text-[#60738d]">Detail sebelum bayar</p></div>
+              </div>
+              <div className="mt-4 rounded-xl bg-[#f7f9fc] p-3">
+                <p className="text-[11px] font-extrabold text-[#40546f]">Sebelum melanjutkan booking</p>
+                <p className="mt-1 text-[10px] leading-4 text-[#748297]">Periksa jadwal, harga, fasilitas, ketentuan pembayaran, serta kebijakan perjalanan. Detail final ditampilkan sebelum konfirmasi booking.</p>
+              </div>
             </div>
           </aside>
         </div>
