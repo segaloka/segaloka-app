@@ -40,11 +40,9 @@ export function MarketplaceHeader({ initialLanguage = "id", initialCurrency = "I
   const [currency, setCurrency] = useState(safeInitialCurrency);
 
   useEffect(() => {
-    const storedLanguage = localStorage.getItem("segaloka-language");
-    const storedCurrency = localStorage.getItem("segaloka-currency");
-    if (storedLanguage && LANGUAGES.some(([code]) => code === storedLanguage)) setLanguage(storedLanguage);
-    if (storedCurrency && CURRENCIES.some(([code]) => code === storedCurrency)) setCurrency(storedCurrency);
-  }, []);
+    localStorage.setItem("segaloka-language", safeInitialLanguage);
+    localStorage.setItem("segaloka-currency", safeInitialCurrency);
+  }, [safeInitialLanguage, safeInitialCurrency]);
 
   const t = COPY[language === "en" || language === "ar" ? language : "id"];
 
