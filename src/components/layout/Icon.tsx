@@ -1,6 +1,9 @@
 import type { SVGProps } from "react";
 
 const paths: Record<string, string> = {
+  home: "M3 11l9-8 9 8v10h-6v-6H9v6H3V11z",
+  booking: "M5 4h14a2 2 0 012 2v4a2 2 0 000 4v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4a2 2 0 000-4V6a2 2 0 012-2zM12 7v10",
+  user: "M20 21a8 8 0 00-16 0M12 13a5 5 0 100-10 5 5 0 000 10z",
   dashboard: "M3 3h8v8H3V3zm10 0h8v5h-8V3zM3 13h8v8H3v-8zm10 3h8v5h-8v-5z",
   package: "M21 8l-9-5-9 5 9 5 9-5zM3 8v8l9 5 9-5V8M12 13v8",
   users: "M17 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2M9 11a4 4 0 100-8 4 4 0 000 8zM23 21v-2a4 4 0 00-3-3.87M16 3.13a4 4 0 010 7.75",
