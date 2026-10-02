@@ -2,7 +2,6 @@
 
 import { useFormState, useFormStatus } from "react-dom";
 import Link from "next/link";
-import { useSearchParams } from "next/navigation";
 import { registerAction } from "./actions";
 import { Input } from "@/components/ui/Field";
 
@@ -21,8 +20,7 @@ function SubmitButton() {
 
 export default function RegisterPage() {
   const [state, formAction] = useFormState(registerAction, null);
-  const searchParams = useSearchParams();
-  const role = searchParams.get("role");
+  const role = typeof window !== "undefined" ? new URLSearchParams(window.location.search).get("role") : null;
   const roleLabels: Record<string, string> = {
     traveler: "Traveler",
     travel: "Travel",
