@@ -101,6 +101,56 @@ export default async function PackageDetailPage({ params }: { params: { slug: st
           <div className="space-y-4">
             {pkg.description && <section className="rounded-[18px] border border-[#dfe7f0] bg-white p-4 sm:p-6"><h2 className="font-display text-lg font-extrabold">Tentang paket</h2><p className="mt-2 whitespace-pre-line text-[13px] leading-6 text-[#60738d] sm:text-sm">{pkg.description}</p></section>}
 
+            <section className="rounded-[18px] border border-[#dfe7f0] bg-white p-4 sm:p-6">
+              <div className="flex items-center justify-between gap-3">
+                <div><p className="text-[11px] font-extrabold uppercase tracking-[0.12em] text-primary">Ringkasan perjalanan</p><h2 className="mt-1 font-display text-lg font-extrabold">Detail paket</h2></div>
+                <span className="rounded-full bg-[#f2f6fb] px-3 py-1 text-[10px] font-extrabold text-[#748297]">Preview UI</span>
+              </div>
+              <div className="mt-4 grid grid-cols-2 gap-2 sm:grid-cols-4">
+                {[["route", "Jenis", pkg.type === "halal_tour" ? "Halal Tour" : pkg.type.charAt(0).toUpperCase() + pkg.type.slice(1)], ["globe", "Durasi", `${pkg.duration_days} hari`], ["plane", "Keberangkatan", departures?.[0] ? formatDate(departures[0].departure_date) : "Belum tersedia"], ["users", "Ketersediaan", departures?.length ? `${departures.length} jadwal` : "Belum tersedia"]].map(([icon, label, value]) => (
+                  <div key={label} className="rounded-xl border border-[#e5ebf2] bg-[#fbfcfe] p-3">
+                    <span className="text-primary"><Icon name={icon as "route"} size={17} /></span>
+                    <p className="mt-2 text-[10px] font-bold uppercase tracking-[0.08em] text-[#8a98aa]">{label}</p>
+                    <p className="mt-1 text-xs font-extrabold text-[#40546f]">{value}</p>
+                  </div>
+                ))}
+              </div>
+            </section>
+
+            <section className="rounded-[18px] border border-[#dfe7f0] bg-white p-4 sm:p-6">
+              <p className="text-[11px] font-extrabold uppercase tracking-[0.12em] text-primary">Program perjalanan</p>
+              <h2 className="mt-1 font-display text-lg font-extrabold">Itinerary</h2>
+              <div className="mt-4 space-y-3">
+                {["Hari 1", "Hari 2", "Hari berikutnya"].map((day, index) => (
+                  <div key={day} className="flex gap-3">
+                    <div className="flex flex-col items-center"><span className="flex h-8 w-8 items-center justify-center rounded-full bg-[#eaf3ff] text-xs font-extrabold text-primary">{index + 1}</span>{index < 2 && <span className="mt-1 h-full w-px bg-[#dfe7f0]" />}</div>
+                    <div className="min-w-0 pb-4"><p className="text-sm font-extrabold">{day}</p><p className="mt-1 text-xs leading-5 text-[#748297]">Rangkaian kegiatan akan ditampilkan di sini setelah detail itinerary diisi oleh Travel.</p></div>
+                  </div>
+                ))}
+              </div>
+            </section>
+
+            <section className="grid gap-3 sm:grid-cols-2">
+              <div className="rounded-[18px] border border-[#dfe7f0] bg-white p-4 sm:p-5">
+                <div className="flex h-9 w-9 items-center justify-center rounded-xl bg-[#eaf3ff] text-primary"><Icon name="plane" size={18} /></div>
+                <h2 className="mt-3 font-display text-base font-extrabold">Penerbangan</h2>
+                <p className="mt-2 text-xs leading-5 text-[#748297]">Maskapai, nomor penerbangan, rute, waktu, dan bagasi akan tampil setelah Travel melengkapi data keberangkatan.</p>
+              </div>
+              <div className="rounded-[18px] border border-[#dfe7f0] bg-white p-4 sm:p-5">
+                <div className="flex h-9 w-9 items-center justify-center rounded-xl bg-[#eef8f3] text-[#167453]"><Icon name="bed" size={18} /></div>
+                <h2 className="mt-3 font-display text-base font-extrabold">Hotel & akomodasi</h2>
+                <p className="mt-2 text-xs leading-5 text-[#748297]">Nama hotel, lokasi, kelas, dan konfigurasi kamar akan ditampilkan sesuai data paket dari Travel.</p>
+              </div>
+            </section>
+
+            <section className="grid gap-3 sm:grid-cols-3">
+              {[["doc", "Dokumen & persyaratan", "Persyaratan paspor, visa, dan dokumen perjalanan akan ditampilkan di bagian ini."], ["wallet", "Pembayaran", "Pilihan DP, cicilan, atau pelunasan akan mengikuti ketentuan paket."], ["shield", "Kebijakan perjalanan", "Ketentuan pembatalan, refund, dan reschedule akan tampil sebelum booking."]].map(([icon, title, body]) => (
+                <div key={title} className="rounded-[18px] border border-[#dfe7f0] bg-white p-4">
+                  <span className="text-primary"><Icon name={icon as "doc"} size={18} /></span><h2 className="mt-3 text-sm font-extrabold">{title}</h2><p className="mt-2 text-xs leading-5 text-[#748297]">{body}</p>
+                </div>
+              ))}
+            </section>
+
             <section className="grid gap-3 sm:grid-cols-2">
               <div className="rounded-[18px] border border-[#dfe7f0] bg-white p-4 sm:p-5">
                 <h2 className="flex items-center gap-2 font-display text-base font-extrabold"><span className="text-[#20a67a]">✓</span> Termasuk</h2>
@@ -146,6 +196,12 @@ export default async function PackageDetailPage({ params }: { params: { slug: st
           </aside>
         </div>
       </main>
+      <div className="fixed inset-x-0 bottom-0 z-40 border-t border-[#dfe7f0] bg-white/95 px-3 py-2.5 backdrop-blur lg:hidden">
+        <div className="mx-auto flex max-w-[1180px] items-center justify-between gap-3">
+          <div><p className="text-[10px] font-bold text-[#748297]">Mulai dari</p><p className="font-display text-base font-extrabold text-primary">{formatIDR(pkg.base_price)}</p></div>
+          {departures?.[0] ? <Link href={`/booking/baru?departure=${departures[0].id}`} className="rounded-xl bg-primary px-5 py-3 text-xs font-extrabold text-white">Pilih Jadwal</Link> : <span className="rounded-xl bg-[#e9eef4] px-5 py-3 text-xs font-extrabold text-[#8a98aa]">Belum ada jadwal</span>}
+        </div>
+      </div>
     </div>
   );
 }
