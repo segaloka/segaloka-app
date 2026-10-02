@@ -33,7 +33,7 @@ export default async function PackageTypePage({
 
   const { data: packages } = await supabase
     .from("packages")
-    .select("id, name, slug, duration_days, base_price, organizations(name, slug), departures(departure_date, return_date, status)")
+    .select("id, name, slug, description, duration_days, base_price, organizations(name, slug), departures(departure_date, return_date, status)")
     .eq("status", "published")
     .eq("type", params.type)
     .order("created_at", { ascending: false });
