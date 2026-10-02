@@ -1037,22 +1037,28 @@ export default async function HomePage() {
       </main>
 
       <footer className="border-t border-[#d9e3ef] bg-[#082d63] pb-20 text-white md:pb-0">
-        <div className="mx-auto max-w-[1180px] px-4 py-8 sm:py-12">
+        <div className="mx-auto max-w-[1180px] px-3 py-7 sm:px-4 sm:py-12">
           <div className="grid gap-7 sm:grid-cols-2 sm:gap-8 lg:grid-cols-[1.25fr_0.8fr_0.8fr_0.9fr]">
             <div>
               <div className="flex items-center">
                 <img
                   src="/brand/segaloka-logo.png"
                   alt="Segaloka"
-                  className="h-11 w-auto object-contain brightness-0 invert"
+                  className="h-9 w-auto object-contain brightness-0 invert sm:h-11"
                 />
               </div>
-              <p className="mt-4 max-w-[330px] text-xs leading-5 text-[#c5d7ed]">
+              <p className="mt-3 max-w-[330px] text-[11px] leading-[18px] text-[#c5d7ed] sm:mt-4 sm:text-xs sm:leading-5">
                 Ekosistem perjalanan yang menghubungkan Traveler, Travel, Vendor, Agen, Mitra dan Affiliate dalam satu platform.
               </p>
-              <div className="mt-5 flex flex-wrap gap-2">
-                {["Instagram", "Facebook", "TikTok"].map((social) => (
-                  <Link key={social} href="/kontak" className="rounded-full border border-white/20 px-3 py-1.5 text-xs font-bold text-[#dce9f8] transition hover:border-white/40 hover:text-white">{social}</Link>
+              <div className="mt-4 flex items-center gap-2 sm:mt-5">
+                {[
+                  ["instagram", "Instagram"],
+                  ["facebook", "Facebook"],
+                  ["tiktok", "TikTok"],
+                ].map(([icon, label]) => (
+                  <Link key={label} href="/kontak" aria-label={label} className="flex h-9 w-9 items-center justify-center rounded-full border border-white/20 text-[#dce9f8] transition hover:border-white/45 hover:bg-white/10 hover:text-white">
+                    <Icon name={icon as any} size={17} />
+                  </Link>
                 ))}
               </div>
             </div>
@@ -1094,22 +1100,21 @@ export default async function HomePage() {
             </div>
           </div>
 
-          <div className="mt-9 grid gap-5 border-t border-white/15 pt-6 sm:grid-cols-2 lg:grid-cols-3">
-            <div>
-              <p className="text-xs font-extrabold uppercase tracking-[0.12em] text-[#8fb2da]">Pembayaran</p>
-              <p className="mt-2 text-xs leading-5 text-[#c5d7ed]">Payment gateway dan metode pembayaran akan mengikuti konfigurasi production Segaloka.</p>
-            </div>
-            <div>
-              <p className="text-xs font-extrabold uppercase tracking-[0.12em] text-[#8fb2da]">Partner</p>
-              <p className="mt-2 text-xs leading-5 text-[#c5d7ed]">Travel dan Vendor terhubung melalui ekosistem Segaloka.</p>
-            </div>
-            <div>
-              <p className="text-xs font-extrabold uppercase tracking-[0.12em] text-[#8fb2da]">Keamanan</p>
-              <p className="mt-2 text-xs leading-5 text-[#c5d7ed]">Transaksi, status dan audit mengikuti sistem Segaloka.</p>
-            </div>
+          <div className="mt-6 grid grid-cols-3 gap-2 border-t border-white/15 pt-5 sm:mt-9 sm:gap-5 sm:pt-6">
+            {[
+              ["wallet", "Pembayaran", "Gateway terintegrasi"],
+              ["handshake", "Partner", "Travel & Vendor"],
+              ["shield", "Keamanan", "Transaksi & audit"],
+            ].map(([icon, title, detail]) => (
+              <div key={title} className="rounded-xl border border-white/10 bg-white/[0.04] p-2.5 sm:rounded-none sm:border-0 sm:bg-transparent sm:p-0">
+                <div className="flex h-7 w-7 items-center justify-center rounded-lg bg-white/10 text-[#cfe3fa] sm:mb-2"><Icon name={icon as any} size={15} /></div>
+                <p className="mt-2 text-[9px] font-extrabold uppercase tracking-[0.08em] text-[#8fb2da] sm:mt-0 sm:text-xs sm:tracking-[0.12em]">{title}</p>
+                <p className="mt-1 text-[10px] leading-4 text-[#c5d7ed] sm:text-xs sm:leading-5">{detail}</p>
+              </div>
+            ))}
           </div>
 
-          <div className="mt-7 flex flex-col gap-2 border-t border-white/15 pt-5 text-xs text-[#9eb9d8] sm:flex-row sm:items-center sm:justify-between">
+          <div className="mt-6 flex flex-col gap-1.5 border-t border-white/15 pt-4 text-[10px] text-[#9eb9d8] sm:mt-7 sm:flex-row sm:items-center sm:justify-between sm:gap-2 sm:pt-5 sm:text-xs">
             <span>© 2026 Segaloka. All rights reserved.</span>
             <span>Satu ekosistem untuk perjalanan dan bisnis travel.</span>
           </div>
