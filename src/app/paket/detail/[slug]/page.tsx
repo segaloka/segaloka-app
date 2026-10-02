@@ -20,9 +20,9 @@ export default async function PackageDetailPage({ params }: { params: { slug: st
   const displayNumber = (value: number) => new Intl.NumberFormat(locale).format(value);
   const displayRating = (value: number | null) => value == null ? "—" : new Intl.NumberFormat(locale, { minimumFractionDigits: 1, maximumFractionDigits: 1 }).format(value);
   const copy = {
-    id: { home:"Beranda", available:"Paket tersedia", days:"hari", overview:"Ringkasan", itinerary:"Itinerary", transportHotel:"Pesawat & Hotel", facilities:"Fasilitas", terms:"Ketentuan", about:"Tentang paket", summary:"Ringkasan perjalanan", detail:"Detail paket", program:"Program perjalanan", route:"Rute perjalanan", from:"Dari", to:"Ke", nearest:"Jadwal terdekat", flight:"Penerbangan", hotel:"Hotel & akomodasi", startFrom:"Mulai dari", perTraveler:"per jamaah", chooseDeparture:"Pilih keberangkatan", choose:"Pilih", chooseSchedule:"Pilih Jadwal", noSchedule:"Belum ada jadwal", unavailable:"Belum tersedia", baseCurrency:"Harga dasar · IDR" },
-    en: { home:"Home", available:"Package available", days:"days", overview:"Overview", itinerary:"Itinerary", transportHotel:"Flight & Hotel", facilities:"Facilities", terms:"Terms", about:"About this package", summary:"Trip summary", detail:"Package details", program:"Travel program", route:"Travel route", from:"From", to:"To", nearest:"Nearest schedule", flight:"Flight", hotel:"Hotel & accommodation", startFrom:"Starts from", perTraveler:"per traveler", chooseDeparture:"Choose departure", choose:"Choose", chooseSchedule:"Choose Schedule", noSchedule:"No schedule yet", unavailable:"Not available", baseCurrency:"Base price · IDR" },
-    ar: { home:"الرئيسية", available:"الباقة متاحة", days:"أيام", overview:"الملخص", itinerary:"برنامج الرحلة", transportHotel:"الطيران والفندق", facilities:"الخدمات", terms:"الشروط", about:"عن الباقة", summary:"ملخص الرحلة", detail:"تفاصيل الباقة", program:"برنامج السفر", route:"مسار الرحلة", from:"من", to:"إلى", nearest:"أقرب موعد", flight:"الطيران", hotel:"الفندق والإقامة", startFrom:"يبدأ من", perTraveler:"لكل مسافر", chooseDeparture:"اختر موعد المغادرة", choose:"اختر", chooseSchedule:"اختر الموعد", noSchedule:"لا يوجد موعد", unavailable:"غير متاح", baseCurrency:"السعر الأساسي · IDR" }
+    id: { home:"Beranda", available:"Paket tersedia", days:"hari", overview:"Ringkasan", departures:"Jadwal & Harga", itinerary:"Itinerary", transportHotel:"Pesawat & Hotel", facilities:"Fasilitas", terms:"Ketentuan", about:"Tentang paket", summary:"Ringkasan perjalanan", detail:"Detail paket", program:"Program perjalanan", route:"Rute perjalanan", from:"Dari", to:"Ke", nearest:"Jadwal terdekat", flight:"Penerbangan", hotel:"Hotel & akomodasi", startFrom:"Mulai dari", perTraveler:"per jamaah", chooseDeparture:"Pilih keberangkatan", choose:"Pilih", chooseSchedule:"Pilih Jadwal", noSchedule:"Belum ada jadwal", unavailable:"Belum tersedia", baseCurrency:"Harga dasar · IDR" },
+    en: { home:"Home", available:"Package available", days:"days", overview:"Overview", departures:"Schedule & Price", itinerary:"Itinerary", transportHotel:"Flight & Hotel", facilities:"Facilities", terms:"Terms", about:"About this package", summary:"Trip summary", detail:"Package details", program:"Travel program", route:"Travel route", from:"From", to:"To", nearest:"Nearest schedule", flight:"Flight", hotel:"Hotel & accommodation", startFrom:"Starts from", perTraveler:"per traveler", chooseDeparture:"Choose departure", choose:"Choose", chooseSchedule:"Choose Schedule", noSchedule:"No schedule yet", unavailable:"Not available", baseCurrency:"Base price · IDR" },
+    ar: { home:"الرئيسية", available:"الباقة متاحة", days:"أيام", overview:"الملخص", departures:"المواعيد والأسعار", itinerary:"برنامج الرحلة", transportHotel:"الطيران والفندق", facilities:"الخدمات", terms:"الشروط", about:"عن الباقة", summary:"ملخص الرحلة", detail:"تفاصيل الباقة", program:"برنامج السفر", route:"مسار الرحلة", from:"من", to:"إلى", nearest:"أقرب موعد", flight:"الطيران", hotel:"الفندق والإقامة", startFrom:"يبدأ من", perTraveler:"لكل مسافر", chooseDeparture:"اختر موعد المغادرة", choose:"اختر", chooseSchedule:"اختر الموعد", noSchedule:"لا يوجد موعد", unavailable:"غير متاح", baseCurrency:"السعر الأساسي · IDR" }
   } as const;
   const t = copy[language === "en" || language === "ar" ? language : "id"];
   const longCopy = {
@@ -172,7 +172,7 @@ export default async function PackageDetailPage({ params }: { params: { slug: st
             <div className="sticky top-[68px] z-30 -mx-3 overflow-x-auto border-y border-[#e7edf4] bg-[#f7f9fc]/95 px-3 py-2 backdrop-blur sm:mx-0 sm:rounded-2xl sm:border sm:px-2 lg:top-[76px]">
               <div className="flex min-w-max gap-1.5">
                 <a href="#overview" className="rounded-full bg-primary px-3 py-2 text-[11px] font-extrabold text-white shadow-sm">{t.overview}</a>
-                <a href="#itinerary" className="rounded-full border border-[#dfe7f0] bg-white px-3 py-2 text-[11px] font-extrabold text-[#40546f] transition hover:border-primary/40 hover:text-primary">{t.itinerary}</a>
+                <a href="#departures" className="rounded-full border border-[#dfe7f0] bg-white px-3 py-2 text-[11px] font-extrabold text-[#40546f] transition hover:border-primary/40 hover:text-primary">{t.departures}</a>\n                <a href="#itinerary" className="rounded-full border border-[#dfe7f0] bg-white px-3 py-2 text-[11px] font-extrabold text-[#40546f] transition hover:border-primary/40 hover:text-primary">{t.itinerary}</a>
                 <a href="#transport-hotel" className="rounded-full border border-[#dfe7f0] bg-white px-3 py-2 text-[11px] font-extrabold text-[#40546f] transition hover:border-primary/40 hover:text-primary">{t.transportHotel}</a>
                 <a href="#facilities" className="rounded-full border border-[#dfe7f0] bg-white px-3 py-2 text-[11px] font-extrabold text-[#40546f] transition hover:border-primary/40 hover:text-primary">{t.facilities}</a>
                 {org && <a href="#travel" className="rounded-full border border-[#dfe7f0] bg-white px-3 py-2 text-[11px] font-extrabold text-[#40546f] transition hover:border-primary/40 hover:text-primary">{u.travel}</a>}
@@ -196,6 +196,51 @@ export default async function PackageDetailPage({ params }: { params: { slug: st
                   </div>
                 ))}
               </div>
+            </section>
+
+            <section id="departures" className="scroll-mt-32 rounded-[18px] border border-[#dfe7f0] bg-white p-4 sm:p-6">
+              <div className="flex flex-wrap items-end justify-between gap-3">
+                <div>
+                  <p className="text-[11px] font-extrabold uppercase tracking-[0.12em] text-primary">{t.chooseDeparture}</p>
+                  <h2 className="mt-1 font-display text-lg font-extrabold">{t.departures}</h2>
+                </div>
+                {departures?.length ? <span className="rounded-full bg-[#f2f6fb] px-3 py-1 text-[10px] font-extrabold text-[#748297]">{displayNumber(departures.length)} {u.choices}</span> : null}
+              </div>
+              {!departures?.length ? (
+                <div className="mt-4 rounded-xl border border-dashed border-[#d7e1ec] bg-[#fbfcfe] p-4 text-xs leading-5 text-[#60738d]">{lt.noDeparture}</div>
+              ) : (
+                <div className="mt-4 grid gap-3 sm:grid-cols-2">
+                  {departures.map((d) => {
+                    const seats = Math.max(0, d.quota - d.filled);
+                    return (
+                      <Link key={d.id} href={`/booking/baru?departure=${d.id}`} className="group rounded-2xl border border-[#dfe7f0] bg-[#fbfcfe] p-4 transition hover:-translate-y-0.5 hover:border-primary/50 hover:bg-white hover:shadow-[0_8px_24px_rgba(15,45,90,0.08)]">
+                        <div className="flex items-start justify-between gap-3">
+                          <div className="min-w-0">
+                            <p className="text-[9px] font-extrabold uppercase tracking-[0.1em] text-[#8a98aa]">{u.depart}</p>
+                            <p className="mt-1 text-sm font-extrabold text-[#10223f]">{displayDate(d.departure_date)}</p>
+                            <p className="mt-1 text-[11px] text-[#748297]">{u.return} · {d.return_date ? displayDate(d.return_date) : t.unavailable}</p>
+                          </div>
+                          <span className={`shrink-0 rounded-full px-2.5 py-1 text-[10px] font-extrabold ${seats <= 10 ? "bg-[#fff7e8] text-[#b16b00]" : "bg-[#eef8f3] text-[#167453]"}`}>{d.status === "almost_full" ? u.almostFull : u.available}</span>
+                        </div>
+                        <div className="mt-4 grid grid-cols-2 gap-2 border-t border-[#e8edf3] pt-3">
+                          <div>
+                            <p className="text-[9px] font-bold uppercase tracking-[0.08em] text-[#8a98aa]">{u.availabilityLabel}</p>
+                            <p className="mt-1 text-xs font-extrabold text-[#40546f]">{displayNumber(seats)} {u.seats}</p>
+                          </div>
+                          <div className="text-end">
+                            <p className="text-[9px] font-bold uppercase tracking-[0.08em] text-[#8a98aa]">{u.heroPrice}</p>
+                            <p className="mt-1 text-xs font-extrabold text-primary">{displayPrice(pkg.base_price)}</p>
+                          </div>
+                        </div>
+                        <div className="mt-3 flex items-center justify-between rounded-xl bg-[#eaf3ff] px-3 py-2.5 text-xs font-extrabold text-primary">
+                          <span>{t.chooseSchedule}</span><span aria-hidden="true">{arrow}</span>
+                        </div>
+                      </Link>
+                    );
+                  })}
+                </div>
+              )}
+              {currency !== "IDR" && <p className="mt-3 text-[10px] font-bold leading-4 text-[#b16b00]">{lt.currencyPending(currency)}</p>}
             </section>
 
             <section id="itinerary" className="scroll-mt-32 rounded-[18px] border border-[#dfe7f0] bg-white p-4 sm:p-6">
