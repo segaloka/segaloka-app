@@ -128,14 +128,38 @@ export default async function PackageDetailPage({ params }: { params: { slug: st
             <section id="itinerary" className="rounded-[18px] border border-[#dfe7f0] bg-white p-4 sm:p-6">
               <p className="text-[11px] font-extrabold uppercase tracking-[0.12em] text-primary">Program perjalanan</p>
               <h2 className="mt-1 font-display text-lg font-extrabold">Itinerary</h2>
-              <div className="mt-4 rounded-xl border border-dashed border-[#d7e1ec] bg-[#fbfcfe] p-5">
+              <div className="mt-4 grid gap-3 sm:grid-cols-3">
+                <div className="rounded-xl border border-[#e5ebf2] bg-[#fbfcfe] p-3">
+                  <p className="text-[10px] font-bold uppercase tracking-[0.08em] text-[#8a98aa]">Rute perjalanan</p>
+                  <div className="mt-2 flex items-center gap-2 text-xs font-extrabold text-[#40546f]"><span className="rounded-lg bg-white px-2 py-1 ring-1 ring-[#e5ebf2]">Dari</span><span className="text-primary">→</span><span className="rounded-lg bg-white px-2 py-1 ring-1 ring-[#e5ebf2]">Ke</span></div>
+                  <p className="mt-2 text-[10px] leading-4 text-[#8a98aa]">Kota asal dan tujuan diisi Travel.</p>
+                </div>
+                <div className="rounded-xl border border-[#e5ebf2] bg-[#fbfcfe] p-3">
+                  <p className="text-[10px] font-bold uppercase tracking-[0.08em] text-[#8a98aa]">Durasi</p>
+                  <p className="mt-2 text-sm font-extrabold text-[#40546f]">{pkg.duration_days} hari</p>
+                  <p className="mt-2 text-[10px] leading-4 text-[#8a98aa]">Program harian mengikuti durasi paket.</p>
+                </div>
+                <div className="rounded-xl border border-[#e5ebf2] bg-[#fbfcfe] p-3">
+                  <p className="text-[10px] font-bold uppercase tracking-[0.08em] text-[#8a98aa]">Jadwal terdekat</p>
+                  <p className="mt-2 text-sm font-extrabold text-[#40546f]">{departures?.[0] ? formatDate(departures[0].departure_date) : "Belum tersedia"}</p>
+                  <p className="mt-2 text-[10px] leading-4 text-[#8a98aa]">{departures?.[0]?.return_date ? `Kembali ${formatDate(departures[0].return_date)}` : "Tanggal kembali mengikuti jadwal Travel."}</p>
+                </div>
+              </div>
+              <div className="mt-3 rounded-xl border border-dashed border-[#d7e1ec] bg-[#fbfcfe] p-4 sm:p-5">
                 <div className="flex items-start gap-3">
                   <span className="flex h-9 w-9 shrink-0 items-center justify-center rounded-xl bg-[#eaf3ff] text-primary"><Icon name="route" size={17} /></span>
-                  <div>
-                    <p className="text-sm font-extrabold text-[#40546f]">Itinerary belum ditampilkan</p>
-                    <p className="mt-1 text-xs leading-5 text-[#748297]">Urutan hari, aktivitas, lokasi, dan agenda perjalanan akan tampil setelah Travel melengkapi program perjalanan paket ini.</p>
+                  <div className="min-w-0 flex-1">
+                    <p className="text-sm font-extrabold text-[#40546f]">Agenda perjalanan per hari</p>
+                    <p className="mt-1 text-xs leading-5 text-[#748297]">Travel akan mengisi Hari 1 sampai Hari {pkg.duration_days}: lokasi awal dan tujuan, aktivitas, waktu kegiatan, transportasi, hotel atau akomodasi, serta catatan perjalanan.</p>
+                    <div className="mt-3 flex flex-wrap gap-2">
+                      {["Dari → Ke", "Aktivitas", "Waktu", "Transportasi", "Hotel", "Catatan"].map((item) => <span key={item} className="rounded-full bg-white px-2.5 py-1 text-[10px] font-bold text-[#60738d] ring-1 ring-[#e5ebf2]">{item}</span>)}
+                    </div>
                   </div>
                 </div>
+              </div>
+              <div className="mt-3 grid gap-3 sm:grid-cols-2">
+                <a href="#facilities" className="rounded-xl border border-[#dfe7f0] bg-[#eef8f3] p-3 transition hover:border-[#b9decf]"><p className="text-[10px] font-extrabold uppercase tracking-[0.08em] text-[#167453]">Termasuk</p><p className="mt-1 text-xs font-bold text-[#40546f]">{inclusions.length ? `${inclusions.length} fasilitas tercantum` : "Menunggu rincian Travel"}</p></a>
+                <a href="#facilities" className="rounded-xl border border-[#dfe7f0] bg-[#fff9ef] p-3 transition hover:border-[#ead5ad]"><p className="text-[10px] font-extrabold uppercase tracking-[0.08em] text-[#b16b00]">Tidak termasuk</p><p className="mt-1 text-xs font-bold text-[#40546f]">{exclusions.length ? `${exclusions.length} item tercantum` : "Menunggu rincian Travel"}</p></a>
               </div>
             </section>
 
