@@ -200,8 +200,19 @@ export default async function PackageDetailPage({ params }: { params: { slug: st
                   <div className="mt-3 space-y-2">
                     {departures.map((d) => {
                       const seats = Math.max(0, d.quota - d.filled);
-                      return <Link key={d.id} href={`/booking/baru?departure=${d.id}`} className="group flex items-center justify-between gap-3 rounded-xl border border-[#dfe7f0] p-3 transition hover:border-primary hover:bg-[#f8fbff]">
-                        <div><p className="text-[13px] font-extrabold">{formatDate(d.departure_date)}</p><p className={`mt-1 text-[11px] font-bold ${seats <= 10 ? "text-[#b16b00]" : "text-[#60738d]"}`}>{seats} kursi tersisa</p></div><span className="text-sm font-extrabold text-primary">Pilih →</span>
+                      return <Link key={d.id} href={`/booking/baru?departure=${d.id}`} className="group block rounded-xl border border-[#dfe7f0] p-3 transition hover:border-primary hover:bg-[#f8fbff]">
+                        <div className="flex items-start justify-between gap-3">
+                          <div className="min-w-0">
+                            <p className="text-[10px] font-bold uppercase tracking-[0.08em] text-[#8a98aa]">Berangkat</p>
+                            <p className="mt-0.5 text-[13px] font-extrabold">{formatDate(d.departure_date)}</p>
+                            {d.return_date && <p className="mt-1 text-[11px] text-[#748297]">Kembali {formatDate(d.return_date)}</p>}
+                          </div>
+                          <span className="shrink-0 rounded-lg bg-[#eaf3ff] px-2.5 py-1.5 text-[11px] font-extrabold text-primary">Pilih →</span>
+                        </div>
+                        <div className="mt-3 flex items-center justify-between border-t border-[#edf1f6] pt-2.5">
+                          <span className={`text-[11px] font-extrabold ${seats <= 10 ? "text-[#b16b00]" : "text-[#167453]"}`}>{seats} kursi tersisa</span>
+                          <span className="text-[10px] font-bold text-[#8a98aa]">{d.status === "almost_full" ? "Hampir penuh" : "Tersedia"}</span>
+                        </div>
                       </Link>;
                     })}
                   </div>
