@@ -23,19 +23,19 @@ export default async function PackageDetailPage({ params }: { params: { slug: st
   const t = copy[language === "en" || language === "ar" ? language : "id"];
   const longCopy = {
     id: {
-      routeHint:"{lt.routeHint}", dailyHint:"{lt.dailyHint}", returnHint:"{lt.returnHint}", dailyTitle:"{lt.dailyTitle}", dailyBody:`Travel akan mengisi Hari 1 sampai Hari ${pkg?.duration_days ?? ""}: lokasi awal dan tujuan, aktivitas, waktu kegiatan, transportasi, hotel atau akomodasi, serta catatan perjalanan.`,
+      routeHint:"{lt.routeHint}", dailyHint:"{lt.dailyHint}", returnHint:"{lt.returnHint}", dailyTitle:"{lt.dailyTitle}", dailyBody:(days:number)=>`Travel akan mengisi Hari 1 sampai Hari ${days}: lokasi awal dan tujuan, aktivitas, waktu kegiatan, transportasi, hotel atau akomodasi, serta catatan perjalanan.`,
       flightBody:"{lt.flightBody}", hotelBody:"{lt.hotelBody}",
       includedEmpty:"{lt.includedEmpty}", excludedEmpty:"{lt.excludedEmpty}",
       currencyPending:(code:string)=>`Pilihan ${code} aktif · harga sementara ditampilkan dalam IDR sampai kurs tersedia.`, noDeparture:"{lt.noDeparture}", beforeBooking:"{lt.beforeBooking}", beforeBookingBody:"{lt.beforeBookingBody}"
     },
     en: {
-      routeHint:"Origin and destination cities are provided by the Travel operator.", dailyHint:"The daily program follows the package duration.", returnHint:"The return date follows the Travel schedule.", dailyTitle:"Daily travel plan", dailyBody:`Travel will provide Day 1 through Day ${pkg?.duration_days ?? ""}: origin and destination, activities, times, transportation, hotel or accommodation, and travel notes.`,
+      routeHint:"Origin and destination cities are provided by the Travel operator.", dailyHint:"The daily program follows the package duration.", returnHint:"The return date follows the Travel schedule.", dailyTitle:"Daily travel plan", dailyBody:(days:number)=>`Travel will provide Day 1 through Day ${days}: origin and destination, activities, times, transportation, hotel or accommodation, and travel notes.`,
       flightBody:"Airline, flight number, route, time, and baggage details will appear after the Travel operator completes the departure information.", hotelBody:"Hotel name, location, class, and room configuration will be displayed according to the Travel package data.",
       includedEmpty:"Facilities included in the price will appear after the Travel operator completes the details.", excludedEmpty:"Costs or services not included will appear after the Travel operator completes the details.",
       currencyPending:(code:string)=>`${code} is selected · prices remain displayed in IDR until an exchange rate is available.`, noDeparture:"No open departure schedule yet. Please check again later or contact the Travel operator.", beforeBooking:"Before continuing to booking", beforeBookingBody:"Review the schedule, price, facilities, payment terms, and travel policies. Final details are shown before booking confirmation."
     },
     ar: {
-      routeHint:"تحدد شركة السفر مدينة الانطلاق والوجهة.", dailyHint:"يتبع البرنامج اليومي مدة الباقة.", returnHint:"يتم تحديد تاريخ العودة حسب جدول شركة السفر.", dailyTitle:"البرنامج اليومي للرحلة", dailyBody:`ستضيف شركة السفر تفاصيل اليوم الأول حتى اليوم ${pkg?.duration_days ?? ""}: نقطة الانطلاق والوجهة والأنشطة والأوقات ووسائل النقل والفندق أو الإقامة وملاحظات الرحلة.`,
+      routeHint:"تحدد شركة السفر مدينة الانطلاق والوجهة.", dailyHint:"يتبع البرنامج اليومي مدة الباقة.", returnHint:"يتم تحديد تاريخ العودة حسب جدول شركة السفر.", dailyTitle:"البرنامج اليومي للرحلة", dailyBody:(days:number)=>`ستضيف شركة السفر تفاصيل اليوم الأول حتى اليوم ${days}: نقطة الانطلاق والوجهة والأنشطة والأوقات ووسائل النقل والفندق أو الإقامة وملاحظات الرحلة.`,
       flightBody:"ستظهر شركة الطيران ورقم الرحلة والمسار والوقت والأمتعة بعد استكمال شركة السفر بيانات المغادرة.", hotelBody:"سيتم عرض اسم الفندق والموقع والتصنيف ونوع الغرفة وفق بيانات الباقة من شركة السفر.",
       includedEmpty:"ستظهر الخدمات المشمولة في السعر بعد استكمال شركة السفر التفاصيل.", excludedEmpty:"ستظهر التكاليف أو الخدمات غير المشمولة بعد استكمال شركة السفر التفاصيل.",
       currencyPending:(code:string)=>`تم اختيار ${code} · ستظل الأسعار معروضة بالروبية الإندونيسية حتى يتوفر سعر الصرف.`, noDeparture:"لا يوجد موعد مغادرة متاح حالياً. يرجى المحاولة لاحقاً أو التواصل مع شركة السفر.", beforeBooking:"قبل متابعة الحجز", beforeBookingBody:"راجع الموعد والسعر والخدمات وشروط الدفع وسياسات السفر. ستظهر التفاصيل النهائية قبل تأكيد الحجز."
@@ -190,7 +190,7 @@ export default async function PackageDetailPage({ params }: { params: { slug: st
                   <span className="flex h-9 w-9 shrink-0 items-center justify-center rounded-xl bg-[#eaf3ff] text-primary"><Icon name="route" size={17} /></span>
                   <div className="min-w-0 flex-1">
                     <p className="text-sm font-extrabold text-[#40546f]">{lt.dailyTitle}</p>
-                    <p className="mt-1 text-xs leading-5 text-[#748297]">{lt.dailyBody}</p>
+                    <p className="mt-1 text-xs leading-5 text-[#748297]">{lt.dailyBody(pkg.duration_days)}</p>
                     <div className="mt-3 flex flex-wrap gap-2">
                       {["Dari → Ke", "Aktivitas", "Waktu", "Transportasi", "Hotel", "Catatan"].map((item) => <span key={item} className="rounded-full bg-white px-2.5 py-1 text-[10px] font-bold text-[#60738d] ring-1 ring-[#e5ebf2]">{item}</span>)}
                     </div>
@@ -259,9 +259,9 @@ export default async function PackageDetailPage({ params }: { params: { slug: st
                 </div>
               </div>
               <div className="grid gap-px bg-[#e8edf3] sm:grid-cols-2">
-                <div className="bg-white p-4"><p className="text-[10px] font-bold uppercase tracking-[0.08em] text-[#8a98aa]">{u.license}</p><p className="mt-1 text-xs font-extrabold text-[#40546f]">{org.license_type ? `${org.license_type}${org.license_number ? ` · ${org.license_number}` : ""}` : "{u.licenseMissing}"}</p></div>
+                <div className="bg-white p-4"><p className="text-[10px] font-bold uppercase tracking-[0.08em] text-[#8a98aa]">{u.license}</p><p className="mt-1 text-xs font-extrabold text-[#40546f]">{org.license_type ? `${org.license_type}${org.license_number ? ` · ${org.license_number}` : ""}` : u.licenseMissing}</p></div>
                 <div className="bg-white p-4"><p className="text-[10px] font-bold uppercase tracking-[0.08em] text-[#8a98aa]">{u.communication}</p><p className="mt-1 text-xs font-extrabold text-[#40546f]">{u.viaSegaloka}</p><p className="mt-1 text-[10px] leading-4 text-[#8a98aa]">{u.communicationBody}</p></div>
-                <div className="bg-white p-4 sm:col-span-2"><p className="text-[10px] font-bold uppercase tracking-[0.08em] text-[#8a98aa]">{u.address}</p><p className="mt-1 text-xs leading-5 text-[#60738d]">{org.address || "{u.addressMissing}"}</p></div>
+                <div className="bg-white p-4 sm:col-span-2"><p className="text-[10px] font-bold uppercase tracking-[0.08em] text-[#8a98aa]">{u.address}</p><p className="mt-1 text-xs leading-5 text-[#60738d]">{org.address || u.addressMissing}</p></div>
               </div>
               <div className="p-4 sm:hidden"><Link href={`/travel/${org.slug}`} className="flex w-full items-center justify-center rounded-xl bg-[#eaf3ff] px-4 py-3 text-xs font-extrabold text-primary">{u.viewProfile} →</Link></div>
             </section>}
