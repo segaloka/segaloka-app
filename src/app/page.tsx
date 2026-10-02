@@ -809,7 +809,7 @@ export default async function HomePage() {
                     <Link
                       key={`${pkg.id}-${departure.id}`}
                       href={`/paket/detail/${pkg.slug}`}
-                      className={`group flex items-start gap-2.5 px-3.5 py-3 transition sm:gap-3.5 sm:px-6 sm:py-3.5 duration-200 hover:bg-[#f8fbff] sm:items-center sm:gap-3.5 sm:px-6 ${
+                      className={`group flex items-start gap-2.5 px-3.5 py-3 transition duration-200 hover:bg-[#f8fbff] sm:items-center sm:gap-3.5 sm:px-6 sm:py-3.5 ${
                         index % 2 === 0 ? "md:border-r md:border-[#edf1f6]" : ""
                       } ${index > 1 ? "border-t border-[#edf1f6]" : index === 1 ? "border-t border-[#edf1f6] md:border-t-0" : ""}`}
                     >
