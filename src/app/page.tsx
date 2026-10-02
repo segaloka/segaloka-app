@@ -510,14 +510,14 @@ export default async function HomePage() {
           <div className="absolute -right-16 -top-28 hidden h-[420px] w-[620px] rounded-[50%] border border-white/60 bg-white/25 lg:block" />
           <div className="absolute right-[13%] top-10 hidden h-44 w-44 rounded-full border-[30px] border-white/25 lg:block" />
 
-          <div className="relative mx-auto max-w-[1180px] px-4 pb-16 pt-5 sm:px-4 sm:pb-24 sm:pt-8 md:pb-28 md:pt-10">
+          <div className="relative mx-auto max-w-[1180px] px-3 pb-16 pt-5 sm:px-4 sm:pb-24 sm:pt-8 md:pb-28 md:pt-10">
             <div className="grid gap-6 lg:grid-cols-[1fr_0.72fr] lg:items-center">
               <div className="max-w-[700px]">
                 <p className="hidden items-center gap-2 rounded-full border border-white/80 bg-white/80 px-3 py-1.5 text-xs font-extrabold text-primary shadow-sm sm:inline-flex">
                   <Icon name="globe" size={13} />
                   Domestik · Internasional · Umrah · Haji
                 </p>
-                <h1 className="font-display text-[27px] font-extrabold leading-[1.08] tracking-[-0.035em] text-[#10223f] sm:mt-3 sm:text-[36px] md:text-[42px]">
+                <h1 className="font-display text-[26px] font-extrabold leading-[1.1] tracking-[-0.03em] sm:text-[36px] sm:leading-[1.08] sm:tracking-[-0.035em] text-[#10223f] sm:mt-3 md:text-[42px]">
                   Dari Indonesia untuk perjalanan ke mana saja.
                 </h1>
                 <p className="mt-2.5 max-w-[650px] text-[13px] leading-5 text-[#52647e] sm:mt-3 sm:text-sm sm:leading-6">
@@ -584,7 +584,7 @@ export default async function HomePage() {
               <Link
                 key={promo.id}
                 href={index === 0 ? "/paket/umrah" : index === 1 ? "/paket/tour" : "/paket/halal_tour"}
-                className={`group relative min-h-[104px] min-w-[84%] snap-start overflow-hidden rounded-[16px] border p-3.5 transition duration-300 sm:min-h-[110px] sm:min-w-0 sm:rounded-[18px] sm:p-4 hover:-translate-y-0.5 hover:shadow-[0_14px_34px_rgba(15,45,90,0.09)] ${
+                className={`group relative min-h-[104px] min-w-[82%] snap-start overflow-hidden rounded-[16px] border p-3.5 transition duration-300 sm:min-h-[110px] sm:min-w-0 sm:rounded-[18px] sm:p-4 hover:-translate-y-0.5 hover:shadow-[0_14px_34px_rgba(15,45,90,0.09)] ${
                   index === 0
                     ? "border-[#cfe4ff] bg-[linear-gradient(135deg,#e9f5ff_0%,#f8fcff_68%,#ddecff_100%)]"
                     : index === 1
@@ -618,7 +618,7 @@ export default async function HomePage() {
               <p className="text-xs font-extrabold uppercase tracking-[0.14em] text-primary">
                 Rekomendasi perjalanan
               </p>
-              <h2 className="mt-1 font-display text-[24px] font-extrabold tracking-[-0.025em] text-[#10223f]">
+              <h2 className="mt-1 font-display text-xl font-extrabold tracking-[-0.02em] sm:text-[24px] sm:tracking-[-0.025em] text-[#10223f]">
                 Paket pilihan untuk Anda
               </h2>
               <p className="mt-1 text-sm text-[#6d7c91]">
@@ -666,7 +666,7 @@ export default async function HomePage() {
                   <Link
                     key={pkg.id}
                     href={`/paket/detail/${pkg.slug}`}
-                    className="group flex min-h-[300px] min-w-[78%] snap-start flex-col overflow-hidden rounded-[18px] border border-[#dfe7f0] bg-white shadow-[0_8px_24px_rgba(15,45,90,0.05)] transition duration-200 hover:-translate-y-1 hover:border-[#b9d2ee] hover:shadow-[0_16px_38px_rgba(15,45,90,0.11)] sm:min-h-[338px] sm:min-w-0 sm:rounded-[20px]"
+                    className="group flex min-h-[294px] min-w-[76%] snap-start flex-col overflow-hidden rounded-[18px] border border-[#dfe7f0] bg-white shadow-[0_8px_24px_rgba(15,45,90,0.05)] transition duration-200 hover:-translate-y-1 hover:border-[#b9d2ee] hover:shadow-[0_16px_38px_rgba(15,45,90,0.11)] sm:min-h-[338px] sm:min-w-0 sm:rounded-[20px]"
                   >
                     <div className="relative h-[132px] overflow-hidden bg-[linear-gradient(145deg,#dcefff_0%,#eff8ff_48%,#e8f8f2_100%)] p-3.5">
                       <div className="absolute -bottom-14 -left-10 h-36 w-36 rounded-full border-[24px] border-white/40" />
@@ -742,7 +742,7 @@ export default async function HomePage() {
         </section>
 
         {/* MARKETPLACE ADS — AFTER PACKAGES */}
-        <div className="mx-auto w-full max-w-[1180px] px-4 pb-6 lg:pb-4">
+        <div className="mx-auto w-full max-w-[1180px] px-3 pb-5 sm:px-4 sm:pb-6 lg:pb-4">
           <MarketplaceAdCarousel placement="after_packages" />
         </div>
         {/* EXPLORE INDONESIA — V4.3 DESTINATION CARDS */}
@@ -786,7 +786,7 @@ export default async function HomePage() {
         </section>
 
         {/* MARKETPLACE ADS — AFTER DOMESTIC */}
-        <div className="mx-auto w-full max-w-[1180px] px-4 pb-6 lg:pb-4">
+        <div className="mx-auto w-full max-w-[1180px] px-3 pb-5 sm:px-4 sm:pb-6 lg:pb-4">
           <MarketplaceAdCarousel placement="after_domestic" />
         </div>
         {/* UPCOMING DEPARTURES — V4.3 */}
@@ -871,7 +871,7 @@ export default async function HomePage() {
         </section>
 
         {/* MARKETPLACE ADS — AFTER WORLD */}
-        <div className="mx-auto w-full max-w-[1180px] px-4 pb-6 lg:pb-4">
+        <div className="mx-auto w-full max-w-[1180px] px-3 pb-5 sm:px-4 sm:pb-6 lg:pb-4">
           <MarketplaceAdCarousel placement="after_world" />
         </div>
         {/* VENDOR PICKS — V4.3 SERVICE CARDS */}
@@ -887,7 +887,7 @@ export default async function HomePage() {
 
           <div className="mt-4 flex snap-x gap-3 overflow-x-auto pb-2 [scrollbar-width:none] [&::-webkit-scrollbar]:hidden sm:grid sm:grid-cols-2 sm:overflow-visible sm:pb-0 lg:grid-cols-4">
             {PREVIEW_VENDORS.map((vendor, index) => (
-              <Link href="/register" key={vendor.id} className="group relative min-h-[174px] min-w-[76%] snap-start overflow-hidden sm:min-h-[184px] sm:min-w-0 rounded-[18px] border border-[#dfe7f0] bg-white p-5 transition duration-300 hover:-translate-y-0.5 hover:border-[#bfd5ee] hover:shadow-[0_12px_26px_rgba(15,45,90,0.08)]">
+              <Link href="/register" key={vendor.id} className="group relative min-h-[168px] min-w-[74%] snap-start overflow-hidden sm:min-h-[184px] sm:min-w-0 rounded-[18px] border border-[#dfe7f0] bg-white p-5 transition duration-300 hover:-translate-y-0.5 hover:border-[#bfd5ee] hover:shadow-[0_12px_26px_rgba(15,45,90,0.08)]">
                 <div className={`absolute inset-x-0 top-0 h-1 ${index % 2 === 0 ? "bg-[#0b6ee8]" : "bg-[#20a67a]"}`} />
                 <div className="flex items-start justify-between gap-3">
                   <span className="flex h-10 w-10 items-center justify-center rounded-[14px] bg-[#eef5ff] text-primary transition group-hover:bg-primary group-hover:text-white">
@@ -937,7 +937,7 @@ export default async function HomePage() {
         </section>
 
         {/* MARKETPLACE ADS — LOWER HOME */}
-        <div className="mx-auto w-full max-w-[1180px] px-4 pb-6 lg:pb-4">
+        <div className="mx-auto w-full max-w-[1180px] px-3 pb-5 sm:px-4 sm:pb-6 lg:pb-4">
           <MarketplaceAdCarousel placement="lower_home" />
         </div>
         {/* TRAVEL DIRECTORY — V4.3 IDENTITY CARDS */}
@@ -953,7 +953,7 @@ export default async function HomePage() {
 
           <div className="mt-4 flex snap-x gap-3 overflow-x-auto pb-2 [scrollbar-width:none] [&::-webkit-scrollbar]:hidden sm:grid sm:grid-cols-2 sm:overflow-visible sm:pb-0 lg:grid-cols-4">
             {PREVIEW_TRAVELS.map((travel) => (
-              <Link href="/paket/umrah" key={travel.id} className="group min-w-[76%] snap-start overflow-hidden rounded-[20px] sm:min-w-0 border border-[#dfe7f0] bg-white transition hover:-translate-y-0.5 hover:border-[#bfd5ee] hover:shadow-[0_12px_28px_rgba(15,45,90,0.08)]">
+              <Link href="/paket/umrah" key={travel.id} className="group min-w-[74%] snap-start overflow-hidden rounded-[18px] sm:rounded-[20px] sm:min-w-0 border border-[#dfe7f0] bg-white transition hover:-translate-y-0.5 hover:border-[#bfd5ee] hover:shadow-[0_12px_28px_rgba(15,45,90,0.08)]">
                 <div className="h-16 bg-[linear-gradient(135deg,#e5f2ff,#f4f9ff,#e9f8f2)]" />
                 <div className="-mt-7 px-4 pb-4">
                   <div className="flex items-end justify-between gap-3">
@@ -988,8 +988,8 @@ export default async function HomePage() {
 
           <div className="mt-4 flex snap-x gap-3 overflow-x-auto pb-2 [scrollbar-width:none] [&::-webkit-scrollbar]:hidden sm:grid sm:grid-cols-2 sm:overflow-visible sm:pb-0 lg:grid-cols-4">
             {PREVIEW_INSPIRATIONS.map((item, index) => (
-              <Link href={item.href} key={item.title} className="group min-w-[76%] snap-start overflow-hidden rounded-[20px] sm:min-w-0 border border-[#dfe7f0] bg-white transition hover:-translate-y-0.5 hover:shadow-[0_12px_28px_rgba(15,45,90,0.08)]">
-                <div className={`relative flex h-[116px] items-center justify-center overflow-hidden ${
+              <Link href={item.href} key={item.title} className="group min-w-[74%] snap-start overflow-hidden rounded-[18px] sm:rounded-[20px] sm:min-w-0 border border-[#dfe7f0] bg-white transition hover:-translate-y-0.5 hover:shadow-[0_12px_28px_rgba(15,45,90,0.08)]">
+                <div className={`relative flex h-[104px] items-center sm:h-[116px] justify-center overflow-hidden ${
                   index % 3 === 0 ? "bg-[#e4f2ff]" : index % 3 === 1 ? "bg-[#e8f7ef]" : "bg-[#f2ebff]"
                 }`}>
                   <div className="absolute -right-8 -top-10 h-28 w-28 rounded-full border-[18px] border-white/50" />
@@ -1012,7 +1012,7 @@ export default async function HomePage() {
 
         {/* BUSINESS ECOSYSTEM */}
         <section className="mx-auto max-w-[1180px] px-3 pb-10 sm:px-4 sm:pb-12">
-          <div className="grid gap-4 rounded-2xl border border-[#dce4ee] bg-white p-5 sm:p-7 lg:grid-cols-[1fr_auto] lg:items-center">
+          <div className="grid gap-3 rounded-2xl border border-[#dce4ee] bg-white p-4 sm:gap-4 sm:p-5 sm:p-7 lg:grid-cols-[1fr_auto] lg:items-center">
             <div>
               <p className="text-xs font-extrabold uppercase tracking-[0.14em] text-primary">
                 Ekosistem Segaloka
@@ -1028,7 +1028,7 @@ export default async function HomePage() {
 
             <Link
               href="/register"
-              className="inline-flex items-center justify-center rounded-full bg-primary px-5 py-2.5 text-xs font-extrabold text-white hover:opacity-90"
+              className="inline-flex w-full items-center justify-center rounded-full bg-primary px-5 py-2.5 text-xs sm:w-auto font-extrabold text-white hover:opacity-90"
             >
               Bergabung dengan Segaloka
             </Link>
