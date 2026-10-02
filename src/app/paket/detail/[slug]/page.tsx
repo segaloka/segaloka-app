@@ -1,13 +1,20 @@
 import Link from "next/link";
 import { notFound } from "next/navigation";
+import { cookies } from "next/headers";
 import { MarketplaceHeader } from "@/components/marketplace/MarketplaceHeader";
 import { createClient } from "@/lib/supabase/server";
-import { formatIDR, formatDate } from "@/lib/utils";
+
 import { WishlistButton } from "@/components/WishlistButton";
 import { Icon } from "@/components/layout/Icon";
 
 export default async function PackageDetailPage({ params }: { params: { slug: string } }) {
   const supabase = await createClient();
+  const cookieStore = cookies();
+  const language = cookieStore.get("segaloka-language")?.value ?? "id";
+  const currency = cookieStore.get("segaloka-currency")?.value ?? "IDR";
+  const locale = language === "en" ? "en-US" : language === "ar" ? "ar-SA" : "id-ID";
+  const displayDate = (value: string | null | undefined) => value ? new Intl.DateTimeFormat(locale, { day: "2-digit", month: "short", year: "numeric" }).format(new Date(value)) : "—";
+  const displayPrice = (amount: number | null | undefined) => amount == null ? "—" : new Intl.NumberFormat(locale, { style: "currency", currency: "IDR", maximumFractionDigits: 0 }).format(amount);
   const { data: pkg } = await supabase
     .from("packages")
     .select("*, organizations(id, name, slug, status, support_phone, support_email, address, license_type, license_number)")
@@ -115,7 +122,7 @@ export default async function PackageDetailPage({ params }: { params: { slug: st
                 <span className="hidden rounded-full bg-[#f2f6fb] px-3 py-1 text-[10px] font-extrabold text-[#748297] sm:inline-flex">Detail perjalanan</span>
               </div>
               <div className="mt-4 grid grid-cols-2 gap-2 sm:grid-cols-4 sm:gap-3">
-                {[["route", "Jenis", pkg.type === "halal_tour" ? "Halal Tour" : pkg.type.charAt(0).toUpperCase() + pkg.type.slice(1)], ["globe", "Durasi", `${pkg.duration_days} hari`], ["plane", "Keberangkatan", departures?.[0] ? formatDate(departures[0].departure_date) : "Belum tersedia"], ["users", "Ketersediaan", departures?.length ? `${departures.length} jadwal · ${Math.max(0, departures[0].quota - departures[0].filled)} kursi terdekat` : "Belum tersedia"]].map(([icon, label, value]) => (
+                {[["route", "Jenis", pkg.type === "halal_tour" ? "Halal Tour" : pkg.type.charAt(0).toUpperCase() + pkg.type.slice(1)], ["globe", "Durasi", `${pkg.duration_days} hari`], ["plane", "Keberangkatan", departures?.[0] ? displayDate(departures[0].departure_date) : "Belum tersedia"], ["users", "Ketersediaan", departures?.length ? `${departures.length} jadwal · ${Math.max(0, departures[0].quota - departures[0].filled)} kursi terdekat` : "Belum tersedia"]].map(([icon, label, value]) => (
                   <div key={label} className="rounded-xl border border-[#e5ebf2] bg-[#fbfcfe] p-3">
                     <span className="text-primary"><Icon name={icon as "route"} size={17} /></span>
                     <p className="mt-2 text-[10px] font-bold uppercase tracking-[0.08em] text-[#8a98aa]">{label}</p>
@@ -141,8 +148,8 @@ export default async function PackageDetailPage({ params }: { params: { slug: st
                 </div>
                 <div className="rounded-xl border border-[#e5ebf2] bg-[#fbfcfe] p-3">
                   <p className="text-[10px] font-bold uppercase tracking-[0.08em] text-[#8a98aa]">Jadwal terdekat</p>
-                  <p className="mt-2 text-sm font-extrabold text-[#40546f]">{departures?.[0] ? formatDate(departures[0].departure_date) : "Belum tersedia"}</p>
-                  <p className="mt-2 text-[10px] leading-4 text-[#8a98aa]">{departures?.[0]?.return_date ? `Kembali ${formatDate(departures[0].return_date)}` : "Tanggal kembali mengikuti jadwal Travel."}</p>
+                  <p className="mt-2 text-sm font-extrabold text-[#40546f]">{departures?.[0] ? displayDate(departures[0].departure_date) : "Belum tersedia"}</p>
+                  <p className="mt-2 text-[10px] leading-4 text-[#8a98aa]">{departures?.[0]?.return_date ? `Kembali ${displayDate(departures[0].return_date)}` : "Tanggal kembali mengikuti jadwal Travel."}</p>
                 </div>
               </div>
               <div className="mt-3 rounded-xl border border-dashed border-[#d7e1ec] bg-[#fbfcfe] p-4 sm:p-5">
@@ -230,8 +237,8 @@ export default async function PackageDetailPage({ params }: { params: { slug: st
           <aside className="lg:sticky lg:top-[82px]">
             <div className="rounded-[18px] border border-[#d7e3ef] bg-white p-4 shadow-[0_10px_30px_rgba(15,45,90,0.07)] sm:p-5">
               <p className="text-[11px] font-extrabold uppercase tracking-[0.12em] text-[#748297]">Mulai dari</p>
-              <p className="mt-1 font-display text-[26px] font-extrabold text-primary">{formatIDR(pkg.base_price)}</p>
-              <p className="text-xs text-[#748297]">per jamaah</p>
+              <p className="mt-1 font-display text-[26px] font-extrabold text-primary">{displayPrice(pkg.base_price)}</p>
+              <p className="text-xs text-[#748297]">per jamaah</p>{currency !== "IDR" && <p className="mt-1 text-[10px] font-bold text-[#b16b00]">Pilihan {currency} aktif · harga sementara ditampilkan dalam IDR sampai kurs tersedia.</p>}
               <div className="mt-4 grid grid-cols-2 gap-2 rounded-xl bg-[#f7f9fc] p-3"><div><p className="text-[9px] font-bold uppercase tracking-[0.08em] text-[#8a98aa]">Durasi</p><p className="mt-1 text-xs font-extrabold text-[#40546f]">{pkg.duration_days} hari</p></div><div><p className="text-[9px] font-bold uppercase tracking-[0.08em] text-[#8a98aa]">Jadwal</p><p className="mt-1 text-xs font-extrabold text-[#40546f]">{departures?.length ? `${departures.length} pilihan` : "Belum tersedia"}</p></div></div>
               <div className="mt-4 border-t border-[#edf1f6] pt-4">
                 <h2 className="text-xs font-extrabold uppercase tracking-[0.1em]">Pilih keberangkatan</h2>
@@ -243,8 +250,8 @@ export default async function PackageDetailPage({ params }: { params: { slug: st
                         <div className="flex items-start justify-between gap-3">
                           <div className="min-w-0">
                             <p className="text-[10px] font-bold uppercase tracking-[0.08em] text-[#8a98aa]">Berangkat</p>
-                            <p className="mt-0.5 text-[13px] font-extrabold">{formatDate(d.departure_date)}</p>
-                            {d.return_date && <p className="mt-1 text-[11px] text-[#748297]">Kembali {formatDate(d.return_date)}</p>}<p className="mt-1 text-[10px] font-bold text-[#8a98aa]">{pkg.duration_days} hari perjalanan</p>
+                            <p className="mt-0.5 text-[13px] font-extrabold">{displayDate(d.departure_date)}</p>
+                            {d.return_date && <p className="mt-1 text-[11px] text-[#748297]">Kembali {displayDate(d.return_date)}</p>}<p className="mt-1 text-[10px] font-bold text-[#8a98aa]">{pkg.duration_days} hari perjalanan</p>
                           </div>
                           <span className="shrink-0 rounded-lg bg-[#eaf3ff] px-2.5 py-1.5 text-[11px] font-extrabold text-primary">Pilih →</span>
                         </div>
@@ -273,8 +280,8 @@ export default async function PackageDetailPage({ params }: { params: { slug: st
       <div className="fixed inset-x-0 bottom-0 z-40 border-t border-[#dfe7f0] bg-white/95 px-3 py-2.5 backdrop-blur lg:hidden">
         <div className="mx-auto flex max-w-[1180px] items-center justify-between gap-3">
           <div className="min-w-0">
-            <p className="text-[10px] font-bold text-[#748297]">{departures?.[0] ? `Berangkat ${formatDate(departures[0].departure_date)}` : "Mulai dari"}</p>
-            <div className="flex items-baseline gap-1.5"><p className="font-display text-base font-extrabold text-primary">{formatIDR(pkg.base_price)}</p><span className="text-[9px] font-bold text-[#8a98aa]">/jamaah</span></div>
+            <p className="text-[10px] font-bold text-[#748297]">{departures?.[0] ? `Berangkat ${displayDate(departures[0].departure_date)}` : "Mulai dari"}</p>
+            <div className="flex items-baseline gap-1.5"><p className="font-display text-base font-extrabold text-primary">{displayPrice(pkg.base_price)}</p><span className="text-[9px] font-bold text-[#8a98aa]">/jamaah</span></div>
           </div>
           {departures?.[0] ? <Link href={`/booking/baru?departure=${departures[0].id}`} className="shrink-0 rounded-xl bg-primary px-5 py-3 text-xs font-extrabold text-white shadow-[0_6px_16px_rgba(15,95,175,0.22)]">Pilih Jadwal</Link> : <span className="shrink-0 rounded-xl bg-[#e9eef4] px-4 py-3 text-xs font-extrabold text-[#8a98aa]">Belum ada jadwal</span>}
         </div>
