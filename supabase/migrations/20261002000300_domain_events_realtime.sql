@@ -65,9 +65,14 @@ begin
   end;
 
   v_event := lower(tg_table_name) || '.' || lower(tg_op);
-  v_payload := jsonb_build_object('new', v_row);
-  if v_old is not null then
-    v_payload := v_payload || jsonb_build_object('old', v_old);
+  -- Keep the integration stream intentionally minimal. Consumers refetch the
+  -- canonical row through RLS instead of receiving full row snapshots here.
+  v_payload := jsonb_build_object(
+    'operation', lower(tg_op),
+    'table', tg_table_name
+  );
+  if v_row ? 'status' then
+    v_payload := v_payload || jsonb_build_object('status', v_row->>'status');
   end if;
 
   insert into public.domain_events(
