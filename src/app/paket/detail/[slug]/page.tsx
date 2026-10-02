@@ -99,14 +99,22 @@ export default async function PackageDetailPage({ params }: { params: { slug: st
 
         <div className="mt-4 grid gap-4 lg:grid-cols-[minmax(0,1fr)_360px] lg:items-start">
           <div className="space-y-4">
+            <div className="-mx-3 overflow-x-auto px-3 sm:mx-0 sm:px-0">
+              <div className="flex min-w-max gap-2">
+                <a href="#itinerary" className="rounded-full border border-[#dfe7f0] bg-white px-3 py-2 text-[11px] font-extrabold text-[#40546f]">Itinerary</a>
+                <a href="#transport-hotel" className="rounded-full border border-[#dfe7f0] bg-white px-3 py-2 text-[11px] font-extrabold text-[#40546f]">Pesawat & Hotel</a>
+                <a href="#facilities" className="rounded-full border border-[#dfe7f0] bg-white px-3 py-2 text-[11px] font-extrabold text-[#40546f]">Fasilitas</a>
+                <a href="#travel" className="rounded-full border border-[#dfe7f0] bg-white px-3 py-2 text-[11px] font-extrabold text-[#40546f]">Travel</a>
+              </div>
+            </div>
             {pkg.description && <section className="rounded-[18px] border border-[#dfe7f0] bg-white p-4 sm:p-6"><h2 className="font-display text-lg font-extrabold">Tentang paket</h2><p className="mt-2 whitespace-pre-line text-[13px] leading-6 text-[#60738d] sm:text-sm">{pkg.description}</p></section>}
 
             <section className="rounded-[18px] border border-[#dfe7f0] bg-white p-4 sm:p-6">
               <div className="flex items-center justify-between gap-3">
                 <div><p className="text-[11px] font-extrabold uppercase tracking-[0.12em] text-primary">Ringkasan perjalanan</p><h2 className="mt-1 font-display text-lg font-extrabold">Detail paket</h2></div>
-                <span className="rounded-full bg-[#f2f6fb] px-3 py-1 text-[10px] font-extrabold text-[#748297]">Preview UI</span>
+                <span className="hidden rounded-full bg-[#f2f6fb] px-3 py-1 text-[10px] font-extrabold text-[#748297] sm:inline-flex">Detail perjalanan</span>
               </div>
-              <div className="mt-4 grid grid-cols-2 gap-2 sm:grid-cols-4">
+              <div className="mt-4 grid grid-cols-2 gap-2 sm:grid-cols-4 sm:gap-3">
                 {[["route", "Jenis", pkg.type === "halal_tour" ? "Halal Tour" : pkg.type.charAt(0).toUpperCase() + pkg.type.slice(1)], ["globe", "Durasi", `${pkg.duration_days} hari`], ["plane", "Keberangkatan", departures?.[0] ? formatDate(departures[0].departure_date) : "Belum tersedia"], ["users", "Ketersediaan", departures?.length ? `${departures.length} jadwal` : "Belum tersedia"]].map(([icon, label, value]) => (
                   <div key={label} className="rounded-xl border border-[#e5ebf2] bg-[#fbfcfe] p-3">
                     <span className="text-primary"><Icon name={icon as "route"} size={17} /></span>
@@ -117,7 +125,7 @@ export default async function PackageDetailPage({ params }: { params: { slug: st
               </div>
             </section>
 
-            <section className="rounded-[18px] border border-[#dfe7f0] bg-white p-4 sm:p-6">
+            <section id="itinerary" className="rounded-[18px] border border-[#dfe7f0] bg-white p-4 sm:p-6">
               <p className="text-[11px] font-extrabold uppercase tracking-[0.12em] text-primary">Program perjalanan</p>
               <h2 className="mt-1 font-display text-lg font-extrabold">Itinerary</h2>
               <div className="mt-4 space-y-3">
@@ -130,7 +138,7 @@ export default async function PackageDetailPage({ params }: { params: { slug: st
               </div>
             </section>
 
-            <section className="grid gap-3 sm:grid-cols-2">
+            <section id="transport-hotel" className="grid gap-3 sm:grid-cols-2">
               <div className="rounded-[18px] border border-[#dfe7f0] bg-white p-4 sm:p-5">
                 <div className="flex h-9 w-9 items-center justify-center rounded-xl bg-[#eaf3ff] text-primary"><Icon name="plane" size={18} /></div>
                 <h2 className="mt-3 font-display text-base font-extrabold">Penerbangan</h2>
@@ -151,7 +159,7 @@ export default async function PackageDetailPage({ params }: { params: { slug: st
               ))}
             </section>
 
-            <section className="grid gap-3 sm:grid-cols-2">
+            <section id="facilities" className="grid gap-3 sm:grid-cols-2">
               <div className="rounded-[18px] border border-[#dfe7f0] bg-white p-4 sm:p-5">
                 <h2 className="flex items-center gap-2 font-display text-base font-extrabold"><span className="text-[#20a67a]">✓</span> Termasuk</h2>
                 {inclusions.length ? <ul className="mt-3 space-y-2">{inclusions.map((item, i) => <li key={i} className="flex gap-2 text-[13px] leading-5 text-[#60738d]"><span className="text-[#20a67a]">✓</span><span>{item}</span></li>)}</ul> : <p className="mt-3 text-xs text-[#748297]">Detail fasilitas akan diperbarui Travel.</p>}
@@ -162,7 +170,7 @@ export default async function PackageDetailPage({ params }: { params: { slug: st
               </div>
             </section>
 
-            {org && <section className="rounded-[18px] border border-[#dfe7f0] bg-white p-4 sm:p-6">
+            {org && <section id="travel" className="rounded-[18px] border border-[#dfe7f0] bg-white p-4 sm:p-6">
               <div className="flex items-start justify-between gap-3"><div><p className="text-[11px] font-extrabold uppercase tracking-[0.12em] text-primary">Penyelenggara perjalanan</p><h2 className="mt-1 font-display text-lg font-extrabold">{org.name}</h2></div><Link href={`/travel/${org.slug}`} className="text-xs font-extrabold text-primary">Lihat Travel →</Link></div>
               <div className="mt-4 grid gap-2 text-xs text-[#60738d] sm:grid-cols-2">
                 {org.license_type && <p><span className="font-extrabold text-[#40546f]">Izin:</span> {org.license_type}{org.license_number ? ` · ${org.license_number}` : ""}</p>}
