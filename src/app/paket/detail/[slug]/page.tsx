@@ -6,12 +6,13 @@ import { formatIDR, formatDate } from "@/lib/utils";
 import { WishlistButton } from "@/components/WishlistButton";
 import { Icon } from "@/components/layout/Icon";
 
-export default async function PackageDetailPage({ params }: { params: { slug: string } }) {
+export default async function PackageDetailPage({ params }: { params: Promise<{ slug: string }> }) {
+  const { slug } = await params;
   const supabase = await createClient();
   const { data: pkg } = await supabase
     .from("packages")
     .select("*, organizations(id, name, slug, status, support_phone, support_email, address, license_type, license_number, logo_light_url)")
-    .eq("slug", params.slug)
+    .eq("slug", slug)
     .eq("status", "published")
     .single();
 
