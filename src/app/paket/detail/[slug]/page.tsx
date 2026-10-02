@@ -232,6 +232,7 @@ export default async function PackageDetailPage({ params }: { params: { slug: st
               <p className="text-[11px] font-extrabold uppercase tracking-[0.12em] text-[#748297]">Mulai dari</p>
               <p className="mt-1 font-display text-[26px] font-extrabold text-primary">{formatIDR(pkg.base_price)}</p>
               <p className="text-xs text-[#748297]">per jamaah</p>
+              <div className="mt-4 grid grid-cols-2 gap-2 rounded-xl bg-[#f7f9fc] p-3"><div><p className="text-[9px] font-bold uppercase tracking-[0.08em] text-[#8a98aa]">Durasi</p><p className="mt-1 text-xs font-extrabold text-[#40546f]">{pkg.duration_days} hari</p></div><div><p className="text-[9px] font-bold uppercase tracking-[0.08em] text-[#8a98aa]">Jadwal</p><p className="mt-1 text-xs font-extrabold text-[#40546f]">{departures?.length ? `${departures.length} pilihan` : "Belum tersedia"}</p></div></div>
               <div className="mt-4 border-t border-[#edf1f6] pt-4">
                 <h2 className="text-xs font-extrabold uppercase tracking-[0.1em]">Pilih keberangkatan</h2>
                 {!departures?.length ? <div className="mt-3 rounded-xl bg-[#f7f9fc] p-3 text-xs leading-5 text-[#60738d]">Belum ada jadwal terbuka. Silakan lihat kembali nanti atau hubungi Travel.</div> : (
@@ -243,7 +244,7 @@ export default async function PackageDetailPage({ params }: { params: { slug: st
                           <div className="min-w-0">
                             <p className="text-[10px] font-bold uppercase tracking-[0.08em] text-[#8a98aa]">Berangkat</p>
                             <p className="mt-0.5 text-[13px] font-extrabold">{formatDate(d.departure_date)}</p>
-                            {d.return_date && <p className="mt-1 text-[11px] text-[#748297]">Kembali {formatDate(d.return_date)}</p>}
+                            {d.return_date && <p className="mt-1 text-[11px] text-[#748297]">Kembali {formatDate(d.return_date)}</p>}<p className="mt-1 text-[10px] font-bold text-[#8a98aa]">{pkg.duration_days} hari perjalanan</p>
                           </div>
                           <span className="shrink-0 rounded-lg bg-[#eaf3ff] px-2.5 py-1.5 text-[11px] font-extrabold text-primary">Pilih →</span>
                         </div>
