@@ -312,7 +312,7 @@ export function MarketplaceSearch() {
     : "Pilih tanggal";
 
   return (
-    <div ref={rootRef} className="relative pt-5 sm:pt-6">
+    <div ref={rootRef} className="relative pt-4 sm:pt-6">
       {showSegaDealsInfo && (
         <div
           className="fixed inset-0 z-[100] flex items-center justify-center bg-[#071a33]/45 p-4 backdrop-blur-[2px]"
@@ -448,8 +448,8 @@ export function MarketplaceSearch() {
         </div>
       )}
 
-      <div className="absolute left-1/2 top-0 z-20 w-[calc(100%-16px)] -translate-x-1/2 sm:w-max sm:max-w-[calc(100%-32px)]">
-        <div className="overflow-x-auto rounded-[18px] border border-[#dce4ee] bg-white shadow-[0_8px_22px_rgba(16,34,63,0.14)] [scrollbar-width:none] [&::-webkit-scrollbar]:hidden sm:rounded-full">
+      <div className="absolute left-1/2 top-0 z-20 w-[calc(100%-8px)] -translate-x-1/2 sm:w-max sm:max-w-[calc(100%-32px)]">
+        <div className="overflow-x-auto rounded-[16px] border border-[#dce4ee] bg-white shadow-[0_8px_22px_rgba(16,34,63,0.12)] sm:rounded-full [scrollbar-width:none] [&::-webkit-scrollbar]:hidden">
           <div className="flex min-w-max items-center gap-0.5 px-1 py-1 sm:gap-1 sm:px-2 sm:py-1.5">
             {SERVICES.map((item) => {
               const active = service === item.type;
@@ -459,7 +459,7 @@ export function MarketplaceSearch() {
                   key={item.type}
                   type="button"
                   onClick={() => handleServiceClick(item.type)}
-                  className={`group flex h-9 shrink-0 items-center gap-1 rounded-full px-1.5 transition sm:h-11 sm:gap-2 sm:px-3 ${
+                  className={`group flex h-8.5 shrink-0 items-center gap-1 rounded-full px-1.5 transition sm:h-11 sm:gap-2 sm:px-3 ${
                     active ? "bg-[#eaf3ff] text-primary" : "text-[#52647e] hover:bg-[#f5f8fc]"
                   }`}
                 >
@@ -476,9 +476,9 @@ export function MarketplaceSearch() {
         </div>
       </div>
 
-      <div className="rounded-[18px] border border-[#dce4ee] bg-white px-2.5 pb-3 pt-[52px] shadow-[0_18px_50px_rgba(16,34,63,0.14)] sm:rounded-[22px] sm:px-4 sm:pb-4 sm:pt-[64px]">
+      <div className="rounded-[16px] border border-[#dce4ee] bg-white px-2 pb-2.5 pt-[48px] sm:rounded-[22px] sm:px-4 sm:pb-4 sm:pt-[64px] shadow-[0_18px_50px_rgba(16,34,63,0.12)]">
         <div
-          className={`grid gap-2.5 ${
+          className={`grid gap-2 sm:gap-2.5 ${
             service === "segadeals"
               ? "md:grid-cols-2 xl:grid-cols-[minmax(190px,1.05fr)_minmax(240px,1.35fr)_142px_158px_174px_176px]"
               : "md:grid-cols-2 lg:grid-cols-[minmax(180px,1fr)_minmax(220px,1.25fr)_150px_170px_112px] xl:grid-cols-[minmax(220px,1.15fr)_minmax(300px,1.6fr)_180px_200px_112px]"
@@ -488,7 +488,7 @@ export function MarketplaceSearch() {
             <button
               type="button"
               onClick={() => setOpenPanel(openPanel === "origin" ? null : "origin")}
-              className="flex min-h-[62px] w-full cursor-pointer items-center gap-3 rounded-xl border border-[#dfe7f0] bg-[#fbfdff] px-3.5 text-left transition hover:border-[#c8d8ea] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/20"
+              className="flex min-h-[56px] sm:min-h-[62px] w-full cursor-pointer items-center gap-2.5 rounded-xl border border-[#dfe7f0] bg-[#fbfdff] px-3.5 text-left transition hover:border-[#c8d8ea] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/20"
               aria-expanded={openPanel === "origin"}
               aria-haspopup="dialog"
             >
@@ -541,7 +541,7 @@ export function MarketplaceSearch() {
             <button
               type="button"
               onClick={() => setOpenPanel(openPanel === "destination" ? null : "destination")}
-            className="relative flex min-h-[62px] w-full min-w-0 cursor-pointer items-center gap-3 rounded-xl border border-[#dfe7f0] bg-[#fbfdff] px-3.5 text-left transition hover:border-[#c8d8ea] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/20"
+            className="relative flex min-h-[56px] sm:min-h-[62px] w-full min-w-0 cursor-pointer items-center gap-2.5 rounded-xl border border-[#dfe7f0] bg-[#fbfdff] px-3.5 text-left transition hover:border-[#c8d8ea] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/20"
             aria-expanded={openPanel === "destination"}
           >
             <span className="shrink-0 text-primary"><Icon name="globe" size={17} /></span>
@@ -595,7 +595,7 @@ export function MarketplaceSearch() {
             <button
               type="button"
               onClick={() => setOpenPanel(openPanel === "date" ? null : "date")}
-              className="relative order-5 flex min-h-[62px] cursor-pointer items-center gap-3 rounded-xl border border-[#dfe7f0] bg-[#fbfdff] px-3.5 text-left transition hover:border-[#c8d8ea] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/20"
+              className="relative order-5 flex min-h-[56px] sm:min-h-[62px] cursor-pointer items-center gap-2.5 rounded-xl border border-[#dfe7f0] bg-[#fbfdff] px-3.5 text-left transition hover:border-[#c8d8ea] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/20"
               aria-expanded={openPanel === "date"}
             >
               <span className="shrink-0 text-primary"><Icon name="booking" size={17} /></span>
@@ -606,7 +606,7 @@ export function MarketplaceSearch() {
             </button>
           )}
 
-          <div className={`flex min-h-[62px] items-center gap-3 rounded-xl border border-[#dfe7f0] bg-[#fbfdff] px-3.5 ${service === "segadeals" ? "order-3" : ""}`}>
+          <div className={`flex min-h-[56px] sm:min-h-[62px] items-center gap-2.5 rounded-xl border border-[#dfe7f0] bg-[#fbfdff] px-3.5 ${service === "segadeals" ? "order-3" : ""}`}>
             <span className="shrink-0 text-primary"><Icon name="user" size={17} /></span>
             <div className="min-w-0 flex-1">
               <span className="block text-[10px] font-semibold text-[#8b9aae]">Traveler</span>
@@ -619,7 +619,7 @@ export function MarketplaceSearch() {
           </div>
 
           {service === "segadeals" && (
-            <label className="order-4 flex min-h-[62px] cursor-text items-center gap-3 rounded-xl border border-[#dfe7f0] bg-[#fbfdff] px-3.5 transition hover:border-[#c8d8ea]">
+            <label className="order-4 flex min-h-[56px] sm:min-h-[62px] cursor-text items-center gap-2.5 rounded-xl border border-[#dfe7f0] bg-[#fbfdff] px-3.5 transition hover:border-[#c8d8ea]">
               <span className="shrink-0 text-[15px] font-extrabold text-primary">Rp</span>
               <span className="min-w-0 flex-1">
                 <span className="block text-[10px] font-semibold text-[#8b9aae]">Budget</span>
@@ -640,7 +640,7 @@ export function MarketplaceSearch() {
             <button
               type="button"
               onClick={() => setOpenPanel(openPanel === "date" ? null : "date")}
-              className="relative flex min-h-[62px] cursor-pointer items-center gap-3 rounded-xl border border-[#dfe7f0] bg-[#fbfdff] px-3.5 text-left transition hover:border-[#c8d8ea] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/20"
+              className="relative flex min-h-[56px] sm:min-h-[62px] cursor-pointer items-center gap-2.5 rounded-xl border border-[#dfe7f0] bg-[#fbfdff] px-3.5 text-left transition hover:border-[#c8d8ea] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/20"
               aria-expanded={openPanel === "date"}
             >
               <span className="shrink-0 text-primary"><Icon name="booking" size={17} /></span>
@@ -654,7 +654,7 @@ export function MarketplaceSearch() {
           <button
             type="button"
             onClick={handleSearch}
-            className={`inline-flex min-h-[62px] w-full items-center justify-center gap-2 whitespace-nowrap rounded-xl bg-primary px-4 text-xs font-extrabold text-white shadow-sm transition hover:brightness-105 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/30 ${service === "segadeals" ? "order-6" : ""}`}
+            className={`inline-flex min-h-[56px] sm:min-h-[62px] w-full items-center justify-center gap-2 whitespace-nowrap rounded-xl bg-primary px-4 text-xs font-extrabold text-white shadow-sm transition hover:brightness-105 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/30 ${service === "segadeals" ? "order-6" : ""}`}
           >
             <Icon name="search" size={16} />
             {form.actionLabel}
