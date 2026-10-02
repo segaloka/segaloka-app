@@ -161,12 +161,12 @@ export default async function PackageDetailPage({ params }: { params: { slug: st
 
             <section id="facilities" className="grid gap-3 sm:grid-cols-2">
               <div className="rounded-[18px] border border-[#dfe7f0] bg-white p-4 sm:p-5">
-                <h2 className="flex items-center gap-2 font-display text-base font-extrabold"><span className="text-[#20a67a]">✓</span> Termasuk</h2>
-                {inclusions.length ? <ul className="mt-3 space-y-2">{inclusions.map((item, i) => <li key={i} className="flex gap-2 text-[13px] leading-5 text-[#60738d]"><span className="text-[#20a67a]">✓</span><span>{item}</span></li>)}</ul> : <p className="mt-3 text-xs text-[#748297]">Detail fasilitas akan diperbarui Travel.</p>}
+                <div className="flex items-center justify-between gap-3"><h2 className="flex items-center gap-2 font-display text-base font-extrabold"><span className="flex h-7 w-7 items-center justify-center rounded-full bg-[#eef8f3] text-[#20a67a]">✓</span> Termasuk</h2>{inclusions.length > 0 && <span className="rounded-full bg-[#f4f7fb] px-2 py-1 text-[10px] font-extrabold text-[#748297]">{inclusions.length} item</span>}</div>
+                {inclusions.length ? <ul className="mt-3 space-y-2">{inclusions.map((item, i) => <li key={i} className="flex gap-2 text-[13px] leading-5 text-[#60738d]"><span className="text-[#20a67a]">✓</span><span>{item}</span></li>)}</ul> : <p className="mt-3 text-xs text-[#748297]">Detail fasilitas yang termasuk dalam harga akan ditampilkan setelah dilengkapi Travel.</p>}
               </div>
               <div className="rounded-[18px] border border-[#dfe7f0] bg-white p-4 sm:p-5">
-                <h2 className="flex items-center gap-2 font-display text-base font-extrabold"><span className="text-[#b16b00]">×</span> Tidak termasuk</h2>
-                {exclusions.length ? <ul className="mt-3 space-y-2">{exclusions.map((item, i) => <li key={i} className="flex gap-2 text-[13px] leading-5 text-[#60738d]"><span className="text-[#b16b00]">×</span><span>{item}</span></li>)}</ul> : <p className="mt-3 text-xs text-[#748297]">Tidak ada informasi tambahan.</p>}
+                <div className="flex items-center justify-between gap-3"><h2 className="flex items-center gap-2 font-display text-base font-extrabold"><span className="flex h-7 w-7 items-center justify-center rounded-full bg-[#fff7e8] text-[#b16b00]">×</span> Tidak termasuk</h2>{exclusions.length > 0 && <span className="rounded-full bg-[#f4f7fb] px-2 py-1 text-[10px] font-extrabold text-[#748297]">{exclusions.length} item</span>}</div>
+                {exclusions.length ? <ul className="mt-3 space-y-2">{exclusions.map((item, i) => <li key={i} className="flex gap-2 text-[13px] leading-5 text-[#60738d]"><span className="text-[#b16b00]">×</span><span>{item}</span></li>)}</ul> : <p className="mt-3 text-xs text-[#748297]">Detail biaya atau layanan yang tidak termasuk akan ditampilkan setelah dilengkapi Travel.</p>}
               </div>
             </section>
 
