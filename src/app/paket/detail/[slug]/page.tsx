@@ -17,6 +17,8 @@ export default async function PackageDetailPage({ params }: { params: { slug: st
   const locale = language === "en" ? "en-US" : language === "ar" ? "ar-SA" : "id-ID";
   const displayDate = (value: string | null | undefined) => value ? new Intl.DateTimeFormat(locale, { day: "2-digit", month: "short", year: "numeric" }).format(new Date(value)) : "—";
   const displayPrice = (amount: number | null | undefined) => amount == null ? "—" : new Intl.NumberFormat(locale, { style: "currency", currency: "IDR", maximumFractionDigits: 0 }).format(amount);
+  const displayNumber = (value: number) => new Intl.NumberFormat(locale).format(value);
+  const displayRating = (value: number | null) => value == null ? "—" : new Intl.NumberFormat(locale, { minimumFractionDigits: 1, maximumFractionDigits: 1 }).format(value);
   const copy = {
     id: { home:"Beranda", available:"Paket tersedia", days:"hari", itinerary:"Itinerary", transportHotel:"Pesawat & Hotel", facilities:"Fasilitas", terms:"Ketentuan", about:"Tentang paket", summary:"Ringkasan perjalanan", detail:"Detail paket", program:"Program perjalanan", route:"Rute perjalanan", from:"Dari", to:"Ke", nearest:"Jadwal terdekat", flight:"Penerbangan", hotel:"Hotel & akomodasi", startFrom:"Mulai dari", perTraveler:"per jamaah", chooseDeparture:"Pilih keberangkatan", choose:"Pilih", chooseSchedule:"Pilih Jadwal", noSchedule:"Belum ada jadwal", unavailable:"Belum tersedia" },
     en: { home:"Home", available:"Package available", days:"days", itinerary:"Itinerary", transportHotel:"Flight & Hotel", facilities:"Facilities", terms:"Terms", about:"About this package", summary:"Trip summary", detail:"Package details", program:"Travel program", route:"Travel route", from:"From", to:"To", nearest:"Nearest schedule", flight:"Flight", hotel:"Hotel & accommodation", startFrom:"Starts from", perTraveler:"per traveler", chooseDeparture:"Choose departure", choose:"Choose", chooseSchedule:"Choose Schedule", noSchedule:"No schedule yet", unavailable:"Not available" },
@@ -113,7 +115,7 @@ export default async function PackageDetailPage({ params }: { params: { slug: st
             <div className="flex items-start justify-between gap-3">
               <div className="min-w-0">
                 <div className="flex flex-wrap items-center gap-2 text-[11px] font-extrabold sm:text-xs">
-                  <span className="rounded-full bg-[#eaf3ff] px-2.5 py-1 text-primary">{pkg.duration_days} {t.days}</span>
+                  <span className="rounded-full bg-[#eaf3ff] px-2.5 py-1 text-primary">{displayNumber(pkg.duration_days)} {t.days}</span>
                   <span className="rounded-full bg-[#eef8f3] px-2.5 py-1 text-[#167453]">{t.available}</span>
                 </div>
                 <h1 className="mt-2.5 font-display text-[22px] font-extrabold leading-[1.18] tracking-[-0.025em] sm:text-[30px]">{pkg.name}</h1>
@@ -133,7 +135,7 @@ export default async function PackageDetailPage({ params }: { params: { slug: st
                 <div className="flex items-center gap-1.5">
                   <span className="text-[#f5a000]">★</span>
                   {rating && rating.review_count > 0 ? (
-                    <><span className="text-sm font-extrabold">{Number(rating.average_rating).toFixed(1)}</span><span className="text-xs text-[#748297]">({rating.review_count} {u.reviews})</span></>
+                    <><span className="text-sm font-extrabold">{displayRating(rating.average_rating)}</span><span className="text-xs text-[#748297]">({displayNumber(rating.review_count)} {u.reviews})</span></>
                   ) : <span className="text-xs font-bold text-[#748297]">{u.noReviews}</span>}
                 </div>
               </div>
@@ -159,7 +161,7 @@ export default async function PackageDetailPage({ params }: { params: { slug: st
                 <span className="hidden rounded-full bg-[#f2f6fb] px-3 py-1 text-[10px] font-extrabold text-[#748297] sm:inline-flex">{u.journeyDetail}</span>
               </div>
               <div className="mt-4 grid grid-cols-2 gap-2 sm:grid-cols-4 sm:gap-3">
-                {[["route", u.typeLabel, packageTypeLabel(pkg.type)], ["globe", u.duration, `${pkg.duration_days} ${t.days}`], ["plane", u.departureLabel, departures?.[0] ? displayDate(departures[0].departure_date) : t.unavailable], ["users", u.availabilityLabel, departures?.length ? `${departures.length} ${u.schedule} · ${Math.max(0, departures[0].quota - departures[0].filled)} ${u.seatNearest}` : t.unavailable]].map(([icon, label, value]) => (
+                {[["route", u.typeLabel, packageTypeLabel(pkg.type)], ["globe", u.duration, `${displayNumber(pkg.duration_days)} ${t.days}`], ["plane", u.departureLabel, departures?.[0] ? displayDate(departures[0].departure_date) : t.unavailable], ["users", u.availabilityLabel, departures?.length ? `${displayNumber(departures.length)} ${u.schedule} · ${displayNumber(Math.max(0, departures[0].quota - departures[0].filled))} ${u.seatNearest}` : t.unavailable]].map(([icon, label, value]) => (
                   <div key={label} className="rounded-xl border border-[#e5ebf2] bg-[#fbfcfe] p-3">
                     <span className="text-primary"><Icon name={icon as "route"} size={17} /></span>
                     <p className="mt-2 text-[10px] font-bold uppercase tracking-[0.08em] text-[#8a98aa]">{label}</p>
@@ -180,7 +182,7 @@ export default async function PackageDetailPage({ params }: { params: { slug: st
                 </div>
                 <div className="rounded-xl border border-[#e5ebf2] bg-[#fbfcfe] p-3">
                   <p className="text-[10px] font-bold uppercase tracking-[0.08em] text-[#8a98aa]">{u.duration}</p>
-                  <p className="mt-2 text-sm font-extrabold text-[#40546f]">{pkg.duration_days} {t.days}</p>
+                  <p className="mt-2 text-sm font-extrabold text-[#40546f]">{displayNumber(pkg.duration_days)} {t.days}</p>
                   <p className="mt-2 text-[10px] leading-4 text-[#8a98aa]">{lt.dailyHint}</p>
                 </div>
                 <div className="rounded-xl border border-[#e5ebf2] bg-[#fbfcfe] p-3">
@@ -202,8 +204,8 @@ export default async function PackageDetailPage({ params }: { params: { slug: st
                 </div>
               </div>
               <div className="mt-3 grid gap-3 sm:grid-cols-2">
-                <a href="#facilities" className="rounded-xl border border-[#dfe7f0] bg-[#eef8f3] p-3 transition hover:border-[#b9decf]"><p className="text-[10px] font-extrabold uppercase tracking-[0.08em] text-[#167453]">{u.included}</p><p className="mt-1 text-xs font-bold text-[#40546f]">{inclusions.length ? `${inclusions.length} ${u.facilitiesListed}` : u.waitingTravel}</p></a>
-                <a href="#facilities" className="rounded-xl border border-[#dfe7f0] bg-[#fff9ef] p-3 transition hover:border-[#ead5ad]"><p className="text-[10px] font-extrabold uppercase tracking-[0.08em] text-[#b16b00]">{u.excluded}</p><p className="mt-1 text-xs font-bold text-[#40546f]">{exclusions.length ? `${exclusions.length} ${u.itemsListed}` : u.waitingTravel}</p></a>
+                <a href="#facilities" className="rounded-xl border border-[#dfe7f0] bg-[#eef8f3] p-3 transition hover:border-[#b9decf]"><p className="text-[10px] font-extrabold uppercase tracking-[0.08em] text-[#167453]">{u.included}</p><p className="mt-1 text-xs font-bold text-[#40546f]">{inclusions.length ? `${displayNumber(inclusions.length)} ${u.facilitiesListed}` : u.waitingTravel}</p></a>
+                <a href="#facilities" className="rounded-xl border border-[#dfe7f0] bg-[#fff9ef] p-3 transition hover:border-[#ead5ad]"><p className="text-[10px] font-extrabold uppercase tracking-[0.08em] text-[#b16b00]">{u.excluded}</p><p className="mt-1 text-xs font-bold text-[#40546f]">{exclusions.length ? `${displayNumber(exclusions.length)} ${u.itemsListed}` : u.waitingTravel}</p></a>
               </div>
             </section>
 
@@ -230,11 +232,11 @@ export default async function PackageDetailPage({ params }: { params: { slug: st
 
             <section id="facilities" className="grid gap-3 sm:grid-cols-2">
               <div className="rounded-[18px] border border-[#dfe7f0] bg-white p-4 sm:p-5">
-                <div className="flex items-center justify-between gap-3"><h2 className="flex items-center gap-2 font-display text-base font-extrabold"><span className="flex h-7 w-7 items-center justify-center rounded-full bg-[#eef8f3] text-[#20a67a]">✓</span> {u.included}</h2>{inclusions.length > 0 && <span className="rounded-full bg-[#f4f7fb] px-2 py-1 text-[10px] font-extrabold text-[#748297]">{inclusions.length} {u.item}</span>}</div>
+                <div className="flex items-center justify-between gap-3"><h2 className="flex items-center gap-2 font-display text-base font-extrabold"><span className="flex h-7 w-7 items-center justify-center rounded-full bg-[#eef8f3] text-[#20a67a]">✓</span> {u.included}</h2>{inclusions.length > 0 && <span className="rounded-full bg-[#f4f7fb] px-2 py-1 text-[10px] font-extrabold text-[#748297]">{displayNumber(inclusions.length)} {u.item}</span>}</div>
                 {inclusions.length ? <ul className="mt-3 space-y-2">{inclusions.map((item, i) => <li key={i} className="flex gap-2 text-[13px] leading-5 text-[#60738d]"><span className="text-[#20a67a]">✓</span><span>{item}</span></li>)}</ul> : <p className="mt-3 text-xs text-[#748297]">{lt.includedEmpty}</p>}
               </div>
               <div className="rounded-[18px] border border-[#dfe7f0] bg-white p-4 sm:p-5">
-                <div className="flex items-center justify-between gap-3"><h2 className="flex items-center gap-2 font-display text-base font-extrabold"><span className="flex h-7 w-7 items-center justify-center rounded-full bg-[#fff7e8] text-[#b16b00]">×</span> {u.excluded}</h2>{exclusions.length > 0 && <span className="rounded-full bg-[#f4f7fb] px-2 py-1 text-[10px] font-extrabold text-[#748297]">{exclusions.length} {u.item}</span>}</div>
+                <div className="flex items-center justify-between gap-3"><h2 className="flex items-center gap-2 font-display text-base font-extrabold"><span className="flex h-7 w-7 items-center justify-center rounded-full bg-[#fff7e8] text-[#b16b00]">×</span> {u.excluded}</h2>{exclusions.length > 0 && <span className="rounded-full bg-[#f4f7fb] px-2 py-1 text-[10px] font-extrabold text-[#748297]">{displayNumber(exclusions.length)} {u.item}</span>}</div>
                 {exclusions.length ? <ul className="mt-3 space-y-2">{exclusions.map((item, i) => <li key={i} className="flex gap-2 text-[13px] leading-5 text-[#60738d]"><span className="text-[#b16b00]">×</span><span>{item}</span></li>)}</ul> : <p className="mt-3 text-xs text-[#748297]">{lt.excludedEmpty}</p>}
               </div>
             </section>
@@ -242,7 +244,7 @@ export default async function PackageDetailPage({ params }: { params: { slug: st
             <section id="reviews" className="rounded-[18px] border border-[#dfe7f0] bg-white p-4 sm:p-6">
               <div className="flex items-start justify-between gap-4">
                 <div><p className="text-[11px] font-extrabold uppercase tracking-[0.12em] text-primary">{u.experience}</p><h2 className="mt-1 font-display text-lg font-extrabold">{u.ratingTitle}</h2></div>
-                {rating && rating.review_count > 0 ? <div className="shrink-0 text-end"><p className="text-2xl font-extrabold text-[#f5a000]">★ {Number(rating.average_rating).toFixed(1)}</p><p className="text-[11px] font-bold text-[#748297]">{rating.review_count} {u.reviews}</p></div> : null}
+                {rating && rating.review_count > 0 ? <div className="shrink-0 text-end"><p className="text-2xl font-extrabold text-[#f5a000]">★ {displayRating(rating.average_rating)}</p><p className="text-[11px] font-bold text-[#748297]">{displayNumber(rating.review_count)} {u.reviews}</p></div> : null}
               </div>
               {rating && rating.review_count > 0 ? <div className="mt-4 rounded-xl bg-[#f7f9fc] p-4"><div className="flex items-center gap-2 text-[11px] font-extrabold text-[#167453]"><Icon name="check" size={14} /> {u.verified}</div><p className="mt-2 text-xs leading-5 text-[#60738d]">{u.reviewBody}</p></div> : <div className="mt-4 rounded-xl border border-dashed border-[#d7e1ec] bg-[#fbfcfe] p-5 text-center"><span className="mx-auto flex h-10 w-10 items-center justify-center rounded-full bg-[#fff7e8] text-[#f5a000]">★</span><p className="mt-2 text-sm font-extrabold">{u.noReviews}</p><p className="mx-auto mt-1 max-w-md text-xs leading-5 text-[#748297]">{u.noReviewBody}</p></div>}
             </section>
@@ -256,7 +258,7 @@ export default async function PackageDetailPage({ params }: { params: { slug: st
                     <h2 className="mt-1 truncate font-display text-lg font-extrabold">{org.name}</h2>
                     <div className="mt-1.5 flex flex-wrap items-center gap-x-3 gap-y-1">
                       <span className="text-[11px] font-bold text-[#167453]">{u.onSegaloka}</span>
-                      <span className="text-[11px] text-[#748297]">{rating && rating.review_count > 0 ? `★ ${Number(rating.average_rating).toFixed(1)} · ${rating.review_count} ${u.reviews}` : u.noReviews}</span>
+                      <span className="text-[11px] text-[#748297]">{rating && rating.review_count > 0 ? `★ ${displayRating(rating.average_rating)} · ${rating.review_count} ${u.reviews}` : u.noReviews}</span>
                     </div>
                   </div>
                   <Link href={`/travel/${org.slug}`} className="hidden rounded-xl border border-[#cfe0f2] bg-white px-3 py-2 text-[11px] font-extrabold text-primary sm:inline-flex">{u.viewTravel} {arrow}</Link>
@@ -276,7 +278,7 @@ export default async function PackageDetailPage({ params }: { params: { slug: st
               <p className="text-[11px] font-extrabold uppercase tracking-[0.12em] text-[#748297]">{t.startFrom}</p>
               <p className="mt-1 font-display text-[26px] font-extrabold text-primary">{displayPrice(pkg.base_price)}</p>
               <p className="text-xs text-[#748297]">{t.perTraveler}</p>{currency !== "IDR" && <p className="mt-1 text-[10px] font-bold text-[#b16b00]">{lt.currencyPending(currency)}</p>}
-              <div className="mt-4 grid grid-cols-2 gap-2 rounded-xl bg-[#f7f9fc] p-3"><div><p className="text-[9px] font-bold uppercase tracking-[0.08em] text-[#8a98aa]">{u.duration}</p><p className="mt-1 text-xs font-extrabold text-[#40546f]">{pkg.duration_days} {t.days}</p></div><div><p className="text-[9px] font-bold uppercase tracking-[0.08em] text-[#8a98aa]">{u.scheduleLabel}</p><p className="mt-1 text-xs font-extrabold text-[#40546f]">{departures?.length ? `${departures.length} ${u.choices}` : t.unavailable}</p></div></div>
+              <div className="mt-4 grid grid-cols-2 gap-2 rounded-xl bg-[#f7f9fc] p-3"><div><p className="text-[9px] font-bold uppercase tracking-[0.08em] text-[#8a98aa]">{u.duration}</p><p className="mt-1 text-xs font-extrabold text-[#40546f]">{displayNumber(pkg.duration_days)} {t.days}</p></div><div><p className="text-[9px] font-bold uppercase tracking-[0.08em] text-[#8a98aa]">{u.scheduleLabel}</p><p className="mt-1 text-xs font-extrabold text-[#40546f]">{departures?.length ? `${displayNumber(departures.length)} ${u.choices}` : t.unavailable}</p></div></div>
               <div className="mt-4 border-t border-[#edf1f6] pt-4">
                 <h2 className="text-xs font-extrabold uppercase tracking-[0.1em]">{t.chooseDeparture}</h2>
                 {!departures?.length ? <div className="mt-3 rounded-xl bg-[#f7f9fc] p-3 text-xs leading-5 text-[#60738d]">{lt.noDeparture}</div> : (
@@ -288,7 +290,7 @@ export default async function PackageDetailPage({ params }: { params: { slug: st
                           <div className="min-w-0">
                             <p className="text-[10px] font-bold uppercase tracking-[0.08em] text-[#8a98aa]">{u.depart}</p>
                             <p className="mt-0.5 text-[13px] font-extrabold">{displayDate(d.departure_date)}</p>
-                            {d.return_date && <p className="mt-1 text-[11px] text-[#748297]">{u.return} {displayDate(d.return_date)}</p>}<p className="mt-1 text-[10px] font-bold text-[#8a98aa]">{pkg.duration_days} {u.tripDays}</p>
+                            {d.return_date && <p className="mt-1 text-[11px] text-[#748297]">{u.return} {displayDate(d.return_date)}</p>}<p className="mt-1 text-[10px] font-bold text-[#8a98aa]">{displayNumber(pkg.duration_days)} {u.tripDays}</p>
                           </div>
                           <span className="shrink-0 rounded-lg bg-[#eaf3ff] px-2.5 py-1.5 text-[11px] font-extrabold text-primary">{t.choose} {arrow}</span>
                         </div>
