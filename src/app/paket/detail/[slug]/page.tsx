@@ -31,10 +31,11 @@ export default async function PackageDetailPage({ params }: { params: { slug: st
     license_number: string | null; logo_light_url: string | null;
   } | null;
 
-  const { data: ratingRows } = org?.id
-    ? await supabase.rpc("get_travel_rating", { p_org_id: org.id })
-    : { data: null };
-  const rating = ratingRows?.[0] ?? null;
+  let rating: { average_rating: number | null; review_count: number } | null = null;
+  if (org?.id) {
+    const { data: ratingRows } = await supabase.rpc("get_travel_rating", { p_org_id: org.id });
+    rating = ratingRows?.[0] ?? null;
+  }
 
   const inclusions = Array.isArray(pkg.inclusions) ? (pkg.inclusions as string[]) : [];
   const exclusions = Array.isArray(pkg.exclusions) ? (pkg.exclusions as string[]) : [];
