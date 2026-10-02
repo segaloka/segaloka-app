@@ -27,19 +27,19 @@ export default async function PackageDetailPage({ params }: { params: { slug: st
   const t = copy[language === "en" || language === "ar" ? language : "id"];
   const longCopy = {
     id: {
-      routeHint:"Kota asal dan tujuan diisi Travel.", dailyHint:"Program harian mengikuti durasi paket.", returnHint:"Tanggal kembali mengikuti jadwal Travel.", dailyTitle:"Agenda perjalanan per hari", dailyBody:(days:number)=>`Travel akan mengisi Hari 1 sampai Hari ${days}: lokasi awal dan tujuan, aktivitas, waktu kegiatan, transportasi, hotel atau akomodasi, serta catatan perjalanan.`,
+      routeHint:"Kota asal dan tujuan diisi Travel.", dailyHint:"Program harian mengikuti durasi paket.", returnHint:"Tanggal kembali mengikuti jadwal Travel.", dailyTitle:"Agenda perjalanan per hari", dailyBody:(days:string)=>`Travel akan mengisi Hari ${displayNumber(1)} sampai Hari ${days}: lokasi awal dan tujuan, aktivitas, waktu kegiatan, transportasi, hotel atau akomodasi, serta catatan perjalanan.`,
       flightBody:"Maskapai, nomor penerbangan, rute, waktu, dan bagasi akan tampil setelah Travel melengkapi data keberangkatan.", hotelBody:"Nama hotel, lokasi, kelas, dan konfigurasi kamar akan ditampilkan sesuai data paket dari Travel.",
       includedEmpty:"Detail fasilitas yang termasuk dalam harga akan ditampilkan setelah dilengkapi Travel.", excludedEmpty:"Detail biaya atau layanan yang tidak termasuk akan ditampilkan setelah dilengkapi Travel.",
       currencyPending:(code:string)=>`Pilihan ${code} aktif · harga sementara ditampilkan dalam IDR sampai kurs tersedia.`, noDeparture:"Belum ada jadwal terbuka. Silakan lihat kembali nanti atau hubungi Travel.", beforeBooking:"Sebelum melanjutkan booking", beforeBookingBody:"Periksa jadwal, harga, fasilitas, ketentuan pembayaran, serta kebijakan perjalanan. Detail final ditampilkan sebelum konfirmasi booking."
     },
     en: {
-      routeHint:"Origin and destination cities are provided by the Travel operator.", dailyHint:"The daily program follows the package duration.", returnHint:"The return date follows the Travel schedule.", dailyTitle:"Daily travel plan", dailyBody:(days:number)=>`Travel will provide Day 1 through Day ${days}: origin and destination, activities, times, transportation, hotel or accommodation, and travel notes.`,
+      routeHint:"Origin and destination cities are provided by the Travel operator.", dailyHint:"The daily program follows the package duration.", returnHint:"The return date follows the Travel schedule.", dailyTitle:"Daily travel plan", dailyBody:(days:string)=>`Travel will provide Day ${displayNumber(1)} through Day ${days}: origin and destination, activities, times, transportation, hotel or accommodation, and travel notes.`,
       flightBody:"Airline, flight number, route, time, and baggage details will appear after the Travel operator completes the departure information.", hotelBody:"Hotel name, location, class, and room configuration will be displayed according to the Travel package data.",
       includedEmpty:"Facilities included in the price will appear after the Travel operator completes the details.", excludedEmpty:"Costs or services not included will appear after the Travel operator completes the details.",
       currencyPending:(code:string)=>`${code} is selected · prices remain displayed in IDR until an exchange rate is available.`, noDeparture:"No open departure schedule yet. Please check again later or contact the Travel operator.", beforeBooking:"Before continuing to booking", beforeBookingBody:"Review the schedule, price, facilities, payment terms, and travel policies. Final details are shown before booking confirmation."
     },
     ar: {
-      routeHint:"تحدد شركة السفر مدينة الانطلاق والوجهة.", dailyHint:"يتبع البرنامج اليومي مدة الباقة.", returnHint:"يتم تحديد تاريخ العودة حسب جدول شركة السفر.", dailyTitle:"البرنامج اليومي للرحلة", dailyBody:(days:number)=>`ستضيف شركة السفر تفاصيل اليوم الأول حتى اليوم ${days}: نقطة الانطلاق والوجهة والأنشطة والأوقات ووسائل النقل والفندق أو الإقامة وملاحظات الرحلة.`,
+      routeHint:"تحدد شركة السفر مدينة الانطلاق والوجهة.", dailyHint:"يتبع البرنامج اليومي مدة الباقة.", returnHint:"يتم تحديد تاريخ العودة حسب جدول شركة السفر.", dailyTitle:"البرنامج اليومي للرحلة", dailyBody:(days:string)=>`ستضيف شركة السفر تفاصيل اليوم ${displayNumber(1)} حتى اليوم ${days}: نقطة الانطلاق والوجهة والأنشطة والأوقات ووسائل النقل والفندق أو الإقامة وملاحظات الرحلة.`,
       flightBody:"ستظهر شركة الطيران ورقم الرحلة والمسار والوقت والأمتعة بعد استكمال شركة السفر بيانات المغادرة.", hotelBody:"سيتم عرض اسم الفندق والموقع والتصنيف ونوع الغرفة وفق بيانات الباقة من شركة السفر.",
       includedEmpty:"ستظهر الخدمات المشمولة في السعر بعد استكمال شركة السفر التفاصيل.", excludedEmpty:"ستظهر التكاليف أو الخدمات غير المشمولة بعد استكمال شركة السفر التفاصيل.",
       currencyPending:(code:string)=>`تم اختيار ${code} · ستظل الأسعار معروضة بالروبية الإندونيسية حتى يتوفر سعر الصرف.`, noDeparture:"لا يوجد موعد مغادرة متاح حالياً. يرجى المحاولة لاحقاً أو التواصل مع شركة السفر.", beforeBooking:"قبل متابعة الحجز", beforeBookingBody:"راجع الموعد والسعر والخدمات وشروط الدفع وسياسات السفر. ستظهر التفاصيل النهائية قبل تأكيد الحجز."
@@ -196,7 +196,7 @@ export default async function PackageDetailPage({ params }: { params: { slug: st
                   <span className="flex h-9 w-9 shrink-0 items-center justify-center rounded-xl bg-[#eaf3ff] text-primary"><Icon name="route" size={17} /></span>
                   <div className="min-w-0 flex-1">
                     <p className="text-sm font-extrabold text-[#40546f]">{lt.dailyTitle}</p>
-                    <p className="mt-1 text-xs leading-5 text-[#748297]">{lt.dailyBody(pkg.duration_days)}</p>
+                    <p className="mt-1 text-xs leading-5 text-[#748297]">{lt.dailyBody(displayNumber(pkg.duration_days))}</p>
                     <div className="mt-3 flex flex-wrap gap-2">
                       {[`${t.from} ${arrow} ${t.to}`, u.activity, u.time, u.transport, t.hotel, u.notes].map((item) => <span key={item} className="rounded-full bg-white px-2.5 py-1 text-[10px] font-bold text-[#60738d] ring-1 ring-[#e5ebf2]">{item}</span>)}
                     </div>
@@ -295,7 +295,7 @@ export default async function PackageDetailPage({ params }: { params: { slug: st
                           <span className="shrink-0 rounded-lg bg-[#eaf3ff] px-2.5 py-1.5 text-[11px] font-extrabold text-primary">{t.choose} {arrow}</span>
                         </div>
                         <div className="mt-3 flex items-center justify-between border-t border-[#edf1f6] pt-2.5">
-                          <span className={`text-[11px] font-extrabold ${seats <= 10 ? "text-[#b16b00]" : "text-[#167453]"}`}>{seats} {u.seats}</span>
+                          <span className={`text-[11px] font-extrabold ${seats <= 10 ? "text-[#b16b00]" : "text-[#167453]"}`}>{displayNumber(seats)} {u.seats}</span>
                           <span className="text-[10px] font-bold text-[#8a98aa]">{d.status === "almost_full" ? u.almostFull : u.available}</span>
                         </div>
                       </Link>;
