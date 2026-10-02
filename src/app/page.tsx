@@ -517,7 +517,7 @@ export default async function HomePage() {
                   <Icon name="globe" size={13} />
                   Domestik · Internasional · Umrah · Haji
                 </p>
-                <h1 className="font-display text-[26px] font-extrabold leading-[1.1] tracking-[-0.03em] sm:text-[36px] sm:leading-[1.08] sm:tracking-[-0.035em] text-[#10223f] sm:mt-3 md:text-[42px]">
+                <h1 className="font-display text-[26px] font-extrabold leading-[1.1] tracking-[-0.03em] text-[#10223f] sm:mt-3 sm:text-[36px] sm:leading-[1.08] sm:tracking-[-0.035em] md:text-[42px]">
                   Dari Indonesia untuk perjalanan ke mana saja.
                 </h1>
                 <p className="mt-2.5 max-w-[650px] text-[13px] leading-5 text-[#52647e] sm:mt-3 sm:text-sm sm:leading-6">
@@ -624,11 +624,6 @@ export default async function HomePage() {
               <p className="mt-1 text-[12px] leading-[18px] text-[#6d7c91] sm:text-sm sm:leading-normal">
                 Umrah, Haji, perjalanan domestik dan internasional dari Travel di Segaloka.
               </p>
-              {isPreviewInventory && (
-                <p className="mt-2 inline-flex rounded-full bg-[#fff4dd] px-2.5 py-1 text-xs font-extrabold text-[#a65f00]">
-                  Preview layout — data contoh sementara
-                </p>
-              )}
             </div>
             <Link href="/paket/umrah" className="hidden text-sm font-extrabold text-primary hover:underline sm:inline">
               Lihat semua →
@@ -813,7 +808,7 @@ export default async function HomePage() {
                         index % 2 === 0 ? "md:border-r md:border-[#edf1f6]" : ""
                       } ${index > 1 ? "border-t border-[#edf1f6]" : index === 1 ? "border-t border-[#edf1f6] md:border-t-0" : ""}`}
                     >
-                      <span className="flex h-10 w-10 shrink-0 items-center justify-center rounded-[12px] bg-[#eef5ff] sm:h-11 sm:w-11 sm:rounded-[14px] text-primary transition duration-200 group-hover:bg-primary group-hover:text-white">
+                      <span className="flex h-10 w-10 shrink-0 items-center justify-center rounded-[12px] bg-[#eef5ff] text-primary transition duration-200 group-hover:bg-primary group-hover:text-white sm:h-11 sm:w-11 sm:rounded-[14px]">
                         <Icon name={packageIcon(pkg.type)} size={19} />
                       </span>
                       <div className="min-w-0 flex-1">
