@@ -312,7 +312,7 @@ export function MarketplaceSearch() {
     : "Pilih tanggal";
 
   return (
-    <div ref={rootRef} className="relative pt-6">
+    <div ref={rootRef} className="relative pt-5 sm:pt-6">
       {showSegaDealsInfo && (
         <div
           className="fixed inset-0 z-[100] flex items-center justify-center bg-[#071a33]/45 p-4 backdrop-blur-[2px]"
@@ -448,9 +448,9 @@ export function MarketplaceSearch() {
         </div>
       )}
 
-      <div className="absolute left-1/2 top-0 z-20 w-[calc(100%-24px)] -translate-x-1/2 sm:w-max sm:max-w-[calc(100%-32px)]">
-        <div className="overflow-x-auto rounded-2xl border border-[#dce4ee] bg-white shadow-[0_8px_22px_rgba(16,34,63,0.14)] sm:rounded-full">
-          <div className="flex min-w-max items-center gap-0.5 px-1.5 py-1.5 sm:gap-1 sm:px-2">
+      <div className="absolute left-1/2 top-0 z-20 w-[calc(100%-16px)] -translate-x-1/2 sm:w-max sm:max-w-[calc(100%-32px)]">
+        <div className="overflow-x-auto rounded-[18px] border border-[#dce4ee] bg-white shadow-[0_8px_22px_rgba(16,34,63,0.14)] [scrollbar-width:none] [&::-webkit-scrollbar]:hidden sm:rounded-full">
+          <div className="flex min-w-max items-center gap-0.5 px-1 py-1 sm:gap-1 sm:px-2 sm:py-1.5">
             {SERVICES.map((item) => {
               const active = service === item.type;
 
@@ -459,14 +459,14 @@ export function MarketplaceSearch() {
                   key={item.type}
                   type="button"
                   onClick={() => handleServiceClick(item.type)}
-                  className={`group flex h-10 shrink-0 items-center gap-1.5 rounded-full px-2 transition sm:h-11 sm:gap-2 sm:px-3 ${
+                  className={`group flex h-9 shrink-0 items-center gap-1 rounded-full px-1.5 transition sm:h-11 sm:gap-2 sm:px-3 ${
                     active ? "bg-[#eaf3ff] text-primary" : "text-[#52647e] hover:bg-[#f5f8fc]"
                   }`}
                 >
-                  <span className={`flex h-7 w-7 shrink-0 items-center justify-center rounded-full sm:h-8 sm:w-8 ${active ? "bg-white text-primary" : "bg-[#eef4fb] text-primary"}`}>
+                  <span className={`flex h-6 w-6 shrink-0 items-center justify-center rounded-full sm:h-8 sm:w-8 ${active ? "bg-white text-primary" : "bg-[#eef4fb] text-primary"}`}>
                     <Icon name={item.icon} size={16} />
                   </span>
-                  <span className={`whitespace-nowrap text-xs font-extrabold ${active ? "text-primary" : "text-[#52647e]"}`}>
+                  <span className={`whitespace-nowrap text-[11px] font-extrabold sm:text-xs ${active ? "text-primary" : "text-[#52647e]"}`}>
                     {item.label}
                   </span>
                 </button>
@@ -476,7 +476,7 @@ export function MarketplaceSearch() {
         </div>
       </div>
 
-      <div className="rounded-[18px] border border-[#dce4ee] bg-white px-2.5 pb-3 pt-[58px] shadow-[0_18px_50px_rgba(16,34,63,0.14)] sm:rounded-[22px] sm:px-4 sm:pb-4 sm:pt-[64px]">
+      <div className="rounded-[18px] border border-[#dce4ee] bg-white px-2.5 pb-3 pt-[52px] shadow-[0_18px_50px_rgba(16,34,63,0.14)] sm:rounded-[22px] sm:px-4 sm:pb-4 sm:pt-[64px]">
         <div
           className={`grid gap-2.5 ${
             service === "segadeals"
