@@ -792,13 +792,13 @@ export default async function HomePage() {
         {/* UPCOMING DEPARTURES — V4.3 */}
         {upcomingPackages.length > 0 && (
           <section className="mx-auto max-w-[1180px] px-3 pb-8 sm:px-4 sm:pb-10 lg:pb-8">
-            <div className="overflow-hidden rounded-[22px] border border-[#dce5ef] bg-white shadow-[0_8px_24px_rgba(15,45,90,0.04)]">
-              <div className="flex flex-col gap-2 border-b border-[#edf1f6] px-5 py-4 sm:flex-row sm:items-end sm:justify-between sm:px-6">
+            <div className="overflow-hidden rounded-[18px] border border-[#dce5ef] bg-white shadow-[0_8px_24px_rgba(15,45,90,0.04)] sm:rounded-[22px]">
+              <div className="flex flex-col gap-1.5 border-b border-[#edf1f6] px-4 py-3.5 sm:flex-row sm:items-end sm:justify-between sm:gap-2 sm:px-6 sm:py-4">
                 <div>
                   <p className="text-xs font-extrabold uppercase tracking-[0.14em] text-primary">Jadwal perjalanan</p>
                   <h2 className="mt-1 font-display text-xl font-extrabold text-[#10223f]">Keberangkatan terdekat</h2>
                 </div>
-                <p className="text-sm text-[#748297]">Jadwal terbuka terdekat dari inventory marketplace.</p>
+                <p className="text-[12px] leading-[18px] text-[#748297] sm:text-sm sm:leading-normal">Jadwal terbuka terdekat dari inventory marketplace.</p>
               </div>
 
               <div className="grid md:grid-cols-2">
@@ -809,16 +809,16 @@ export default async function HomePage() {
                     <Link
                       key={`${pkg.id}-${departure.id}`}
                       href={`/paket/detail/${pkg.slug}`}
-                      className={`group flex items-start gap-3 px-4 py-3.5 transition duration-200 hover:bg-[#f8fbff] sm:items-center sm:gap-3.5 sm:px-6 ${
+                      className={`group flex items-start gap-2.5 px-3.5 py-3 transition sm:gap-3.5 sm:px-6 sm:py-3.5 duration-200 hover:bg-[#f8fbff] sm:items-center sm:gap-3.5 sm:px-6 ${
                         index % 2 === 0 ? "md:border-r md:border-[#edf1f6]" : ""
                       } ${index > 1 ? "border-t border-[#edf1f6]" : index === 1 ? "border-t border-[#edf1f6] md:border-t-0" : ""}`}
                     >
-                      <span className="flex h-11 w-11 shrink-0 items-center justify-center rounded-[14px] bg-[#eef5ff] text-primary transition duration-200 group-hover:bg-primary group-hover:text-white">
+                      <span className="flex h-10 w-10 shrink-0 items-center justify-center rounded-[12px] bg-[#eef5ff] sm:h-11 sm:w-11 sm:rounded-[14px] text-primary transition duration-200 group-hover:bg-primary group-hover:text-white">
                         <Icon name={packageIcon(pkg.type)} size={19} />
                       </span>
                       <div className="min-w-0 flex-1">
-                        <p className="truncate text-[13px] font-extrabold leading-5 text-[#10223f] sm:text-sm">{pkg.name}</p>
-                        <p className="mt-0.5 truncate text-xs text-[#748297]">{pkg.organizations?.name ?? "Travel Segaloka"} · {packageTypeLabel(pkg.type)}</p>
+                        <p className="truncate text-[12px] font-extrabold leading-[18px] text-[#10223f] sm:text-sm sm:leading-5">{pkg.name}</p>
+                        <p className="mt-0.5 truncate text-[11px] text-[#748297] sm:text-xs">{pkg.organizations?.name ?? "Travel Segaloka"} · {packageTypeLabel(pkg.type)}</p>
                       </div>
                       <div className="ml-auto flex max-w-[96px] shrink-0 items-center gap-2 sm:max-w-none sm:gap-3">
                         <div className="text-right"><p className="text-[11px] font-extrabold leading-4 text-[#10223f] sm:whitespace-nowrap sm:text-xs">{formatDate(departure.departure_date)}</p>
@@ -880,25 +880,24 @@ export default async function HomePage() {
             <div>
               <p className="text-xs font-extrabold uppercase tracking-[0.14em] text-primary">Vendor Pilihan</p>
               <h2 className="mt-1 font-display text-xl font-extrabold text-[#10223f] sm:text-[22px]">Vendor perjalanan pilihan</h2>
-              <p className="mt-1 text-sm text-[#748297]">Kategori Vendor untuk kebutuhan Travel dan perjalanan.</p>
+              <p className="mt-1 text-[12px] leading-[18px] text-[#748297] sm:text-sm sm:leading-normal">Kategori Vendor untuk kebutuhan Travel dan perjalanan.</p>
             </div>
             <span className="hidden rounded-full bg-[#f3f7fb] px-3 py-1.5 text-xs font-extrabold text-[#60738d] sm:inline">Mitra pendukung Segaloka</span>
           </div>
 
-          <div className="mt-4 flex snap-x gap-3 overflow-x-auto pb-2 [scrollbar-width:none] [&::-webkit-scrollbar]:hidden sm:grid sm:grid-cols-2 sm:overflow-visible sm:pb-0 lg:grid-cols-4">
+          <div className="mt-3 flex snap-x gap-3 overflow-x-auto pb-2 sm:mt-4 [scrollbar-width:none] [&::-webkit-scrollbar]:hidden sm:grid sm:grid-cols-2 sm:overflow-visible sm:pb-0 lg:grid-cols-4">
             {PREVIEW_VENDORS.map((vendor, index) => (
-              <Link href="/register" key={vendor.id} className="group relative min-h-[168px] min-w-[74%] snap-start overflow-hidden sm:min-h-[184px] sm:min-w-0 rounded-[18px] border border-[#dfe7f0] bg-white p-5 transition duration-300 hover:-translate-y-0.5 hover:border-[#bfd5ee] hover:shadow-[0_12px_26px_rgba(15,45,90,0.08)]">
+              <Link href="/register" key={vendor.id} className="group relative min-h-[150px] min-w-[70%] snap-start overflow-hidden rounded-[18px] border border-[#dfe7f0] bg-white p-4 sm:min-h-[184px] sm:min-w-0 sm:p-5 transition duration-300 hover:-translate-y-0.5 hover:border-[#bfd5ee] hover:shadow-[0_12px_26px_rgba(15,45,90,0.08)]">
                 <div className={`absolute inset-x-0 top-0 h-1 ${index % 2 === 0 ? "bg-[#0b6ee8]" : "bg-[#20a67a]"}`} />
                 <div className="flex items-start justify-between gap-3">
-                  <span className="flex h-10 w-10 items-center justify-center rounded-[14px] bg-[#eef5ff] text-primary transition group-hover:bg-primary group-hover:text-white">
+                  <span className="flex h-9 w-9 items-center justify-center rounded-[12px] bg-[#eef5ff] sm:h-10 sm:w-10 sm:rounded-[14px] text-primary transition group-hover:bg-primary group-hover:text-white">
                     <Icon name={vendor.icon} size={19} />
                   </span>
-                  <span className="rounded-full border border-[#e4eaf1] bg-[#f8fafc] px-2 py-1 text-[10px] font-extrabold uppercase tracking-[0.08em] text-[#718096]">Preview</span>
                 </div>
-                <p className="mt-4 text-xs font-extrabold uppercase tracking-[0.1em] text-primary">{vendor.category}</p>
-                <h3 className="mt-1 truncate text-sm font-extrabold text-[#10223f]">{vendor.name}</h3>
-                <p className="mt-1.5 line-clamp-2 text-xs leading-[1.45] text-[#748297]">{vendor.description}</p>
-                <span className="mt-3 inline-flex text-xs font-extrabold text-primary">Lihat layanan →</span>
+                <p className="mt-3 text-[11px] font-extrabold uppercase tracking-[0.1em] text-primary sm:mt-4 sm:text-xs">{vendor.category}</p>
+                <h3 className="mt-1 truncate text-[13px] font-extrabold text-[#10223f] sm:text-sm">{vendor.name}</h3>
+                <p className="mt-1 line-clamp-2 text-[11px] leading-[1.45] text-[#748297] sm:mt-1.5 sm:text-xs">{vendor.description}</p>
+                <span className="mt-2.5 inline-flex text-[11px] font-extrabold text-primary sm:mt-3 sm:text-xs">Lihat layanan →</span>
               </Link>
             ))}
           </div>
