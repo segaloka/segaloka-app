@@ -42,6 +42,12 @@ export default async function PackageDetailPage({ params }: { params: { slug: st
     }
   } as const;
   const lt = longCopy[language === "en" || language === "ar" ? language : "id"];
+  const ui = {
+    id:{reviews:"ulasan",noReviews:"Belum ada ulasan",experience:"Pengalaman jamaah",ratingTitle:"Rating & ulasan Travel",verified:"Berdasarkan booking di Segaloka",reviewBody:"Ringkasan rating dihitung dari ulasan jamaah setelah booking. Isi ulasan publik akan tampil ketika fitur publikasi ulasan tersedia.",noReviewBody:"Rating belum terbentuk. Ulasan akan berasal dari jamaah setelah melakukan booking melalui Segaloka.",operator:"Penyelenggara perjalanan",onSegaloka:"Travel di Segaloka",viewTravel:"Lihat Travel",license:"Perizinan",licenseMissing:"{u.licenseMissing}",communication:"Komunikasi",viaSegaloka:"Melalui Segaloka",communicationBody:"Kontak dengan Travel dilakukan melalui fitur Pesan setelah masuk.",address:"Alamat",addressMissing:"{u.addressMissing}",viewProfile:"Lihat Profil Travel",documents:"Dokumen & persyaratan",documentsBody:"Persyaratan paspor, visa, dan dokumen perjalanan akan ditampilkan di bagian ini.",payment:"Pembayaran",paymentBody:"Pilihan DP, cicilan, atau pelunasan akan mengikuti ketentuan paket.",policy:"Kebijakan perjalanan",policyBody:"Ketentuan pembatalan, refund, dan reschedule akan tampil sebelum booking.",depart:"Berangkat",return:"Kembali",tripDays:"hari perjalanan",seats:"kursi tersisa",almostFull:"Hampir penuh",available:"Tersedia"},
+    en:{reviews:"reviews",noReviews:"No reviews yet",experience:"Traveler experience",ratingTitle:"Travel rating & reviews",verified:"Based on bookings on Segaloka",reviewBody:"The rating summary is calculated from traveler reviews after booking. Public review content will appear when review publishing is available.",noReviewBody:"No rating has been established yet. Reviews will come from travelers after booking through Segaloka.",operator:"Travel operator",onSegaloka:"Travel on Segaloka",viewTravel:"View Travel",license:"License",licenseMissing:"License information is not displayed yet",communication:"Communication",viaSegaloka:"Through Segaloka",communicationBody:"Communication with the Travel operator is available through Messages after signing in.",address:"Address",addressMissing:"Travel address is not displayed yet.",viewProfile:"View Travel Profile",documents:"Documents & requirements",documentsBody:"Passport, visa, and travel document requirements will be displayed here.",payment:"Payment",paymentBody:"Deposit, installment, or full payment options follow the package terms.",policy:"Travel policy",policyBody:"Cancellation, refund, and reschedule terms will be shown before booking.",depart:"Departure",return:"Return",tripDays:"travel days",seats:"seats remaining",almostFull:"Almost full",available:"Available"},
+    ar:{reviews:"تقييمات",noReviews:"لا توجد تقييمات بعد",experience:"تجربة المسافرين",ratingTitle:"تقييمات شركة السفر",verified:"استناداً إلى الحجوزات عبر Segaloka",reviewBody:"يتم احتساب ملخص التقييم من تقييمات المسافرين بعد الحجز. ستظهر التقييمات العامة عند تفعيل نشر التقييمات.",noReviewBody:"لم يتم تكوين تقييم بعد. ستأتي التقييمات من المسافرين بعد الحجز عبر Segaloka.",operator:"منظم الرحلة",onSegaloka:"شركة سفر على Segaloka",viewTravel:"عرض شركة السفر",license:"الترخيص",licenseMissing:"معلومات الترخيص غير معروضة بعد",communication:"التواصل",viaSegaloka:"عبر Segaloka",communicationBody:"يتم التواصل مع شركة السفر عبر ميزة الرسائل بعد تسجيل الدخول.",address:"العنوان",addressMissing:"عنوان شركة السفر غير معروض بعد.",viewProfile:"عرض ملف شركة السفر",documents:"المستندات والمتطلبات",documentsBody:"ستظهر هنا متطلبات جواز السفر والتأشيرة ومستندات السفر.",payment:"الدفع",paymentBody:"تتبع خيارات الدفعة المقدمة أو التقسيط أو السداد الكامل شروط الباقة.",policy:"سياسة السفر",policyBody:"ستظهر شروط الإلغاء والاسترداد وإعادة الجدولة قبل الحجز.",depart:"المغادرة",return:"العودة",tripDays:"أيام الرحلة",seats:"مقاعد متبقية",almostFull:"شبه ممتلئ",available:"متاح"}
+  } as const;
+  const u = ui[language === "en" || language === "ar" ? language : "id"];
   const { data: pkg } = await supabase
     .from("packages")
     .select("*, organizations(id, name, slug, status, support_phone, support_email, address, license_type, license_number)")
@@ -117,14 +123,14 @@ export default async function PackageDetailPage({ params }: { params: { slug: st
                   <span className="flex h-10 w-10 shrink-0 items-center justify-center overflow-hidden rounded-xl border border-[#dfe7f0] bg-[#f8fbff] text-primary">
                     <Icon name="building" size={18} />
                   </span>
-                  <span className="min-w-0"><span className="block truncate text-[13px] font-extrabold sm:text-sm">{org.name}</span><span className="block text-[11px] text-[#748297]">Travel di Segaloka</span></span>
+                  <span className="min-w-0"><span className="block truncate text-[13px] font-extrabold sm:text-sm">{org.name}</span><span className="block text-[11px] text-[#748297]">{u.onSegaloka}</span></span>
                 </Link>
                 <span className="h-8 w-px bg-[#e4eaf1]" />
                 <div className="flex items-center gap-1.5">
                   <span className="text-[#f5a000]">★</span>
                   {rating && rating.review_count > 0 ? (
-                    <><span className="text-sm font-extrabold">{Number(rating.average_rating).toFixed(1)}</span><span className="text-xs text-[#748297]">({rating.review_count} ulasan)</span></>
-                  ) : <span className="text-xs font-bold text-[#748297]">Belum ada ulasan</span>}
+                    <><span className="text-sm font-extrabold">{Number(rating.average_rating).toFixed(1)}</span><span className="text-xs text-[#748297]">({rating.review_count} {u.reviews})</span></>
+                  ) : <span className="text-xs font-bold text-[#748297]">{u.noReviews}</span>}
                 </div>
               </div>
             )}
@@ -211,7 +217,7 @@ export default async function PackageDetailPage({ params }: { params: { slug: st
             </section>
 
             <section id="terms" className="grid gap-3 sm:grid-cols-3">
-              {[["doc", "Dokumen & persyaratan", "Persyaratan paspor, visa, dan dokumen perjalanan akan ditampilkan di bagian ini."], ["wallet", "Pembayaran", "Pilihan DP, cicilan, atau pelunasan akan mengikuti ketentuan paket."], ["shield", "Kebijakan perjalanan", "Ketentuan pembatalan, refund, dan reschedule akan tampil sebelum booking."]].map(([icon, title, body]) => (
+              {[["doc", u.documents, u.documentsBody], ["wallet", u.payment, u.paymentBody], ["shield", u.policy, u.policyBody]].map(([icon, title, body]) => (
                 <div key={title} className="rounded-[18px] border border-[#dfe7f0] bg-white p-4">
                   <span className="text-primary"><Icon name={icon as "doc"} size={18} /></span><h2 className="mt-3 text-sm font-extrabold">{title}</h2><p className="mt-2 text-xs leading-5 text-[#748297]">{body}</p>
                 </div>
@@ -231,10 +237,10 @@ export default async function PackageDetailPage({ params }: { params: { slug: st
 
             <section id="reviews" className="rounded-[18px] border border-[#dfe7f0] bg-white p-4 sm:p-6">
               <div className="flex items-start justify-between gap-4">
-                <div><p className="text-[11px] font-extrabold uppercase tracking-[0.12em] text-primary">Pengalaman jamaah</p><h2 className="mt-1 font-display text-lg font-extrabold">Rating & ulasan Travel</h2></div>
-                {rating && rating.review_count > 0 ? <div className="shrink-0 text-right"><p className="text-2xl font-extrabold text-[#f5a000]">★ {Number(rating.average_rating).toFixed(1)}</p><p className="text-[11px] font-bold text-[#748297]">{rating.review_count} ulasan</p></div> : null}
+                <div><p className="text-[11px] font-extrabold uppercase tracking-[0.12em] text-primary">{u.experience}</p><h2 className="mt-1 font-display text-lg font-extrabold">{u.ratingTitle}</h2></div>
+                {rating && rating.review_count > 0 ? <div className="shrink-0 text-right"><p className="text-2xl font-extrabold text-[#f5a000]">★ {Number(rating.average_rating).toFixed(1)}</p><p className="text-[11px] font-bold text-[#748297]">{rating.review_count} {u.reviews}</p></div> : null}
               </div>
-              {rating && rating.review_count > 0 ? <div className="mt-4 rounded-xl bg-[#f7f9fc] p-4"><div className="flex items-center gap-2 text-[11px] font-extrabold text-[#167453]"><Icon name="check" size={14} /> Berdasarkan booking di Segaloka</div><p className="mt-2 text-xs leading-5 text-[#60738d]">Ringkasan rating dihitung dari ulasan jamaah setelah booking. Isi ulasan publik akan tampil ketika fitur publikasi ulasan tersedia.</p></div> : <div className="mt-4 rounded-xl border border-dashed border-[#d7e1ec] bg-[#fbfcfe] p-5 text-center"><span className="mx-auto flex h-10 w-10 items-center justify-center rounded-full bg-[#fff7e8] text-[#f5a000]">★</span><p className="mt-2 text-sm font-extrabold">Belum ada ulasan</p><p className="mx-auto mt-1 max-w-md text-xs leading-5 text-[#748297]">Rating belum terbentuk. Ulasan akan berasal dari jamaah setelah melakukan booking melalui Segaloka.</p></div>}
+              {rating && rating.review_count > 0 ? <div className="mt-4 rounded-xl bg-[#f7f9fc] p-4"><div className="flex items-center gap-2 text-[11px] font-extrabold text-[#167453]"><Icon name="check" size={14} /> {u.verified}</div><p className="mt-2 text-xs leading-5 text-[#60738d]">{u.reviewBody}</p></div> : <div className="mt-4 rounded-xl border border-dashed border-[#d7e1ec] bg-[#fbfcfe] p-5 text-center"><span className="mx-auto flex h-10 w-10 items-center justify-center rounded-full bg-[#fff7e8] text-[#f5a000]">★</span><p className="mt-2 text-sm font-extrabold">{u.noReviews}</p><p className="mx-auto mt-1 max-w-md text-xs leading-5 text-[#748297]">{u.noReviewBody}</p></div>}
             </section>
 
             {org && <section id="travel" className="overflow-hidden rounded-[18px] border border-[#dfe7f0] bg-white">
@@ -242,22 +248,22 @@ export default async function PackageDetailPage({ params }: { params: { slug: st
                 <div className="flex items-start gap-3">
                   <span className="flex h-12 w-12 shrink-0 items-center justify-center rounded-2xl border border-[#dfe7f0] bg-white text-primary shadow-sm"><Icon name="building" size={20} /></span>
                   <div className="min-w-0 flex-1">
-                    <p className="text-[10px] font-extrabold uppercase tracking-[0.12em] text-primary">Penyelenggara perjalanan</p>
+                    <p className="text-[10px] font-extrabold uppercase tracking-[0.12em] text-primary">{u.operator}</p>
                     <h2 className="mt-1 truncate font-display text-lg font-extrabold">{org.name}</h2>
                     <div className="mt-1.5 flex flex-wrap items-center gap-x-3 gap-y-1">
-                      <span className="text-[11px] font-bold text-[#167453]">Travel di Segaloka</span>
+                      <span className="text-[11px] font-bold text-[#167453]">{u.onSegaloka}</span>
                       <span className="text-[11px] text-[#748297]">{rating && rating.review_count > 0 ? `★ ${Number(rating.average_rating).toFixed(1)} · ${rating.review_count} ulasan` : "Belum ada ulasan"}</span>
                     </div>
                   </div>
-                  <Link href={`/travel/${org.slug}`} className="hidden rounded-xl border border-[#cfe0f2] bg-white px-3 py-2 text-[11px] font-extrabold text-primary sm:inline-flex">Lihat Travel →</Link>
+                  <Link href={`/travel/${org.slug}`} className="hidden rounded-xl border border-[#cfe0f2] bg-white px-3 py-2 text-[11px] font-extrabold text-primary sm:inline-flex">{u.viewTravel} →</Link>
                 </div>
               </div>
               <div className="grid gap-px bg-[#e8edf3] sm:grid-cols-2">
-                <div className="bg-white p-4"><p className="text-[10px] font-bold uppercase tracking-[0.08em] text-[#8a98aa]">Perizinan</p><p className="mt-1 text-xs font-extrabold text-[#40546f]">{org.license_type ? `${org.license_type}${org.license_number ? ` · ${org.license_number}` : ""}` : "Informasi izin belum ditampilkan"}</p></div>
-                <div className="bg-white p-4"><p className="text-[10px] font-bold uppercase tracking-[0.08em] text-[#8a98aa]">Komunikasi</p><p className="mt-1 text-xs font-extrabold text-[#40546f]">Melalui Segaloka</p><p className="mt-1 text-[10px] leading-4 text-[#8a98aa]">Kontak dengan Travel dilakukan melalui fitur Pesan setelah masuk.</p></div>
-                <div className="bg-white p-4 sm:col-span-2"><p className="text-[10px] font-bold uppercase tracking-[0.08em] text-[#8a98aa]">Alamat</p><p className="mt-1 text-xs leading-5 text-[#60738d]">{org.address || "Alamat Travel belum ditampilkan."}</p></div>
+                <div className="bg-white p-4"><p className="text-[10px] font-bold uppercase tracking-[0.08em] text-[#8a98aa]">{u.license}</p><p className="mt-1 text-xs font-extrabold text-[#40546f]">{org.license_type ? `${org.license_type}${org.license_number ? ` · ${org.license_number}` : ""}` : "{u.licenseMissing}"}</p></div>
+                <div className="bg-white p-4"><p className="text-[10px] font-bold uppercase tracking-[0.08em] text-[#8a98aa]">{u.communication}</p><p className="mt-1 text-xs font-extrabold text-[#40546f]">{u.viaSegaloka}</p><p className="mt-1 text-[10px] leading-4 text-[#8a98aa]">{u.communicationBody}</p></div>
+                <div className="bg-white p-4 sm:col-span-2"><p className="text-[10px] font-bold uppercase tracking-[0.08em] text-[#8a98aa]">{u.address}</p><p className="mt-1 text-xs leading-5 text-[#60738d]">{org.address || "{u.addressMissing}"}</p></div>
               </div>
-              <div className="p-4 sm:hidden"><Link href={`/travel/${org.slug}`} className="flex w-full items-center justify-center rounded-xl bg-[#eaf3ff] px-4 py-3 text-xs font-extrabold text-primary">Lihat Profil Travel →</Link></div>
+              <div className="p-4 sm:hidden"><Link href={`/travel/${org.slug}`} className="flex w-full items-center justify-center rounded-xl bg-[#eaf3ff] px-4 py-3 text-xs font-extrabold text-primary">{u.viewProfile} →</Link></div>
             </section>}
           </div>
 
@@ -276,15 +282,15 @@ export default async function PackageDetailPage({ params }: { params: { slug: st
                       return <Link key={d.id} href={`/booking/baru?departure=${d.id}`} className="group block rounded-xl border border-[#dfe7f0] p-3 transition hover:border-primary hover:bg-[#f8fbff]">
                         <div className="flex items-start justify-between gap-3">
                           <div className="min-w-0">
-                            <p className="text-[10px] font-bold uppercase tracking-[0.08em] text-[#8a98aa]">Berangkat</p>
+                            <p className="text-[10px] font-bold uppercase tracking-[0.08em] text-[#8a98aa]">{u.depart}</p>
                             <p className="mt-0.5 text-[13px] font-extrabold">{displayDate(d.departure_date)}</p>
-                            {d.return_date && <p className="mt-1 text-[11px] text-[#748297]">Kembali {displayDate(d.return_date)}</p>}<p className="mt-1 text-[10px] font-bold text-[#8a98aa]">{pkg.duration_days} hari perjalanan</p>
+                            {d.return_date && <p className="mt-1 text-[11px] text-[#748297]">{u.return} {displayDate(d.return_date)}</p>}<p className="mt-1 text-[10px] font-bold text-[#8a98aa]">{pkg.duration_days} {u.tripDays}</p>
                           </div>
                           <span className="shrink-0 rounded-lg bg-[#eaf3ff] px-2.5 py-1.5 text-[11px] font-extrabold text-primary">{t.choose} →</span>
                         </div>
                         <div className="mt-3 flex items-center justify-between border-t border-[#edf1f6] pt-2.5">
-                          <span className={`text-[11px] font-extrabold ${seats <= 10 ? "text-[#b16b00]" : "text-[#167453]"}`}>{seats} kursi tersisa</span>
-                          <span className="text-[10px] font-bold text-[#8a98aa]">{d.status === "almost_full" ? "Hampir penuh" : "Tersedia"}</span>
+                          <span className={`text-[11px] font-extrabold ${seats <= 10 ? "text-[#b16b00]" : "text-[#167453]"}`}>{seats} {u.seats}</span>
+                          <span className="text-[10px] font-bold text-[#8a98aa]">{d.status === "almost_full" ? u.almostFull : u.available}</span>
                         </div>
                       </Link>;
                     })}
