@@ -11,9 +11,11 @@ export function PaymentProof({
   bookingId,
   userId,
   existing,
+  language,
 }: {
   bookingId: string;
   userId: string;
+  language: "id" | "en" | "ar";
   existing: {
     id: string;
     file_url: string;
@@ -22,6 +24,12 @@ export function PaymentProof({
     created_at: string;
   }[];
 }) {
+  const copy = {
+    id:{saveFail:"Gagal menyimpan bukti",sent:"Bukti transfer terkirim",waiting:"Menunggu verifikasi tim keuangan Travel.",genericError:"Terjadi gangguan saat memproses bukti pembayaran. Silakan coba lagi.",proof:"Bukti transfer",saving:"{t.saving}",upload:"Unggah bukti transfer"},
+    en:{saveFail:"Failed to save proof",sent:"Transfer proof submitted",waiting:"Waiting for verification by the Travel finance team.",genericError:"There was a problem processing the payment proof. Please try again.",proof:"Transfer proof",saving:"Saving payment proof...",upload:"Upload transfer proof"},
+    ar:{saveFail:"تعذر حفظ الإثبات",sent:"تم إرسال إثبات التحويل",waiting:"بانتظار التحقق من فريق المالية لدى شركة السفر.",genericError:"حدثت مشكلة أثناء معالجة إثبات الدفع. يرجى المحاولة مرة أخرى.",proof:"إثبات التحويل",saving:"جارٍ حفظ إثبات الدفع...",upload:"رفع إثبات التحويل"}
+  } as const;
+  const t = copy[language];
   const router = useRouter();
   const toast = useToast();
   const [saving, setSaving] = useState(false);
@@ -39,7 +47,7 @@ export function PaymentProof({
 
       if (!result.ok) {
         toast.push({
-          title: "Gagal menyimpan bukti",
+          title: t.saveFail,
           description: result.error,
           tone: "error",
         });
@@ -47,15 +55,15 @@ export function PaymentProof({
       }
 
       toast.push({
-        title: "Bukti transfer terkirim",
-        description: "Menunggu verifikasi tim keuangan Travel.",
+        title: t.sent,
+        description: t.waiting,
         tone: "success",
       });
       router.refresh();
     } catch {
       toast.push({
         title: "Gagal menyimpan bukti",
-        description: "Terjadi gangguan saat memproses bukti pembayaran. Silakan coba lagi.",
+        description: t.genericError,
         tone: "error",
       });
     } finally {
@@ -74,7 +82,7 @@ export function PaymentProof({
             >
               <DocumentLink
                 path={document.file_url}
-                name={document.file_name ?? "Bukti transfer"}
+                name={document.file_name ?? t.proof}
               />
               <span className="shrink-0 text-xs capitalize text-muted">
                 {document.status.replaceAll("_", " ")}
@@ -91,7 +99,7 @@ export function PaymentProof({
       <FileUpload
         pathPrefix={`${userId}/booking/${bookingId}`}
         onUploaded={handleUploaded}
-        label="Unggah bukti transfer"
+        label={t.upload}
       />
     </div>
   );
