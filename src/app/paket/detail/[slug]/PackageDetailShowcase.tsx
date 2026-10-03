@@ -24,15 +24,15 @@ export function PackageDetailShowcase({ language }: { language: Language; descri
     policy:<><b>{t.policy}</b><div><p>1. Pemesanan mengikuti ketersediaan jadwal dan kuota.</p><p>2. Perubahan jadwal mengikuti ketentuan Travel dan penyedia layanan.</p><p>3. Pembatalan dan refund mengikuti kebijakan paket yang berlaku.</p></div></>,
     reviews:<><div><b>{t.review}</b><p className="mt-1">{t.reviewMeta}</p></div><div><p>Pelayanan Travel ramah dan responsif. Informasi perjalanan mudah dipahami dan proses pemesanan dapat dipantau dengan jelas.</p><p className="mt-4 text-[12px] font-semibold">Ahmad Fauzi · Jamaah Umrah Januari 2025</p></div></>
   };
-  return <div className="overflow-hidden rounded-[14px] bg-[#f4f4f4] p-2 font-sans">
-    <div className="grid h-[215px] grid-cols-[1.25fr_.9fr] gap-2 sm:h-[245px]">
+  return <div className="overflow-hidden rounded-[16px] bg-[#f4f4f4] p-2.5 font-sans">
+    <div className="grid h-[275px] grid-cols-[1.25fr_.9fr] gap-2.5 sm:h-[315px]">
       <div className="rounded-[9px] border border-[#e9e9e9] bg-white" />
       <div className="grid grid-rows-[1.35fr_.75fr] gap-2"><div className="rounded-[9px] border border-[#e9e9e9] bg-white" /><div className="grid grid-cols-2 gap-2"><div className="rounded-[9px] border border-[#e9e9e9] bg-white" /><div className="rounded-[9px] border border-[#e9e9e9] bg-white" /></div></div>
     </div>
-    <div className="mt-2 rounded-[10px] bg-white px-3 pb-3 pt-0 sm:px-4">
-      <div className="overflow-x-auto border-b border-[#d9d9d9]"><div className="flex min-w-max justify-between gap-4">{order.map((key,i)=><button key={key} type="button" onClick={()=>setTab(key)} className={`border-b-2 px-0 py-2.5 text-[9px] font-medium leading-none transition sm:text-[10px] ${tab===key?"border-primary font-bold text-primary":"border-transparent text-[#454545] hover:text-primary"}`}>{t.tabs[i]}</button>)}</div></div>
-      <div className={`h-[112px] pe-2 pt-3 text-[9px] leading-[1.55] text-[#454545] sm:text-[10px] ${tab === "description" || tab === "policy" || tab === "hotel" ? "overflow-y-auto" : "overflow-hidden"}`}>
-        <div className="grid grid-cols-1 gap-3 sm:grid-cols-[62px_1fr] sm:gap-3">{body[tab]}</div>
+    <div className="mt-2.5 rounded-[12px] bg-white px-4 pb-4 pt-0 sm:px-5">
+      <div className="overflow-x-auto border-b border-[#d9d9d9]"><div className="flex min-w-max justify-between gap-4">{order.map((key,i)=><button key={key} type="button" onClick={()=>setTab(key)} className={`border-b-2 px-0 py-3 text-[11px] font-medium leading-none transition sm:text-[12px] ${tab===key?"border-primary font-bold text-primary":"border-transparent text-[#454545] hover:text-primary"}`}>{t.tabs[i]}</button>)}</div></div>
+      <div className={`h-[145px] pe-3 pt-4 text-[11px] leading-[1.6] text-[#454545] sm:text-[12px] ${tab === "description" || tab === "policy" || tab === "hotel" ? "overflow-y-auto" : "overflow-hidden"}`}>
+        <div className="grid grid-cols-1 gap-3 sm:grid-cols-[78px_1fr] sm:gap-4">{body[tab]}</div>
       </div>
       {tab === "itinerary" && <div className="mt-2 flex items-center gap-3">
         <button type="button" onClick={()=>setItineraryDay((v)=>(v+3)%4)} aria-label="Hari itinerary sebelumnya" className="flex h-5 w-5 items-center justify-center rounded-full border border-[#9b9b9b] text-[13px] leading-none text-[#777] transition hover:border-primary hover:text-primary">←</button>
