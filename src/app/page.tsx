@@ -51,12 +51,6 @@ const SEGADEALS_STEPS = [
  * Hanya untuk membentuk layout marketplace selama data CMS/ads/destination
  * production belum tersedia. Tidak ditulis ke Supabase dan bukan sumber transaksi.
  */
-const PREVIEW_PROMOS = [
-  { id: "promo-umrah", label: "Umrah", title: "Promo Umrah Pilihan", detail: "Paket perjalanan dari Travel aktif", icon: "building" as const },
-  { id: "promo-domestik", label: "Domestik", title: "Liburan di Indonesia", detail: "Bali, Lombok, Labuan Bajo & lainnya", icon: "route" as const },
-  { id: "promo-halal", label: "Halal Tour", title: "Jelajahi Dunia", detail: "Turki, Jepang, Korea & destinasi lainnya", icon: "globe" as const },
-];
-
 const PREVIEW_DOMESTIC_DESTINATIONS = [
   { name: "Bali", detail: "Pantai, budaya & keluarga", icon: "route" as const, query: "Bali" },
   { name: "Lombok", detail: "Pulau, resort & wisata halal", icon: "globe" as const, query: "Lombok" },
@@ -428,7 +422,7 @@ const PREVIEW_PACKAGES: MarketplacePackage[] = [
   },
 ];
 
-// Homepage Marketplace V4.3 — card-system refinement; production data flow preserved.
+// Homepage Marketplace V5 — clearer hierarchy, reduced repetition, adaptive inventory layout.
 export default async function HomePage() {
   const supabase = await createClient();
 
@@ -508,17 +502,17 @@ export default async function HomePage() {
           <div className="absolute -right-16 -top-28 hidden h-[420px] w-[620px] rounded-[50%] border border-white/60 bg-white/25 lg:block" />
           <div className="absolute right-[13%] top-10 hidden h-44 w-44 rounded-full border-[30px] border-white/25 lg:block" />
 
-          <div className="relative mx-auto max-w-[1180px] px-3 pb-16 pt-5 sm:px-4 sm:pb-24 sm:pt-8 md:pb-28 md:pt-10">
-            <div className="grid gap-6 lg:grid-cols-[1fr_0.72fr] lg:items-center">
+          <div className="relative mx-auto max-w-[1240px] px-3 pb-16 pt-5 sm:px-4 sm:pb-24 sm:pt-8 md:pb-28 md:pt-10">
+            <div className="grid gap-8 lg:grid-cols-[minmax(0,1.25fr)_minmax(280px,0.55fr)] lg:items-center">
               <div className="max-w-[700px]">
                 <p className="hidden items-center gap-2 rounded-full border border-white/80 bg-white/80 px-3 py-1.5 text-xs font-extrabold text-primary shadow-sm sm:inline-flex">
                   <Icon name="globe" size={13} />
                   Domestik · Internasional · Umrah · Haji
                 </p>
-                <h1 className="font-display text-[26px] font-extrabold leading-[1.1] tracking-[-0.03em] text-[#10223f] sm:mt-3 sm:text-[36px] sm:leading-[1.08] sm:tracking-[-0.035em] md:text-[42px]">
+                <h1 className="font-display max-w-[760px] text-[30px] font-extrabold leading-[1.08] tracking-[-0.035em] text-[#10223f] sm:mt-3 sm:text-[40px] md:text-[48px] md:leading-[1.04]">
                   Dari Indonesia untuk perjalanan ke mana saja.
                 </h1>
-                <p className="mt-2.5 max-w-[650px] text-[13px] leading-5 text-[#52647e] sm:mt-3 sm:text-sm sm:leading-6">
+                <p className="mt-3 max-w-[680px] text-[14px] leading-6 text-[#52647e] sm:mt-4 sm:text-[15px] sm:leading-6">
                   Temukan paket Umrah, Haji, Halal Tour, Tour Domestik dan Tour Internasional dari Travel dalam ekosistem Segaloka.
                 </p>
               </div>
@@ -546,7 +540,7 @@ export default async function HomePage() {
         </section>
 
         {/* MARKETPLACE CATEGORY + SEARCH CENTER */}
-        <section className="relative z-20 mx-auto -mt-10 max-w-[1180px] px-3 sm:-mt-16 sm:px-4">
+        <section className="relative z-20 mx-auto -mt-10 max-w-[1240px] px-3 sm:-mt-16 sm:px-4">
           <MarketplaceSearch />
 
           {/* AUTO MARKETPLACE ADS V4.5 */}
@@ -554,7 +548,7 @@ export default async function HomePage() {
         </section>
 
         {/* MOBILE MARKETPLACE SHORTCUTS */}
-        <section className="mx-auto max-w-[1180px] px-3 pb-1 pt-2 sm:hidden">
+        <section className="mx-auto max-w-[1240px] px-3 pb-1 pt-2 sm:hidden">
           <div className="rounded-[16px] border border-[#dfe7f0] bg-white px-1.5 py-2 shadow-[0_8px_22px_rgba(16,34,63,0.05)]">
             <div className="grid grid-cols-5 gap-1">
               {[
@@ -575,42 +569,8 @@ export default async function HomePage() {
           </div>
         </section>
 
-        {/* MARKETPLACE PROMO STRIP — V4.3 */}
-        <section className="mx-auto max-w-[1180px] px-3 pb-3 pt-1.5 sm:px-4 sm:pb-4 sm:pt-3">
-          <div className="flex snap-x gap-2.5 overflow-x-auto pb-1 [scrollbar-width:none] [&::-webkit-scrollbar]:hidden sm:grid sm:grid-cols-2 sm:overflow-visible sm:pb-0 lg:grid-cols-3">
-            {PREVIEW_PROMOS.map((promo, index) => (
-              <Link
-                key={promo.id}
-                href={index === 0 ? "/paket/umrah" : index === 1 ? "/paket/tour" : "/paket/halal_tour"}
-                className={`group relative min-h-[96px] min-w-[80%] snap-start overflow-hidden rounded-[16px] border p-3 transition duration-300 sm:min-h-[110px] sm:min-w-0 sm:rounded-[18px] sm:p-4 hover:-translate-y-0.5 hover:shadow-[0_14px_34px_rgba(15,45,90,0.09)] ${
-                  index === 0
-                    ? "border-[#cfe4ff] bg-[linear-gradient(135deg,#e9f5ff_0%,#f8fcff_68%,#ddecff_100%)]"
-                    : index === 1
-                      ? "border-[#d8eee5] bg-[linear-gradient(135deg,#ecfaf4_0%,#fbfffd_68%,#dcf4e9_100%)]"
-                      : "border-[#eadff8] bg-[linear-gradient(135deg,#f6efff_0%,#fdfbff_68%,#eadfff_100%)]"
-                }`}
-              >
-                <div className="absolute -right-7 -top-10 h-28 w-28 rounded-full border-[18px] border-white/45 transition duration-300 group-hover:scale-110" />
-                <div className="relative flex h-full items-start gap-3 sm:gap-3.5">
-                  <span className="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl border border-white/80 bg-white/90 text-primary shadow-sm sm:h-11 sm:w-11 sm:rounded-2xl">
-                    <Icon name={promo.icon} size={19} />
-                  </span>
-                  <div className="min-w-0">
-                    <p className="text-xs font-black uppercase tracking-[0.12em] text-primary">{promo.label}</p>
-                    <p className="mt-1 text-[13px] font-extrabold leading-[18px] text-[#10223f] sm:text-sm sm:leading-5">{promo.title}</p>
-                    <p className="mt-1 line-clamp-2 text-[11px] leading-4 text-[#718096] sm:text-xs">{promo.detail}</p>
-                    <span className="mt-2 inline-flex items-center gap-1 text-[11px] font-extrabold text-primary sm:mt-2.5 sm:text-xs">
-                      Jelajahi <span aria-hidden="true">→</span>
-                    </span>
-                  </div>
-                </div>
-              </Link>
-            ))}
-          </div>
-        </section>
-
         {/* REAL MARKETPLACE INVENTORY — V4.3 CARD SYSTEM */}
-        <section className="mx-auto max-w-[1180px] px-3 pb-8 pt-3 sm:px-4 sm:pb-10 sm:pt-5">
+        <section className="mx-auto max-w-[1240px] px-3 pb-10 pt-8 sm:px-4 sm:pb-12 sm:pt-10">
           <div className="flex items-end justify-between gap-4">
             <div>
               <p className="text-xs font-extrabold uppercase tracking-[0.14em] text-primary">
@@ -646,7 +606,15 @@ export default async function HomePage() {
               </Link>
             </div>
           ) : (
-            <div className="mt-3 flex snap-x gap-3 overflow-x-auto pb-2 [scrollbar-width:none] [&::-webkit-scrollbar]:hidden sm:mt-5 sm:grid sm:grid-cols-2 sm:gap-4 sm:overflow-visible sm:pb-0 lg:grid-cols-4">
+            <div className={`mt-4 flex snap-x gap-3 overflow-x-auto pb-2 [scrollbar-width:none] [&::-webkit-scrollbar]:hidden sm:mt-6 sm:grid sm:gap-5 sm:overflow-visible sm:pb-0 ${
+              displayPackages.length === 1
+                ? "sm:grid-cols-1 lg:max-w-[820px]"
+                : displayPackages.length === 2
+                  ? "sm:grid-cols-2 lg:max-w-[900px]"
+                  : displayPackages.length === 3
+                    ? "sm:grid-cols-2 lg:grid-cols-3"
+                    : "sm:grid-cols-2 lg:grid-cols-4"
+            }`}>
               {displayPackages.map((pkg) => {
                 const org = pkg.organizations;
                 const departure = pkg.departures[0];
@@ -659,9 +627,15 @@ export default async function HomePage() {
                   <Link
                     key={pkg.id}
                     href={`/paket/detail/${pkg.slug}`}
-                    className="group flex min-h-[282px] min-w-[74%] snap-start flex-col overflow-hidden rounded-[18px] border border-[#dfe7f0] bg-white shadow-[0_8px_24px_rgba(15,45,90,0.05)] transition duration-200 hover:-translate-y-1 hover:border-[#b9d2ee] hover:shadow-[0_16px_38px_rgba(15,45,90,0.11)] sm:min-h-[338px] sm:min-w-0 sm:rounded-[20px]"
+                    className={`group flex min-h-[300px] min-w-[82%] snap-start flex-col overflow-hidden rounded-[18px] border border-[#dfe7f0] bg-white shadow-[0_8px_24px_rgba(15,45,90,0.05)] transition duration-200 hover:-translate-y-1 hover:border-[#b9d2ee] hover:shadow-[0_16px_38px_rgba(15,45,90,0.11)] sm:min-h-[350px] sm:min-w-0 sm:rounded-[22px] ${
+                      displayPackages.length === 1
+                        ? "lg:grid lg:min-h-[250px] lg:grid-cols-[300px_minmax(0,1fr)]"
+                        : ""
+                    }`}
                   >
-                    <div className="relative h-[120px] overflow-hidden bg-[linear-gradient(145deg,#dcefff_0%,#eff8ff_48%,#e8f8f2_100%)] p-3 sm:h-[132px] sm:p-3.5">
+                    <div className={`relative h-[132px] overflow-hidden bg-[linear-gradient(145deg,#dcefff_0%,#eff8ff_48%,#e8f8f2_100%)] p-3.5 sm:h-[144px] sm:p-4 ${
+                      displayPackages.length === 1 ? "lg:h-full" : ""
+                    }`}>
                       <div className="absolute -bottom-14 -left-10 h-36 w-36 rounded-full border-[24px] border-white/40" />
                       <div className="absolute -right-10 -top-12 h-36 w-36 rounded-full bg-white/40" />
                       <div className="absolute bottom-3 right-3 text-primary/10 transition duration-300 group-hover:scale-110 group-hover:text-primary/15">
@@ -735,15 +709,15 @@ export default async function HomePage() {
         </section>
 
         {/* MARKETPLACE ADS — AFTER PACKAGES */}
-        <div className="mx-auto w-full max-w-[1180px] px-3 pb-5 sm:px-4 sm:pb-6 lg:pb-4">
+        <div className="mx-auto w-full max-w-[1240px] px-3 pb-5 sm:px-4 sm:pb-6 lg:pb-4">
           <MarketplaceAdCarousel placement="after_packages" />
         </div>
         {/* EXPLORE INDONESIA — V4.3 DESTINATION CARDS */}
-        <section className="mx-auto max-w-[1180px] px-3 pb-7 sm:px-4 sm:pb-10 lg:pb-8">
+        <section className="mx-auto max-w-[1240px] px-3 pb-7 sm:px-4 sm:pb-10 lg:pb-8">
           <div className="flex items-end justify-between gap-4">
             <div>
               <p className="text-xs font-extrabold uppercase tracking-[0.14em] text-primary">Jelajahi Indonesia</p>
-              <h2 className="mt-1 font-display text-xl font-extrabold text-[#10223f] sm:text-[22px]">Destinasi domestik pilihan</h2>
+              <h2 className="mt-1 font-display text-xl font-extrabold text-[#10223f] sm:text-[24px]">Destinasi domestik pilihan</h2>
               <p className="mt-1 text-[12px] leading-[18px] text-[#748297] sm:text-sm sm:leading-normal">Dari wisata kota hingga bahari dalam satu marketplace.</p>
             </div>
             <Link href="/paket/tour?scope=domestic" className="hidden text-sm font-extrabold text-primary hover:underline sm:inline">Lihat Tour Domestik →</Link>
@@ -778,13 +752,9 @@ export default async function HomePage() {
           </div>
         </section>
 
-        {/* MARKETPLACE ADS — AFTER DOMESTIC */}
-        <div className="mx-auto w-full max-w-[1180px] px-3 pb-5 sm:px-4 sm:pb-6 lg:pb-4">
-          <MarketplaceAdCarousel placement="after_domestic" />
-        </div>
         {/* UPCOMING DEPARTURES — V4.3 */}
         {upcomingPackages.length > 0 && (
-          <section className="mx-auto max-w-[1180px] px-3 pb-8 sm:px-4 sm:pb-10 lg:pb-8">
+          <section className="mx-auto max-w-[1240px] px-3 pb-8 sm:px-4 sm:pb-10 lg:pb-8">
             <div className="overflow-hidden rounded-[18px] border border-[#dce5ef] bg-white shadow-[0_8px_24px_rgba(15,45,90,0.04)] sm:rounded-[22px]">
               <div className="flex flex-col gap-1.5 border-b border-[#edf1f6] px-4 py-3.5 sm:flex-row sm:items-end sm:justify-between sm:gap-2 sm:px-6 sm:py-4">
                 <div>
@@ -829,12 +799,12 @@ export default async function HomePage() {
         )}
 
         {/* EXPLORE THE WORLD — V4.3 */}
-        <section className="mx-auto max-w-[1180px] px-3 pb-8 sm:px-4 sm:pb-10 lg:pb-8">
+        <section className="mx-auto max-w-[1240px] px-3 pb-8 sm:px-4 sm:pb-10 lg:pb-8">
           <div className="overflow-hidden rounded-[18px] border border-[#dfe9f3] bg-[linear-gradient(135deg,#f4f9ff_0%,#f8fbff_52%,#f1faf7_100%)] p-3.5 sm:rounded-[22px] sm:p-6">
             <div className="flex items-end justify-between gap-4">
               <div>
                 <p className="text-xs font-extrabold uppercase tracking-[0.14em] text-primary">Jelajahi Dunia</p>
-                <h2 className="mt-1 font-display text-xl font-extrabold text-[#10223f] sm:text-[22px]">Destinasi internasional populer</h2>
+                <h2 className="mt-1 font-display text-xl font-extrabold text-[#10223f] sm:text-[24px]">Destinasi internasional populer</h2>
                 <p className="mt-1 text-[12px] leading-[18px] text-[#748297] sm:text-sm sm:leading-normal">Halal Tour dan Tour Internasional untuk perjalanan berikutnya.</p>
               </div>
               <Link href="/paket/halal_tour?scope=international" className="hidden text-sm font-extrabold text-primary hover:underline sm:inline">Lihat Internasional →</Link>
@@ -863,16 +833,12 @@ export default async function HomePage() {
           </div>
         </section>
 
-        {/* MARKETPLACE ADS — AFTER WORLD */}
-        <div className="mx-auto w-full max-w-[1180px] px-3 pb-5 sm:px-4 sm:pb-6 lg:pb-4">
-          <MarketplaceAdCarousel placement="after_world" />
-        </div>
         {/* VENDOR PICKS — V4.3 SERVICE CARDS */}
-        <section className="mx-auto max-w-[1180px] px-3 pb-8 sm:px-4 sm:pb-10 lg:pb-8">
+        <section className="mx-auto max-w-[1240px] px-3 pb-8 sm:px-4 sm:pb-10 lg:pb-8">
           <div className="flex items-end justify-between gap-4">
             <div>
               <p className="text-xs font-extrabold uppercase tracking-[0.14em] text-primary">Vendor Pilihan</p>
-              <h2 className="mt-1 font-display text-xl font-extrabold text-[#10223f] sm:text-[22px]">Vendor perjalanan pilihan</h2>
+              <h2 className="mt-1 font-display text-xl font-extrabold text-[#10223f] sm:text-[24px]">Vendor perjalanan pilihan</h2>
               <p className="mt-1 text-[12px] leading-[18px] text-[#748297] sm:text-sm sm:leading-normal">Kategori Vendor untuk kebutuhan Travel dan perjalanan.</p>
             </div>
             <span className="hidden rounded-full bg-[#f3f7fb] px-3 py-1.5 text-xs font-extrabold text-[#60738d] sm:inline">Mitra pendukung Segaloka</span>
@@ -897,7 +863,7 @@ export default async function HomePage() {
         </section>
 
         {/* SEGADEALS — V4.3 FEATURE */}
-        <section className="mx-auto max-w-[1180px] px-3 pb-8 sm:px-4 sm:pb-10 lg:pb-8">
+        <section className="mx-auto max-w-[1240px] px-3 pb-8 sm:px-4 sm:pb-10 lg:pb-8">
           <div className="relative overflow-hidden rounded-[20px] bg-[linear-gradient(120deg,#082b58_0%,#0d447f_55%,#126b91_100%)] sm:rounded-[26px]">
             <div className="absolute -right-24 -top-28 h-80 w-80 rounded-full border-[54px] border-white/[0.06]" />
             <div className="grid gap-3.5 p-3.5 sm:gap-7 sm:p-8 lg:grid-cols-[1.05fr_0.95fr] lg:items-center">
@@ -929,15 +895,15 @@ export default async function HomePage() {
         </section>
 
         {/* MARKETPLACE ADS — LOWER HOME */}
-        <div className="mx-auto w-full max-w-[1180px] px-3 pb-5 sm:px-4 sm:pb-6 lg:pb-4">
+        <div className="mx-auto w-full max-w-[1240px] px-3 pb-5 sm:px-4 sm:pb-6 lg:pb-4">
           <MarketplaceAdCarousel placement="lower_home" />
         </div>
         {/* TRAVEL DIRECTORY — V4.3 IDENTITY CARDS */}
-        <section className="mx-auto max-w-[1180px] px-3 pb-8 sm:px-4 sm:pb-10 lg:pb-8">
+        <section className="mx-auto max-w-[1240px] px-3 pb-8 sm:px-4 sm:pb-10 lg:pb-8">
           <div className="flex items-end justify-between gap-4">
             <div>
               <p className="text-xs font-extrabold uppercase tracking-[0.14em] text-primary">Travel Pilihan</p>
-              <h2 className="mt-1 font-display text-xl font-extrabold text-[#10223f] sm:text-[22px]">Kenali Travel di Segaloka</h2>
+              <h2 className="mt-1 font-display text-xl font-extrabold text-[#10223f] sm:text-[24px]">Kenali Travel di Segaloka</h2>
               <p className="mt-1 text-[12px] leading-[18px] text-[#748297] sm:text-sm sm:leading-normal">Temukan Travel dan pilihan perjalanan yang tersedia di Segaloka.</p>
             </div>
             <Link href="/paket/umrah" className="hidden text-sm font-extrabold text-primary hover:underline sm:inline">Jelajahi marketplace →</Link>
@@ -971,10 +937,10 @@ export default async function HomePage() {
         </section>
 
         {/* TRAVEL INSPIRATION — V4.3 EDITORIAL CARDS */}
-        <section className="mx-auto max-w-[1180px] px-3 pb-8 sm:px-4 sm:pb-10 lg:pb-8">
+        <section className="mx-auto max-w-[1240px] px-3 pb-8 sm:px-4 sm:pb-10 lg:pb-8">
           <div>
             <p className="text-xs font-extrabold uppercase tracking-[0.14em] text-primary">Inspirasi Perjalanan</p>
-            <h2 className="mt-1 font-display text-xl font-extrabold text-[#10223f] sm:text-[22px]">Ide dan panduan sebelum berangkat</h2>
+            <h2 className="mt-1 font-display text-xl font-extrabold text-[#10223f] sm:text-[24px]">Ide dan panduan sebelum berangkat</h2>
             <p className="mt-1 text-[12px] leading-[18px] text-[#748297] sm:text-sm sm:leading-normal">Konten panduan untuk membantu menyiapkan perjalanan Anda.</p>
           </div>
 
@@ -1003,7 +969,7 @@ export default async function HomePage() {
         </section>
 
         {/* BUSINESS ECOSYSTEM */}
-        <section className="mx-auto max-w-[1180px] px-3 pb-8 sm:px-4 sm:pb-12">
+        <section className="mx-auto max-w-[1240px] px-3 pb-8 sm:px-4 sm:pb-12">
           <div className="grid gap-2.5 rounded-2xl border border-[#dce4ee] bg-white p-3.5 sm:gap-4 sm:p-7 lg:grid-cols-[1fr_auto] lg:items-center">
             <div>
               <p className="text-xs font-extrabold uppercase tracking-[0.14em] text-primary">
@@ -1029,7 +995,7 @@ export default async function HomePage() {
       </main>
 
       <footer className="border-t border-[#d9e3ef] bg-[#082d63] pb-20 text-white md:pb-0">
-        <div className="mx-auto max-w-[1180px] px-3 py-6 sm:px-4 sm:py-12">
+        <div className="mx-auto max-w-[1240px] px-3 py-8 sm:px-4 sm:py-14">
           <div className="grid grid-cols-2 gap-x-5 gap-y-6 sm:grid-cols-2 sm:gap-8 lg:grid-cols-[1.25fr_0.8fr_0.8fr_0.9fr]">
             <div className="col-span-2 sm:col-span-1">
               <div className="flex items-center">
@@ -1039,7 +1005,7 @@ export default async function HomePage() {
                   className="h-9 w-auto object-contain brightness-0 invert sm:h-11"
                 />
               </div>
-              <p className="mt-3 max-w-[330px] text-[11px] leading-[18px] text-[#c5d7ed] sm:mt-4 sm:text-xs sm:leading-5">
+              <p className="mt-3 max-w-[330px] text-xs leading-5 text-[#c5d7ed] sm:mt-4 sm:text-[13px] sm:leading-6">
                 Ekosistem perjalanan yang menghubungkan Traveler, Travel, Vendor, Agen, Mitra dan Affiliate dalam satu platform.
               </p>
               <div className="mt-4 flex items-center gap-2 sm:mt-5">
