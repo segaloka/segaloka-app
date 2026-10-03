@@ -57,19 +57,19 @@ export function MarketplaceHeader({ initialLanguage = "id", initialCurrency = "I
 
   return (
     <>
-      <header className="sticky top-0 z-50 border-b border-[#e4eaf1] bg-white/95 backdrop-blur">
-        <div className="mx-auto flex h-[58px] max-w-[1180px] items-center gap-2 px-3 sm:h-[62px] sm:gap-5 sm:px-4">
+      <header className="sticky top-0 z-50 border-b border-[#e4eaf1] bg-white/95 shadow-[0_4px_18px_rgba(16,34,63,0.04)] backdrop-blur">
+        <div className="mx-auto flex h-[60px] max-w-[1240px] items-center gap-2 px-3 sm:h-[68px] sm:gap-5 sm:px-4">
           <Link href="/" className="flex shrink-0 items-center" aria-label="Segaloka">
             <img
               src="/brand/segaloka-logo.png"
               alt="Segaloka"
-              className="h-9 w-auto max-w-[128px] object-contain sm:h-11 sm:max-w-none"
+              className="h-9 w-auto max-w-[132px] object-contain sm:h-[46px] sm:max-w-none"
             />
           </Link>
 
-          <nav className="hidden flex-1 items-center justify-center gap-6 lg:flex">
+          <nav className="hidden flex-1 items-center justify-center gap-1 lg:flex">
             {NAV.map(([label, href]) => (
-              <Link key={label} href={href} className="text-sm font-bold text-[#52647e] transition hover:text-primary">
+              <Link key={label} href={href} className="rounded-full px-3 py-2 text-[13px] font-semibold text-[#52647e] transition hover:bg-[#f3f7fb] hover:text-primary">
                 {label}
               </Link>
             ))}
@@ -79,13 +79,13 @@ export function MarketplaceHeader({ initialLanguage = "id", initialCurrency = "I
             <button
               type="button"
               onClick={() => setOpen(true)}
-              className="hidden items-center gap-1.5 rounded-lg px-2.5 py-2 text-xs font-extrabold text-[#40546f] hover:bg-[#f2f6fb] md:flex"
+              className="hidden items-center gap-1.5 rounded-full border border-[#dfe7f0] bg-white px-3 py-2 text-xs font-extrabold text-[#40546f] transition hover:border-[#c7d8eb] hover:bg-[#f7faff] md:flex"
             >
               <Icon name="globe" size={14} />
               {language.toUpperCase()} · {currency}
             </button>
             <Link href="/login" className="hidden px-2.5 py-2 text-xs font-extrabold text-[#10223f] md:inline-flex">{t.login}</Link>
-            <Link href="/register" className="hidden rounded-lg bg-primary px-4 py-2 text-xs font-extrabold text-white md:inline-flex">{t.register}</Link>
+            <Link href="/register" className="hidden rounded-full bg-primary px-4 py-2.5 text-xs font-extrabold text-white shadow-[0_6px_16px_rgba(11,110,232,0.16)] transition hover:opacity-90 md:inline-flex">{t.register}</Link>
             <button type="button" onClick={() => setOpen(true)} className="inline-flex h-9 w-9 items-center justify-center rounded-full border border-[#dfe7f0] bg-white text-primary md:hidden" aria-label={t.aria}>
               <Icon name="globe" size={14} />
             </button>
