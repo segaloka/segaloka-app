@@ -5,7 +5,7 @@ import { cookies } from "next/headers";
 import { BookingForm } from "./BookingForm";
 import { PublicNav } from "@/components/layout/PublicNav";
 
-export default async function NewBookingPage({ searchParams }: { searchParams: { departure?: string } }) {
+export default async function NewBookingPage({ searchParams }: { searchParams: { departure?: string; pax?: string } }) {
   const cookieStore = cookies();
   const storedLanguage = cookieStore.get("segaloka-language")?.value;
   const storedCurrency = cookieStore.get("segaloka-currency")?.value;
@@ -59,7 +59,7 @@ export default async function NewBookingPage({ searchParams }: { searchParams: {
           {remaining <= 0 ? (
             <p className="text-sm text-danger">{t.full}</p>
           ) : (
-            <BookingForm departureId={departure.id} basePrice={pkg.base_price} maxPax={remaining} language={language} currency={currency} />
+            <BookingForm departureId={departure.id} basePrice={pkg.base_price} maxPax={remaining} initialPax={Math.max(1, Math.min(remaining, Number(searchParams.pax) || 1))} language={language} currency={currency} />
           )}
         </div>
       </div>
