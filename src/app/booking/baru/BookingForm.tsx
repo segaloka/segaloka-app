@@ -14,7 +14,7 @@ function SubmitButton({ processing, submit }: { processing: string; submit: stri
   );
 }
 
-export function BookingForm({ departureId, basePrice, maxPax, language, currency }: { departureId: string; basePrice: number; maxPax: number; language: "id" | "en" | "ar"; currency: string }) {
+export function BookingForm({ departureId, basePrice, maxPax, initialPax = 1, language, currency }: { departureId: string; basePrice: number; maxPax: number; initialPax?: number; language: "id" | "en" | "ar"; currency: string }) {
   const locale = language === "en" ? "en-US" : language === "ar" ? "ar-SA" : "id-ID";
   const copy = {
     id:{ pax:"Jumlah Jamaah", max:(n:string)=>`Maksimal ${n} kursi tersedia pada jadwal ini.`, travelers:"Data Jamaah", name:(n:string)=>`Nama lengkap jamaah ${n} (sesuai paspor)`, notes:"Catatan (opsional)", notesPlaceholder:"Permintaan khusus, kondisi kesehatan, dsb.", total:"Total Tagihan", processing:"Memproses…", submit:"Buat Booking", baseCurrency:"Harga dasar · IDR", currencyPending:(code:string)=>`Pilihan ${code} belum dikonversi.`, errors:{INVALID_DEPARTURE:"Jadwal keberangkatan tidak valid.",AUTH_REQUIRED:"Silakan masuk kembali sebelum membuat booking.",INVALID_PAX_COUNT:"Jumlah jamaah tidak valid.",PASSENGER_NAME_REQUIRED:"Data seluruh jamaah wajib diisi dengan lengkap.",DEPARTURE_NOT_AVAILABLE:"Jadwal keberangkatan sudah tidak tersedia.",PACKAGE_NOT_AVAILABLE:"Paket ini belum tersedia untuk dipesan.",INSUFFICIENT_QUOTA:"Kuota tidak mencukupi untuk jumlah jamaah ini.",BOOKING_FAILED:"Booking belum berhasil dibuat. Silakan coba kembali."} },
@@ -26,7 +26,7 @@ export function BookingForm({ departureId, basePrice, maxPax, language, currency
   const displayPrice = (value:number) => new Intl.NumberFormat(locale, { style:"currency", currency:"IDR", maximumFractionDigits:0 }).format(value);
   const errorMessage = (code: string) => t.errors[code as keyof typeof t.errors] ?? t.errors.BOOKING_FAILED;
   const [state, formAction] = useFormState(createBookingAction, null);
-  const [paxCount, setPaxCount] = useState(1);
+  const [paxCount, setPaxCount] = useState(Math.max(1, Math.min(maxPax, initialPax)));
 
   return (
     <form action={formAction} className="space-y-5">
