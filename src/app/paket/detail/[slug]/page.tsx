@@ -136,80 +136,50 @@ export default async function PackageDetailPage({ params }: { params: { slug: st
         {isPreview && <div className="mb-3 flex items-start gap-2.5 rounded-2xl border border-[#d8e6f5] bg-[#eef6ff] px-3.5 py-3 text-[#40546f] sm:px-4"><span className="mt-0.5 flex h-7 w-7 shrink-0 items-center justify-center rounded-full bg-white text-primary ring-1 ring-[#d8e6f5]"><Icon name="info" size={13} /></span><div><p className="text-[10px] font-extrabold uppercase tracking-[0.1em] text-primary">{u.previewLabel}</p><p className="mt-0.5 text-[11px] leading-5 sm:text-xs">{u.previewNotice}</p></div></div>}
 
 
-        <section className="overflow-hidden rounded-[20px] border border-[#dfe7f0] bg-white sm:rounded-[26px]">
-          <div className="relative min-h-[210px] overflow-hidden bg-[linear-gradient(135deg,#e5f2ff_0%,#f5faff_52%,#e9f8f2_100%)] p-4 sm:min-h-[290px] sm:p-6">
-            <div className="absolute -end-16 -top-20 h-64 w-64 rounded-full border-[42px] border-white/60" />
-            <div className="absolute -bottom-28 -start-16 h-64 w-64 rounded-full bg-white/45 blur-sm" />
-            <div className="relative flex h-full min-h-[178px] flex-col justify-between sm:min-h-[242px]">
-              <div className="flex items-start justify-between gap-3">
-                <span className="inline-flex items-center gap-2 rounded-full border border-white/80 bg-white/85 px-3 py-1.5 text-[11px] font-extrabold text-primary shadow-sm backdrop-blur">
-                  <Icon name={pkg.type === "umrah" ? "building" : pkg.type === "haji" ? "route" : pkg.type === "halal_tour" ? "globe" : "plane"} size={15} />
-                  {packageTypeLabel(pkg.type)}
-                </span>
-                <span className={`rounded-full px-3 py-1.5 text-[10px] font-extrabold shadow-sm ${departures?.length ? "bg-[#167453] text-white" : "bg-white/85 text-[#748297] ring-1 ring-[#dfe7f0]"}`}>{departures?.length ? t.available : u.noActiveSchedule}</span>
-              </div>
-              <div className="grid max-w-2xl grid-cols-2 gap-2 sm:grid-cols-3">
-                <div className="rounded-2xl border border-white/80 bg-white/80 p-3 shadow-sm backdrop-blur">
-                  <p className="text-[9px] font-extrabold uppercase tracking-[0.08em] text-[#748297]">{u.heroPrice}</p>
-                  <p className="mt-1 font-display text-base font-extrabold text-primary sm:text-lg">{displayPrice(pkg.base_price)}</p>
-                  <p className="mt-0.5 text-[9px] font-bold text-[#748297]">{t.baseCurrency}</p>
-                </div>
-                <div className="rounded-2xl border border-white/80 bg-white/80 p-3 shadow-sm backdrop-blur">
-                  <p className="text-[9px] font-extrabold uppercase tracking-[0.08em] text-[#748297]">{u.duration}</p>
-                  <p className="mt-1 text-sm font-extrabold text-[#40546f] sm:text-base">{displayNumber(pkg.duration_days)} {t.days}</p>
-                  <p className="mt-0.5 text-[9px] font-bold text-[#748297]">{u.tripDays}</p>
-                </div>
-                <div className="col-span-2 rounded-2xl border border-white/80 bg-white/80 p-3 shadow-sm backdrop-blur sm:col-span-1">
-                  <p className="text-[9px] font-extrabold uppercase tracking-[0.08em] text-[#748297]">{u.nearestDeparture}</p>
-                  <p className="mt-1 text-sm font-extrabold text-[#40546f] sm:text-base">{departures?.[0] ? displayDate(departures[0].departure_date) : t.unavailable}</p>
-                  <p className="mt-0.5 text-[9px] font-bold text-[#748297]">{departures?.length ? `${displayNumber(departures.length)} ${u.openSchedules}` : t.noSchedule}</p>
-                </div>
+        <section className="mb-4">
+          <div className="flex items-start justify-between gap-3">
+            <div className="min-w-0">
+              <h1 className="break-words font-display text-[24px] font-extrabold leading-[1.12] tracking-[-0.03em] sm:text-[32px]">{pkg.name}</h1>
+              <div className="mt-2 flex flex-wrap items-center gap-x-3 gap-y-1.5 text-[11px] font-bold text-[#748297]">
+                {org && <span className="inline-flex items-center gap-1.5"><span className="h-2 w-2 rounded-full bg-primary" />{org.name}</span>}
+                <span className="inline-flex items-center gap-1.5"><Icon name="route" size={12} />{packageTypeLabel(pkg.type)} · {displayNumber(pkg.duration_days)} {t.days}</span>
+                <span className="inline-flex items-center gap-1.5"><span className="text-[#f5a000]">★</span>{rating && rating.review_count > 0 ? `${displayRating(rating.average_rating)} (${displayNumber(rating.review_count)} ${u.reviews})` : u.noReviews}</span>
               </div>
             </div>
+            {!isPreview && <WishlistButton packageId={pkg.id} initialSaved={saved} />}
           </div>
 
-          <div className="p-4 sm:p-6">
-            <div className="flex items-start justify-between gap-3">
-              <div className="min-w-0">
-                <p className="text-[10px] font-extrabold uppercase tracking-[0.12em] text-primary">{packageTypeLabel(pkg.type)}</p>
-                <h1 className="mt-1.5 break-words font-display text-[22px] font-extrabold leading-[1.18] tracking-[-0.025em] sm:text-[30px]">{pkg.name}</h1>
+          <div className="mt-4 grid min-h-[280px] grid-cols-1 gap-2 sm:min-h-[360px] sm:grid-cols-[1.45fr_.9fr]">
+            <div className="relative min-h-[240px] overflow-hidden rounded-2xl border border-[#d8e3ef] bg-[linear-gradient(145deg,#eaf4ff_0%,#f8fbff_48%,#eaf8f3_100%)] sm:min-h-[360px]">
+              <div className="absolute -end-16 -top-20 h-64 w-64 rounded-full border-[42px] border-white/65" />
+              <div className="absolute -bottom-24 -start-16 h-60 w-60 rounded-full bg-white/55" />
+              <div className="absolute inset-x-4 top-4 flex items-center justify-between gap-2">
+                <span className="rounded-full bg-white/90 px-3 py-1.5 text-[10px] font-extrabold text-primary shadow-sm">{packageTypeLabel(pkg.type)}</span>
+                <span className={`rounded-full px-3 py-1.5 text-[10px] font-extrabold shadow-sm ${departures?.length ? "bg-[#167453] text-white" : "bg-white/90 text-[#748297]"}`}>{departures?.length ? t.available : u.noActiveSchedule}</span>
               </div>
-              {!isPreview && <WishlistButton packageId={pkg.id} initialSaved={saved} />}
+              <div className="absolute inset-x-5 bottom-5 max-w-lg rounded-2xl border border-white/80 bg-white/88 p-4 shadow-sm backdrop-blur">
+                <p className="text-[10px] font-extrabold uppercase tracking-[0.1em] text-[#748297]">{t.startFrom}</p>
+                <p className="mt-1 font-display text-xl font-extrabold text-primary">{displayPrice(pkg.base_price)} <span className="text-[10px] font-bold text-[#748297]">{t.perTraveler}</span></p>
+              </div>
             </div>
-
-            {org && (
-              <div className="mt-4 flex flex-wrap items-center gap-x-3 gap-y-2 border-t border-[#edf1f6] pt-4">
-                {isPreview ? <div className="flex min-w-0 max-w-full items-center gap-2.5">
-                  <span className="flex h-10 w-10 shrink-0 items-center justify-center overflow-hidden rounded-xl border border-[#dfe7f0] bg-[#f8fbff] text-primary"><Icon name="building" size={18} /></span>
-                  <span className="min-w-0"><span className="block truncate text-[13px] font-extrabold sm:text-sm">{org.name}</span><span className="block text-[11px] text-[#748297]">{u.previewLabel}</span></span>
-                </div> : <Link href={`/travel/${org.slug}`} className="flex min-w-0 max-w-full items-center gap-2.5">
-                  <span className="flex h-10 w-10 shrink-0 items-center justify-center overflow-hidden rounded-xl border border-[#dfe7f0] bg-[#f8fbff] text-primary"><Icon name="building" size={18} /></span>
-                  <span className="min-w-0"><span className="block truncate text-[13px] font-extrabold sm:text-sm">{org.name}</span><span className="block text-[11px] text-[#748297]">{u.onSegaloka}</span></span>
-                </Link>}
-                <span className="h-8 w-px bg-[#e4eaf1]" />
-                <div className="flex items-center gap-1.5">
-                  <span className="text-[#f5a000]">★</span>
-                  {rating && rating.review_count > 0 ? (
-                    <><span className="text-sm font-extrabold">{displayRating(rating.average_rating)}</span><span className="text-xs text-[#748297]">({displayNumber(rating.review_count)} {u.reviews})</span></>
-                  ) : <span className="text-xs font-bold text-[#748297]">{u.noReviews}</span>}
-                </div>
-              </div>
-            )}
+            <div className="grid grid-cols-2 gap-2 sm:grid-rows-2">
+              {[0,1,2,3].map((item) => <div key={item} className={`min-h-[110px] rounded-2xl border border-[#e3eaf2] ${item === 0 ? "bg-[linear-gradient(145deg,#f5f9ff,#eaf3ff)]" : item === 1 ? "bg-[linear-gradient(145deg,#f7fbf9,#eaf8f3)]" : item === 2 ? "bg-[linear-gradient(145deg,#fffaf2,#f7f9fc)]" : "bg-[linear-gradient(145deg,#f8f9fc,#eef3f8)]"}`}><span className="sr-only">{u.detailsPending}</span></div>)}
+            </div>
           </div>
         </section>
 
-        <div className="mt-4 grid gap-4 lg:grid-cols-[minmax(0,1fr)_360px] lg:items-start">
+        <div className="mt-4 grid gap-4 lg:grid-cols-[minmax(0,1fr)_330px] lg:items-start">
           <div className="space-y-4">
-            <nav aria-label={u.sectionNav} className="sticky top-[68px] z-30 -mx-3 overflow-x-auto border-y border-[#e7edf4] bg-[#f7f9fc]/95 px-3 py-2 backdrop-blur sm:mx-0 sm:rounded-2xl sm:border sm:px-2 lg:top-[76px]">
+            <nav aria-label={u.sectionNav} className="sticky top-[68px] z-30 overflow-x-auto border-b border-[#e3eaf2] bg-white/95 px-1 pt-1 backdrop-blur lg:top-[76px]">
               <div className="flex min-w-max gap-1.5">
-                <a href="#overview" className="rounded-full border border-[#dfe7f0] bg-white px-3 py-2 text-[11px] font-extrabold text-[#40546f] transition hover:border-primary/40 hover:text-primary focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/30">{t.overview}</a>
-                <a href="#departures" className="rounded-full border border-[#dfe7f0] bg-white px-3 py-2 text-[11px] font-extrabold text-[#40546f] transition hover:border-primary/40 hover:text-primary focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/30">{t.departures}</a>
-                <a href="#itinerary" className="rounded-full border border-[#dfe7f0] bg-white px-3 py-2 text-[11px] font-extrabold text-[#40546f] transition hover:border-primary/40 hover:text-primary focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/30">{t.itinerary}</a>
-                <a href="#transport-hotel" className="rounded-full border border-[#dfe7f0] bg-white px-3 py-2 text-[11px] font-extrabold text-[#40546f] transition hover:border-primary/40 hover:text-primary focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/30">{t.transportHotel}</a>
-                <a href="#facilities" className="rounded-full border border-[#dfe7f0] bg-white px-3 py-2 text-[11px] font-extrabold text-[#40546f] transition hover:border-primary/40 hover:text-primary focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/30">{t.facilities}</a>
-                {org && <a href="#travel" className="rounded-full border border-[#dfe7f0] bg-white px-3 py-2 text-[11px] font-extrabold text-[#40546f] transition hover:border-primary/40 hover:text-primary focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/30">{u.travel}</a>}
-                <a href="#reviews" className="rounded-full border border-[#dfe7f0] bg-white px-3 py-2 text-[11px] font-extrabold text-[#40546f] transition hover:border-primary/40 hover:text-primary focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/30">{u.reviewsNav}</a>
-                <a href="#terms" className="rounded-full border border-[#dfe7f0] bg-white px-3 py-2 text-[11px] font-extrabold text-[#40546f] transition hover:border-primary/40 hover:text-primary focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/30">{t.terms}</a>
+                <a href="#overview" className="border-b-2 border-transparent px-3 py-2.5 text-[11px] font-extrabold text-[#60738d] transition hover:border-primary hover:text-primary focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/30">{t.overview}</a>
+                <a href="#departures" className="border-b-2 border-transparent px-3 py-2.5 text-[11px] font-extrabold text-[#60738d] transition hover:border-primary hover:text-primary focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/30">{t.departures}</a>
+                <a href="#itinerary" className="border-b-2 border-transparent px-3 py-2.5 text-[11px] font-extrabold text-[#60738d] transition hover:border-primary hover:text-primary focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/30">{t.itinerary}</a>
+                <a href="#transport-hotel" className="border-b-2 border-transparent px-3 py-2.5 text-[11px] font-extrabold text-[#60738d] transition hover:border-primary hover:text-primary focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/30">{t.transportHotel}</a>
+                <a href="#facilities" className="border-b-2 border-transparent px-3 py-2.5 text-[11px] font-extrabold text-[#60738d] transition hover:border-primary hover:text-primary focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/30">{t.facilities}</a>
+                {org && <a href="#travel" className="border-b-2 border-transparent px-3 py-2.5 text-[11px] font-extrabold text-[#60738d] transition hover:border-primary hover:text-primary focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/30">{u.travel}</a>}
+                <a href="#reviews" className="border-b-2 border-transparent px-3 py-2.5 text-[11px] font-extrabold text-[#60738d] transition hover:border-primary hover:text-primary focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/30">{u.reviewsNav}</a>
+                <a href="#terms" className="border-b-2 border-transparent px-3 py-2.5 text-[11px] font-extrabold text-[#60738d] transition hover:border-primary hover:text-primary focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/30">{t.terms}</a>
               </div>
             </nav>
             {pkg.description && <section id="overview" className="scroll-mt-32 rounded-[18px] border border-[#dfe7f0] bg-white p-4 sm:p-6"><h2 className="font-display text-lg font-extrabold">{t.about}</h2><p className="mt-2 whitespace-pre-line text-[13px] leading-6 text-[#60738d] sm:text-sm">{pkg.description}</p></section>}
