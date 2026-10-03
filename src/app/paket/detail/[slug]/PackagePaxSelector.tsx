@@ -27,12 +27,29 @@ export function PackagePaxSelector({
   const t = copy[language];
   const safeMax = Math.max(0, Math.floor(maxPax));
   const [pax, setPax] = useState(safeMax > 0 ? 1 : 0);
+  const [priceOpen, setPriceOpen] = useState(false);
   const money = (value: number) => new Intl.NumberFormat(locale, { style: "currency", currency: "IDR", maximumFractionDigits: 0 }).format(value);
   const number = (value: number) => new Intl.NumberFormat(locale).format(value);
   const disabled = isPreview || safeMax <= 0;
 
   return (
-    <div className="mt-4 border-t border-[#edf1f6] pt-4">
+    <div className="mt-3">
+      <button type="button" onClick={() => setPriceOpen((value) => !value)} aria-expanded={priceOpen} className="mb-3 w-full rounded-xl border border-[#dfe7f0] bg-white p-3 text-start transition hover:border-primary/40">
+        <div className="flex items-start justify-between gap-3">
+          <div className="grid flex-1 grid-cols-[1fr_auto_1fr] items-start gap-2 text-[9px] text-[#748297]">
+            <div><p className="font-bold">Pergi</p><p>30 Des 2025</p></div><div className="pt-2 text-primary">··· ✈ ···</div><div className="text-end"><p className="font-bold">Pulang</p><p>09 Jan 2026</p></div>
+          </div>
+          <span className="mt-8 text-xs font-bold text-[#60738d]">{priceOpen ? "⌃" : "⌄"}</span>
+        </div>
+        <div className="mt-2 border-t border-[#edf1f6] pt-2">
+          <p className="text-[9px] text-[#9aa6b5] line-through">{money(basePrice + 1700000)}</p>
+          <p className="mt-0.5 font-display text-[16px] font-extrabold text-primary">{money(basePrice)}<span className="text-[10px] font-medium text-[#40546f]">/pax</span></p>
+        </div>
+        {priceOpen && <div className="mt-2 space-y-2 border-t border-[#edf1f6] pt-2">
+          <div><p className="text-[9px] text-[#8a98aa]">Sekamar Bertiga</p><p className="font-display text-[14px] font-extrabold text-[#40546f]">{money(basePrice + 1000000)}<span className="text-[9px] font-medium">/pax</span></p></div>
+          <div><p className="text-[9px] text-[#8a98aa]">Sekamar Berdua</p><p className="font-display text-[14px] font-extrabold text-[#40546f]">{money(basePrice + 2000000)}<span className="text-[9px] font-medium">/pax</span></p></div>
+        </div>}
+      </button>
       <div className="rounded-xl border border-[#e1e8f0] bg-white">
         <div className="flex items-center justify-between gap-3 border-b border-[#edf1f6] px-3 py-3">
           <div>
