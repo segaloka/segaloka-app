@@ -151,11 +151,11 @@ export default async function PackageDetailPage({ params }: { params: { slug: st
         </section>
 
         <div className="grid gap-4 lg:grid-cols-[minmax(0,1fr)_300px] lg:items-stretch">
-          <div className="space-y-4">
+          <div className="h-full">
             <PackageDetailShowcase language={language} description={pkg.description} durationDays={pkg.duration_days} inclusions={inclusions} exclusions={exclusions} rating={rating && rating.review_count > 0 ? rating.average_rating : null} reviewCount={rating?.review_count ?? 0} />
           </div>
           <aside id="package-booking" className="h-full scroll-mt-24">
-            <div className="rounded-[16px] bg-[#f4f4f4] p-2.5">
+            <div className="h-full rounded-[16px] bg-[#f4f4f4] p-2.5">
               {!departures?.length ? <div className="rounded-xl bg-white p-4 text-xs leading-5 text-[#60738d]">{lt.noDeparture}</div> : <PackagePaxSelector departureId={departures[0].id} maxPax={Math.max(0, departures[0].quota - departures[0].filled)} basePrice={pkg.base_price} language={language} isPreview={isPreview} />}
             </div>
           </aside>
