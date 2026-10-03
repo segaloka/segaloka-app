@@ -20,9 +20,9 @@ export function PackagePaxSelector({
 }) {
   const locale = language === "en" ? "en-US" : language === "ar" ? "ar-SA" : "id-ID";
   const copy = {
-    id: { title: "Jumlah Jamaah", pax: "jamaah", seats: "kursi tersedia", total: "Estimasi total", action: "Pesan Sekarang", preview: "Booking aktif setelah paket dipublikasikan" },
-    en: { title: "Number of Travelers", pax: "travelers", seats: "seats available", total: "Estimated total", action: "Book Now", preview: "Booking becomes available after the package is published" },
-    ar: { title: "عدد المسافرين", pax: "مسافر", seats: "مقاعد متاحة", total: "الإجمالي التقديري", action: "احجز الآن", preview: "يتاح الحجز بعد نشر الباقة" },
+    id: { title: "Atur Peserta", pax: "jamaah", seats: "kursi tersedia", unit: "Harga / jamaah", subtotal: "Subtotal", total: "Total Harga", action: "Lanjutkan", preview: "Booking aktif setelah paket dipublikasikan" },
+    en: { title: "Set Travelers", pax: "travelers", seats: "seats available", unit: "Price / traveler", subtotal: "Subtotal", total: "Total Price", action: "Continue", preview: "Booking becomes available after the package is published" },
+    ar: { title: "تحديد المسافرين", pax: "مسافر", seats: "مقاعد متاحة", unit: "السعر / مسافر", subtotal: "المجموع الفرعي", total: "السعر الإجمالي", action: "متابعة", preview: "يتاح الحجز بعد نشر الباقة" },
   } as const;
   const t = copy[language];
   const safeMax = Math.max(0, Math.floor(maxPax));
@@ -33,30 +33,31 @@ export function PackagePaxSelector({
 
   return (
     <div className="mt-4 border-t border-[#edf1f6] pt-4">
-      <div className="flex items-end justify-between gap-3">
-        <div>
-          <p className="text-[10px] font-extrabold uppercase tracking-[0.1em] text-[#748297]">{t.title}</p>
-          <p className="mt-1 text-[10px] font-bold text-[#8a98aa]">{number(safeMax)} {t.seats}</p>
-        </div>
-        <div className="flex items-center rounded-xl border border-[#dfe7f0] bg-[#fbfcfe] p-1">
-          <button type="button" aria-label="Kurangi jumlah jamaah" disabled={disabled || pax <= 1} onClick={() => setPax((value) => Math.max(1, value - 1))} className="flex h-9 w-9 items-center justify-center rounded-lg text-lg font-bold text-[#40546f] hover:bg-white disabled:cursor-not-allowed disabled:opacity-35">−</button>
-          <div className="min-w-[70px] px-2 text-center">
-            <p className="text-sm font-extrabold text-[#10223f]">{number(pax)}</p>
-            <p className="text-[9px] font-bold text-[#8a98aa]">{t.pax}</p>
+      <div className="rounded-xl border border-[#e1e8f0] bg-white">
+        <div className="flex items-center justify-between gap-3 border-b border-[#edf1f6] px-3 py-3">
+          <div>
+            <p className="text-[10px] font-extrabold text-[#40546f]">{t.title}</p>
+            <p className="mt-0.5 text-[9px] font-bold text-[#8a98aa]">{number(safeMax)} {t.seats}</p>
           </div>
-          <button type="button" aria-label="Tambah jumlah jamaah" disabled={disabled || pax >= safeMax} onClick={() => setPax((value) => Math.min(safeMax, value + 1))} className="flex h-9 w-9 items-center justify-center rounded-lg text-lg font-bold text-primary hover:bg-white disabled:cursor-not-allowed disabled:opacity-35">+</button>
+          <div className="flex items-center gap-1">
+            <button type="button" aria-label="Kurangi jumlah jamaah" disabled={disabled || pax <= 1} onClick={() => setPax((value) => Math.max(1, value - 1))} className="flex h-7 w-7 items-center justify-center rounded-md border border-[#dfe7f0] bg-white text-sm font-bold text-[#60738d] disabled:cursor-not-allowed disabled:opacity-35">−</button>
+            <div className="min-w-[34px] text-center text-xs font-extrabold text-[#10223f]">{number(pax)}</div>
+            <button type="button" aria-label="Tambah jumlah jamaah" disabled={disabled || pax >= safeMax} onClick={() => setPax((value) => Math.min(safeMax, value + 1))} className="flex h-7 w-7 items-center justify-center rounded-md bg-primary text-sm font-bold text-white disabled:cursor-not-allowed disabled:opacity-35">+</button>
+          </div>
         </div>
-      </div>
 
-      <div className="mt-3 flex items-center justify-between rounded-xl bg-[#f7f9fc] px-3 py-3">
-        <span className="text-[10px] font-bold text-[#748297]">{t.total}</span>
-        <span className="font-display text-base font-extrabold text-primary">{money(basePrice * pax)}</span>
+        <div className="space-y-2.5 px-3 py-3 text-[10px]">
+          <div className="flex items-center justify-between gap-3"><span className="font-bold text-[#748297]">{t.unit}</span><span className="font-extrabold text-[#40546f]">{money(basePrice)}</span></div>
+          <div className="flex items-center justify-between gap-3"><span className="font-bold text-[#748297]">{number(pax)} × {t.pax}</span><span className="font-extrabold text-[#40546f]">{money(basePrice * pax)}</span></div>
+          <div className="flex items-center justify-between gap-3 border-t border-dashed border-[#dfe7f0] pt-2.5"><span className="font-extrabold text-[#40546f]">{t.subtotal}</span><span className="font-extrabold text-[#10223f]">{money(basePrice * pax)}</span></div>
+          <div className="flex items-center justify-between gap-3 border-t border-[#edf1f6] pt-2.5"><span className="font-extrabold text-[#10223f]">{t.total}</span><span className="font-display text-sm font-extrabold text-primary">{money(basePrice * pax)}</span></div>
+        </div>
       </div>
 
       {isPreview ? (
-        <div className="mt-3 rounded-xl bg-[#f2f4f7] px-4 py-3 text-center text-[11px] font-extrabold leading-4 text-[#8a98aa]">{t.preview}</div>
+        <div className="mt-3 rounded-lg bg-[#f2f4f7] px-4 py-3 text-center text-[11px] font-extrabold leading-4 text-[#8a98aa]">{t.preview}</div>
       ) : safeMax > 0 ? (
-        <Link href={`/booking/baru?departure=${encodeURIComponent(departureId)}&pax=${pax}`} className="mt-3 flex w-full items-center justify-center rounded-xl bg-primary px-4 py-3 text-xs font-extrabold text-white shadow-[0_6px_16px_rgba(15,95,175,0.16)]">{t.action}</Link>
+        <Link href={`/booking/baru?departure=${encodeURIComponent(departureId)}&pax=${pax}`} className="mt-3 flex w-full items-center justify-center rounded-lg bg-primary px-4 py-3 text-xs font-extrabold text-white shadow-[0_5px_14px_rgba(15,95,175,0.16)] transition hover:brightness-95">{t.action}</Link>
       ) : null}
     </div>
   );
