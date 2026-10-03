@@ -74,7 +74,7 @@ export function PackagePaxSelector({
           <div className="flex justify-between pt-1 text-[#e89a00]"><span>Diskon 2%</span><span>- {money(discount)}</span></div>
           <div className="flex justify-between text-[#00a6a6]"><span>Kode Voucher ✨</span><span className="rounded bg-[#f3f5f7] px-2 py-0.5 font-mono text-[8px] text-[#40546f]">XYZMNO</span></div>
           <div className="mt-2 flex justify-between border-t border-[#edf1f6] pt-2 font-extrabold"><span>{t.total}</span><span>{money(totalPrice)}</span></div>
-        </div>        </div>
+        </div>
       </div>
 
       {isPreview ? (
