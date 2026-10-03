@@ -177,12 +177,13 @@ export default async function PackageDetailPage({ params }: { params: { slug: st
 
             {org && (
               <div className="mt-4 flex flex-wrap items-center gap-x-3 gap-y-2 border-t border-[#edf1f6] pt-4">
-                <Link href={`/travel/${org.slug}`} className="flex min-w-0 max-w-full items-center gap-2.5">
-                  <span className="flex h-10 w-10 shrink-0 items-center justify-center overflow-hidden rounded-xl border border-[#dfe7f0] bg-[#f8fbff] text-primary">
-                    <Icon name="building" size={18} />
-                  </span>
+                {isPreview ? <div className="flex min-w-0 max-w-full items-center gap-2.5">
+                  <span className="flex h-10 w-10 shrink-0 items-center justify-center overflow-hidden rounded-xl border border-[#dfe7f0] bg-[#f8fbff] text-primary"><Icon name="building" size={18} /></span>
+                  <span className="min-w-0"><span className="block truncate text-[13px] font-extrabold sm:text-sm">{org.name}</span><span className="block text-[11px] text-[#748297]">{u.previewLabel}</span></span>
+                </div> : <Link href={`/travel/${org.slug}`} className="flex min-w-0 max-w-full items-center gap-2.5">
+                  <span className="flex h-10 w-10 shrink-0 items-center justify-center overflow-hidden rounded-xl border border-[#dfe7f0] bg-[#f8fbff] text-primary"><Icon name="building" size={18} /></span>
                   <span className="min-w-0"><span className="block truncate text-[13px] font-extrabold sm:text-sm">{org.name}</span><span className="block text-[11px] text-[#748297]">{u.onSegaloka}</span></span>
-                </Link>
+                </Link>}
                 <span className="h-8 w-px bg-[#e4eaf1]" />
                 <div className="flex items-center gap-1.5">
                   <span className="text-[#f5a000]">★</span>
@@ -433,7 +434,7 @@ export default async function PackageDetailPage({ params }: { params: { slug: st
                       <span className="text-[11px] text-[#748297]">{rating && rating.review_count > 0 ? `★ ${displayRating(rating.average_rating)} · ${rating.review_count} ${u.reviews}` : u.noReviews}</span>
                     </div>
                   </div>
-                  <Link href={`/travel/${org.slug}`} className="hidden rounded-xl border border-[#cfe0f2] bg-white px-3 py-2 text-[11px] font-extrabold text-primary sm:inline-flex">{u.viewTravel} {arrow}</Link>
+                  {!isPreview && <Link href={`/travel/${org.slug}`} className="hidden rounded-xl border border-[#cfe0f2] bg-white px-3 py-2 text-[11px] font-extrabold text-primary sm:inline-flex">{u.viewTravel} {arrow}</Link>}
                 </div>
               </div>
               <div className="border-t border-[#e8edf3] p-4 sm:p-6">
@@ -458,7 +459,7 @@ export default async function PackageDetailPage({ params }: { params: { slug: st
                   </div>
                 </div>
               </div>
-              <div className="p-4 sm:hidden"><Link href={`/travel/${org.slug}`} className="flex w-full items-center justify-center rounded-xl bg-[#eaf3ff] px-4 py-3 text-xs font-extrabold text-primary">{u.viewProfile} {arrow}</Link></div>
+              {!isPreview && <div className="p-4 sm:hidden"><Link href={`/travel/${org.slug}`} className="flex w-full items-center justify-center rounded-xl bg-[#eaf3ff] px-4 py-3 text-xs font-extrabold text-primary">{u.viewProfile} {arrow}</Link></div>}
             </section>}
           </div>
 
