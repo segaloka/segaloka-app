@@ -30,19 +30,19 @@ export function PackageDetailShowcase({ language }: { language: Language; descri
       <div className="grid grid-rows-[1.35fr_.75fr] gap-2"><div className="rounded-[9px] border border-[#e9e9e9] bg-white" /><div className="grid grid-cols-2 gap-2"><div className="rounded-[9px] border border-[#e9e9e9] bg-white" /><div className="rounded-[9px] border border-[#e9e9e9] bg-white" /></div></div>
     </div>
     <div className="mt-2.5 rounded-[12px] bg-white px-4 pb-4 pt-0 sm:px-5">
-      <div className="overflow-x-auto border-b border-[#d9d9d9]"><div className="flex min-w-max justify-between gap-4">{order.map((key,i)=><button key={key} type="button" onClick={()=>setTab(key)} className={`border-b-2 px-0 py-3 text-[11px] font-medium leading-none transition sm:text-[12px] ${tab===key?"border-primary font-bold text-primary":"border-transparent text-[#454545] hover:text-primary"}`}>{t.tabs[i]}</button>)}</div></div>
-      <div className={`h-[145px] pe-3 pt-4 text-[11px] leading-[1.6] text-[#454545] sm:text-[12px] ${tab === "description" || tab === "policy" || tab === "hotel" ? "overflow-y-auto" : "overflow-hidden"}`}>
+      <div className="overflow-x-auto border-b border-[#d9d9d9]"><div className="flex min-w-max justify-between gap-4">{order.map((key,i)=><button key={key} type="button" onClick={()=>setTab(key)} className={`border-b-2 px-0 py-3 text-xs font-medium leading-none transition sm:text-sm ${tab===key?"border-primary font-bold text-primary":"border-transparent text-[#454545] hover:text-primary"}`}>{t.tabs[i]}</button>)}</div></div>
+      <div className={`h-[145px] pe-3 pt-4 text-xs leading-5 text-[#454545] sm:text-sm sm:leading-6 ${tab === "description" || tab === "policy" || tab === "hotel" ? "overflow-y-auto" : "overflow-hidden"}`}>
         <div className="grid grid-cols-1 gap-3 sm:grid-cols-[78px_1fr] sm:gap-4">{body[tab]}</div>
       </div>
       {tab === "itinerary" && <div className="mt-2 flex items-center gap-3">
         <button type="button" onClick={()=>setItineraryDay((v)=>(v+3)%4)} aria-label="Hari itinerary sebelumnya" className="flex h-5 w-5 items-center justify-center rounded-full border border-[#9b9b9b] text-[13px] leading-none text-[#777] transition hover:border-primary hover:text-primary">←</button>
         <button type="button" onClick={()=>setItineraryDay((v)=>(v+1)%4)} aria-label="Hari itinerary berikutnya" className="flex h-5 w-5 items-center justify-center rounded-full border border-primary text-[13px] leading-none text-primary transition hover:bg-primary hover:text-white">→</button>
-        <span className="text-[8px] font-semibold text-[#8a8a8a]">{itineraryDay + 1} / 4</span>
+        <span className="text-xs font-semibold text-[#8a8a8a]">{itineraryDay + 1} / 4</span>
       </div>}
       {tab === "hotel" && <div className="mt-2 flex items-center gap-3">
         <button type="button" onClick={()=>setHotelSlide((v)=>(v+1)%2)} aria-label="Tiket dan hotel sebelumnya" className="flex h-5 w-5 items-center justify-center rounded-full border border-[#9b9b9b] text-[13px] leading-none text-[#777] transition hover:border-primary hover:text-primary">←</button>
         <button type="button" onClick={()=>setHotelSlide((v)=>(v+1)%2)} aria-label="Tiket dan hotel berikutnya" className="flex h-5 w-5 items-center justify-center rounded-full border border-primary text-[13px] leading-none text-primary transition hover:bg-primary hover:text-white">→</button>
-        <span className="text-[8px] font-semibold text-[#8a8a8a]">{hotelSlide + 1} / 2</span>
+        <span className="text-xs font-semibold text-[#8a8a8a]">{hotelSlide + 1} / 2</span>
       </div>}
     </div>
   </div>;
