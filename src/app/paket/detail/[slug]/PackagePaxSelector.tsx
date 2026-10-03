@@ -16,7 +16,7 @@ export function PackagePaxSelector({ maxPax, basePrice, language }: { departureI
   const money=(v:number)=>new Intl.NumberFormat(locale,{style:"currency",currency:"IDR",maximumFractionDigits:0}).format(v);
   const childPrice=3000000, infantPrice=0, discount=2520000;
   const totalPrice=Math.max(0,basePrice*pax+childPrice*children+infantPrice*infants-discount);
-  return <div className="mt-3">
+  return <div>
     <button type="button" onClick={()=>setPriceOpen(v=>!v)} aria-expanded={priceOpen} className="mb-3 w-full rounded-[9px] border border-[#dfe7f0] bg-white p-2.5 text-start transition hover:border-primary/40">
       <div className="flex items-start justify-between gap-2.5"><div className="grid flex-1 grid-cols-[1fr_auto_1fr] gap-2 text-xs text-[#748297]"><div><b>Pergi</b><p>30 Des 2025</p></div><div className="pt-2 text-primary">··· ✈ ···</div><div className="text-end"><b>Pulang</b><p>09 Jan 2026</p></div></div><span className="mt-8 text-xs font-bold text-[#60738d]">{priceOpen?"⌃":"⌄"}</span></div>
       <div className="mt-2 border-t border-[#edf1f6] pt-2"><p className="text-xs text-[#9aa6b5] line-through">{money(basePrice+1700000)}</p><p className="mt-0.5 font-display text-lg font-extrabold text-primary">{money(basePrice)}<span className="text-xs font-medium text-[#40546f]">/pax</span></p></div>
