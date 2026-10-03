@@ -128,8 +128,8 @@ export default async function PackageDetailPage({ params }: { params: { slug: st
   return (
     <div dir={language === "ar" ? "rtl" : "ltr"} lang={language} className="min-h-screen bg-[#f7f9fc] text-[#10223f]">
       <MarketplaceHeader initialLanguage={language} initialCurrency={currency} />
-      <main className="mx-auto max-w-[1120px] px-3 pb-24 pt-4 sm:px-4 sm:pb-12 sm:pt-6">
-        <nav className="mb-3 flex items-center gap-1.5 overflow-hidden text-[10px] font-semibold text-[#748297] sm:text-xs">
+      <main className="mx-auto max-w-[1180px] px-3 pb-24 pt-4 sm:px-4 sm:pb-12 sm:pt-6">
+        <nav className="mb-3 flex items-center gap-1.5 overflow-hidden text-xs font-semibold text-[#748297] sm:text-xs">
           <Link href="/" className="shrink-0 hover:text-primary">{t.home}</Link><span>/</span>
           <Link href={`/paket/${pkg.type}`} className="shrink-0 hover:text-primary">{packageTypeLabel(pkg.type)}</Link>
           <span>/</span><span className="truncate text-[#40546f]">{pkg.name}</span>
@@ -140,7 +140,7 @@ export default async function PackageDetailPage({ params }: { params: { slug: st
         <section className="mb-4">
           <div className="flex items-start justify-between gap-3">
             <div className="min-w-0">
-              <h1 className="break-words font-display text-[22px] font-extrabold leading-[1.12] tracking-[-0.025em] sm:text-[26px]">{pkg.name}</h1>
+              <h1 className="break-words font-display text-xl font-extrabold leading-[1.12] tracking-[-0.025em] sm:text-[24px]">{pkg.name}</h1>
               <div className="mt-2 flex flex-wrap items-center gap-x-3 gap-y-1.5 text-[11px] font-bold text-[#748297]">
                 {org && <span className="inline-flex items-center gap-1.5"><span className="h-2 w-2 rounded-full bg-primary" />{org.name}</span>}
                 <span className="inline-flex items-center gap-1.5"><Icon name="route" size={12} />{packageTypeLabel(pkg.type)} · {displayNumber(pkg.duration_days)} {t.days}</span>
@@ -163,7 +163,7 @@ export default async function PackageDetailPage({ params }: { params: { slug: st
           </aside>
         </div>
         <section className="mt-3">
-          <h2 className="mb-2 text-[10px] font-medium text-[#555]">Rekomendasi Paket</h2>
+          <h2 className="mb-2 text-xs font-medium text-[#555]">Rekomendasi Paket</h2>
           <div className="grid gap-3 sm:grid-cols-3">
             {[
               ["Turki", "Umrah Plus Turki", "Rp 32.500.000/pax", "Jakarta · 12 Hari"],
