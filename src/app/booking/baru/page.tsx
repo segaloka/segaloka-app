@@ -30,6 +30,7 @@ export default async function NewBookingPage({ searchParams }: { searchParams: {
     .from("departures")
     .select("*, packages(name, base_price, duration_days, status, organizations(name))")
     .eq("id", searchParams.departure)
+    .in("status", ["open", "almost_full"])
     .gte("departure_date", new Date().toISOString().slice(0, 10))
     .single();
 
