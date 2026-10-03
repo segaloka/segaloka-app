@@ -157,30 +157,8 @@ export default async function PackageDetailPage({ params }: { params: { slug: st
             <PackageDetailShowcase language={language} description={pkg.description} durationDays={pkg.duration_days} inclusions={inclusions} exclusions={exclusions} rating={rating && rating.review_count > 0 ? rating.average_rating : null} reviewCount={rating?.review_count ?? 0} />
           </div>
           <aside className="lg:sticky lg:top-[82px]">
-            <div className="rounded-[18px] border border-[#d7e3ef] bg-white p-4 shadow-[0_10px_30px_rgba(15,45,90,0.07)] sm:p-5">
-              <p className="text-[11px] font-extrabold uppercase tracking-[0.12em] text-[#748297]">{t.startFrom}</p>
-              <p className="mt-1 font-display text-[26px] font-extrabold text-primary">{displayPrice(pkg.base_price)}</p>
-              <div className="flex flex-wrap items-center gap-x-2 gap-y-1"><p className="text-xs text-[#748297]">{t.perTraveler}</p><span className="rounded-full bg-[#f4f7fb] px-2 py-0.5 text-[9px] font-extrabold text-[#748297]">{t.baseCurrency}</span></div>{currency !== "IDR" && <p className="mt-1 text-[10px] font-bold text-[#b16b00]">{lt.currencyPending(currency)}</p>}
-              <div className="mt-4 grid grid-cols-2 gap-2 rounded-xl bg-[#f7f9fc] p-3"><div><p className="text-[9px] font-bold uppercase tracking-[0.08em] text-[#8a98aa]">{u.duration}</p><p className="mt-1 text-xs font-extrabold text-[#40546f]">{displayNumber(pkg.duration_days)} {t.days}</p></div><div><p className="text-[9px] font-bold uppercase tracking-[0.08em] text-[#8a98aa]">{u.scheduleLabel}</p><p className="mt-1 text-xs font-extrabold text-[#40546f]">{departures?.length ? `${displayNumber(departures.length)} ${u.choices}` : t.unavailable}</p></div></div>
-              <div className="mt-4 border-t border-[#edf1f6] pt-4">
-                <div className="flex items-center justify-between gap-3"><h2 className="text-xs font-extrabold uppercase tracking-[0.1em]">{u.nearestSchedule}</h2>{departures?.length ? <span className="rounded-full bg-[#f2f6fb] px-2 py-1 text-[9px] font-extrabold text-[#748297]">{displayNumber(departures.length)} {u.choices}</span> : null}</div>
-                {!departures?.length ? <div className="mt-3 rounded-xl bg-[#f7f9fc] p-3 text-xs leading-5 text-[#60738d]">{lt.noDeparture}</div> : <>
-                  <div className="mt-3 rounded-xl border border-[#dfe7f0] bg-[#fbfcfe] p-3">
-                    <div className="flex items-start justify-between gap-3"><div className="min-w-0"><p className="text-[10px] font-bold uppercase tracking-[0.08em] text-[#8a98aa]">{u.depart}</p><p className="mt-1 text-sm font-extrabold text-[#10223f]">{displayDate(departures[0].departure_date)}</p><p className="mt-1 text-[10px] text-[#748297]">{u.return} · {departures[0].return_date ? displayDate(departures[0].return_date) : t.unavailable}</p></div><span className={`shrink-0 rounded-full px-2 py-1 text-[9px] font-extrabold ${Math.max(0, departures[0].quota - departures[0].filled) <= 0 ? "bg-[#f2f4f7] text-[#7a8798]" : Math.max(0, departures[0].quota - departures[0].filled) <= 10 ? "bg-[#fff7e8] text-[#b16b00]" : "bg-[#eef8f3] text-[#167453]"}`}>{Math.max(0, departures[0].quota - departures[0].filled) <= 0 ? u.soldOut : Math.max(0, departures[0].quota - departures[0].filled) <= 10 ? u.almostFull : u.available}</span></div>
-                    <div className="mt-3 flex items-center justify-between border-t border-[#edf1f6] pt-2.5"><span className="text-[10px] font-bold text-[#8a98aa]">{u.remainingSeats}</span><span className="text-xs font-extrabold text-[#40546f]">{displayNumber(Math.max(0, departures[0].quota - departures[0].filled))} {u.seats}</span></div>
-                  </div>
-                  <PackagePaxSelector departureId={departures[0].id} maxPax={Math.max(0, departures[0].quota - departures[0].filled)} basePrice={pkg.base_price} language={language} isPreview={isPreview} />
-                </>}
-              </div>
-              <div className="mt-4 grid grid-cols-3 gap-2 border-t border-[#edf1f6] pt-4">
-                <div className="text-center"><span className="mx-auto flex h-8 w-8 items-center justify-center rounded-full bg-[#eef8f3] text-[#167453]"><Icon name="check" size={15} /></span><p className="mt-1.5 text-[10px] font-bold text-[#60738d]">{u.transparentPrice}</p></div>
-                <div className="text-center"><span className="mx-auto flex h-8 w-8 items-center justify-center rounded-full bg-[#eaf3ff] text-primary"><Icon name="shield" size={15} /></span><p className="mt-1.5 text-[10px] font-bold text-[#60738d]">{isPreview ? u.previewTravel : u.registeredTravel}</p></div>
-                <div className="text-center"><span className="mx-auto flex h-8 w-8 items-center justify-center rounded-full bg-[#fff7e8] text-[#b16b00]"><Icon name="doc" size={15} /></span><p className="mt-1.5 text-[10px] font-bold text-[#60738d]">{u.detailsBeforePay}</p></div>
-              </div>
-              <div className="mt-4 rounded-xl bg-[#f7f9fc] p-3">
-                <p className="text-[11px] font-extrabold text-[#40546f]">{lt.beforeBooking}</p>
-                <p className="mt-1 text-[10px] leading-4 text-[#748297]">{lt.beforeBookingBody}</p>
-              </div>
+            <div className="rounded-[18px] bg-[#f4f4f4] p-3">
+              {!departures?.length ? <div className="rounded-xl bg-white p-4 text-xs leading-5 text-[#60738d]">{lt.noDeparture}</div> : <PackagePaxSelector departureId={departures[0].id} maxPax={Math.max(0, departures[0].quota - departures[0].filled)} basePrice={pkg.base_price} language={language} isPreview={isPreview} />}
             </div>
           </aside>
         </div>
