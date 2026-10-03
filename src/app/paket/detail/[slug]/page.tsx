@@ -8,6 +8,7 @@ import { WishlistButton } from "@/components/WishlistButton";
 import { Icon } from "@/components/layout/Icon";
 import { PackagePaxSelector } from "./PackagePaxSelector";
 import { PackageDetailShowcase } from "./PackageDetailShowcase";
+import { MarketplaceFooter } from "@/components/marketplace/MarketplaceFooter";
 
 export default async function PackageDetailPage({ params }: { params: { slug: string } }) {
   const supabase = await createClient();
@@ -161,23 +162,71 @@ export default async function PackageDetailPage({ params }: { params: { slug: st
           </aside>
         </div>
         <section className="mt-5">
-          <div className="mb-3 flex items-end justify-between gap-3"><div><h2 className="text-lg font-extrabold text-[#10223f]">Rekomendasi Paket</h2><p className="mt-1 text-xs text-[#6d7c91]">Paket lain yang mungkin sesuai untuk perjalanan Anda.</p></div></div>
-          <div className="grid gap-3 sm:grid-cols-2 lg:grid-cols-4">
-            {[
-              ["Umrah","Umrah Plus Turki","Travel Segaloka","12 Hari","Rp 32.500.000"],
-              ["Umrah","Umrah Plus Thaif","Travel Segaloka","10 Hari","Rp 31.500.000"],
-              ["Umrah","Umrah Awal Tahun","Travel Segaloka","9 Hari","Rp 30.900.000"],\n              ["Halal Tour","Halal Tour Turki","Travel Segaloka","8 Hari","Rp 23.900.000"],
-            ].map(([type,name,travel,duration,price])=><button type="button" key={name} className="group flex min-h-[300px] flex-col overflow-hidden rounded-[20px] border border-[#dfe7f0] bg-white text-start shadow-[0_8px_24px_rgba(15,45,90,0.05)] transition duration-200 hover:-translate-y-1 hover:border-[#b9d2ee] hover:shadow-[0_16px_38px_rgba(15,45,90,0.11)]">
-              <div className="relative h-[132px] overflow-hidden bg-[linear-gradient(145deg,#dcefff_0%,#eff8ff_48%,#e8f8f2_100%)] p-3.5">
-                <div className="absolute -bottom-14 -left-10 h-36 w-36 rounded-full border-[24px] border-white/40" /><div className="absolute -right-10 -top-12 h-36 w-36 rounded-full bg-white/40" />
-                <div className="relative z-10 flex items-start justify-between gap-3"><span className="inline-flex rounded-full border border-white/90 bg-white/95 px-2.5 py-1 text-xs font-extrabold text-[#183a64] shadow-sm">{type}</span><span className="flex h-10 w-10 items-center justify-center rounded-xl border border-white bg-white text-primary shadow-sm"><Icon name="plane" size={17} /></span></div>
-                <div className="absolute bottom-3 left-3.5 z-10 inline-flex items-center gap-1.5 rounded-full bg-[#10294d]/90 px-2.5 py-1 text-xs font-bold text-white"><span className="text-[#ffbd3d]">★</span><span>4.8</span><span className="text-white/70">(120)</span></div>
-              </div>
-              <div className="flex flex-1 flex-col p-3.5"><p className="truncate text-xs font-bold text-[#60748f]">{travel}</p><h3 className="mt-1.5 min-h-[40px] text-sm font-extrabold leading-5 text-[#071f43]">{name}</h3><div className="mt-3 flex items-center gap-2 text-xs font-medium text-[#657892]"><Icon name="booking" size={12} /><span>30 Des 2025</span><span className="h-1 w-1 rounded-full bg-[#b6c3d3]" /><span>{duration}</span></div><div className="mt-auto flex items-end justify-between gap-3 border-t border-[#edf1f6] pt-3"><div><p className="text-xs font-semibold uppercase tracking-[0.08em] text-[#8b9aae]">Harga</p><p className="mt-0.5 text-lg font-black leading-none text-[#0b6ee8]">{price}</p></div><span className="flex h-8 w-8 items-center justify-center rounded-full bg-[#eef5ff] text-primary transition group-hover:bg-primary group-hover:text-white">→</span></div></div>
-            </button>)}
-          </div>
-                  <div className="mt-4 flex items-center justify-center gap-1.5" aria-label="Slide rekomendasi">{Array.from({length:8}).map((_,i)=><span key={i} className={`h-1.5 w-1.5 rounded-full ${i===0?"bg-primary":"bg-[#9aa6b5]"}`} />)}</div>\n</section>
+          {(() => {
+            const recommendationCopy = {
+              id: { title: "Rekomendasi Paket", subtitle: "Paket lain yang mungkin sesuai untuk perjalanan Anda.", price: "Harga" },
+              en: { title: "Recommended Packages", subtitle: "Other packages you may like for your next journey.", price: "Price" },
+              ar: { title: "باقات مقترحة", subtitle: "باقات أخرى قد تناسب رحلتك القادمة.", price: "السعر" },
+            } as const;
+            const rc = recommendationCopy[language];
+            const recommendations = [
+              { slug: "preview-umrah-plus-thaif-12-hari", type: "umrah", name: "Umrah Plus Thaif", travel: "Travel Segaloka", duration: 12, price: 34500000, date: "2026-11-03" },
+              { slug: "preview-umrah-awal-tahun-9-hari", type: "umrah", name: "Umrah Awal Tahun", travel: "Travel Segaloka", duration: 9, price: 30500000, date: "2027-01-09" },
+              { slug: "preview-halal-tour-turki-8-hari", type: "halal_tour", name: "Halal Tour Turki", travel: "Travel Segaloka", duration: 8, price: 23900000, date: "2026-12-12" },
+              { slug: "preview-explore-jepang-7-hari", type: "tour", name: "Explore Jepang", travel: "Travel Segaloka", duration: 7, price: 21900000, date: "2027-01-16" },
+            ].filter((item) => item.slug !== params.slug);
+            return (
+              <>
+                <div className="mb-3 flex items-end justify-between gap-3">
+                  <div>
+                    <h2 className="text-lg font-extrabold text-[#10223f]">{rc.title}</h2>
+                    <p className="mt-1 text-xs text-[#6d7c91]">{rc.subtitle}</p>
+                  </div>
+                </div>
+                <div className="-mx-3 flex snap-x snap-mandatory gap-3 overflow-x-auto px-3 pb-1 [scrollbar-width:none] [&::-webkit-scrollbar]:hidden sm:mx-0 sm:grid sm:grid-cols-2 sm:overflow-visible sm:px-0 lg:grid-cols-4">
+                  {recommendations.map((item) => (
+                    <Link
+                      href={`/paket/detail/${item.slug}`}
+                      key={item.slug}
+                      className="group flex min-h-[300px] w-[78vw] max-w-[280px] shrink-0 snap-start flex-col overflow-hidden rounded-[20px] border border-[#dfe7f0] bg-white text-start shadow-[0_8px_24px_rgba(15,45,90,0.05)] transition duration-200 hover:-translate-y-1 hover:border-[#b9d2ee] hover:shadow-[0_16px_38px_rgba(15,45,90,0.11)] sm:w-auto sm:max-w-none"
+                    >
+                      <div className="relative h-[132px] overflow-hidden bg-[linear-gradient(145deg,#dcefff_0%,#eff8ff_48%,#e8f8f2_100%)] p-3.5">
+                        <div className="absolute -bottom-14 -left-10 h-36 w-36 rounded-full border-[24px] border-white/40" />
+                        <div className="absolute -right-10 -top-12 h-36 w-36 rounded-full bg-white/40" />
+                        <div className="relative z-10 flex items-start justify-between gap-3">
+                          <span className="inline-flex rounded-full border border-white/90 bg-white/95 px-2.5 py-1 text-xs font-extrabold text-[#183a64] shadow-sm">{packageTypeLabel(item.type)}</span>
+                          <span className="flex h-10 w-10 items-center justify-center rounded-xl border border-white bg-white text-primary shadow-sm"><Icon name="plane" size={17} /></span>
+                        </div>
+                        <div className="absolute bottom-3 left-3.5 z-10 inline-flex items-center gap-1.5 rounded-full bg-[#10294d]/90 px-2.5 py-1 text-xs font-bold text-white">
+                          <span className="text-[#ffbd3d]">★</span><span>4.8</span><span className="text-white/70">(120)</span>
+                        </div>
+                      </div>
+                      <div className="flex flex-1 flex-col p-3.5">
+                        <p className="truncate text-xs font-bold text-[#60748f]">{item.travel}</p>
+                        <h3 className="mt-1.5 min-h-[40px] text-sm font-extrabold leading-5 text-[#071f43]">{item.name}</h3>
+                        <div className="mt-3 flex items-center gap-2 text-xs font-medium text-[#657892]">
+                          <Icon name="booking" size={12} /><span>{displayDate(item.date)}</span><span className="h-1 w-1 rounded-full bg-[#b6c3d3]" /><span>{displayNumber(item.duration)} {t.days}</span>
+                        </div>
+                        <div className="mt-auto flex items-end justify-between gap-3 border-t border-[#edf1f6] pt-3">
+                          <div>
+                            <p className="text-xs font-semibold uppercase tracking-[0.08em] text-[#8b9aae]">{rc.price}</p>
+                            <p className="mt-0.5 text-lg font-black leading-none text-[#0b6ee8]">{displayPrice(item.price)}</p>
+                          </div>
+                          <span className="flex h-8 w-8 items-center justify-center rounded-full bg-[#eef5ff] text-primary transition group-hover:bg-primary group-hover:text-white">{arrow}</span>
+                        </div>
+                      </div>
+                    </Link>
+                  ))}
+                </div>
+                <div className="mt-4 flex items-center justify-center gap-1.5" aria-label={rc.title}>
+                  {Array.from({ length: 8 }).map((_, i) => <span key={i} className={`h-1.5 w-1.5 rounded-full ${i === 0 ? "bg-primary" : "bg-[#9aa6b5]"}`} />)}
+                </div>
+              </>
+            );
+          })()}
+        </section>
       </main>
+      <MarketplaceFooter />
       <div className="fixed inset-x-0 bottom-0 z-40 border-t border-[#dfe7f0] bg-white/95 px-3 pb-[max(0.625rem,env(safe-area-inset-bottom))] pt-2.5 shadow-[0_-8px_24px_rgba(15,45,90,0.08)] backdrop-blur lg:hidden">
         <div className="mx-auto flex max-w-[1180px] items-center justify-between gap-3">
           <div className="min-w-0">
