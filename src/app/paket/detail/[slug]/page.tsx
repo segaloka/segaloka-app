@@ -162,6 +162,25 @@ export default async function PackageDetailPage({ params }: { params: { slug: st
             </div>
           </aside>
         </div>
+        <section className="mt-5">
+          <h2 className="mb-3 text-[11px] font-medium text-[#555]">Rekomendasi Paket</h2>
+          <div className="grid gap-3 sm:grid-cols-3">
+            {[
+              ["Turki", "Umrah Plus Turki", "Rp 32.500.000/pax", "Jakarta · 12 Hari"],
+              ["Umrah Plus", "Umrah Plus Thaif", "Rp 31.500.000/pax", "Jakarta · 10 Hari"],
+              ["Best Seller", "Umrah Awal Tahun", "Rp 30.900.000/pax", "Makassar · 9 Hari"],
+            ].map(([badge,name,price,meta],index)=><article key={name} className="overflow-hidden rounded-xl bg-[#f4f4f4] p-2">
+              <div className="relative h-[145px] overflow-hidden rounded-lg bg-[linear-gradient(180deg,#fff_0%,#fff_58%,#d8e1ea_100%)]">
+                <span className="absolute start-3 top-3 rounded bg-white px-2 py-1 text-[7px] text-[#8a98aa] shadow-sm">{badge}</span>
+                <span className="absolute end-3 top-3 h-4 w-4 rounded-full bg-primary" />
+                <div className="absolute inset-x-0 bottom-0 p-3 text-white"><p className="text-[12px] font-bold">{name}</p><p className="text-[10px]">Durasi</p></div>
+              </div>
+              <p className="mt-2 text-[9px] font-semibold text-[#555]">{price}</p><p className="text-[8px] text-[#777]">{meta}</p>
+              <button type="button" className={`mt-2 w-full rounded-md py-2 text-[9px] font-bold ${index===0?"bg-primary text-white":"bg-white text-[#555]"}`}>Lihat</button>
+            </article>)}
+          </div>
+          <div className="mt-3 flex justify-center gap-1">{Array.from({length:8}).map((_,i)=><span key={i} className={`h-1.5 w-1.5 rounded-full ${i===0?"bg-primary":"bg-[#aab4c0]"}`} />)}</div>
+        </section>
       </main>
       <div className="fixed inset-x-0 bottom-0 z-40 border-t border-[#dfe7f0] bg-white/95 px-3 pb-[max(0.625rem,env(safe-area-inset-bottom))] pt-2.5 shadow-[0_-8px_24px_rgba(15,45,90,0.08)] backdrop-blur lg:hidden">
         <div className="mx-auto flex max-w-[1180px] items-center justify-between gap-3">
