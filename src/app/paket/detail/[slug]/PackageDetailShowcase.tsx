@@ -32,13 +32,13 @@ export function PackageDetailShowcase({language}:{language:Language;description:
    {tile(activeImage,true)}
    <div className="grid min-h-0 grid-rows-2 gap-2.5">{tile(thumbs[0])}<div className="grid min-h-0 grid-cols-2 gap-2.5">{tile(thumbs[1])}{tile(thumbs[2])}</div></div>
   </div>
-  <div className="mt-2.5 flex min-h-[205px] flex-1 flex-col rounded-[12px] bg-white px-5 pb-4">
+  <div className="mt-2.5 flex h-[205px] shrink-0 flex-col rounded-[12px] bg-white px-5 pb-4">
    <div className="overflow-x-auto border-b border-[#d9d9d9]"><div className="flex min-w-max justify-between gap-4">{order.map((key,i)=><button key={key} type="button" onClick={()=>setTab(key)} className={`border-b-2 py-3 text-xs font-medium leading-none transition sm:text-sm ${tab===key?"border-primary font-bold text-primary":"border-transparent text-[#454545] hover:text-primary"}`}>{t.tabs[i]}</button>)}</div></div>
    <div className={`relative min-h-0 flex-1 pe-3 pt-4 text-xs leading-5 text-[#454545] sm:text-sm sm:leading-6 ${tab==="description"||tab==="policy"||tab==="hotel"||tab==="facilities"||tab==="reviews"?"overflow-y-scroll":"overflow-hidden"} [scrollbar-color:#8a8a8a_#f1f3f5] [scrollbar-width:thin]`}>
     <div className="grid grid-cols-1 gap-3 sm:grid-cols-[78px_1fr] sm:gap-4">{body[tab]}</div>
    </div>
-   {tab==="itinerary"&&<div className="mt-2 flex items-center gap-3"><button type="button" onClick={()=>setItineraryDay(v=>(v+3)%4)} className="flex h-6 w-6 items-center justify-center rounded-full border border-[#9b9b9b]">←</button><button type="button" onClick={()=>setItineraryDay(v=>(v+1)%4)} className="flex h-6 w-6 items-center justify-center rounded-full border border-primary text-primary">→</button><span className="text-xs font-semibold text-[#8a8a8a]">{itineraryDay+1} / 4</span></div>}
-   {tab==="hotel"&&<div className="mt-2 flex items-center gap-3"><button type="button" onClick={()=>setHotelSlide(v=>(v+1)%2)} className="flex h-6 w-6 items-center justify-center rounded-full border border-[#9b9b9b]">←</button><button type="button" onClick={()=>setHotelSlide(v=>(v+1)%2)} className="flex h-6 w-6 items-center justify-center rounded-full border border-primary text-primary">→</button><span className="text-xs font-semibold text-[#8a8a8a]">{hotelSlide+1} / 2</span></div>}
+   <div className="mt-2 flex h-6 shrink-0 items-center gap-3">{tab==="itinerary"&&<><button type="button" onClick={()=>setItineraryDay(v=>(v+3)%4)} className="flex h-6 w-6 items-center justify-center rounded-full border border-[#9b9b9b]">←</button><button type="button" onClick={()=>setItineraryDay(v=>(v+1)%4)} className="flex h-6 w-6 items-center justify-center rounded-full border border-primary text-primary">→</button><span className="text-xs font-semibold text-[#8a8a8a]">{itineraryDay+1} / 4</span></>}
+   {tab==="hotel"&&<><button type="button" onClick={()=>setHotelSlide(v=>(v+1)%2)} className="flex h-6 w-6 items-center justify-center rounded-full border border-[#9b9b9b]">←</button><button type="button" onClick={()=>setHotelSlide(v=>(v+1)%2)} className="flex h-6 w-6 items-center justify-center rounded-full border border-primary text-primary">→</button><span className="text-xs font-semibold text-[#8a8a8a]">{hotelSlide+1} / 2</span></>}</div>
   </div>
  </div>;
 }
