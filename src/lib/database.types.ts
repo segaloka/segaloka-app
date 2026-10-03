@@ -251,11 +251,14 @@ export type Database = {
           code: string
           created_at: string
           created_by: string | null
-          departure_id: string
+          custom_departure_date: string | null
+          custom_package_name: string | null
+          departure_id: string | null
           id: string
           notes: string | null
           org_id: string
           pax_count: number
+          segadeals_offer_id: string | null
           status: string
           total_amount: number
           traveler_user_id: string | null
@@ -265,11 +268,14 @@ export type Database = {
           code: string
           created_at?: string
           created_by?: string | null
-          departure_id: string
+          custom_departure_date?: string | null
+          custom_package_name?: string | null
+          departure_id?: string | null
           id?: string
           notes?: string | null
           org_id: string
           pax_count?: number
+          segadeals_offer_id?: string | null
           status?: string
           total_amount?: number
           traveler_user_id?: string | null
@@ -279,11 +285,14 @@ export type Database = {
           code?: string
           created_at?: string
           created_by?: string | null
-          departure_id?: string
+          custom_departure_date?: string | null
+          custom_package_name?: string | null
+          departure_id?: string | null
           id?: string
           notes?: string | null
           org_id?: string
           pax_count?: number
+          segadeals_offer_id?: string | null
           status?: string
           total_amount?: number
           traveler_user_id?: string | null
@@ -302,6 +311,13 @@ export type Database = {
             columns: ["org_id"]
             isOneToOne: false
             referencedRelation: "organizations"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "bookings_segadeals_offer_id_fkey"
+            columns: ["segadeals_offer_id"]
+            isOneToOne: false
+            referencedRelation: "segadeals_offers"
             referencedColumns: ["id"]
           },
         ]
@@ -803,6 +819,69 @@ export type Database = {
           },
         ]
       }
+      marketplace_ads: {
+        Row: {
+          active: boolean
+          category: string
+          created_at: string
+          created_by: string | null
+          detail: string
+          ends_at: string | null
+          href: string
+          icon: string
+          id: string
+          image_url: string | null
+          placement: string
+          price_text: string
+          sort_order: number
+          starts_at: string | null
+          title: string
+          tone: string
+          travel_name: string
+          updated_at: string
+        }
+        Insert: {
+          active?: boolean
+          category: string
+          created_at?: string
+          created_by?: string | null
+          detail: string
+          ends_at?: string | null
+          href: string
+          icon?: string
+          id?: string
+          image_url?: string | null
+          placement?: string
+          price_text: string
+          sort_order?: number
+          starts_at?: string | null
+          title: string
+          tone?: string
+          travel_name: string
+          updated_at?: string
+        }
+        Update: {
+          active?: boolean
+          category?: string
+          created_at?: string
+          created_by?: string | null
+          detail?: string
+          ends_at?: string | null
+          href?: string
+          icon?: string
+          id?: string
+          image_url?: string | null
+          placement?: string
+          price_text?: string
+          sort_order?: number
+          starts_at?: string | null
+          title?: string
+          tone?: string
+          travel_name?: string
+          updated_at?: string
+        }
+        Relationships: []
+      }
       notifications: {
         Row: {
           body: string | null
@@ -850,6 +929,7 @@ export type Database = {
       organizations: {
         Row: {
           address: string | null
+          bank_info: Json | null
           created_at: string
           created_by: string | null
           favicon_url: string | null
@@ -872,6 +952,7 @@ export type Database = {
         }
         Insert: {
           address?: string | null
+          bank_info?: Json | null
           created_at?: string
           created_by?: string | null
           favicon_url?: string | null
@@ -894,6 +975,7 @@ export type Database = {
         }
         Update: {
           address?: string | null
+          bank_info?: Json | null
           created_at?: string
           created_by?: string | null
           favicon_url?: string | null
@@ -1651,6 +1733,35 @@ export type Database = {
           },
         ]
       }
+      wishlists: {
+        Row: {
+          created_at: string
+          id: string
+          package_id: string
+          user_id: string
+        }
+        Insert: {
+          created_at?: string
+          id?: string
+          package_id: string
+          user_id: string
+        }
+        Update: {
+          created_at?: string
+          id?: string
+          package_id?: string
+          user_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "wishlists_package_id_fkey"
+            columns: ["package_id"]
+            isOneToOne: false
+            referencedRelation: "packages"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
       websites: {
         Row: {
           created_at: string
@@ -1694,6 +1805,21 @@ export type Database = {
       [_ in never]: never
     }
     Functions: {
+      get_travel_rating: {
+        Args: { p_org_id: string }
+        Returns: {
+          average_rating: number | null
+          review_count: number
+        }[]
+      }
+      create_marketplace_booking: {
+        Args: {
+          p_departure_id: string
+          p_notes?: string
+          p_passenger_names: string[]
+        }
+        Returns: string
+      }
       create_organization: {
         Args: { p_legal_name: string; p_license_type: string; p_name: string }
         Returns: string
@@ -1721,7 +1847,7 @@ export type Database = {
       }
       invite_staff_by_email: {
         Args: {
-          p_branch_id?: string
+          p_branch_id?: string | null
           p_email: string
           p_org_id: string
           p_role_slug: string
@@ -1737,9 +1863,9 @@ export type Database = {
       register_vendor: {
         Args: {
           p_category_code: string
-          p_contact_email: string
-          p_contact_phone: string
-          p_legal_name: string
+          p_contact_email: string | null
+          p_contact_phone: string | null
+          p_legal_name: string | null
           p_name: string
         }
         Returns: string

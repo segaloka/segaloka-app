@@ -18,7 +18,7 @@ export function WishlistButton({ packageId, initialSaved }: { packageId: string;
         data: { user },
       } = await supabase.auth.getUser();
       if (!user) {
-        router.push(`/login?next=${window.location.pathname}`);
+        router.push(`/login?next=${encodeURIComponent(`${window.location.pathname}${window.location.search}`)}`);
         return;
       }
       if (saved) {

@@ -16,5 +16,6 @@ export async function updateProfileAction(_prev: FormState, formData: FormData):
   const { error } = await supabase.from("profiles").update({ full_name: fullName, phone: phone || null }).eq("id", user.id);
   if (error) return { error: error.message };
   revalidatePath("/akun/profil");
+  revalidatePath("/akun");
   return { success: true };
 }

@@ -1,7 +1,8 @@
 import type { Metadata } from "next";
+import { cookies } from "next/headers";
 import "./globals.css";
-import { ThemeInit } from "@/components/layout/ThemeInit";
 import { ToastProvider } from "@/components/ui/Toast";
+import { RealtimeRefresh } from "@/components/realtime/RealtimeRefresh";
 
 export const metadata: Metadata = {
   title: {
@@ -13,18 +14,24 @@ export const metadata: Metadata = {
 };
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
+  const cookieStore = cookies();
+  const storedLanguage = cookieStore.get("segaloka-language")?.value;
+  const language = storedLanguage === "en" || storedLanguage === "ar" ? storedLanguage : "id";
+
   return (
-    <html lang="id" suppressHydrationWarning>
+    <html lang={language} dir={language === "ar" ? "rtl" : "ltr"} suppressHydrationWarning>
       <head>
         <link rel="preconnect" href="https://fonts.googleapis.com" />
         <link
           rel="stylesheet"
           href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=IBM+Plex+Sans+Arabic:wght@400;500;600;700&display=swap"
         />
-        <ThemeInit />
       </head>
       <body>
-        <ToastProvider>{children}</ToastProvider>
+        <ToastProvider>
+          <RealtimeRefresh />
+          {children}
+        </ToastProvider>
       </body>
     </html>
   );

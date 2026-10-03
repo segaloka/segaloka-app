@@ -50,7 +50,7 @@ export default async function WebsitePage({ params }: { params: { org: string } 
       />
 
       <div className="rounded-md border border-info/30 bg-info-tint px-3 py-2.5 text-xs text-info">
-        Paket yang berstatus "Published" ({packageCount ?? 0} paket) otomatis tampil di website ini dan katalog publik Segaloka — tidak perlu input ulang.
+        Paket yang berstatus &quot;Published&quot; ({packageCount ?? 0} paket) otomatis tampil di website ini dan katalog publik Segaloka — tidak perlu input ulang.
       </div>
 
       <div className="mt-6 grid gap-6 lg:grid-cols-2">

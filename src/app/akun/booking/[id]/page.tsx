@@ -4,10 +4,26 @@ import { requireUser } from "@/lib/auth";
 import { PageHeader } from "@/components/layout/PageHeader";
 import { Card, CardBody, CardHeader } from "@/components/ui/Card";
 import { Badge } from "@/components/ui/Badge";
-import { formatDate, formatIDR } from "@/lib/utils";
+import { cookies } from "next/headers";
 import { PaymentProof } from "./PaymentProof";
 
 export default async function BookingDetailPage({ params }: { params: { id: string } }) {
+  const cookieStore = cookies();
+  const storedLanguage = cookieStore.get("segaloka-language")?.value;
+  const storedCurrency = cookieStore.get("segaloka-currency")?.value;
+  const language = storedLanguage === "en" || storedLanguage === "ar" ? storedLanguage : "id";
+  const currency = storedCurrency === "USD" || storedCurrency === "MYR" || storedCurrency === "SGD" || storedCurrency === "SAR" ? storedCurrency : "IDR";
+  const locale = language === "en" ? "en-US" : language === "ar" ? "ar-SA" : "id-ID";
+  const copy = {
+    id:{booking:"Booking",trip:"Detail Perjalanan",travel:"Travel",departure:"Tanggal Berangkat",travelers:"Jumlah Jamaah",people:"orang",total:"Total Tagihan",travelerData:"Data Jamaah",payment:"Pembayaran",invoice:"No. Invoice",status:"Status",due:"Jatuh Tempo",manual:"Transfer Manual",account:"a.n.",missingBank:"Travel belum melengkapi rekening pembayaran. Hubungi Travel melalui Segaloka.",baseCurrency:"Harga transaksi · IDR",currencyPending:(code:string)=>`Pilihan ${code} aktif · transaksi tetap ditampilkan dalam IDR sampai kurs tersedia.`,statuses:{pending:"Menunggu",pending_verification:"Menunggu verifikasi",confirmed:"Dikonfirmasi",paid:"Lunas",cancelled:"Dibatalkan",failed:"Gagal",expired:"Kedaluwarsa",active:"Aktif"}},
+    en:{booking:"Booking",trip:"Trip Details",travel:"Travel",departure:"Departure Date",travelers:"Number of Travelers",people:"travelers",total:"Total Amount",travelerData:"Traveler Details",payment:"Payment",invoice:"Invoice No.",status:"Status",due:"Due Date",manual:"Manual Transfer",account:"Account name",missingBank:"The Travel operator has not added a payment account yet. Contact the Travel operator through Segaloka.",baseCurrency:"Transaction currency · IDR",currencyPending:(code:string)=>`${code} is selected · the transaction remains displayed in IDR until an exchange rate is available.`,statuses:{pending:"Pending",pending_verification:"Pending verification",confirmed:"Confirmed",paid:"Paid",cancelled:"Cancelled",failed:"Failed",expired:"Expired",active:"Active"}},
+    ar:{booking:"الحجز",trip:"تفاصيل الرحلة",travel:"شركة السفر",departure:"تاريخ المغادرة",travelers:"عدد المسافرين",people:"مسافر",total:"إجمالي المبلغ",travelerData:"بيانات المسافرين",payment:"الدفع",invoice:"رقم الفاتورة",status:"الحالة",due:"تاريخ الاستحقاق",manual:"تحويل بنكي يدوي",account:"اسم الحساب",missingBank:"لم تضف شركة السفر حساب الدفع بعد. تواصل مع شركة السفر عبر Segaloka.",baseCurrency:"عملة المعاملة · IDR",currencyPending:(code:string)=>`تم اختيار ${code} · ستظل المعاملة معروضة بالروبية الإندونيسية حتى يتوفر سعر الصرف.`,statuses:{pending:"قيد الانتظار",pending_verification:"بانتظار التحقق",confirmed:"مؤكد",paid:"مدفوع",cancelled:"ملغي",failed:"فشل",expired:"منتهي الصلاحية",active:"نشط"}}
+  } as const;
+  const t = copy[language];
+  const displayDate = (value:string | null | undefined) => value ? new Intl.DateTimeFormat(locale,{day:"2-digit",month:"short",year:"numeric"}).format(new Date(value)) : "—";
+  const displayNumber = (value:number) => new Intl.NumberFormat(locale).format(value);
+  const displayPrice = (value:number | null | undefined) => value == null ? "—" : new Intl.NumberFormat(locale,{style:"currency",currency:"IDR",maximumFractionDigits:0}).format(value);
+  const statusLabel = (status:string) => t.statuses[status as keyof typeof t.statuses] ?? status.replaceAll("_", " ");
   const user = await requireUser();
   const supabase = await createClient();
 
@@ -15,6 +31,7 @@ export default async function BookingDetailPage({ params }: { params: { id: stri
     .from("bookings")
     .select("*, departures(departure_date, packages(name, organizations(name, bank_info))), booking_passengers(*), invoices(*)")
     .eq("id", params.id)
+    .eq("traveler_user_id", user.id)
     .single();
 
   if (!booking) notFound();
@@ -29,31 +46,36 @@ export default async function BookingDetailPage({ params }: { params: { id: stri
 
   const pkg = (booking.departures as any)?.packages;
   const org = pkg?.organizations;
-  const invoice = (booking.invoices as any[])?.[0];
+  const invoices = [...(((booking.invoices as any[]) ?? []))].sort(
+    (a, b) =>
+      new Date(b.created_at ?? 0).getTime() -
+      new Date(a.created_at ?? 0).getTime(),
+  );
+  const invoice = invoices[0];
   const bank = org?.bank_info ?? {};
 
   return (
-    <div>
-      <PageHeader eyebrow={`Booking ${booking.code}`} title={pkg?.name ?? "Booking"} actions={<Badge status={booking.status} />} />
+    <div lang={language} dir={language === "ar" ? "rtl" : "ltr"}>
+      <PageHeader eyebrow={`${t.booking} ${booking.code}`} title={pkg?.name ?? t.booking} actions={<Badge status={booking.status} label={statusLabel(booking.status)} />} />
 
       <div className="grid gap-6 lg:grid-cols-3">
         <div className="space-y-6 lg:col-span-2">
           <Card>
-            <CardHeader><p className="font-display font-bold text-text-primary">Detail Perjalanan</p></CardHeader>
+            <CardHeader><p className="font-display font-bold text-text-primary">{t.trip}</p></CardHeader>
             <CardBody className="grid gap-3 sm:grid-cols-2 text-sm">
-              <div><p className="text-xs text-muted">Travel</p><p className="font-semibold text-text-primary">{org?.name}</p></div>
-              <div><p className="text-xs text-muted">Tanggal Berangkat</p><p className="font-semibold text-text-primary">{formatDate((booking.departures as any)?.departure_date)}</p></div>
-              <div><p className="text-xs text-muted">Jumlah Jamaah</p><p className="font-semibold text-text-primary">{booking.pax_count} orang</p></div>
-              <div><p className="text-xs text-muted">Total Tagihan</p><p className="font-semibold text-text-primary">{formatIDR(booking.total_amount)}</p></div>
+              <div><p className="text-xs text-muted">{t.travel}</p><p className="font-semibold text-text-primary">{org?.name}</p></div>
+              <div><p className="text-xs text-muted">{t.departure}</p><p className="font-semibold text-text-primary">{displayDate((booking.departures as any)?.departure_date)}</p></div>
+              <div><p className="text-xs text-muted">{t.travelers}</p><p className="font-semibold text-text-primary">{displayNumber(booking.pax_count)} {t.people}</p></div>
+              <div><p className="text-xs text-muted">{t.total}</p><p className="font-semibold text-text-primary">{displayPrice(booking.total_amount)}</p></div>
             </CardBody>
           </Card>
 
           <Card>
-            <CardHeader><p className="font-display font-bold text-text-primary">Data Jamaah</p></CardHeader>
+            <CardHeader><p className="font-display font-bold text-text-primary">{t.travelerData}</p></CardHeader>
             <CardBody className="space-y-2">
               {(booking.booking_passengers as any[]).map((p, i) => (
                 <div key={p.id} className="flex items-center justify-between rounded-md border border-border px-3 py-2 text-sm">
-                  <span className="text-text-primary">{i + 1}. {p.full_name}</span>
+                  <span className="text-text-primary">{displayNumber(i + 1)}. {p.full_name}</span>
                   {p.passport_number && <span className="text-xs text-muted">{p.passport_number}</span>}
                 </div>
               ))}
@@ -63,33 +85,33 @@ export default async function BookingDetailPage({ params }: { params: { id: stri
 
         <div className="space-y-6">
           <Card>
-            <CardHeader><p className="font-display font-bold text-text-primary">Pembayaran</p></CardHeader>
+            <CardHeader><p className="font-display font-bold text-text-primary">{t.payment}</p></CardHeader>
             <CardBody className="space-y-4">
               {invoice && (
                 <div className="rounded-md bg-bg px-3 py-2.5 text-sm">
-                  <div className="flex justify-between"><span className="text-text-secondary">No. Invoice</span><span className="font-mono text-xs">{invoice.number}</span></div>
-                  <div className="mt-1 flex justify-between"><span className="text-text-secondary">Status</span><Badge status={invoice.status} /></div>
-                  <div className="mt-1 flex justify-between"><span className="text-text-secondary">Jatuh Tempo</span><span>{formatDate(invoice.due_date)}</span></div>
+                  <div className="flex justify-between"><span className="text-text-secondary">{t.invoice}</span><span className="font-mono text-xs">{invoice.number}</span></div>
+                  <div className="mt-1 flex justify-between"><span className="text-text-secondary">{t.status}</span><Badge status={invoice.status} label={statusLabel(invoice.status)} /></div>
+                  <div className="mt-1 flex justify-between"><span className="text-text-secondary">{t.due}</span><span>{displayDate(invoice.due_date)}</span></div>
                 </div>
               )}
 
               {invoice?.status !== "paid" && (
                 <>
                   <div className="rounded-md border border-border px-3 py-2.5 text-xs text-text-secondary">
-                    <p className="font-semibold text-text-primary">Transfer Manual</p>
+                    <p className="font-semibold text-text-primary">{t.manual}</p>
                     {bank?.bank_name ? (
                       <>
                         <p className="mt-1">{bank.bank_name} — {bank.account_number}</p>
-                        <p>a.n. {bank.account_name}</p>
+                        <p>{t.account}: {bank.account_name}</p>
                       </>
                     ) : (
-                      <p className="mt-1">Travel belum melengkapi rekening pembayaran. Hubungi Travel secara langsung.</p>
+                      <p className="mt-1">{t.missingBank}</p>
                     )}
                   </div>
-                  <PaymentProof bookingId={booking.id} userId={user.id} existing={docs ?? []} />
+                  <PaymentProof bookingId={booking.id} userId={user.id} existing={docs ?? []} language={language} />
                 </>
               )}
-            </CardBody>
+            {currency !== "IDR" && <p className="mt-3 text-xs font-semibold text-warning">{t.currencyPending(currency)}</p>}<p className="mt-1 text-[10px] font-semibold text-muted">{t.baseCurrency}</p></CardBody>
           </Card>
         </div>
       </div>

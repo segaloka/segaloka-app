@@ -1,6 +1,9 @@
 import type { SVGProps } from "react";
 
 const paths: Record<string, string> = {
+  home: "M3 11l9-8 9 8v10h-6v-6H9v6H3V11z",
+  booking: "M5 4h14a2 2 0 012 2v4a2 2 0 000 4v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4a2 2 0 000-4V6a2 2 0 012-2zM12 7v10",
+  user: "M20 21a8 8 0 00-16 0M12 13a5 5 0 100-10 5 5 0 000 10z",
   dashboard: "M3 3h8v8H3V3zm10 0h8v5h-8V3zM3 13h8v8H3v-8zm10 3h8v5h-8v-5z",
   package: "M21 8l-9-5-9 5 9 5 9-5zM3 8v8l9 5 9-5V8M12 13v8",
   users: "M17 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2M9 11a4 4 0 100-8 4 4 0 000 8zM23 21v-2a4 4 0 00-3-3.87M16 3.13a4 4 0 010 7.75",
@@ -37,6 +40,9 @@ const paths: Record<string, string> = {
   inbox: "M22 12h-6l-2 3h-4l-2-3H2M5.45 5.11L2 12v6a2 2 0 002 2h16a2 2 0 002-2v-6l-3.45-6.89A2 2 0 0016.76 4H7.24a2 2 0 00-1.79 1.11z",
   lock: "M5 11h14v10H5V11zM8 11V7a4 4 0 118 0v4",
   handshake: "M11 17l-3 3a2 2 0 01-3-3l5-5M15 13l-2 2M2 12l5-5 3 3-5 5-3-3z",
+  instagram: "M7 2h10a5 5 0 015 5v10a5 5 0 01-5 5H7a5 5 0 01-5-5V7a5 5 0 015-5zM16 11.37A4 4 0 1112.63 8 4 4 0 0116 11.37zM17.5 6.5h.01",
+  facebook: "M18 2h-3a5 5 0 00-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 011-1h3V2z",
+  tiktok: "M15 3v11.5a4.5 4.5 0 11-4-4.47V14a1.5 1.5 0 101 1.47V3h3zm0 0c.6 2.4 2 3.8 4 4.5V11c-1.6-.3-3-1-4-2",
 };
 
 export function Icon({ name, size = 18, className, ...rest }: { name: keyof typeof paths; size?: number } & SVGProps<SVGSVGElement>) {

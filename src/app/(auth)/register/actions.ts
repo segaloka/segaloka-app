@@ -11,6 +11,9 @@ export async function registerAction(_prev: FormState, formData: FormData): Prom
   const email = String(formData.get("email") ?? "").trim();
   const password = String(formData.get("password") ?? "");
   const passwordConfirm = String(formData.get("password_confirm") ?? "");
+  const requestedRole = String(formData.get("requested_role") ?? "").trim();
+  const allowedRequestedRoles = new Set(["traveler", "travel", "vendor", "agent", "mitra", "affiliate"]);
+  const safeRequestedRole = allowedRequestedRoles.has(requestedRole) ? requestedRole : null;
 
   if (!fullName || !email || !password) return { error: "Semua kolom wajib diisi." };
   if (password.length < 8) return { error: "Kata sandi minimal 8 karakter." };
@@ -21,7 +24,7 @@ export async function registerAction(_prev: FormState, formData: FormData): Prom
     email,
     password,
     options: {
-      data: { full_name: fullName },
+      data: { full_name: fullName, ...(safeRequestedRole ? { requested_role: safeRequestedRole } : {}) },
       emailRedirectTo: `${getSiteUrl()}/auth/callback?next=/akun`,
     },
   });
