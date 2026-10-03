@@ -32,7 +32,7 @@ export function PackageDetailShowcase({language}:{language:Language;description:
    {tile(activeImage,true)}
    <div className="grid min-h-0 grid-rows-2 gap-2.5">{tile(thumbs[0])}<div className="grid min-h-0 grid-cols-2 gap-2.5">{tile(thumbs[1])}{tile(thumbs[2])}</div></div>
   </div>
-  <div className="mt-2.5 flex h-[205px] shrink-0 flex-col rounded-[12px] bg-white px-5 pb-4">
+  <div className="mt-2.5 flex h-[235px] shrink-0 flex-col rounded-[12px] bg-white px-5 pb-4">
    <div className="overflow-x-auto border-b border-[#d9d9d9]"><div className="flex min-w-max justify-between gap-4">{order.map((key,i)=><button key={key} type="button" onClick={()=>setTab(key)} className={`border-b-2 py-3 text-xs font-medium leading-none transition sm:text-sm ${tab===key?"border-primary font-bold text-primary":"border-transparent text-[#454545] hover:text-primary"}`}>{t.tabs[i]}</button>)}</div></div>
    <div className={`relative min-h-0 flex-1 pe-3 pt-4 text-xs leading-5 text-[#454545] sm:text-sm sm:leading-6 ${tab==="description"||tab==="policy"||tab==="hotel"||tab==="facilities"||tab==="reviews"?"overflow-y-scroll":"overflow-hidden"} [scrollbar-color:#8a8a8a_#f1f3f5] [scrollbar-width:thin]`}>
     <div className="grid grid-cols-1 gap-3 sm:grid-cols-[78px_1fr] sm:gap-4">{body[tab]}</div>
