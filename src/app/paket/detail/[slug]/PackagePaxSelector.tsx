@@ -42,32 +42,32 @@ export function PackagePaxSelector({
     <div className="mt-3">
       <button type="button" onClick={() => setPriceOpen((value) => !value)} aria-expanded={priceOpen} className="mb-3 w-full rounded-[9px] border border-[#dfe7f0] bg-white p-2.5 text-start transition hover:border-primary/40">
         <div className="flex items-start justify-between gap-2.5">
-          <div className="grid flex-1 grid-cols-[1fr_auto_1fr] items-start gap-2 text-[10px] text-[#748297]">
+          <div className="grid flex-1 grid-cols-[1fr_auto_1fr] items-start gap-2 text-xs text-[#748297]">
             <div><p className="font-bold">Pergi</p><p>30 Des 2025</p></div><div className="pt-2 text-primary">··· ✈ ···</div><div className="text-end"><p className="font-bold">Pulang</p><p>09 Jan 2026</p></div>
           </div>
           <span className="mt-8 text-xs font-bold text-[#60738d]">{priceOpen ? "⌃" : "⌄"}</span>
         </div>
         <div className="mt-2 border-t border-[#edf1f6] pt-2">
-          <p className="text-[10px] text-[#9aa6b5] line-through">{money(basePrice + 1700000)}</p>
-          <p className="mt-0.5 font-display text-[16px] font-extrabold text-primary">{money(basePrice)}<span className="text-[10px] font-medium text-[#40546f]">/pax</span></p>
+          <p className="text-xs text-[#9aa6b5] line-through">{money(basePrice + 1700000)}</p>
+          <p className="mt-0.5 font-display text-lg font-extrabold text-primary">{money(basePrice)}<span className="text-xs font-medium text-[#40546f]">/pax</span></p>
         </div>
         {priceOpen && <div className="mt-2 space-y-2 border-t border-[#edf1f6] pt-2">
-          <div><p className="text-[10px] text-[#8a98aa]">Sekamar Bertiga</p><p className="font-display text-[12px] font-extrabold text-[#40546f]">{money(basePrice + 1000000)}<span className="text-[10px] font-medium">/pax</span></p></div>
-          <div><p className="text-[10px] text-[#8a98aa]">Sekamar Berdua</p><p className="font-display text-[12px] font-extrabold text-[#40546f]">{money(basePrice + 2000000)}<span className="text-[10px] font-medium">/pax</span></p></div>
+          <div><p className="text-xs text-[#8a98aa]">Sekamar Bertiga</p><p className="font-display text-sm font-extrabold text-[#40546f]">{money(basePrice + 1000000)}<span className="text-xs font-medium">/pax</span></p></div>
+          <div><p className="text-xs text-[#8a98aa]">Sekamar Berdua</p><p className="font-display text-sm font-extrabold text-[#40546f]">{money(basePrice + 2000000)}<span className="text-xs font-medium">/pax</span></p></div>
         </div>}
       </button>
       <div className="rounded-[9px] border border-[#e1e8f0] bg-white">
         <div className="border-b border-[#edf1f6] px-2.5 py-2.5">
-          <p className="mb-2 text-[10px] font-extrabold text-[#40546f]">{t.title}</p>
-          <div className="space-y-2 text-[10px]">
+          <p className="mb-2 text-xs font-extrabold text-[#40546f]">{t.title}</p>
+          <div className="space-y-2 text-xs">
             <div className="grid grid-cols-[1fr_auto] items-center gap-2"><div><b>Dewasa</b><span className="ms-2 text-[#9aa6b5]">Umur 12 tahun +</span></div><div className="flex items-center gap-1"><button type="button" onClick={()=>setPax(v=>Math.max(1,v-1))} className="h-5 w-5 rounded border border-[#dfe7f0]">−</button><span className="w-5 text-center font-bold">{pax}</span><button type="button" onClick={()=>setPax(v=>Math.min(safeMax,v+1))} className="h-5 w-5 rounded bg-primary text-white">+</button></div></div>
             <div className="grid grid-cols-[1fr_auto] items-center gap-2"><div><b>Anak</b><span className="ms-2 text-[#9aa6b5]">Umur 2 - 11 tahun</span></div><div className="flex items-center gap-1"><button type="button" onClick={()=>setChildren(v=>Math.max(0,v-1))} className="h-5 w-5 rounded border border-[#dfe7f0]">−</button><span className="w-5 text-center font-bold">{children}</span><button type="button" onClick={()=>setChildren(v=>v+1)} className="h-5 w-5 rounded border border-[#dfe7f0]">+</button></div></div>
             <div className="grid grid-cols-[1fr_auto] items-center gap-2"><div><b>Bayi</b><span className="ms-2 text-[#9aa6b5]">Umur 0-23 bulan</span></div><div className="flex items-center gap-1"><button type="button" onClick={()=>setInfants(v=>Math.max(0,v-1))} className="h-5 w-5 rounded border border-[#dfe7f0]">−</button><span className="w-5 text-center font-bold">{infants}</span><button type="button" onClick={()=>setInfants(v=>v+1)} className="h-5 w-5 rounded border border-[#dfe7f0]">+</button></div></div>
           </div>
         </div>
 
-        <div className="space-y-2 px-2.5 py-2.5 text-[10px]">
-          <p className="mb-2 text-[10px] font-extrabold text-[#40546f]">Detail Harga</p>
+        <div className="space-y-2 px-2.5 py-2.5 text-xs">
+          <p className="mb-2 text-xs font-extrabold text-[#40546f]">Detail Harga</p>
           <div className="flex justify-between"><span>{pax}x Dewasa</span><span>{money(basePrice * pax)}</span></div>
           <div className="flex justify-between"><span>{children}x Anak</span><span>{money(childPrice * children)}</span></div>
           <div className="flex justify-between"><span>{infants}x Bayi</span><span>{money(infantPrice * infants)}</span></div>
@@ -78,7 +78,7 @@ export function PackagePaxSelector({
       </div>
 
       {isPreview ? (
-        <div className="mt-3 rounded-lg bg-[#f2f4f7] px-4 py-3 text-center text-[12px] font-extrabold leading-4 text-[#8a98aa]">{t.preview}</div>
+        <div className="mt-3 rounded-lg bg-[#f2f4f7] px-4 py-3 text-center text-sm font-extrabold leading-4 text-[#8a98aa]">{t.preview}</div>
       ) : safeMax > 0 ? (
         <Link href={`/booking/baru?departure=${encodeURIComponent(departureId)}&pax=${pax + children + infants}`} className="mt-2 flex w-full items-center justify-center rounded-md bg-primary px-3 py-3 text-[11px] font-extrabold text-white shadow-[0_5px_14px_rgba(15,95,175,0.16)] transition hover:brightness-95">{t.action}</Link>
       ) : null}
