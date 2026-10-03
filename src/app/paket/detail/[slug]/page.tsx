@@ -162,11 +162,11 @@ export default async function PackageDetailPage({ params }: { params: { slug: st
         </div>
         <section className="mt-5">
           <div className="mb-3 flex items-end justify-between gap-3"><div><h2 className="text-lg font-extrabold text-[#10223f]">Rekomendasi Paket</h2><p className="mt-1 text-xs text-[#6d7c91]">Paket lain yang mungkin sesuai untuk perjalanan Anda.</p></div></div>
-          <div className="grid gap-4 sm:grid-cols-3">
+          <div className="grid gap-3 sm:grid-cols-2 lg:grid-cols-4">
             {[
               ["Umrah","Umrah Plus Turki","Travel Segaloka","12 Hari","Rp 32.500.000"],
               ["Umrah","Umrah Plus Thaif","Travel Segaloka","10 Hari","Rp 31.500.000"],
-              ["Umrah","Umrah Awal Tahun","Travel Segaloka","9 Hari","Rp 30.900.000"],
+              ["Umrah","Umrah Awal Tahun","Travel Segaloka","9 Hari","Rp 30.900.000"],\n              ["Halal Tour","Halal Tour Turki","Travel Segaloka","8 Hari","Rp 23.900.000"],
             ].map(([type,name,travel,duration,price])=><button type="button" key={name} className="group flex min-h-[300px] flex-col overflow-hidden rounded-[20px] border border-[#dfe7f0] bg-white text-start shadow-[0_8px_24px_rgba(15,45,90,0.05)] transition duration-200 hover:-translate-y-1 hover:border-[#b9d2ee] hover:shadow-[0_16px_38px_rgba(15,45,90,0.11)]">
               <div className="relative h-[132px] overflow-hidden bg-[linear-gradient(145deg,#dcefff_0%,#eff8ff_48%,#e8f8f2_100%)] p-3.5">
                 <div className="absolute -bottom-14 -left-10 h-36 w-36 rounded-full border-[24px] border-white/40" /><div className="absolute -right-10 -top-12 h-36 w-36 rounded-full bg-white/40" />
@@ -176,7 +176,7 @@ export default async function PackageDetailPage({ params }: { params: { slug: st
               <div className="flex flex-1 flex-col p-3.5"><p className="truncate text-xs font-bold text-[#60748f]">{travel}</p><h3 className="mt-1.5 min-h-[40px] text-sm font-extrabold leading-5 text-[#071f43]">{name}</h3><div className="mt-3 flex items-center gap-2 text-xs font-medium text-[#657892]"><Icon name="booking" size={12} /><span>30 Des 2025</span><span className="h-1 w-1 rounded-full bg-[#b6c3d3]" /><span>{duration}</span></div><div className="mt-auto flex items-end justify-between gap-3 border-t border-[#edf1f6] pt-3"><div><p className="text-xs font-semibold uppercase tracking-[0.08em] text-[#8b9aae]">Harga</p><p className="mt-0.5 text-lg font-black leading-none text-[#0b6ee8]">{price}</p></div><span className="flex h-8 w-8 items-center justify-center rounded-full bg-[#eef5ff] text-primary transition group-hover:bg-primary group-hover:text-white">→</span></div></div>
             </button>)}
           </div>
-        </section>
+                  <div className="mt-4 flex items-center justify-center gap-1.5" aria-label="Slide rekomendasi">{Array.from({length:8}).map((_,i)=><span key={i} className={`h-1.5 w-1.5 rounded-full ${i===0?"bg-primary":"bg-[#9aa6b5]"}`} />)}</div>\n</section>
       </main>
       <div className="fixed inset-x-0 bottom-0 z-40 border-t border-[#dfe7f0] bg-white/95 px-3 pb-[max(0.625rem,env(safe-area-inset-bottom))] pt-2.5 shadow-[0_-8px_24px_rgba(15,45,90,0.08)] backdrop-blur lg:hidden">
         <div className="mx-auto flex max-w-[1180px] items-center justify-between gap-3">
