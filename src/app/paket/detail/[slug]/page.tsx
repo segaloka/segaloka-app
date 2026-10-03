@@ -128,8 +128,8 @@ export default async function PackageDetailPage({ params }: { params: { slug: st
   return (
     <div dir={language === "ar" ? "rtl" : "ltr"} lang={language} className="min-h-screen bg-[#f7f9fc] text-[#10223f]">
       <MarketplaceHeader initialLanguage={language} initialCurrency={currency} />
-      <main className="mx-auto max-w-[1180px] px-3 pb-24 pt-4 sm:px-4 sm:pb-12 sm:pt-6">
-        <nav className="mb-3 flex items-center gap-1.5 overflow-hidden text-[11px] font-bold text-[#748297] sm:text-xs">
+      <main className="mx-auto max-w-[920px] px-3 pb-24 pt-4 sm:px-4 sm:pb-12 sm:pt-6">
+        <nav className="mb-3 flex items-center gap-1.5 overflow-hidden text-[8px] font-semibold text-[#748297] sm:text-xs">
           <Link href="/" className="shrink-0 hover:text-primary">{t.home}</Link><span>/</span>
           <Link href={`/paket/${pkg.type}`} className="shrink-0 hover:text-primary">{packageTypeLabel(pkg.type)}</Link>
           <span>/</span><span className="truncate text-[#40546f]">{pkg.name}</span>
@@ -140,7 +140,7 @@ export default async function PackageDetailPage({ params }: { params: { slug: st
         <section className="mb-4">
           <div className="flex items-start justify-between gap-3">
             <div className="min-w-0">
-              <h1 className="break-words font-display text-[24px] font-extrabold leading-[1.12] tracking-[-0.03em] sm:text-[32px]">{pkg.name}</h1>
+              <h1 className="break-words font-display text-[18px] font-extrabold leading-[1.12] tracking-[-0.025em] sm:text-[21px]">{pkg.name}</h1>
               <div className="mt-2 flex flex-wrap items-center gap-x-3 gap-y-1.5 text-[11px] font-bold text-[#748297]">
                 {org && <span className="inline-flex items-center gap-1.5"><span className="h-2 w-2 rounded-full bg-primary" />{org.name}</span>}
                 <span className="inline-flex items-center gap-1.5"><Icon name="route" size={12} />{packageTypeLabel(pkg.type)} · {displayNumber(pkg.duration_days)} {t.days}</span>
@@ -152,25 +152,25 @@ export default async function PackageDetailPage({ params }: { params: { slug: st
 
         </section>
 
-        <div className="mt-4 grid gap-4 lg:grid-cols-[minmax(0,1fr)_330px] lg:items-start">
+        <div className="mt-4 grid gap-4 lg:grid-cols-[minmax(0,1fr)_250px] lg:items-start">
           <div className="space-y-4">
             <PackageDetailShowcase language={language} description={pkg.description} durationDays={pkg.duration_days} inclusions={inclusions} exclusions={exclusions} rating={rating && rating.review_count > 0 ? rating.average_rating : null} reviewCount={rating?.review_count ?? 0} />
           </div>
           <aside className="lg:sticky lg:top-[82px]">
-            <div className="rounded-[18px] bg-[#f4f4f4] p-3">
+            <div className="rounded-[14px] bg-[#f4f4f4] p-2">
               {!departures?.length ? <div className="rounded-xl bg-white p-4 text-xs leading-5 text-[#60738d]">{lt.noDeparture}</div> : <PackagePaxSelector departureId={departures[0].id} maxPax={Math.max(0, departures[0].quota - departures[0].filled)} basePrice={pkg.base_price} language={language} isPreview={isPreview} />}
             </div>
           </aside>
         </div>
-        <section className="mt-5">
-          <h2 className="mb-3 text-[11px] font-medium text-[#555]">Rekomendasi Paket</h2>
+        <section className="mt-3">
+          <h2 className="mb-2 text-[9px] font-medium text-[#555]">Rekomendasi Paket</h2>
           <div className="grid gap-3 sm:grid-cols-3">
             {[
               ["Turki", "Umrah Plus Turki", "Rp 32.500.000/pax", "Jakarta · 12 Hari"],
               ["Umrah Plus", "Umrah Plus Thaif", "Rp 31.500.000/pax", "Jakarta · 10 Hari"],
               ["Best Seller", "Umrah Awal Tahun", "Rp 30.900.000/pax", "Makassar · 9 Hari"],
             ].map(([badge,name,price,meta],index)=><article key={name} className="overflow-hidden rounded-xl bg-[#f4f4f4] p-2">
-              <div className="relative h-[145px] overflow-hidden rounded-lg bg-[linear-gradient(180deg,#fff_0%,#fff_58%,#d8e1ea_100%)]">
+              <div className="relative h-[122px] overflow-hidden rounded-lg bg-[linear-gradient(180deg,#fff_0%,#fff_58%,#d8e1ea_100%)]">
                 <span className="absolute start-3 top-3 rounded bg-white px-2 py-1 text-[7px] text-[#8a98aa] shadow-sm">{badge}</span>
                 <span className="absolute end-3 top-3 h-4 w-4 rounded-full bg-primary" />
                 <div className="absolute inset-x-0 bottom-0 p-3 text-white"><p className="text-[12px] font-bold">{name}</p><p className="text-[10px]">Durasi</p></div>
