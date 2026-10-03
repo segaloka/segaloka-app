@@ -147,7 +147,7 @@ export default async function PackageDetailPage({ params }: { params: { slug: st
                 <span className="inline-flex items-center gap-1.5"><span className="text-[#f5a000]">★</span>{rating && rating.review_count > 0 ? `${displayRating(rating.average_rating)} (${displayNumber(rating.review_count)} ${u.reviews})` : u.noReviews}</span>
               </div>
             </div>
-            {!isPreview && <WishlistButton packageId={pkg.id} initialSaved={saved} />}
+            <WishlistButton packageId={pkg.id} initialSaved={saved} />
           </div>
 
         </section>
@@ -156,7 +156,7 @@ export default async function PackageDetailPage({ params }: { params: { slug: st
           <div className="space-y-4">
             <PackageDetailShowcase language={language} description={pkg.description} durationDays={pkg.duration_days} inclusions={inclusions} exclusions={exclusions} rating={rating && rating.review_count > 0 ? rating.average_rating : null} reviewCount={rating?.review_count ?? 0} />
           </div>
-          <aside className="lg:sticky lg:top-[82px]">
+          <aside id="package-booking" className="scroll-mt-24 lg:sticky lg:top-[82px]">
             <div className="rounded-[16px] bg-[#f4f4f4] p-2.5">
               {!departures?.length ? <div className="rounded-xl bg-white p-4 text-xs leading-5 text-[#60738d]">{lt.noDeparture}</div> : <PackagePaxSelector departureId={departures[0].id} maxPax={Math.max(0, departures[0].quota - departures[0].filled)} basePrice={pkg.base_price} language={language} isPreview={isPreview} />}
             </div>
@@ -188,7 +188,7 @@ export default async function PackageDetailPage({ params }: { params: { slug: st
             <p className="text-[10px] font-bold text-[#748297]">{departures?.[0] ? `${u.depart} ${displayDate(departures[0].departure_date)}` : t.startFrom}</p>
             <div><div className="flex items-baseline gap-1.5"><p className="font-display text-base font-extrabold text-primary">{displayPrice(pkg.base_price)}</p><span className="text-[9px] font-bold text-[#8a98aa]">{t.perTraveler}</span></div>{currency !== "IDR" && <p className="mt-0.5 max-w-[210px] text-[8px] font-bold leading-3 text-[#b16b00]">{lt.currencyPending(currency)}</p>}</div>
           </div>
-          {departures?.[0] ? (isPreview ? <span className="max-w-[48%] shrink-0 rounded-xl bg-[#e9eef4] px-4 py-3 text-center text-xs font-extrabold leading-4 text-[#8a98aa]">{u.previewAction}</span> : <a href="#departures" className="max-w-[48%] shrink-0 rounded-xl bg-primary px-4 py-3 text-center text-xs font-extrabold leading-4 text-white shadow-[0_6px_16px_rgba(15,95,175,0.22)]">{u.selectScheduleFirst}</a>) : <span className="max-w-[48%] shrink-0 rounded-xl bg-[#e9eef4] px-4 py-3 text-center text-xs font-extrabold leading-4 text-[#8a98aa]">{t.noSchedule}</span>}
+          {departures?.[0] ? <a href="#package-booking" className="max-w-[48%] shrink-0 rounded-xl bg-primary px-4 py-3 text-center text-xs font-extrabold leading-4 text-white shadow-[0_6px_16px_rgba(15,95,175,0.22)]">{u.selectScheduleFirst}</a> : <span className="max-w-[48%] shrink-0 rounded-xl bg-[#e9eef4] px-4 py-3 text-center text-xs font-extrabold leading-4 text-[#8a98aa]">{t.noSchedule}</span>}
         </div>
       </div>
     </div>
