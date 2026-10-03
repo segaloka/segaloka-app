@@ -134,8 +134,6 @@ export default async function PackageDetailPage({ params }: { params: { slug: st
           <Link href={`/paket/${pkg.type}`} className="shrink-0 hover:text-primary">{packageTypeLabel(pkg.type)}</Link>
           <span>/</span><span className="truncate text-[#40546f]">{pkg.name}</span>
         </nav>
-        {isPreview && <div className="mb-3 flex items-start gap-2.5 rounded-2xl border border-[#d8e6f5] bg-[#eef6ff] px-3.5 py-3 text-[#40546f] sm:px-4"><span className="mt-0.5 flex h-7 w-7 shrink-0 items-center justify-center rounded-full bg-white text-primary ring-1 ring-[#d8e6f5]"><Icon name="info" size={13} /></span><div><p className="text-[10px] font-extrabold uppercase tracking-[0.1em] text-primary">{u.previewLabel}</p><p className="mt-0.5 text-[11px] leading-5 sm:text-xs">{u.previewNotice}</p></div></div>}
-
 
         <section className="mb-4">
           <div className="flex items-start justify-between gap-3">
@@ -152,7 +150,7 @@ export default async function PackageDetailPage({ params }: { params: { slug: st
 
         </section>
 
-        <div className="mt-4 grid gap-4 lg:grid-cols-[minmax(0,1fr)_300px] lg:items-start">
+        <div className="grid gap-4 lg:grid-cols-[minmax(0,1fr)_300px] lg:items-start">
           <div className="space-y-4">
             <PackageDetailShowcase language={language} description={pkg.description} durationDays={pkg.duration_days} inclusions={inclusions} exclusions={exclusions} rating={rating && rating.review_count > 0 ? rating.average_rating : null} reviewCount={rating?.review_count ?? 0} />
           </div>
@@ -162,24 +160,22 @@ export default async function PackageDetailPage({ params }: { params: { slug: st
             </div>
           </aside>
         </div>
-        <section className="mt-3">
-          <h2 className="mb-2 text-xs font-medium text-[#555]">Rekomendasi Paket</h2>
-          <div className="grid gap-3 sm:grid-cols-3">
+        <section className="mt-5">
+          <div className="mb-3 flex items-end justify-between gap-3"><div><h2 className="text-lg font-extrabold text-[#10223f]">Rekomendasi Paket</h2><p className="mt-1 text-xs text-[#6d7c91]">Paket lain yang mungkin sesuai untuk perjalanan Anda.</p></div></div>
+          <div className="grid gap-4 sm:grid-cols-3">
             {[
-              ["Turki", "Umrah Plus Turki", "Rp 32.500.000/pax", "Jakarta · 12 Hari"],
-              ["Umrah Plus", "Umrah Plus Thaif", "Rp 31.500.000/pax", "Jakarta · 10 Hari"],
-              ["Best Seller", "Umrah Awal Tahun", "Rp 30.900.000/pax", "Makassar · 9 Hari"],
-            ].map(([badge,name,price,meta],index)=><article key={name} className="overflow-hidden rounded-xl bg-[#f4f4f4] p-2">
-              <div className="relative h-[155px] overflow-hidden rounded-lg bg-[linear-gradient(180deg,#fff_0%,#fff_58%,#d8e1ea_100%)]">
-                <span className="absolute start-3 top-3 rounded bg-white px-2 py-1 text-[7px] text-[#8a98aa] shadow-sm">{badge}</span>
-                <span className="absolute end-3 top-3 h-4 w-4 rounded-full bg-primary" />
-                <div className="absolute inset-x-0 bottom-0 p-3 text-white"><p className="text-[12px] font-bold">{name}</p><p className="text-[10px]">Durasi</p></div>
+              ["Umrah","Umrah Plus Turki","Travel Segaloka","12 Hari","Rp 32.500.000"],
+              ["Umrah","Umrah Plus Thaif","Travel Segaloka","10 Hari","Rp 31.500.000"],
+              ["Umrah","Umrah Awal Tahun","Travel Segaloka","9 Hari","Rp 30.900.000"],
+            ].map(([type,name,travel,duration,price])=><button type="button" key={name} className="group flex min-h-[300px] flex-col overflow-hidden rounded-[20px] border border-[#dfe7f0] bg-white text-start shadow-[0_8px_24px_rgba(15,45,90,0.05)] transition duration-200 hover:-translate-y-1 hover:border-[#b9d2ee] hover:shadow-[0_16px_38px_rgba(15,45,90,0.11)]">
+              <div className="relative h-[132px] overflow-hidden bg-[linear-gradient(145deg,#dcefff_0%,#eff8ff_48%,#e8f8f2_100%)] p-3.5">
+                <div className="absolute -bottom-14 -left-10 h-36 w-36 rounded-full border-[24px] border-white/40" /><div className="absolute -right-10 -top-12 h-36 w-36 rounded-full bg-white/40" />
+                <div className="relative z-10 flex items-start justify-between gap-3"><span className="inline-flex rounded-full border border-white/90 bg-white/95 px-2.5 py-1 text-xs font-extrabold text-[#183a64] shadow-sm">{type}</span><span className="flex h-10 w-10 items-center justify-center rounded-xl border border-white bg-white text-primary shadow-sm"><Icon name="plane" size={17} /></span></div>
+                <div className="absolute bottom-3 left-3.5 z-10 inline-flex items-center gap-1.5 rounded-full bg-[#10294d]/90 px-2.5 py-1 text-xs font-bold text-white"><span className="text-[#ffbd3d]">★</span><span>4.8</span><span className="text-white/70">(120)</span></div>
               </div>
-              <p className="mt-2 text-[9px] font-semibold text-[#555]">{price}</p><p className="text-[8px] text-[#777]">{meta}</p>
-              <button type="button" className={`mt-2 w-full rounded-md py-2 text-[9px] font-bold ${index===0?"bg-primary text-white":"bg-white text-[#555]"}`}>Lihat</button>
-            </article>)}
+              <div className="flex flex-1 flex-col p-3.5"><p className="truncate text-xs font-bold text-[#60748f]">{travel}</p><h3 className="mt-1.5 min-h-[40px] text-sm font-extrabold leading-5 text-[#071f43]">{name}</h3><div className="mt-3 flex items-center gap-2 text-xs font-medium text-[#657892]"><Icon name="booking" size={12} /><span>30 Des 2025</span><span className="h-1 w-1 rounded-full bg-[#b6c3d3]" /><span>{duration}</span></div><div className="mt-auto flex items-end justify-between gap-3 border-t border-[#edf1f6] pt-3"><div><p className="text-xs font-semibold uppercase tracking-[0.08em] text-[#8b9aae]">Harga</p><p className="mt-0.5 text-lg font-black leading-none text-[#0b6ee8]">{price}</p></div><span className="flex h-8 w-8 items-center justify-center rounded-full bg-[#eef5ff] text-primary transition group-hover:bg-primary group-hover:text-white">→</span></div></div>
+            </button>)}
           </div>
-          <div className="mt-3 flex justify-center gap-1">{Array.from({length:8}).map((_,i)=><span key={i} className={`h-1.5 w-1.5 rounded-full ${i===0?"bg-primary":"bg-[#aab4c0]"}`} />)}</div>
         </section>
       </main>
       <div className="fixed inset-x-0 bottom-0 z-40 border-t border-[#dfe7f0] bg-white/95 px-3 pb-[max(0.625rem,env(safe-area-inset-bottom))] pt-2.5 shadow-[0_-8px_24px_rgba(15,45,90,0.08)] backdrop-blur lg:hidden">
