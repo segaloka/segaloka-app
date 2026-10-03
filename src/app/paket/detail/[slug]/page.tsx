@@ -53,7 +53,12 @@ export default async function PackageDetailPage({ params }: { params: { slug: st
   } as const;
   const u = ui[language === "en" || language === "ar" ? language : "id"];
   const arrow = language === "ar" ? "←" : "→";
-  const packageTypeLabel = (pkgTypeLabel: string) => pkgTypeLabel === "halal_tour" ? "Halal Tour" : pkgTypeLabel === "umrah" ? "Umrah" : pkgTypeLabel === "haji" ? "Haji" : pkgTypeLabel === "tour" ? "Tour" : pkgTypeLabel.charAt(0).toUpperCase() + pkgTypeLabel.slice(1);
+  const packageTypeLabels: Record<"id" | "en" | "ar", Record<string, string>> = {
+    id: { umrah: "Umrah", haji: "Haji", halal_tour: "Halal Tour", tour: "Tour" },
+    en: { umrah: "Umrah", haji: "Hajj", halal_tour: "Halal Tour", tour: "Tour" },
+    ar: { umrah: "عمرة", haji: "حج", halal_tour: "جولة حلال", tour: "جولة سياحية" },
+  };
+  const packageTypeLabel = (pkgType: string) => packageTypeLabels[language][pkgType] ?? pkgType.replaceAll("_", " ");
   const previewPackages = [
     ["preview-umrah-reguler-9-hari","preview-umrah-01","Umrah Reguler 9 Hari","umrah",9,28900000,"Travel Amanah","travel-amanah","2026-10-18","2026-10-26",45,33,"open"],
     ["preview-umrah-plus-thaif-12-hari","preview-umrah-02","Umrah Plus Thaif 12 Hari","umrah",12,34500000,"Nusantara Haramain","nusantara-haramain","2026-11-03","2026-11-14",45,17,"open"],
@@ -87,10 +92,9 @@ export default async function PackageDetailPage({ params }: { params: { slug: st
         .from("departures")
         .select("*")
         .eq("package_id", pkg.id)
-        .in("status", ["open", "almost_full"])
         .gte("departure_date", new Date().toISOString().slice(0, 10))
         .order("departure_date", { ascending: true });
-      departures = departureResult.data;
+      departures = (departureResult.data ?? []).filter((departure) => departure.quota - departure.filled > 0);
     }
   }
 
