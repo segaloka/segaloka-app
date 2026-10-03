@@ -262,9 +262,15 @@ export default async function PackageDetailPage({ params }: { params: { slug: st
                             <p className="mt-1 text-xs font-extrabold text-primary">{displayPrice(pkg.base_price)}</p>
                           </div>
                         </div>
-                        <div className="mt-3 flex items-center justify-between rounded-xl bg-[#eaf3ff] px-3 py-2.5 text-xs font-extrabold text-primary">
-                          <span>{isPreview ? u.previewAction : t.chooseSchedule}</span>{!isPreview && <span aria-hidden="true">{arrow}</span>}
-                        </div>
+                        {isPreview ? (
+                          <div className="mt-3 flex items-center justify-between rounded-xl bg-[#f2f4f7] px-3 py-2.5 text-xs font-extrabold text-[#8a98aa]">
+                            <span>{u.previewAction}</span>
+                          </div>
+                        ) : (
+                          <Link href={`/booking/baru?departure=${encodeURIComponent(d.id)}`} className="mt-3 flex items-center justify-between rounded-xl bg-[#eaf3ff] px-3 py-2.5 text-xs font-extrabold text-primary transition hover:bg-[#dcecff] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/30">
+                            <span>{t.chooseSchedule}</span><span aria-hidden="true">{arrow}</span>
+                          </Link>
+                        )}
                       </div>
                     );
                   })}
