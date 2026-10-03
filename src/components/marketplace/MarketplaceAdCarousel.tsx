@@ -145,17 +145,18 @@ function previewAdsForPlacement(
     placement,
   }));
 }
-function AdCard({ ad }: { ad: Ad }) {
+function AdCard({ ad, compact = false }: { ad: Ad; compact?: boolean }) {
   const isBlue = ad.tone === "blue";
+  const isPrice = /^Rp\s?/i.test(ad.price_text ?? "");
 
   return (
     <Link
       href={ad.href}
-      className={`group relative grid min-h-[108px] min-w-0 overflow-hidden rounded-[16px] sm:min-h-[136px] border transition duration-300 hover:-translate-y-0.5 hover:shadow-[0_14px_32px_rgba(15,45,90,0.10)] sm:rounded-[20px] ${
+      className={`group relative grid min-w-0 overflow-hidden rounded-[16px] border transition duration-300 hover:-translate-y-0.5 hover:shadow-[0_14px_32px_rgba(15,45,90,0.10)] sm:rounded-[20px] ${compact ? "min-h-[92px] sm:min-h-[104px]" : "min-h-[108px] sm:min-h-[136px]"} ${
         isBlue
           ? "border-[#c6def8] bg-[linear-gradient(115deg,#f8fbff_0%,#edf6ff_55%,#e1f0ff_100%)] shadow-[0_8px_24px_rgba(24,105,205,0.09)] hover:shadow-[0_14px_34px_rgba(24,105,205,0.15)]"
           : "border-[#f0d98f] bg-[linear-gradient(115deg,#fffef9_0%,#fff9e5_55%,#fff0b9_100%)] shadow-[0_8px_24px_rgba(180,132,20,0.09)] hover:shadow-[0_14px_34px_rgba(180,132,20,0.15)]"
-      } sm:grid-cols-[minmax(0,1fr)_184px]`}
+      } ${compact ? "sm:grid-cols-[minmax(0,1fr)_170px]" : "sm:grid-cols-[minmax(0,1fr)_184px]"} `}
     >
       <div className="relative z-10 flex min-w-0 items-center gap-3 px-3 py-2.5 sm:gap-3.5 sm:px-4 sm:py-3.5">
         <span
@@ -244,7 +245,7 @@ function AdCard({ ad }: { ad: Ad }) {
 
         <div className="relative z-10 text-left sm:text-right">
           <p className="text-[9px] font-black uppercase tracking-[0.1em] text-[#61758d]">
-            Mulai dari
+            {isPrice ? "Mulai dari" : "Aksi"}
           </p>
 
           <p className="mt-0.5 text-base font-black tracking-[-0.02em] text-primary">
@@ -252,7 +253,7 @@ function AdCard({ ad }: { ad: Ad }) {
           </p>
 
           <span className="mt-1 inline-flex items-center gap-1 text-[11px] font-black text-primary">
-            Lihat penawaran
+            {isPrice ? "Lihat penawaran" : "Buka"}
             <span
               className="transition-transform duration-200 group-hover:translate-x-0.5"
               aria-hidden="true"
@@ -381,7 +382,7 @@ export function MarketplaceAdCarousel({
         </>
       ) : (
         <div className="grid grid-cols-1">
-          <AdCard ad={first} />
+          <AdCard ad={first} compact />
         </div>
       )}
     </div>
