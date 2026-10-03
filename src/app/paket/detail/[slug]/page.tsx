@@ -149,27 +149,27 @@ export default async function PackageDetailPage({ params }: { params: { slug: st
             {!isPreview && <WishlistButton packageId={pkg.id} initialSaved={saved} />}
           </div>
 
-          <div className="mt-4 grid min-h-[280px] grid-cols-1 gap-2 sm:min-h-[360px] sm:grid-cols-[1.45fr_.9fr]">
-            <div className="relative min-h-[240px] overflow-hidden rounded-2xl border border-[#d8e3ef] bg-[linear-gradient(145deg,#eaf4ff_0%,#f8fbff_48%,#eaf8f3_100%)] sm:min-h-[360px]">
-              <div className="absolute -end-16 -top-20 h-64 w-64 rounded-full border-[42px] border-white/65" />
-              <div className="absolute -bottom-24 -start-16 h-60 w-60 rounded-full bg-white/55" />
-              <div className="absolute inset-x-4 top-4 flex items-center justify-between gap-2">
-                <span className="rounded-full bg-white/90 px-3 py-1.5 text-[10px] font-extrabold text-primary shadow-sm">{packageTypeLabel(pkg.type)}</span>
-                <span className={`rounded-full px-3 py-1.5 text-[10px] font-extrabold shadow-sm ${departures?.length ? "bg-[#167453] text-white" : "bg-white/90 text-[#748297]"}`}>{departures?.length ? t.available : u.noActiveSchedule}</span>
-              </div>
-              <div className="absolute inset-x-5 bottom-5 max-w-lg rounded-2xl border border-white/80 bg-white/88 p-4 shadow-sm backdrop-blur">
-                <p className="text-[10px] font-extrabold uppercase tracking-[0.1em] text-[#748297]">{t.startFrom}</p>
-                <p className="mt-1 font-display text-xl font-extrabold text-primary">{displayPrice(pkg.base_price)} <span className="text-[10px] font-bold text-[#748297]">{t.perTraveler}</span></p>
-              </div>
-            </div>
-            <div className="grid grid-cols-2 gap-2 sm:grid-rows-2">
-              {[0,1,2,3].map((item) => <div key={item} className={`min-h-[110px] rounded-2xl border border-[#e3eaf2] ${item === 0 ? "bg-[linear-gradient(145deg,#f5f9ff,#eaf3ff)]" : item === 1 ? "bg-[linear-gradient(145deg,#f7fbf9,#eaf8f3)]" : item === 2 ? "bg-[linear-gradient(145deg,#fffaf2,#f7f9fc)]" : "bg-[linear-gradient(145deg,#f8f9fc,#eef3f8)]"}`}><span className="sr-only">{u.detailsPending}</span></div>)}
-            </div>
-          </div>
         </section>
 
         <div className="mt-4 grid gap-4 lg:grid-cols-[minmax(0,1fr)_330px] lg:items-start">
           <div className="space-y-4">
+            <div className="mt-4 grid min-h-[280px] grid-cols-1 gap-2 sm:min-h-[360px] sm:grid-cols-[1.45fr_.9fr]">
+              <div className="relative min-h-[240px] overflow-hidden rounded-2xl border border-[#d8e3ef] bg-[linear-gradient(145deg,#eaf4ff_0%,#f8fbff_48%,#eaf8f3_100%)] sm:min-h-[360px]">
+                <div className="absolute -end-16 -top-20 h-64 w-64 rounded-full border-[42px] border-white/65" />
+                <div className="absolute -bottom-24 -start-16 h-60 w-60 rounded-full bg-white/55" />
+                <div className="absolute inset-x-4 top-4 flex items-center justify-between gap-2">
+                  <span className="rounded-full bg-white/90 px-3 py-1.5 text-[10px] font-extrabold text-primary shadow-sm">{packageTypeLabel(pkg.type)}</span>
+                  <span className={`rounded-full px-3 py-1.5 text-[10px] font-extrabold shadow-sm ${departures?.length ? "bg-[#167453] text-white" : "bg-white/90 text-[#748297]"}`}>{departures?.length ? t.available : u.noActiveSchedule}</span>
+                </div>
+                <div className="absolute inset-x-5 bottom-5 max-w-lg rounded-2xl border border-white/80 bg-white/88 p-4 shadow-sm backdrop-blur">
+                  <p className="text-[10px] font-extrabold uppercase tracking-[0.1em] text-[#748297]">{t.startFrom}</p>
+                  <p className="mt-1 font-display text-xl font-extrabold text-primary">{displayPrice(pkg.base_price)} <span className="text-[10px] font-bold text-[#748297]">{t.perTraveler}</span></p>
+                </div>
+              </div>
+              <div className="grid grid-cols-2 gap-2 sm:grid-rows-2">
+                {[0,1,2,3].map((item) => <div key={item} className={`min-h-[110px] rounded-2xl border border-[#e3eaf2] ${item === 0 ? "bg-[linear-gradient(145deg,#f5f9ff,#eaf3ff)]" : item === 1 ? "bg-[linear-gradient(145deg,#f7fbf9,#eaf8f3)]" : item === 2 ? "bg-[linear-gradient(145deg,#fffaf2,#f7f9fc)]" : "bg-[linear-gradient(145deg,#f8f9fc,#eef3f8)]"}`}><span className="sr-only">{u.detailsPending}</span></div>)}
+              </div>
+            </div>
             <nav aria-label={u.sectionNav} className="sticky top-[68px] z-30 overflow-x-auto border-b border-[#e3eaf2] bg-white/95 px-1 pt-1 backdrop-blur lg:top-[76px]">
               <div className="flex min-w-max gap-1.5">
                 <a href="#overview" className="border-b-2 border-transparent px-3 py-2.5 text-[11px] font-extrabold text-[#60738d] transition hover:border-primary hover:text-primary focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/30">{t.overview}</a>
