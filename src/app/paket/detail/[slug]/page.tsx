@@ -6,6 +6,7 @@ import { createClient } from "@/lib/supabase/server";
 
 import { WishlistButton } from "@/components/WishlistButton";
 import { Icon } from "@/components/layout/Icon";
+import { PackagePaxSelector } from "./PackagePaxSelector";
 
 export default async function PackageDetailPage({ params }: { params: { slug: string } }) {
   const supabase = await createClient();
@@ -483,7 +484,7 @@ export default async function PackageDetailPage({ params }: { params: { slug: st
                     <div className="flex items-start justify-between gap-3"><div className="min-w-0"><p className="text-[10px] font-bold uppercase tracking-[0.08em] text-[#8a98aa]">{u.depart}</p><p className="mt-1 text-sm font-extrabold text-[#10223f]">{displayDate(departures[0].departure_date)}</p><p className="mt-1 text-[10px] text-[#748297]">{u.return} · {departures[0].return_date ? displayDate(departures[0].return_date) : t.unavailable}</p></div><span className={`shrink-0 rounded-full px-2 py-1 text-[9px] font-extrabold ${Math.max(0, departures[0].quota - departures[0].filled) <= 0 ? "bg-[#f2f4f7] text-[#7a8798]" : Math.max(0, departures[0].quota - departures[0].filled) <= 10 ? "bg-[#fff7e8] text-[#b16b00]" : "bg-[#eef8f3] text-[#167453]"}`}>{Math.max(0, departures[0].quota - departures[0].filled) <= 0 ? u.soldOut : Math.max(0, departures[0].quota - departures[0].filled) <= 10 ? u.almostFull : u.available}</span></div>
                     <div className="mt-3 flex items-center justify-between border-t border-[#edf1f6] pt-2.5"><span className="text-[10px] font-bold text-[#8a98aa]">{u.remainingSeats}</span><span className="text-xs font-extrabold text-[#40546f]">{displayNumber(Math.max(0, departures[0].quota - departures[0].filled))} {u.seats}</span></div>
                   </div>
-                  {isPreview ? <div className="mt-3 flex w-full items-center justify-center rounded-xl bg-[#f2f4f7] px-4 py-3 text-xs font-extrabold text-[#8a98aa]">{u.previewAction}</div> : <a href="#departures" className="mt-3 flex w-full items-center justify-center gap-2 rounded-xl bg-primary px-4 py-3 text-xs font-extrabold text-white shadow-[0_6px_16px_rgba(15,95,175,0.16)]">{u.viewAllSchedules} <span aria-hidden="true">{arrow}</span></a>}
+                  <PackagePaxSelector departureId={departures[0].id} maxPax={Math.max(0, departures[0].quota - departures[0].filled)} basePrice={pkg.base_price} language={language} isPreview={isPreview} />
                 </>}
               </div>
               <div className="mt-4 grid grid-cols-3 gap-2 border-t border-[#edf1f6] pt-4">
