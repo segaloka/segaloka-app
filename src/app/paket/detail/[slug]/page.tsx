@@ -92,6 +92,7 @@ export default async function PackageDetailPage({ params }: { params: { slug: st
         .from("departures")
         .select("*")
         .eq("package_id", pkg.id)
+        .in("status", ["open", "almost_full"])
         .gte("departure_date", new Date().toISOString().slice(0, 10))
         .order("departure_date", { ascending: true });
       departures = (departureResult.data ?? []).filter((departure) => departure.quota - departure.filled > 0);
